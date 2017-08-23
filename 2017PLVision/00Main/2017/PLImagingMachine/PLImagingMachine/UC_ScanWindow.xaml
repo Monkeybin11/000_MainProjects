@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="PLImagingMachine.UC_ScanWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PLImagingMachine"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1600"
+             Background="Bisque">
+    <DockPanel Margin="1">
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="500"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="400"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Margin="5" x:Name="stpScanMenu">
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="btnScan" Content="ScanStart" Grid.Column="0" Grid.Row="0" Margin="5" Click="btnScanMenu_Click" />
+                        <ComboBox x:Name="cmbScanSetting" Grid.Column="2" Grid.Row="0" Style="{StaticResource ComboboxBase}"/>
+                        <Button x:Name="btnOrigin"  Content="Origin" Grid.Column="0" Grid.Row="1" Margin="5"  Click="btnScanMenu_Click"/>
+                        <Button x:Name="btnLoadTemplate"      Content="Template"     Grid.Column="0" Grid.Row="2" Margin="5"/>
+                        <ComboBox x:Name="cmbTemplateMatch" Grid.Column="2" Grid.Row="2" Style="{StaticResource ComboboxBase}"/>
+                    </Grid>
+                </StackPanel>
+                <Border Style="{StaticResource border}" Height="{Binding Path=ActualHeight,ElementName=stpScanMenu}" Width="{Binding Path=ActualWidth,ElementName=stpScanMenu}"/>
+
+                <StackPanel x:Name="stpStatue" Background="Azure" Grid.Row="1" Margin="5" >
+                </StackPanel>
+                <Border Grid.Row="1" Style="{StaticResource border}" Height="{Binding Path=ActualHeight,ElementName=stpStatue}" Width="{Binding Path=ActualWidth,ElementName=stpStatue}"/>
+           </Grid>
+            <DockPanel Background="AliceBlue" Margin="5" Grid.Column="1">
+            </DockPanel>
+        </Grid>
+    </DockPanel>
+</UserControl>
