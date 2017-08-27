@@ -64,13 +64,9 @@
     <Compile Include="Data\StringLogger.cs" />
     <Compile Include="Monad\Functor.cs" />
     <Compile Include="Monad\ILogData.cs" />
-    <Compile Include="Monad\ILogger.cs" />
     <Compile Include="Monad\IMonad.cs" />
     <Compile Include="Monad\IWriterLog.cs" />
-    <Compile Include="Monad\LogMaybe.cs" />
     <Compile Include="Monad\Maybe.cs" />
-    <Compile Include="Monad\mLogWriter.cs" />
-    <Compile Include="Monad\StringLogger.cs" />
     <Compile Include="Monad\TestWriter.cs" />
     <Compile Include="Monad\Writer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

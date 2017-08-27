@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 
 namespace ModelLib.Monad
 {
-    public interface Maybe<T> : IMonad { }
+    public interface Maybe<T> : IMonad
+    {
+
+    }
 
 
     public class Just<T> : Maybe<T>, IEnumerable<T>
     {
+        T _Value { get; set; }
         public T Value { get; private set; }
         public bool HasValue { get { return true; } }
         public Just( T value )
