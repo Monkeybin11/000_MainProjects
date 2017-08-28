@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ModelLib.Data
 {
-    public class StringLogger : ILogData<string>
+    public class StringLogger : ILogData
     {
         public List<string> Logs
         {
@@ -33,7 +33,7 @@ namespace ModelLib.Data
     }
     public class test<T>
     {
-        ILogData<T> temp = new StringLogger();
+        ILogData temp = new StringLogger();
 
     }
 }

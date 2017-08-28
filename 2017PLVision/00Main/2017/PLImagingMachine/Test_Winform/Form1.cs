@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MachineLib;
 using ApplicationUtilTool;
+using System.Diagnostics;
 
 namespace Test_Winform
 {
@@ -54,7 +55,35 @@ namespace Test_Winform
             int tt  = 2;
         }
 
-     
+        test1 t1 = new test1();
+        private void button2_Click( object sender , EventArgs e )
+        {
+            t1.main();
+            StackFrame frame = new StackFrame(0);
+            var method = frame.GetMethod();
+            var type = method.DeclaringType;
+            var name = method.Name;
+            Console.WriteLine( name );
+        }
+    }
+
+
+    public class test1
+    {
+        test2 test2class = new test2();
+        public void main()
+        {
+            test2class.display();
+        }
+
+    }
+
+    public class test2
+    {
+        public void display()
+        {
+            Console.WriteLine("IDsplat called");
+        }
 
     }
 }

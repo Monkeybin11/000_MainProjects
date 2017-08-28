@@ -9,10 +9,10 @@ namespace ModelLib.Data
 {
     public class CreateLogger<T>
     {
-        public dynamic CreateLogger(dynamic )
-        {
-
-        }
+       //public dynamic CreateLogger(dynamic )
+       //{
+       //
+       //}
 
 
     }

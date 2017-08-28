@@ -230,6 +230,22 @@ namespace SpeedyCoding
             return output;
         }
 
+        public static T [ ] Tranpose<T>(
+            this T [ ] src ,
+            int currentRowNum,
+            int currentColumnNum)
+        {
+            List<T> output = new List<T>();
+            for ( int i = 0 ; i < currentRowNum ; i++ )
+            {
+                for ( int j = 0 ; j < currentColumnNum ; j++ )
+                {
+                    output.Add( src [ currentRowNum * j + i ] );
+                }
+            }
+            return output.ToArray();
+        } 
+
         #endregion
 
         #region Concatenate

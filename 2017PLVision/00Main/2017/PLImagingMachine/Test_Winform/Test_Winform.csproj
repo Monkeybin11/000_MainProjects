@@ -53,9 +53,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ApplicationUtilTool">
-      <HintPath>..\..\..\..\..\dll\ApplicationUtilTool.dll</HintPath>
-    </Reference>
     <Reference Include="DALSA.SaperaLT.SapClassBasic">
       <HintPath>..\..\..\..\ProjectDll\MachineLib\DALSA.SaperaLT.SapClassBasic.dll</HintPath>
     </Reference>
@@ -119,6 +116,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\01Sub\ApplicationUtilTool\ApplicationUtilTool\ApplicationUtilTool.csproj">
+      <Project>{6d5c0476-77b4-4636-8b7f-08705ec43857}</Project>
+      <Name>ApplicationUtilTool</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

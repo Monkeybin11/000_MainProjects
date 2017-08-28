@@ -23,7 +23,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="MonadPy.py" />
+    <Compile Include="Test.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TestClass.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Writer.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
