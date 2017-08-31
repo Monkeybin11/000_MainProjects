@@ -22,7 +22,22 @@ namespace SpeedyCoding
             Tv value )
         {
             src.Add( value );
-            return src;
+            return src; 
         }
+
+        public static List<int> IndicesOf<T>(
+           this IEnumerable<T> src ,
+           Func<T , bool> cond )
+        {
+            var reslist = src.Select(x => cond(x) ? 0 : 1 );
+            var res = reslist.ToArray();
+
+            var output = new List<int>();
+            reslist.Aggregate( ( f , s ) => s != 0 
+                                            ? f + s 
+                                            : f + 1.Act( x => output.Add( f ) ) );
+            return output;
+        }
+
     }
 }

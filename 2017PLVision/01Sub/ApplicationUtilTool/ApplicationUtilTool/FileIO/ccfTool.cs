@@ -25,6 +25,7 @@ namespace ApplicationUtilTool
             ChangeList = new List<Tuple<string , string , string>>();
             BasePath = basepath;
             FileName = filename;
+            if ( !File.Exists( basepath + "\\" + filename ) ) throw new Exception( "Config ccf file is not exist" );
         }
 
         public ccfTool( string fullpath )

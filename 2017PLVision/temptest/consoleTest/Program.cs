@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ModelLib.Monad;
 using SpeedyCoding;
 using System.Diagnostics;
+using SpeedyCoding;
 
 namespace consoleTest
 {
@@ -13,16 +14,21 @@ namespace consoleTest
     {
         static void Main( string [ ] args )
         {
-           
-            var wr1 = 1.ToWriter( "" );
-            Adder logger = new Adder();
+            string[] strl = new string[] {"12","22","33","d2","g3","12","22","33" };
 
-            wr1.Bind( "+1" , logger , x => x.ToString() )
-                .Bind(" add hi" , logger , x => x + "hi")
-                .Bind( "none" , logger , x => null);
-         
-          
-            
+            var res = strl.IndciesOf( x => x == "33" );
+            Console.ReadLine();
+
+
+           // var wr1 = 1.ToWriter( "" );
+           // Adder logger = new Adder();
+           //
+           // wr1.Bind( "+1" , logger , x => x.ToString() )
+           //     .Bind(" add hi" , logger , x => x + "hi")
+           //     .Bind( "none" , logger , x => null);
+
+
+
         }
     }
 
@@ -111,9 +117,10 @@ namespace consoleTest
             else
             {
                 var result = func( justa.Value );
-                return result == null
-                    ? Writer<B>.Nothing( logger.AddError( src.Logs ) )
-                    : Writer<B>.Just( result.Value , logger.AddLog( src.Logs , log ) );
+                return null;
+                //return result == null
+                //    ? Writer<B>.Nothing( logger.AddError( src.Logs ) )
+                //    : Writer<B>.Just( result.Value , logger.AddLog( src.Logs , log ) );
                 //저 함수는 maybe 리턴, just 는
             }
         }

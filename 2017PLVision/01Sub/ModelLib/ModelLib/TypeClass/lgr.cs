@@ -8,21 +8,21 @@ namespace ModelLib.Monad
 {
     // Logger Monad
     public interface Lgr<MA,A> 
-        where MA :  Monad<A>
+        where MA :  Maybe<A>
     {
         MA Value { get; set; }
         List<string> Logs { get; set; }
     }
 
-    public class Logger<MA,A>  : Lgr<MA,A>
-    {
-
-    }
-
-
-    public static class LgerExtension
-    {
-        public static 
-    }
-
+    //public class Logger<MA,A>  : Lgr<MA,A>
+    //{
+    //
+    //}
+    //
+    //
+    //public static class LgerExtension
+    //{
+    //    public static ToLogger
+    //}
+    //
 }

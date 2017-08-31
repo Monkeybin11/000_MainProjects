@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -10,6 +11,7 @@ namespace ApplicationUtilTool
 {
     public class iniTool
     {
+        // CurrentPath = AppDomain.CurrentDomain.BaseDirectory;
         [DllImport( "kernel32" )]
         public static extern long WritePrivateProfileString( string section , string key , string val , string filePath );
         [DllImport( "kernel32" )]
@@ -22,6 +24,8 @@ namespace ApplicationUtilTool
         public iniTool( string path )
         {
             FilePath = path;
+            if ( !File.Exists( path ) ) File.Create( path );
+
         }
 
         //public iniTool ChangeKey( string section , string keyname , stirng )
@@ -37,6 +41,12 @@ namespace ApplicationUtilTool
             return this;
         }
 
+        public iniTool WriteValues(string section , IEnumerable<Tuple<string,string>> keyval)
+        {
+            keyval.ToList().ForEach(x => iniTool.WritePrivateProfileString( section , x.Item1 , x.Item2 , FilePath ) );
+            return this;
+        }
+
         public string GetValue( string section , string keyname )
         {
             var str = new StringBuilder(1024);
@@ -44,7 +54,8 @@ namespace ApplicationUtilTool
             return str.ToString();
         }
 
-
-
+        public List<string> GetValues( string section , IEnumerable<string> keynames ) =>
+            keynames.Select( x => GetValue( section , x ) )
+                    .ToList();
     }
 }

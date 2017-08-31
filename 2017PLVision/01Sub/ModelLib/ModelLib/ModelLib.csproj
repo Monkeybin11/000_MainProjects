@@ -62,6 +62,7 @@
     <Compile Include="Data\ILogData.cs" />
     <Compile Include="Data\LogData.cs" />
     <Compile Include="Data\StringLogger.cs" />
+    <Compile Include="TypeClass\LogWriter.cs" />
     <Compile Include="TypeClass\Monad.cs" />
     <Compile Include="TypeClass\Lgr.cs" />
     <Compile Include="Monad\Functor.cs" />

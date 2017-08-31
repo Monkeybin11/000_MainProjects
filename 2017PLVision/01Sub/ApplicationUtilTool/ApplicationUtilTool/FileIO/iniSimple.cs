@@ -50,9 +50,6 @@ namespace ApplicationUtilTool
 
             iniTool.GetPrivateProfileString( CommonSectionName , "linerate" , "" , str , 1024 , Path );
             stringvalList.Add( str.ToString() );
-
-           
-
         }
 
         public void Writeini()
