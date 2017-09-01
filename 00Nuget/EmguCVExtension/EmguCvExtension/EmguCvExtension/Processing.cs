@@ -530,11 +530,41 @@ namespace EmguCvExtension
 
         }
 
+		public static Func<Image<Bgr , byte> , Image<Bgr , byte>> FnMatrixWafer( int diameter , int flatzoneSize , Bgr color , int thickness )
+		{
+			return new Func<Image<Bgr , byte> , Image<Bgr , byte>>( src =>
+			{
+				var linecolor = new MCvScalar(color.Blue, color.Green, color.Red);
+				var angle = Math.Asin((double)flatzoneSize / diameter) * 2.0;
+				var flatzoneH = (double)flatzoneSize / ((Math.Tan(angle / 2) * 2f));
 
-        #endregion  
+				Image<Bgr, byte> output = new Image<Bgr, byte>(src.Data);
 
-        #region Helper
-        private static MorphOp CreateMorpOp( morpOp op )
+				CvInvoke.Ellipse( output
+								  , new Point( src.Width / 2 , src.Height / 2 )
+								  , new Size( diameter / 2 , diameter / 2 )
+								  , 0f
+								  , 90 + angle.ToDegree() / 2
+								  , 360 + 90 - angle.ToDegree() / 2
+								  , linecolor
+								  , thickness );
+
+				CvInvoke.Line( output
+							   , new Point( src.Width / 2 - flatzoneSize / 2 , ( int )flatzoneH + src.Height / 2 )
+							   , new Point( src.Width / 2 + flatzoneSize / 2 , ( int )flatzoneH + src.Height / 2 )
+							   , linecolor
+							   , thickness );
+
+				return output;
+			} );
+
+		}
+
+
+		#endregion
+
+		#region Helper
+		private static MorphOp CreateMorpOp( morpOp op )
         {
             switch ( op )
             {

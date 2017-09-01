@@ -158,7 +158,22 @@ namespace SpeedyCoding
             return src;
         }
 
-        public static T [ ][ ] ActLoop<T>(
+		public static IEnumerable<IEnumerable<T>> ActLoop<T>(
+			this IEnumerable<IEnumerable<T>> src ,
+			Action<T> action )
+		{
+			foreach ( var items in src )
+			{
+				foreach ( var item in items )
+				{
+					action( item );
+				}
+			}
+			return src;
+		}
+
+
+		public static T [ ][ ] ActLoop<T>(
             this T [ ][ ] src
             , Action<T> action )
             where T : struct
@@ -173,8 +188,8 @@ namespace SpeedyCoding
             return src;
         }
 
-        public static T [ ][][ ] ActLoop<T>(
-            this T [ ][][ ] src
+        public static T [ ][ ][ ] ActLoop<T>(
+            this T [ ][ ][ ] src
             , Action<T> action )
             where T : struct
         {

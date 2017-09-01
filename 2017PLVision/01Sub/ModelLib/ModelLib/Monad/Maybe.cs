@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ModelLib.Monad
 {
-    public interface Maybe<T> : IMonad
+    public interface Maybe<T> : Monad
     {
 
     }

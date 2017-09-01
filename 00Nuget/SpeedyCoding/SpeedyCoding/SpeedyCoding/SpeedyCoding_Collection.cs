@@ -39,5 +39,27 @@ namespace SpeedyCoding
             return output;
         }
 
-    }
+		public static IEnumerable<int> xRange(
+		this int start ,
+		int count )
+		{
+			return Enumerable.Range( start , count );
+		}
+
+		public static IEnumerable<double> xRange(
+			this int start ,
+			int count ,
+			double step )
+		{
+			return Enumerable.Range( start , count ).Select( x => x * step );
+		}
+
+		public static IEnumerable<int> xRange(
+			this int start ,
+			int count ,
+			int step )
+		{
+			return Enumerable.Range( start , count ).Select( x => x * step );
+		}
+	}
 }

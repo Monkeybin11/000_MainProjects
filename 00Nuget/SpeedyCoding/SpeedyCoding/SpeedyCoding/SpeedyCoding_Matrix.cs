@@ -625,11 +625,16 @@ namespace SpeedyCoding
             return radian * 180 / Math.PI;
         }
 
-        #endregion
+		public static double ToRadian( this double degree )
+		{
+			return degree / 180.0 * Math.PI;
+		}
 
-        #region Operation
+		#endregion
 
-        public static int [ ] Dot(
+		#region Operation
+
+		public static int [ ] Dot(
            this IEnumerable<int> @this ,
            IEnumerable<int> target )
         {

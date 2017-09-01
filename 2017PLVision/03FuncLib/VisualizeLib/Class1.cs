@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelLib.Monad
+namespace VisualizeLib
 {
-    public interface Monad
+    public class Class1
     {
+		
+
 
     }
 }

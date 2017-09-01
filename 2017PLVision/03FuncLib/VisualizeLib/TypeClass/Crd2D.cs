@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelLib.Monad
+namespace VisualizeLib.TypeClass
 {
-    public interface Monad
-    {
-
-    }
+	public interface Crd2D
+	{
+		
+	}
 }
