@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A784FAE0-FF07-4E1A-8138-D9D3B698B951}</ProjectGuid>
+    <ProjectGuid>{0AA6ABFC-7DC0-484D-B2D4-9AAD902F95ED}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EmguCvExtension</RootNamespace>
-    <AssemblyName>EmguCvExtension</AssemblyName>
+    <RootNamespace>ModelLib</RootNamespace>
+    <AssemblyName>ModelLib</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,50 +48,45 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Emgu.CV.UI, Version=3.2.0.2682, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\x64\Debug\Emgu.CV.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Emgu.CV.UI.GL, Version=3.2.0.2682, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\x64\Debug\Emgu.CV.UI.GL.dll</HintPath>
-    </Reference>
-    <Reference Include="Emgu.CV.World, Version=3.2.0.2682, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\x64\Debug\Emgu.CV.World.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.VisualStudio.Imaging, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="SpeedyCoding, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\2017PLVision\dll\SpeedyCoding.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows" />
-    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="ZedGraph, Version=5.1.5.28844, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\x64\Debug\ZedGraph.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Conversion.cs" />
-    <Compile Include="Enum.cs" />
-    <Compile Include="Function.cs" />
-    <Compile Include="Histogram.cs" />
-    <Compile Include="Processing.cs" />
+    <Compile Include="ClassInstance\DeviceRunner.cs" />
+    <Compile Include="ClassInstance\Maybe_NonTimeNumSignal.cs" />
+    <Compile Include="ClassInstance\NTimeSg.cs" />
+    <Compile Include="Data\Coordinate\Coordination.cs" />
+    <Compile Include="Data\CreateLogger.cs" />
+    <Compile Include="Data\ILogData.cs" />
+    <Compile Include="Data\LogData.cs" />
+    <Compile Include="Data\StringLogger.cs" />
+    <Compile Include="Factory\Logger\ILogger.cs" />
+    <Compile Include="Temp\Either.cs" />
+    <Compile Include="TypeClass\Coordination2D.cs" />
+    <Compile Include="TypeClass\Device\Device.cs" />
+    <Compile Include="TypeClass\Either.cs" />
+    <Compile Include="TypeClass\IO.cs" />
+    <Compile Include="TypeClass\LogWriter.cs" />
+    <Compile Include="TypeClass\Monad.cs" />
+    <Compile Include="TypeClass\Lgr.cs" />
+    <Compile Include="Temp\Functor.cs" />
+    <Compile Include="Temp\ILogData.cs" />
+    <Compile Include="Temp\IMonad.cs" />
+    <Compile Include="Temp\IWriterLog.cs" />
+    <Compile Include="Temp\Maybe.cs" />
+    <Compile Include="Temp\TestWriter.cs" />
+    <Compile Include="Temp\Writer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WPF.cs" />
+    <Compile Include="TypeClass\NonTimeNumSignal.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Functor\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A784FAE0-FF07-4E1A-8138-D9D3B698B951}</ProjectGuid>
+    <ProjectGuid>{A1023D0C-1B11-4C8F-B7F6-8F4E30F0206D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EmguCvExtension</RootNamespace>
-    <AssemblyName>EmguCvExtension</AssemblyName>
+    <RootNamespace>MachineLib</RootNamespace>
+    <AssemblyName>MachineLib</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,51 +49,71 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Emgu.CV.UI, Version=3.2.0.2682, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\x64\Debug\Emgu.CV.UI.dll</HintPath>
+    <Reference Include="DALSA.SaperaLT.SapClassBasic">
+      <HintPath>dll\DALSA.SaperaLT.SapClassBasic.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.CV.UI.GL, Version=3.2.0.2682, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\x64\Debug\Emgu.CV.UI.GL.dll</HintPath>
+    <Reference Include="Interop.SPIIPLUSCOM660Lib.1.0">
+      <HintPath>dll\Interop.SPIIPLUSCOM660Lib.1.0.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Emgu.CV.World, Version=3.2.0.2682, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+    <Reference Include="NETOmniDriver-NET40, Version=2.45.0.0, Culture=neutral, PublicKeyToken=5ceb6b3940bb24a4, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\x64\Debug\Emgu.CV.World.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.VisualStudio.Imaging, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="SpeedyCoding, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\2017PLVision\dll\SpeedyCoding.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files\Ocean Optics\OmniDriver\OOI_HOME\NETOmniDriver-NET40.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows" />
-    <Reference Include="System.Xaml" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="ZedGraph, Version=5.1.5.28844, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\x64\Debug\ZedGraph.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Conversion.cs" />
-    <Compile Include="Enum.cs" />
-    <Compile Include="Function.cs" />
-    <Compile Include="Histogram.cs" />
-    <Compile Include="Processing.cs" />
+    <Compile Include="DeviceLib\ACS_Stage\ACSStageController_Dummy.cs" />
+    <Compile Include="DeviceLib\ACS_Stage\IACSStageController.cs" />
+    <Compile Include="DeviceLib\DalsaTDICamera\DalsaTDICam_Addon.cs" />
+    <Compile Include="DeviceLib\DalsaTDICamera\DalsaTDICam.cs" />
+    <Compile Include="DeviceLib\DalsaTDICamera\DalsaTDICam_Dummy.cs" />
+    <Compile Include="DeviceLib\DalsaTDICamera\DalsaTDICam_Local.cs" />
+    <Compile Include="DeviceLib\ACS_Stage\ACSStageController.cs" />
+    <Compile Include="ActionManager\ImageProcessing\ActMg_ImgProcessingClassic.cs" />
+    <Compile Include="ActionManager\PLImaging\ActMg_PLImaging.cs" />
+    <Compile Include="DataManagerr\PLImaging\DataMg_PLimaging.cs" />
+    <Compile Include="DeviceLib\DalsaTDICamera\DalsaTDICam_SerialCom.cs" />
+    <Compile Include="DeviceLib\DalsaTDICamera\IDalsaTDICam.cs" />
+    <Compile Include="DeviceLib\OceanOpticsMaya\IMaya_Spectrometer.cs" />
+    <Compile Include="DeviceLib\OceanOpticsMaya\Maya_Spectrometer.cs" />
+    <Compile Include="DeviceLib\OceanOpticsMaya\Maya_Spectrometer_Dummy.cs" />
+    <Compile Include="DeviceLib\Sigmakoki_Stage\SgmaStg_XR.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WPF.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\00Nuget\SpeedyCoding\SpeedyCoding\SpeedyCoding\SpeedyCoding.csproj">
+      <Project>{04ef47cb-6add-4ca9-8dc9-9443aa536f84}</Project>
+      <Name>SpeedyCoding</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\02Starter\Interface\InterfaceCollection\InterfaceCollection\InterfaceCollection.csproj">
+      <Project>{939597ed-4b78-4806-ba27-22d97eb6ecfa}</Project>
+      <Name>InterfaceCollection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ApplicationUtilTool\ApplicationUtilTool\ApplicationUtilTool.csproj">
+      <Project>{6d5c0476-77b4-4636-8b7f-08705ec43857}</Project>
+      <Name>ApplicationUtilTool</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ModelLib\ModelLib\ModelLib.csproj">
+      <Project>{0aa6abfc-7dc0-484d-b2d4-9aad902f95ed}</Project>
+      <Name>ModelLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

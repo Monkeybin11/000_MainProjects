@@ -10,6 +10,10 @@ namespace ConsoleApplication1
     {
         static void Main( string [ ] args )
         {
+            Controller cd = new Controller("main");
+            cd.go1(1)
+              .go2(2)
+              .go3(3);
         }
     }
 }
