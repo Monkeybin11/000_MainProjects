@@ -16,7 +16,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -33,6 +33,26 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -146,6 +166,26 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\00Nuget\SpeedyCoding\SpeedyCoding\SpeedyCoding\SpeedyCoding.csproj">
+      <Project>{04ef47cb-6add-4ca9-8dc9-9443aa536f84}</Project>
+      <Name>SpeedyCoding</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\01Sub\ApplicationUtilTool\ApplicationUtilTool\ApplicationUtilTool.csproj">
+      <Project>{6d5c0476-77b4-4636-8b7f-08705ec43857}</Project>
+      <Name>ApplicationUtilTool</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\01Sub\MachineLib\MachineLib\MachineLib.csproj">
+      <Project>{a1023d0c-1b11-4c8f-b7f6-8f4e30f0206d}</Project>
+      <Name>MachineLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\01Sub\ModelLib\ModelLib\ModelLib.csproj">
+      <Project>{0aa6abfc-7dc0-484d-b2d4-9aad902f95ed}</Project>
+      <Name>ModelLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\02Starter\Interface\InterfaceCollection\InterfaceCollection\InterfaceCollection.csproj">
+      <Project>{939597ed-4b78-4806-ba27-22d97eb6ecfa}</Project>
+      <Name>InterfaceCollection</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\02Starter\UI\WPF_UC_Lib\WPF_UC_Lib.csproj">
       <Project>{4a46ab95-45a1-40c3-b107-96ec34a35cee}</Project>
       <Name>WPF_UC_Lib</Name>

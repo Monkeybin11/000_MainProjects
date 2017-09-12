@@ -13,77 +13,74 @@ using System.Diagnostics;
 
 namespace MachineLib.DeviceLib.DalsaTDICamera
 {
-    public class DalsaTDICam_Dummy : IDalsaTDICam
-    {
-        public string ConfigFile
-        {
-            get { return "Loaded"; }
-        }
+	public class DalsaTDICam_Dummy : IDalsaTDICam
+	{
+		public string ConfigFile
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
 
-        public Maybe<IDalsaTDICam> Connect( string connect )
-        {
-            CallerName(1).Print();
-            return this.ToMaybe<IDalsaTDICam>();
-        }
+		public bool Connect( string connect )
+		{
+			throw new NotImplementedException();
+		}
 
-        public Maybe<IDalsaTDICam> Direction( DirectionMode direction )
-        {
-            CallerName(1).Print();
-            return this.ToMaybe<IDalsaTDICam>();
-        }
+		public void Direction( DirectionMode direction )
+		{
+			throw new NotImplementedException();
+		}
 
-        public Maybe<IDalsaTDICam> Disconnect()
-        {
-            CallerName(1).Print();
-            return this.ToMaybe<IDalsaTDICam>();
-        }
+		public void Disconnect()
+		{
+			throw new NotImplementedException();
+		}
 
-        public Maybe<IDalsaTDICam> ExposureMode( double value )
-        {
-            CallerName(1).Print();
-            return this.ToMaybe<IDalsaTDICam>();
-        }
+		public void ExposureMode( double value )
+		{
+			throw new NotImplementedException();
+		}
 
-        public Maybe<IDalsaTDICam> Freeze()
-        {
-            CallerName(1).Print();
-            return this.ToMaybe<IDalsaTDICam>();
-        }
+		public void Freeze()
+		{
+			throw new NotImplementedException();
+		}
 
-        public Maybe<int [ ]> GetBufferHW()
-        {
-            CallerName(1).Print();
-            return new int [ ] { 1600 , 1200 }.ToMaybe();
-        }
+		public int [ ] GetBufferHW()
+		{
+			throw new NotImplementedException();
+		}
 
-        public Maybe<byte [ ]> GetFullBuffer()
-        {
-            CallerName(1).Print();
-            return new byte [ ] { 255 , 1 }.ToMaybe();
-        }
+		public byte [ ] GetFullBuffer()
+		{
+			throw new NotImplementedException();
+		}
 
-        public Maybe<IDalsaTDICam> Grab()
-        {
-            CallerName(1).Print();
-            return this.ToMaybe<IDalsaTDICam>();
-        }
+		public void Grab()
+		{
+			throw new NotImplementedException();
+		}
 
-        public Maybe<IDalsaTDICam> LineRate( double value )
-        {
-            CallerName(1).Print();
-            return this.ToMaybe<IDalsaTDICam>();
-        }
+		public void LineRate( double value )
+		{
+			throw new NotImplementedException();
+		}
 
-        public Maybe<IDalsaTDICam> RegistBuffGetEvt()
-        {
-            CallerName(1).Print();
-            return this.ToMaybe<IDalsaTDICam>();
-        }
+		public void RegistBuffGetEvt()
+		{
+			throw new NotImplementedException();
+		}
 
-        public Maybe<IDalsaTDICam> TDIMode( TdiMode mode )
-        {
-            CallerName(1).Print();
-            return this.ToMaybe<IDalsaTDICam>();
-        }
-    }
+		public void TDIMode( TdiMode mode )
+		{
+			throw new NotImplementedException();
+		}
+
+		bool ITDICameraAPI<byte [ ] , int [ ] , string>.Connect( string connect )
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

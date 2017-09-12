@@ -52,7 +52,7 @@ namespace MachineLib.DeviceLib
 		}
 
 		public bool Open()
-		=> ( bool )RS.Open();
+		=> RS.Open() == null ? false : true;
 
 		public void Close()
 		=> RS.Close();

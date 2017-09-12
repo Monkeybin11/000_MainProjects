@@ -64,7 +64,7 @@ namespace ApplicationUtilTool.Communication
 		#region Function options 
 
 		Action<string> WriteString =>
-		text => Port.Write( text + End );
+		text => Port.WriteLine( text + End );
 
 		Action <string> WriteArr =>
 		text =>

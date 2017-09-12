@@ -63,18 +63,20 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			Stg = new SgmaStg_XR();
 			Spct = new Maya_Spectrometer();
 
-			var stg =  !Stg.Open();
-			var spt = !Spct.Connect();
+			var stg =  Stg.Open() == true 
+						? true 
+						: false.Act( x =>  Err.WriteShowErr( ErrorType.StgConnectErr ));
 
-			if ( stg ) Err.WriteShowErr(ErrorType.StgConnectErr) ;
-			if( stg ) Err.WriteShowErr( ErrorType.SpecConnectErr );
-			if ( stg && spt )
+			var spt = Spct.Connect()  == true 
+						? true 
+						: false.Act( x =>  Err.WriteShowErr( ErrorType.SpecConnectErr ));
+
+			if ( !stg || !spt )
 			{
 				Stg = new SgmaStg_XR_Virtual();
 				Spct = new Maya_Spectrometer_Virtual();
 			}
-			return stg && spt;
-			// False 는 버추얼 모드시 반환됨
+			return !!stg || !spt;
 		}
 
 		#endregion
@@ -85,6 +87,10 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		{
 			Stg.Send( Stg.Home );
 			var res = Spct.GetSpectrum();
+			MessageBox.Show( res.GetLength(0).ToString() );
+
+			var temp = Config;
+
 		}
 
 		public bool ScanRun()

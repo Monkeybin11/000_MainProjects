@@ -35,7 +35,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 		public void OptionMenuClick( object sender , RoutedEventArgs e )
 		{
-			var master = sender as Button;
+			var master = sender as MenuItem;
 			switch ( master.Name )
 			{
 				case "menuLoadConfig":
@@ -61,6 +61,10 @@ namespace ThicknessAndComposition_Inspector_IPS
 		{
 			switch ( name )
 			{
+				case "btnConnect":
+					break;
+				case "btnDisconnect":
+					break;
 				case "btnStart":
 					Core.TestFunction();
 					// Main Set

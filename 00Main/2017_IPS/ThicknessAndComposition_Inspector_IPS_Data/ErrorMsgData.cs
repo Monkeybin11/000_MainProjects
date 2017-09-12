@@ -18,7 +18,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 		public IPSErrorMsgData( Logger loger )
 		{
 			Loger = loger;
-
+			ToErrMsg = new Dictionary<ErrorType , string>();
 			ToErrMsg.Add( ErrorType.StgConnectErr , "Stage Malfunction. Please Restart stage controller" );
 			ToErrMsg.Add( ErrorType.SpecConnectErr , "Spectrometer Malfunction. Please reconnect spectrometer controller" );
 			ToErrMsg.Add( ErrorType.CalcErr , "Internal Data Analysis Fail. Please check sample or other posibility" );

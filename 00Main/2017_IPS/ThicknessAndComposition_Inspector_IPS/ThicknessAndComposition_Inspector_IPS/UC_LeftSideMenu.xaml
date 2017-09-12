@@ -21,13 +21,15 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="btnStart" Content="Start" Grid.Column="0" Grid.Row="0"          Click="LeftSideBtnClick"/>
-        <Button x:Name="btnLoad" Content="Load Data" Grid.Column="1" Grid.Row="0"       Click="LeftSideBtnClick"/>
-        <Button x:Name="btnSaveRes" Content="Save" Grid.Column="0" Grid.Row="1"         Click="LeftSideBtnClick"/>
-        <Button x:Name="btnSaveRaw" Content="Save Raw" Grid.Column="1" Grid.Row="1"     Click="LeftSideBtnClick"/>
+        <Button x:Name="btnConnect"     Content="Connect" Grid.Column="0"     Grid.Row="0"          Click="LeftSideBtnClick"/>
+        <Button x:Name="btnDisconnect"  Content="Disconnect" Grid.Column="1" Grid.Row="0"       Click="LeftSideBtnClick"/>
+        <Button x:Name="btnStart"       Content="Start" Grid.Column="0"     Grid.Row="1"          Click="LeftSideBtnClick"/>
+        <Button x:Name="btnLoad"        Content="Load Data" Grid.Column="1" Grid.Row="1"       Click="LeftSideBtnClick"/>
+        <Button x:Name="btnSaveRes"     Content="Save" Grid.Column="0"      Grid.Row="2"         Click="LeftSideBtnClick"/>
+        <Button x:Name="btnSaveRaw"     Content="Save Raw" Grid.Column="1"  Grid.Row="2"     Click="LeftSideBtnClick"/>
 
         <CheckBox x:Name="ckbAutoSave" Content="Auto Save" Grid.Row="2" />
-        <xc:DoubleUpDown x:Name="asd"  Grid.Column="1" Grid.Row="2" />
+        <xc:DoubleUpDown x:Name="asd"  Grid.Column="1" Grid.Row="3" />
 
         <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Background="BlanchedAlmond">
             <Grid>
