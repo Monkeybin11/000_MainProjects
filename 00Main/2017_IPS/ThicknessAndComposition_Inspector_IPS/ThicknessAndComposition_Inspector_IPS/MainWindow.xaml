@@ -9,7 +9,7 @@
         xmlns:uc ="clr-namespace:ThicknessAndComposition_Inspector_IPS"
         xmlns:ui="clr-namespace:WPF_UC_Lib;assembly=WPF_UC_Lib"
         
-        Title="MainWindow" Height="900" Width="1600">
+        Title="MainWindow" Height="900" Width="1600" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -21,8 +21,10 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Option" >
-                <MenuItem x:Name="menuLoadConfig" Header="Load Scan Config" Style="{StaticResource menuItem}" Click="OptionMenuClick" />
-                <MenuItem x:Name="menuCreateConfig" Header="Create New Config" Style="{StaticResource menuItem}" Click="OptionMenuClick"/>
+                <MenuItem x:Name="menuLoadConfig" Header="Load Scan Config"     Style="{StaticResource menuItem}" Click="OptionMenuClick" />
+                <MenuItem x:Name="menuCreateConfig" Header="Create New Config"  Style="{StaticResource menuItem}" Click="OptionMenuClick"/>
+                <MenuItem x:Name="menuSetSpec" Header="Set Spectrometer"        Style="{StaticResource menuItem}" Click="OptionMenuClick"/>
+                <MenuItem x:Name="menuSetStage" Header="Set Stage"              Style="{StaticResource menuItem}" Click="OptionMenuClick"/>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1">
@@ -31,7 +33,6 @@
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"/>

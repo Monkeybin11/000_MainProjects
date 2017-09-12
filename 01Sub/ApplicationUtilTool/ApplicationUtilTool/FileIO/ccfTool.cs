@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationUtilTool
+namespace ApplicationUtilTool.FileIO
 {
     //  ccfTool ccf = new ccfTool(@"C:\Users\idiol\Desktop","T__tdi_2inch");
     //  var changer = ccf.AppendChangeList("Stream Conditioning");

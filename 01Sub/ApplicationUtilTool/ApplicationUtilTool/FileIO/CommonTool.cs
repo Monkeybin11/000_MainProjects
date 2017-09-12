@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationUtilTool
+namespace ApplicationUtilTool.FileIO
 {
     public class CommonTool
     {

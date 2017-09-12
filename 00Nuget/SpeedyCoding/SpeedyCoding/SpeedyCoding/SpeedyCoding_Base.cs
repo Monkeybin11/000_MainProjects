@@ -46,7 +46,6 @@ namespace SpeedyCoding
         }
         #endregion
 
-
         #region Function
         public static TResult Map<TSource, TResult>(
           this TSource src ,
@@ -294,7 +293,6 @@ namespace SpeedyCoding
         }
         #endregion
 
-
         #region PatternMatch
 
 
@@ -364,7 +362,11 @@ namespace SpeedyCoding
             if ( order == 2 ) return src.GetLength( 2 );
             else return src.GetLength( 0 );
         }
-        #endregion  
-    }
+		#endregion
+
+		#region Convert
+		
+		#endregion
+	}
 }
 

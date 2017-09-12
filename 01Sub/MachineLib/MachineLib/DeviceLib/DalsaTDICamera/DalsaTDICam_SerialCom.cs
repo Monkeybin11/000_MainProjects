@@ -12,7 +12,7 @@ namespace MachineLib.DeviceLib.DalsaTDICamera
 {
     // This enum is directly pasrsed to string  
     public enum CommandList { ssf , tdi , scd , sem /*, roi*/}
-    public class DalsaTDICam_SerialCom : RS232<CommandList>
+    public class DalsaTDICam_SerialCom : RS232
     {
         // need to be same order with CommanListt 
         private string[] CommandListExplain = new string[4]
@@ -25,25 +25,15 @@ namespace MachineLib.DeviceLib.DalsaTDICamera
             };
 
         public DalsaTDICam_SerialCom( SerialPort port ) 
-            : base( port  )
+            : base( port  , CommandEndStyle.CR , SendStyle.ASCII , 300)
         {
-        
         }
 
-        public Maybe<DalsaTDICam_SerialCom> SetCamParm( CommandList command, double value )
-        {
-            try
-            {
-                Send( command , value );
-                return this.ToMaybe();
-            }
-            catch ( Exception )
-            {
-                Send( command , value );
-                return new Nothing<DalsaTDICam_SerialCom>();
-            }
-            
-        }
+		public void SetCamParm( CommandList cmd , double value )
+		{
+			base.Query( cmd.ToString() + " " + value.ToString() );
+		}
 
-    }
+
+	}
 }

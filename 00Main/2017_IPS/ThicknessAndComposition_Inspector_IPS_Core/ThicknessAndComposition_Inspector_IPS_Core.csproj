@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,11 +43,24 @@
   <ItemGroup>
     <Compile Include="Core.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="test.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\01Sub\ApplicationUtilTool\ApplicationUtilTool\ApplicationUtilTool.csproj">
+      <Project>{6d5c0476-77b4-4636-8b7f-08705ec43857}</Project>
+      <Name>ApplicationUtilTool</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\01Sub\MachineLib\MachineLib\MachineLib.csproj">
       <Project>{a1023d0c-1b11-4c8f-b7f6-8f4e30f0206d}</Project>
       <Name>MachineLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\01Sub\ModelLib\ModelLib\ModelLib.csproj">
+      <Project>{0aa6abfc-7dc0-484d-b2d4-9aad902f95ed}</Project>
+      <Name>ModelLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ThicknessAndComposition_Inspector_IPS_Data\ThicknessAndComposition_Inspector_IPS_Data.csproj">
+      <Project>{4ba9cdae-111b-42d6-8428-afb03d4e10a5}</Project>
+      <Name>ThicknessAndComposition_Inspector_IPS_Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

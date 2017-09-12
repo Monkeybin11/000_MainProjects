@@ -71,7 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeviceLib\ACS_Stage\ACSStageController_Dummy.cs" />
+    <Compile Include="DeviceLib\ACS_Stage\ACSStageController_Virtual.cs" />
     <Compile Include="DeviceLib\ACS_Stage\IACSStageController.cs" />
     <Compile Include="DeviceLib\DalsaTDICamera\DalsaTDICam_Addon.cs" />
     <Compile Include="DeviceLib\DalsaTDICamera\DalsaTDICam.cs" />
@@ -85,8 +85,10 @@
     <Compile Include="DeviceLib\DalsaTDICamera\IDalsaTDICam.cs" />
     <Compile Include="DeviceLib\OceanOpticsMaya\IMaya_Spectrometer.cs" />
     <Compile Include="DeviceLib\OceanOpticsMaya\Maya_Spectrometer.cs" />
-    <Compile Include="DeviceLib\OceanOpticsMaya\Maya_Spectrometer_Dummy.cs" />
-    <Compile Include="DeviceLib\Sigmakoki_Stage\SgmaStg_XR.cs" />
+    <Compile Include="DeviceLib\OceanOpticsMaya\Maya_Spectrometer_Virtual.cs" />
+    <Compile Include="DeviceLib\Sigmakoki_Controller\Shot702\ISgmaStg_XR.cs" />
+    <Compile Include="DeviceLib\Sigmakoki_Controller\Shot702\SgmaStg_XR.cs" />
+    <Compile Include="DeviceLib\Sigmakoki_Controller\Shot702\SgmaStg_XR_Dummy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

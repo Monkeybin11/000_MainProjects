@@ -106,23 +106,50 @@ namespace WaferAlignErrorCalulator
                              var csvPath = Path.Combine(outputPath , datetime +"Result.csv");
 
 
-                             var imgpathlist = Directory.GetFiles( ofd.SelectedPath ).Where( x => Path.GetExtension(x) == ".jpg").Select( x => x).ToList();
+                             var imgpathlist = Directory.GetFiles( ofd.SelectedPath )
+														.Where( x => 
+															Path.GetExtension(x) == ".bmp" ||
+															Path.GetExtension(x) == ".png" ||
+															Path.GetExtension(x) == ".jpeg" ||
+															Path.GetExtension(x) == ".jpg" 
+															).Select( x => x).ToList();
+
+							 // resultList = (img , angle , Y Axis  )
                              var resultList = imgpathlist.Select(
                                                           path => SingleProcessing( new Image<Bgr , byte>( path ) , true)).ToList();
 
                              var namelist = imgpathlist.Select(x => System.IO.Path.GetFileName(x)).ToList();
 
-                             var NameError = namelist.Zip( resultList , (name , tuple)
-                                 => new Result(
-                                     name,
-                                     tuple.Item2 == 0 ? "0.0000" : tuple.Item2.ToString("##.####"),
-                                     tuple.Item3.ToString()))
-                                     .ToList()
-                                     .Select;  // <- Change abs error => rel error
+							 
+							 double standangle = 0;
+							 double standH = 0;
+							 try
+							 {
+								 standangle = resultList[0].Item2;
+								 standH = resultList[0].Item3;
+							 }
+							 catch (Exception ex)
+							 {
+								 System.Windows.MessageBox.Show("Some image is not processed properly. Standard Angle is setted 0");
+							 }
+							 //standangle = resultList[0].Item2;
+							 //standH = resultList[0].Item3;
+
+							 var NameError = namelist.Zip( resultList , (name , tuple)
+								 => name != null && tuple != null
+										? new Result(
+											name,
+											(standangle - tuple.Item2) == 0 ? "0.0000" : (standangle - tuple.Item2).ToString("##.####"),
+											//tuple.Item3 == 0 ? "0.0000" : tuple.Item3.ToString())
+											(standH - tuple.Item3) == 0 ? "0.0000" :  Math.Abs(standH - tuple.Item3).ToString())
+											
+										: new Result( name , "Error" , "Error" ))
+									.ToList();
+                                       // <- Change abs error => rel error
 
 
 
-                             var NameImg   = namelist.Zip( resultList , (name , tuple) => Tuple.Create( Path.Combine(outputPath,"Result_"+name), tuple.Item1 ));
+                             var NameImg   = namelist.Zip( resultList , (name , tuple) => Tuple.Create( Path.Combine(outputPath,"Result_"+name), tuple == null ? null : tuple.Item1 ));
 
 
                              CreateFolder( outputPath );
@@ -131,7 +158,7 @@ namespace WaferAlignErrorCalulator
                              NameImg.ActLoop(
                                  x =>
                                  {
-                                     x.Item2.Save( x.Item1 );
+									 if(x.Item2 != null) x.Item2.Save( x.Item1 ) ;
                                  });
 
                              return true;
@@ -208,7 +235,11 @@ namespace WaferAlignErrorCalulator
             workingImg = grayimg.Convert<Bgr , byte>();
 
             //var img = WrkImg.Canny( 200 , 1400 );
-            var data = workingImg.HoughLines( 200 , 100 , 2 , Math.PI / 180.0 ,200, 220 ,200);
+            //var data5 = workingImg.HoughLines( 200 , 100 , 2 , Math.PI / 180.0 ,200, 210 ,200);
+            //var data1 = workingImg.HoughLines( 200 , 100 , 2 , Math.PI / 180.0 ,200, 200 ,200);
+            //var data2 = workingImg.HoughLines( 200 , 90 , 2 , Math.PI / 270.0 ,200, 210 ,200);
+            //var data3 = workingImg.HoughLines( 200 , 100 , 2 , Math.PI / 270.0 ,200, 210 ,200);
+            var data = workingImg.HoughLines( 200 , 100 , 2 , Math.PI / 180.0 ,200, 200 ,200);
             var img = new Image<Bgr,byte>(inputImg.Data);
 
 
@@ -217,7 +248,8 @@ namespace WaferAlignErrorCalulator
             LineSegment2D avgLine = new LineSegment2D();
             var flatdata =data.Flatten();
          
-            var selectedlines = flatdata.Where( x => x.P1.X > 15 && x.P1.Y > 80 && x.P2.X > 100 && x.P2.Y > 80 ).Select(x => x).ToArray();
+            //var selectedlines = flatdata.Where( x => x.P1.X > 15 && x.P1.Y > 80 && x.P2.X > 100 && x.P2.Y > 80 ).Select(x => x).ToArray();
+            var selectedlines = flatdata.Where( x => x.P1.X >= 0 && x.P1.Y > 80 && x.P2.X > 100 && x.P2.Y > 80 ).Select(x => x).ToArray();
 
             if ( selectedlines.Count() == 0 ) return null;
             var result = selectedlines.Aggregate( ( f , s ) =>
@@ -254,7 +286,7 @@ namespace WaferAlignErrorCalulator
             if ( needimg ) img.Draw( selectedline , new Bgr( 100 , 200 , 10 ) , 2 );
             else img = null;
 
-            var xlen = Math.Abs( selectedline.Direction.X );
+            var xlen = Math.Abs( selectedline.Direction.X ); // Normalized X
             var ylen = Math.Abs( selectedline.Direction.Y );
             var angless = xlen <= 0 ? 0 : Math.Atan(ylen / xlen) * 180 / Math.PI; // degree
 
@@ -287,7 +319,7 @@ namespace WaferAlignErrorCalulator
         public string Error { get; set; }
         public string Height { get; set; }
 
-        public string RealHeight { get { return ( Resol * Convert.ToDouble( Height ) ).ToString(); } }
+        public string RealHeight { get { return ( Height == "Error" ? "Error" : (Resol * Convert.ToDouble( Height )).ToString() ); } }
         public Result( string name, string err ,string height)
         {
             Name = name;
@@ -306,7 +338,7 @@ namespace WaferAlignErrorCalulator
             strb.Append( "," );
             strb.Append( "Error (degree)" );
             strb.Append( "," );
-            strb.Append( "Yaxis Error (pixel)" );
+            strb.Append( "Yaxis Error (mm)" );
             strb.Append( Environment.NewLine );
             src.ActLoop( x =>
             {

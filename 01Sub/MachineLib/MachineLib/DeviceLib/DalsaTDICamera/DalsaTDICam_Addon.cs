@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ApplicationUtilTool;
+using ApplicationUtilTool.FileIO;
 using System.IO.Ports;
 
 namespace MachineLib.DeviceLib.DalsaTDICamera

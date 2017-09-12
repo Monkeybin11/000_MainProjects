@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelLib.Monad
+namespace ModelLib.TypeClass
 {
 	public interface IEither<L,R>
 	{
@@ -37,7 +37,7 @@ namespace ModelLib.Monad
 
 
 
-	public static class Either_Property
+	public static class Either_Ext
 	{ 
 		public static Either<L , R> ToEither<L,R> (
 		this R val)
@@ -81,6 +81,11 @@ namespace ModelLib.Monad
 			Left = left;
 			IsRight = false;
 		}
+
+		public LEither()
+		{
+			IsRight = false;
+		}
 	}
 	
 	public static class LEither_Property
@@ -92,20 +97,37 @@ namespace ModelLib.Monad
 		}
 
 		// this method is for time logging Either Type
-		public static LEither<B> LBind<A, B>(
+		public static LEither<B> Bind<A, B>(
 		this LEither<A> src ,
 		Func<A , B> func ,
-		string log )
+		string log ) 
 		{
-			if ( src.IsRight ) return func( src.Right ).ToLEither<B>();
-			else
+			if ( src.IsRight )
 			{
-				var time = DateTime.Now.ToString("yyMMdd_HH mm ss");
-				string fulllog = "Error( " + time + " ) : " + log;
-				return new LEither<B>( fulllog );
+				try { return func( src.Right ).ToLEither<B>(); }
+				catch { }
 			}
+			var time = DateTime.Now.ToString("yyMMdd_HH mm ss");
+			string fulllog = "Error( " + time + " ) : " + log;
+			return new LEither<B>( fulllog );
 		}
 
+		// If We Dont need to log . use tthis 
+		// 1 Bind -> Left (실패시 Left State만 내보내고 로그는 비어있다. )
+		// 2 Bind -> Left
+		// 3 Bind(Log) -> Left with Log (Left가 들어왔으므로 이 로그 바인드는 로그를 포함해 출력하게 된다. )
+
+		public static LEither<B> Bind<A, B>(
+		this LEither<A> src ,
+		Func<A , B> func )
+		{
+			if ( src.IsRight )
+			{
+				try { return func( src.Right ).ToLEither<B>(); }
+				catch { }
+			}
+			return new LEither<B>();
+		}
 	}
 
 	#endregion

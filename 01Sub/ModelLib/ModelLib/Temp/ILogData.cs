@@ -20,13 +20,13 @@ namespace ModelLib.Monad
         public string Logs { get; set; }
         public ILogData<string> AppendLog( string log )
         {
-            Logs = Logs + DateTime.Now.ToString( "HH_MM_SS" ) + log;
+            Logs = Logs + DateTime.Now.ToString( "HH_mm_ss" ) + log;
             return this;
         }
 
         public ILogData<string> AppendError( string log )
         {
-            Logs = Logs + DateTime.Now.ToString( "HH_MM_SS" ) + "Error : " + log;
+            Logs = Logs + DateTime.Now.ToString( "HH_mm_ss" ) + "Error : " + log;
             return this;
         }
 

@@ -59,7 +59,10 @@ namespace XMLSample
         public string Dept { get; set; }
     }
 
-    class Config
+    public class Config
     {
+		public double parm1;
+		public int parm2;
+		public string name;
     }
 }

@@ -11,13 +11,15 @@ namespace MachineLib.DeviceLib.DalsaTDICamera
 {
     public partial class DalsaTDICam : IDalsaTDICam
     {
-        public Maybe<IDalsaTDICam> Connect( string connect )
+        public bool Connect( string connect )
         {
-            // Load Config , Create Object
-            return Initialize().Bind( x => ConnectSerialPort( connect ) ) as Maybe<IDalsaTDICam>;
-        }
+			// Load Config , Create Object
+			this.Initialize();
+			ConnectSerialPort( connect );
+			return true;
+		}
 
-        public Maybe<IDalsaTDICam> Disconnect( )
+        public void Disconnect( )
         {
             try
             {
@@ -45,57 +47,41 @@ namespace MachineLib.DeviceLib.DalsaTDICamera
                     Buffers.Dispose();
                 }
                 if ( ServerLocation != null ) ServerLocation.Dispose();
-                return this.ToMaybe<IDalsaTDICam>();
             }
             catch ( Exception )
             {
-
-                return new Nothing<IDalsaTDICam>();
             }
         }
 
-        public Maybe<IDalsaTDICam> Direction( DirectionMode direction )
+        public void Direction( DirectionMode direction )
         {
-            var obj = SerialCom.SetCamParm( CommandList.scd, ( double )( direction == DirectionMode.Forward ? 0:1 ) );
-            return obj != null
-                ? this.ToMaybe<IDalsaTDICam>()
-                : new Nothing<IDalsaTDICam>();
+            SerialCom.SetCamParm( CommandList.scd, ( double )( direction == DirectionMode.Forward ? 0:1 ) );
         }
 
-        public Maybe<IDalsaTDICam> ExposureMode( double value )
+        public void ExposureMode( double value )
         {
-            var obj = SerialCom.SetCamParm( CommandList.sem , value ) as Just<DalsaTDICam_SerialCom>;
-            return obj != null 
-                ? this.ToMaybe<IDalsaTDICam>()
-                : new Nothing<IDalsaTDICam>();
+            SerialCom.SetCamParm( CommandList.sem , value );
+           
         }
 
-        public Maybe<IDalsaTDICam> Freeze()
+        public void Freeze()
+        {
+			if ( Xfer.Grabbing ) Xfer.Freeze();
+        }
+
+        public int[] GetBufferHW()
         {
             try
             {
-                if ( Xfer.Grabbing ) Xfer.Freeze();
-                return this.ToMaybe<IDalsaTDICam>();
+                return new int [ Buffers.Width * Buffers.Height ];
             }
             catch ( Exception )
             {
-                return new Nothing<IDalsaTDICam>();
+                return new int[0];
             }
         }
 
-        public Maybe<int[]> GetBufferHW()
-        {
-            try
-            {
-                return new int [ Buffers.Width * Buffers.Height ].ToMaybe();
-            }
-            catch ( Exception )
-            {
-                return new Nothing<int[]>();
-            }
-        }
-
-        public Maybe<byte[]> GetFullBuffer()
+        public byte[] GetFullBuffer()
         {
             try
             {
@@ -105,47 +91,34 @@ namespace MachineLib.DeviceLib.DalsaTDICamera
                 Buffers.ReadRect( 0 , 0 , Buffers.Width , Buffers.Height , pointer );
                 Marshal.Copy( pointer , output , 0 , output.Length );
                 outputAddr.Free();
-                return output.ToMaybe();
+                return output;
             }
             catch ( Exception )
             {
-                return new Nothing<byte[]>();
+                return default(byte[]);
             }
         }
 
-        public Maybe<IDalsaTDICam> Grab()
+        public void Grab()
         {
-            try
-            {
-                if ( !Xfer.Grabbing ) Xfer.Grab();
-                return this.ToMaybe<IDalsaTDICam>();
-            }
-            catch ( Exception )
-            {
-                return new Nothing<IDalsaTDICam>();
-            }
+			if ( !Xfer.Grabbing ) Xfer.Grab();
         }
  
-        public Maybe<IDalsaTDICam> LineRate( double value )
+        public void LineRate( double value )
         {
-            var obj = SerialCom.SetCamParm( CommandList.ssf , value ) as Just<DalsaTDICam_SerialCom>;
-           return obj != null 
-                ? this.ToMaybe<IDalsaTDICam>() 
-                : new Nothing<IDalsaTDICam>();
+			SerialCom.SetCamParm( CommandList.ssf , value );
         }
 
-        public Maybe<IDalsaTDICam> RegistBuffGetEvt()
+        public void RegistBuffGetEvt()
         {
             // sjw 모륵겠다. 
-            return this.ToMaybe<IDalsaTDICam>();
         }
 
-        public Maybe<IDalsaTDICam> TDIMode( TdiMode mode )
+        public void TDIMode( TdiMode mode )
         {
-            var obj = SerialCom.SetCamParm( CommandList.tdi , mode ==  TdiMode.Tdi ? 1 : 0) as Just<DalsaTDICam_SerialCom>;
-            return obj != null
-                ? this.ToMaybe<IDalsaTDICam>()
-                : new Nothing<IDalsaTDICam>();
+			SerialCom.SetCamParm( CommandList.tdi , mode == TdiMode.Tdi ? 1 : 0 );
         }
-    }
+
+	
+	}
 }

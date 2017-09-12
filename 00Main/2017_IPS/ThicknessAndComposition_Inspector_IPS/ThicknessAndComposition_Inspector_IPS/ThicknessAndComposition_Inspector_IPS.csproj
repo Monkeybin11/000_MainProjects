@@ -150,6 +150,14 @@
       <Project>{4a46ab95-45a1-40c3-b107-96ec34a35cee}</Project>
       <Name>WPF_UC_Lib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ThicknessAndComposition_Inspector_IPS_Core\ThicknessAndComposition_Inspector_IPS_Core.csproj">
+      <Project>{38132163-46c7-4521-945d-054d11a6db42}</Project>
+      <Name>ThicknessAndComposition_Inspector_IPS_Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ThicknessAndComposition_Inspector_IPS_Data\ThicknessAndComposition_Inspector_IPS_Data.csproj">
+      <Project>{4ba9cdae-111b-42d6-8428-afb03d4e10a5}</Project>
+      <Name>ThicknessAndComposition_Inspector_IPS_Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

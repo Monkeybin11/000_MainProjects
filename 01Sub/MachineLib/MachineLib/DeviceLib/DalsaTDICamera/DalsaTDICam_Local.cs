@@ -32,7 +32,7 @@ namespace MachineLib.DeviceLib.DalsaTDICamera
         public string ConfigFileName        ;
         public string ConfigFile { get { return Path.Combine( ConfigFileNameBase , ConfigFileName ); } }
 
-        private Maybe<IDalsaTDICam> Initialize()
+        private IDalsaTDICam Initialize()
         {
             try
             {
@@ -48,16 +48,16 @@ namespace MachineLib.DeviceLib.DalsaTDICamera
 
                 Xfer = new SapAcqToBuf( Acquisition , Buffers );
                 Xfer.Pairs [ 0 ].EventType = SapXferPair.XferEventType.EndOfFrame;
-                return this.ToMaybe<IDalsaTDICam>();
+				return this;
             }
             catch ( Exception )
             {
                 MessageBox.Show( "Camera initialization is fail" );
-                return new Nothing<IDalsaTDICam>();
+				return null;
             }
         }
 
-        private Maybe<IDalsaTDICam> ConnectSerialPort(string port)
+        private bool ConnectSerialPort(string port)
         {
             try
             {
@@ -72,13 +72,12 @@ namespace MachineLib.DeviceLib.DalsaTDICamera
                 Port.Encoding = Encoding.UTF8;
 
                 SerialCom = new DalsaTDICam_SerialCom( Port );
-                SerialCom.evtReadDone += new Action<string>( x => LastMsg = x );
-                return this.ToMaybe<IDalsaTDICam>();
+				return true;
             }
             catch ( Exception )
             {
                 MessageBox.Show( "Serial Communication with Camera is fail" );
-                return new Nothing<IDalsaTDICam>();
+				return false;
             }
         }
         #region curried func

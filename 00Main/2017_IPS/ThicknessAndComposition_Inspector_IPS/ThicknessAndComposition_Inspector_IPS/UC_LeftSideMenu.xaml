@@ -6,33 +6,60 @@
              xmlns:local="clr-namespace:ThicknessAndComposition_Inspector_IPS"
              xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="200" Background="AliceBlue">
+             d:DesignHeight="400" d:DesignWidth="200" Background="AliceBlue">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="btnStart" Content="Start" Grid.Column="0" Grid.Row="0" />
-        <Button x:Name="btnLoad" Content="Load" Grid.Column="1" Grid.Row="0" />
+        <Button x:Name="btnStart" Content="Start" Grid.Column="0" Grid.Row="0"          Click="LeftSideBtnClick"/>
+        <Button x:Name="btnLoad" Content="Load Data" Grid.Column="1" Grid.Row="0"       Click="LeftSideBtnClick"/>
+        <Button x:Name="btnSaveRes" Content="Save" Grid.Column="0" Grid.Row="1"         Click="LeftSideBtnClick"/>
+        <Button x:Name="btnSaveRaw" Content="Save Raw" Grid.Column="1" Grid.Row="1"     Click="LeftSideBtnClick"/>
 
-        <Button x:Name="btnSaveRes" Content="Save" Grid.Column="0" Grid.Row="1" />
-        <Button x:Name="btnSaveRaw" Content="Save Raw" Grid.Column="1" Grid.Row="1" />
-       
+        <CheckBox x:Name="ckbAutoSave" Content="Auto Save" Grid.Row="2" />
         <xc:DoubleUpDown x:Name="asd"  Grid.Column="1" Grid.Row="2" />
-        
 
+        <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Background="BlanchedAlmond">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content=" - Angle (degree) -  " Grid.ColumnSpan="4"          />
+                <Label Content="First" Grid.Row="1" Grid.Column="0"                 />
+                <Label Content="Step" Grid.Row="1" Grid.Column="2"                  />
+                <Label Content=" - Rho -  " Grid.Row="2" Grid.ColumnSpan="4"        />
+                <Label Content="First" Grid.Row="3" Grid.Column="0"                 />
+                <Label Content="Step" Grid.Row="3" Grid.Column="2"                  />
+                <Label Content="First" Grid.Row="4" Grid.Column="2"                 />
 
-
-
-
+                <xc:DoubleUpDown x:Name="nudAngFirst"   Grid.Row="1" Grid.Column="1" />
+                <xc:DoubleUpDown x:Name="nudAngStep"    Grid.Row="1" Grid.Column="3" />
+                <xc:DoubleUpDown x:Name="nudRhoFirst"   Grid.Row="3" Grid.Column="1" />
+                <xc:DoubleUpDown x:Name="nudRhoLast"    Grid.Row="3" Grid.Column="3" />
+                <xc:DoubleUpDown x:Name="nudRhoStep"    Grid.Row="4" Grid.Column="3" />
+            </Grid>
+        </StackPanel>
 
     </Grid>
 </UserControl>

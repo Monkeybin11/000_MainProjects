@@ -59,23 +59,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassInstance\DeviceRunner.cs" />
-    <Compile Include="ClassInstance\Maybe_NonTimeNumSignal.cs" />
-    <Compile Include="ClassInstance\NTimeSg.cs" />
+    <Compile Include="ClassInstance\Either\Either.cs" />
+    <Compile Include="ClassInstance\Either\LEither.cs" />
+    <Compile Include="ClassInstance\Either\SEither.cs" />
     <Compile Include="Data\Coordinate\Coordination.cs" />
     <Compile Include="Data\CreateLogger.cs" />
     <Compile Include="Data\ILogData.cs" />
     <Compile Include="Data\LogData.cs" />
+    <Compile Include="Data\StgCtrl.cs" />
     <Compile Include="Data\StringLogger.cs" />
     <Compile Include="Factory\Logger\ILogger.cs" />
     <Compile Include="Temp\Either.cs" />
     <Compile Include="TypeClass\Coordination2D.cs" />
     <Compile Include="TypeClass\Device\Device.cs" />
-    <Compile Include="TypeClass\Either.cs" />
     <Compile Include="TypeClass\IO.cs" />
     <Compile Include="TypeClass\LogWriter.cs" />
     <Compile Include="TypeClass\Monad.cs" />
     <Compile Include="TypeClass\Lgr.cs" />
-    <Compile Include="Temp\Functor.cs" />
+    <Compile Include="TypeClass\Functor.cs" />
     <Compile Include="Temp\ILogData.cs" />
     <Compile Include="Temp\IMonad.cs" />
     <Compile Include="Temp\IWriterLog.cs" />
@@ -83,10 +84,9 @@
     <Compile Include="Temp\TestWriter.cs" />
     <Compile Include="Temp\Writer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TypeClass\NonTimeNumSignal.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Functor\" />
+    <Folder Include="Temp\Functor\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

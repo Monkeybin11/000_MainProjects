@@ -7,18 +7,19 @@ namespace InterfaceCollection
 {
     public enum TdiMode { Tdi , Area}
     public enum DirectionMode { Forward , Backward}
-    public interface ITDICameraAPI<TModel,TbufType,TtransInfo,TconnectInfoType>
+    public interface ITDICameraAPI<TbufType,TtransInfo,TconnectInfoType>
     {
-        TModel Connect( TconnectInfoType connect );
-        TModel Disconnect();
-        TModel Grab();
-        TModel Freeze();
+		// output = this 
+		bool Connect( TconnectInfoType connect );
+		void Disconnect();
+		void Grab();
+		void Freeze();
         TbufType GetFullBuffer();
-        TModel RegistBuffGetEvt();
+		void RegistBuffGetEvt();
         TtransInfo GetBufferHW();
-        TModel LineRate(double value);
-        TModel ExposureMode( double value );
-        TModel Direction( DirectionMode direction );
-        TModel TDIMode( TdiMode mode);
+		void LineRate(double value);
+		void ExposureMode( double value );
+		void Direction( DirectionMode direction );
+		void TDIMode( TdiMode mode);
     }
 }
