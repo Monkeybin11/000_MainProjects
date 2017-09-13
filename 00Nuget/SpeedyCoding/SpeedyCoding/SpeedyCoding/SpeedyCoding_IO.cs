@@ -26,11 +26,25 @@ namespace SpeedyCoding
             return Path.GetDirectoryName( filepath );
         }
 
-        #region collection to csv
+		public static string CheckAndCreateDir( this string dirpath )
+		{
+			return Directory.Exists( dirpath ) 
+				? dirpath 
+				: dirpath.Act( x => Directory.CreateDirectory( x ) );
+		}
 
-        public static bool ToCsv<T>(
+		public static string CheckAndCreateFile(this string filepath )
+		{
+			return File.Exists( filepath ) 
+				? filepath 
+				: filepath.Act( x => File.Create( x ).Close() );
+		}
+
+		#region collection to csv
+
+		public static bool ToCsv<T>(
             this T [] src ,
-            string path )
+            string path ) where T : IFormattable
         {
             try
             {
@@ -52,8 +66,8 @@ namespace SpeedyCoding
 
         public static bool ToCsv<T>(
       this T [][] src ,
-      string path )
-        {
+      string path ) where T : IFormattable
+		{
             try
             {
                 var sb = new StringBuilder();
@@ -80,8 +94,8 @@ namespace SpeedyCoding
 
         public static bool ToCsv<T>(
       this T [,] src ,
-      string path )
-        {
+      string path ) where T : IFormattable
+		{
             var sb = new StringBuilder();
             try
             {

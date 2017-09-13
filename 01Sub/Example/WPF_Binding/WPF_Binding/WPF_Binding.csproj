@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0F655509-231D-4CA3-8725-66B7713F6DE1}</ProjectGuid>
+    <ProjectGuid>{5C0E5EC0-99EF-4B0D-BDFA-C21E4516B06A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ThicknessAndComposition_Inspector_IPS</RootNamespace>
-    <AssemblyName>ThicknessAndComposition_Inspector_IPS</AssemblyName>
+    <RootNamespace>WPF_Binding</RootNamespace>
+    <AssemblyName>WPF_Binding</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -16,7 +16,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -33,26 +33,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -99,22 +79,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="UC_LeftSideMenu.xaml.cs">
-      <DependentUpon>UC_LeftSideMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UC_MapInfo.xaml.cs">
-      <DependentUpon>UC_MapInfo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UC_Status.xaml.cs">
-      <DependentUpon>UC_Status.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Win_Config.xaml.cs">
-      <DependentUpon>Win_Config.xaml</DependentUpon>
-    </Compile>
-    <Page Include="IPS_Style.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -127,22 +91,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UC_LeftSideMenu.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UC_MapInfo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UC_Status.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Win_Config.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -173,37 +121,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\00Nuget\SpeedyCoding\SpeedyCoding\SpeedyCoding\SpeedyCoding.csproj">
-      <Project>{04ef47cb-6add-4ca9-8dc9-9443aa536f84}</Project>
-      <Name>SpeedyCoding</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\01Sub\ApplicationUtilTool\ApplicationUtilTool\ApplicationUtilTool.csproj">
-      <Project>{6d5c0476-77b4-4636-8b7f-08705ec43857}</Project>
-      <Name>ApplicationUtilTool</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\01Sub\MachineLib\MachineLib\MachineLib.csproj">
-      <Project>{a1023d0c-1b11-4c8f-b7f6-8f4e30f0206d}</Project>
-      <Name>MachineLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\01Sub\ModelLib\ModelLib\ModelLib.csproj">
-      <Project>{0aa6abfc-7dc0-484d-b2d4-9aad902f95ed}</Project>
-      <Name>ModelLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\02Starter\Interface\InterfaceCollection\InterfaceCollection\InterfaceCollection.csproj">
-      <Project>{939597ed-4b78-4806-ba27-22d97eb6ecfa}</Project>
-      <Name>InterfaceCollection</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\02Starter\UI\WPF_UC_Lib\WPF_UC_Lib.csproj">
-      <Project>{4a46ab95-45a1-40c3-b107-96ec34a35cee}</Project>
-      <Name>WPF_UC_Lib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ThicknessAndComposition_Inspector_IPS_Core\ThicknessAndComposition_Inspector_IPS_Core.csproj">
-      <Project>{38132163-46c7-4521-945d-054d11a6db42}</Project>
-      <Name>ThicknessAndComposition_Inspector_IPS_Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ThicknessAndComposition_Inspector_IPS_Data\ThicknessAndComposition_Inspector_IPS_Data.csproj">
-      <Project>{4ba9cdae-111b-42d6-8428-afb03d4e10a5}</Project>
-      <Name>ThicknessAndComposition_Inspector_IPS_Data</Name>
+    <ProjectReference Include="..\BindingTestLib\BindingTestLib.csproj">
+      <Project>{71e2df0d-268b-43d7-aa10-25715741734b}</Project>
+      <Name>BindingTestLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

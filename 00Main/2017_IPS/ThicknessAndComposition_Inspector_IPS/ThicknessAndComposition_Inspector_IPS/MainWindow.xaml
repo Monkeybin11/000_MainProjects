@@ -8,8 +8,7 @@
         xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:uc ="clr-namespace:ThicknessAndComposition_Inspector_IPS"
         xmlns:ui="clr-namespace:WPF_UC_Lib;assembly=WPF_UC_Lib"
-        
-        Title="MainWindow" Height="900" Width="1600" Loaded="Window_Loaded">
+        Title="MainWindow" Height="900" Width="1600" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>

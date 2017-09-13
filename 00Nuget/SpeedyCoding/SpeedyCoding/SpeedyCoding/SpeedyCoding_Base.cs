@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SpeedyCoding
 {
@@ -44,10 +45,28 @@ namespace SpeedyCoding
             Console.WriteLine();
             return src;
         }
-        #endregion
 
-        #region Function
-        public static TResult Map<TSource, TResult>(
+		public static void Show(
+			this bool src ,
+			string trueMsg , 
+			string failMsg)
+		{
+			if ( src ) MessageBox.Show( trueMsg );
+			else MessageBox.Show( failMsg );
+		}
+
+		public static void FailShow(
+				this bool src ,
+				string failMsg )
+		{
+			if ( !src ) MessageBox.Show( failMsg );
+		}
+
+
+		#endregion
+
+		#region Function
+		public static TResult Map<TSource, TResult>(
           this TSource src ,
           Func<TSource , TResult> fn )
           => fn( src );

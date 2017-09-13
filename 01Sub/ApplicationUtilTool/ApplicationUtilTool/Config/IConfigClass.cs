@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace ApplicationUtilTool.Config
 {
-	interface IConfigClass
+	public interface IConfigClass
 	{
 	}
+
+
 }

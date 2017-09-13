@@ -12,7 +12,7 @@ using ModelLib.ClassInstance;
 using ApplicationUtilTool.Log;
 using System.Windows;
 using SpeedyCoding;
-
+using System.Threading;
 
 namespace ThicknessAndComposition_Inspector_IPS_Core
 {
@@ -21,19 +21,21 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		
 		IPSErrorMsgData	   Err; // 에러 데이터 공통 메세지 클래스 
 		Logger			   Lggr; // 같은 로그 파일에 사용하기 위해서 전역 변수로 만들었다. 
-		IPSConfig		   Config; // 여기서 
+		public IPSConfig   Config { get; set; } // 여기서 
 		ISgmaStg_XR        Stg;
 		IMaya_Spectrometer Spct;
 
 		string LogTime = "yyyy-MM-dd_HH-mm-ss";
 
-		string ConfigBasePath = AppDomain.CurrentDomain.BaseDirectory + "\\" + "config";
-		string ConfigName = "SettedConfig.xml";
+		public string ConfigBasePath = AppDomain.CurrentDomain.BaseDirectory + "config";
+		public string ConfigName = "SettedConfig.xml";
+		public string ConfigFullPath { get { return Path.Combine( ConfigBasePath , ConfigName ); } }
 
-		string LogDirPath = AppDomain.CurrentDomain.BaseDirectory + "\\" + "log";
-		string LogName = "IPSLog.txt";
+		string LogDirPath = AppDomain.CurrentDomain.BaseDirectory + "log";
+		string LogName = "";
+		//string LogName = "IPSLog.txt";
 
-		string CurentSaveTime { get { return DateTime.Now.ToString( LogTime ); } }
+		string CurrentSaveTime { get { return DateTime.Now.ToString( LogTime ); } }
 
 
 		#region Init
@@ -41,21 +43,23 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		public IPSCore()
 		{
 			InitCore(); // Field Initialize
-			if(ConnectHW()) MessageBox.Show( "Virtual Mode is Activated" );
+			ConnectHW().FailShow( "Virtual Mode is Activated" );
 		}
+
+		public string TodayLogPath()
+		=> DateTime.Now.ToString( "yyyyMMdd" ) + "_IPSLog.txt";
+		
 
 		public void InitCore()
 		{
+			LogName = TodayLogPath();
 			Lggr = new TextLogger( LogDirPath , LogName )
-					.Act(x => 
-			Err = new IPSErrorMsgData( x ) ); 
+					.Act( x  => Err = new IPSErrorMsgData( x ) );
 
-			var fullpath = Path.Combine(ConfigBasePath , ConfigName);
-			if ( !Directory.Exists( ConfigBasePath ) ) Directory.CreateDirectory( ConfigBasePath );
-			Config = new XmlTool().ReadXmlClas(
-								   new IPSDefualtSetting().ToConfig() ,
-								   ConfigBasePath ,
-								   ConfigName );
+			Config = XmlTool.ReadXmlClas(
+						new IPSDefualtSetting().ToConfig() , // Defulat Setting
+						ConfigBasePath.CheckAndCreateDir() ,
+						ConfigName.CheckAndCreateFile() );
 		}
 
 		public bool ConnectHW()
@@ -76,7 +80,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				Stg = new SgmaStg_XR_Virtual();
 				Spct = new Maya_Spectrometer_Virtual();
 			}
-			return !!stg || !spt;
+			return !stg || !spt;
 		}
 
 		#endregion
@@ -122,6 +126,32 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		#endregion
 
+		#region IO
+
+		public void LoadConfig(string path)
+		{
+			Config = XmlTool.ReadXmlClas(
+						Config ,
+						Path.GetDirectoryName( path ),
+						Path.GetFileName( path ) );
+		}
+
+		public void SaveConfig( string path )
+		{
+			XmlTool.WriteXmlClass(
+			   Config ,
+			   Path.GetDirectoryName( path ) ,
+			   Path.GetFileName( path ) );
+		}
+
+
+		#endregion
+
+		#region Trans
+
+		
+
+		#endregion	
 
 
 		// TODO : Run

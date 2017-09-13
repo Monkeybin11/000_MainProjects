@@ -1,0 +1,24 @@
+﻿<Window x:Class="WPF_Binding.MainWindow"
+        x:Name="mainwindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_Binding"
+        xmlns:Core="clr-namespace:BindingTestLib;assembly=BindingTestLib"
+        mc:Ignorable="d"
+        xmlns:xc ="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="MainWindow" Height="350" Width="525">
+ 
+    <Grid>
+        <UniformGrid Rows="4" Columns="2">
+            <Button x:Name="Check" Click="Check_Click"/>
+            <Button x:Name="btnspeed1" Click="btnspeed1_Click"/>
+            <Button x:Name="btnspeedmain" Click="btnspeedmain_Click"/>
+            <xc:IntegerUpDown x:Name="nudspeedmain"  Value="{Binding Path=mainspeed , Mode=TwoWay }"/>
+            <xc:IntegerUpDown x:Name="nudspeedsecond" Value="{Binding Path=CR.secondspeed , Mode=OneWayToSource , UpdateSourceTrigger=PropertyChanged}"  />
+            <xc:IntegerUpDown x:Name="nudspeedlast" Value="{Binding Path=CR.TestData.Speed , Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"  />
+            <TextBox x:Name="txbbind"  />
+        </UniformGrid>
+    </Grid>
+</Window>

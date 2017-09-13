@@ -9,9 +9,9 @@ using System.Xml.Serialization;
 
 namespace ApplicationUtilTool.FileIO
 {
-    public class XmlTool
+    public static class XmlTool
     {
-		public bool WriteXmlClass<T>( T clss  , string dirpath , string name ) where T : class
+		public static bool WriteXmlClass<T>( T clss  , string dirpath , string name ) where T : class
 		{
 			PathTool.CreateFolder( dirpath );
 			try
@@ -30,9 +30,9 @@ namespace ApplicationUtilTool.FileIO
 			}
 		}
 
-		public T ReadXmlClas<T>( T clsDefulat , string dirpath , string name ) where T : class
+		public static T ReadXmlClas<T>( T clsDefulat , string dirpath , string name ) where T : class
 		{
-			try
+			try //  이 트라이캐치를 Either로 처리할 수 있을까? 
 			{
 				string fullpath = Path.Combine( dirpath , name );
 
@@ -56,5 +56,8 @@ namespace ApplicationUtilTool.FileIO
 				return clsDefulat;
 			}
 		}
+
+
+
     }
 }

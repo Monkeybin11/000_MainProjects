@@ -13,20 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ThicknessAndComposition_Inspector_IPS
+namespace Binding_UserControl_Example
 {
 	/// <summary>
-	/// Interaction logic for UC_Status.xaml
+	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class UC_Status : UserControl
+	public partial class MainWindow : Window
 	{
-		
-
-		public UC_Status()
+		public MainWindow()
 		{
 			InitializeComponent();
 		}
-
-		
 	}
 }

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ThicknessAndComposition_Inspector_IPS"
              xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="200" Background="AliceBlue">
+             d:DesignHeight="400" d:DesignWidth="300" Background="AliceBlue">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -21,15 +21,19 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="btnConnect"     Content="Connect" Grid.Column="0"     Grid.Row="0"          Click="LeftSideBtnClick"/>
-        <Button x:Name="btnDisconnect"  Content="Disconnect" Grid.Column="1" Grid.Row="0"       Click="LeftSideBtnClick"/>
-        <Button x:Name="btnStart"       Content="Start" Grid.Column="0"     Grid.Row="1"          Click="LeftSideBtnClick"/>
-        <Button x:Name="btnLoad"        Content="Load Data" Grid.Column="1" Grid.Row="1"       Click="LeftSideBtnClick"/>
-        <Button x:Name="btnSaveRes"     Content="Save" Grid.Column="0"      Grid.Row="2"         Click="LeftSideBtnClick"/>
-        <Button x:Name="btnSaveRaw"     Content="Save Raw" Grid.Column="1"  Grid.Row="2"     Click="LeftSideBtnClick"/>
+        <Button x:Name="btnConnect"           Content="Connect"              Grid.Column="0"  Grid.Row="0"     Click="LeftSideBtnClick"/>
+        <Button x:Name="btnDisconnect"        Content="Disconnect"           Grid.Column="1"  Grid.Row="0"     Click="LeftSideBtnClick"/>
+        <Button x:Name="btnStart"             Content="Start"                Grid.Column="0"  Grid.Row="1"     Click="LeftSideBtnClick"/>
+        <Button x:Name="btnLoadConfig"        Content="Load Config"          Grid.Column="1"  Grid.Row="1"     Click="LeftSideBtnClick"/>
+        <Button x:Name="btnLoadData"          Content="Load Data"            Grid.Column="0"  Grid.Row="2"     Click="LeftSideBtnClick"/>
+        <Button x:Name="btnSaveRes"           Content="Save"                 Grid.Column="1"  Grid.Row="2"     Click="LeftSideBtnClick"/>
+        <Button x:Name="btnSaveRaw"           Content="Save Raw Data"        Grid.Column="0"  Grid.Row="3"     Click="LeftSideBtnClick"/>
+        <Button x:Name="btnSaveCurrentConfig" Content="Save Current config"  Grid.Column="1"  Grid.Row="3"     Click="LeftSideBtnClick"/>
 
-        <CheckBox x:Name="ckbAutoSave" Content="Auto Save" Grid.Row="2" />
-        <xc:DoubleUpDown x:Name="asd"  Grid.Column="1" Grid.Row="3" />
+        <CheckBox x:Name="ckbAutoSave" Content="Auto Save" Grid.Row="4" />
+        <xc:DoubleUpDown x:Name="nud"  Grid.Column="1" Grid.Row="4" />
+
+        <TextBox x:Name="txbAutoSave" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" />
 
         <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Background="BlanchedAlmond">
             <Grid>
@@ -50,16 +54,18 @@
                 <Label Content=" - Angle (degree) -  " Grid.ColumnSpan="4"          />
                 <Label Content="First" Grid.Row="1" Grid.Column="0"                 />
                 <Label Content="Step" Grid.Row="1" Grid.Column="2"                  />
-                <Label Content=" - Rho -  " Grid.Row="2" Grid.ColumnSpan="4"        />
+                <Label Content=" - Rho (mm) -  " Grid.Row="2" Grid.ColumnSpan="4"   />
                 <Label Content="First" Grid.Row="3" Grid.Column="0"                 />
-                <Label Content="Step" Grid.Row="3" Grid.Column="2"                  />
-                <Label Content="First" Grid.Row="4" Grid.Column="2"                 />
+                <Label Content="Step"  Grid.Row="3" Grid.Column="2"                 />
+                <Label Content="Count" Grid.Row="4" Grid.Column="0"                 />
+                <Label Content="Rho Max =" Grid.Row="4" Grid.Column="2"/>
+                <Label Content=" 100 (mm)" Grid.Row="4" Grid.Column="3"/>
 
-                <xc:DoubleUpDown x:Name="nudAngFirst"   Grid.Row="1" Grid.Column="1" />
-                <xc:DoubleUpDown x:Name="nudAngStep"    Grid.Row="1" Grid.Column="3" />
-                <xc:DoubleUpDown x:Name="nudRhoFirst"   Grid.Row="3" Grid.Column="1" />
-                <xc:DoubleUpDown x:Name="nudRhoLast"    Grid.Row="3" Grid.Column="3" />
-                <xc:DoubleUpDown x:Name="nudRhoStep"    Grid.Row="4" Grid.Column="3" />
+                <xc:DoubleUpDown x:Name="nudAngFirst"   Grid.Row="1" Grid.Column="1"  Value="{Binding Path=MainWindow.Core.Config.AngFirst , Mode=TwoWay }"/>
+                <xc:DoubleUpDown x:Name="nudAngStep"    Grid.Row="1" Grid.Column="3"  Value="{Binding Path=MainWindow.Core.Config.AngStep , Mode=TwoWay }"/>
+                <xc:DoubleUpDown x:Name="nudRhoFirst"   Grid.Row="3" Grid.Column="1"  Value="{Binding Path=MainWindow.Core.Config.RhoFirst , Mode=TwoWay }"/>
+                <xc:DoubleUpDown x:Name="nudRhoStep"    Grid.Row="3" Grid.Column="3"  Value="{Binding Path=MainWindow.Core.Config.RhoStep , Mode=TwoWay }"/>
+                <xc:DoubleUpDown x:Name="nudRhoCount"   Grid.Row="4" Grid.Column="1"  Value="{Binding Path=MainWindow.Core.Config.RhoCount , Mode=TwoWay }"/>
             </Grid>
         </StackPanel>
 

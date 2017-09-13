@@ -28,7 +28,12 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 						( f , s ) => new double [ ] { f * 0.5 , s * 45 } );
 				return output.Concat( output2 ).ToList(); ;
 			}
-		 }  
+		 }
+		public double AngFirst { get { return 0; }  }
+		public double AngStep { get { return 45; }  }
+		public double RhoFirst { get { return 0.5; } }
+		public double RhoStep { get { return 0.5; }  }
+		public double RhoCount { get { return 100; }  }
 
 		// -- HW Config --
 		// Spetrometer
@@ -42,7 +47,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 		public int RStgStep	{ get { return 2; } }
 	}
 
-	public static class Pure
+	public static class ConfigExt
 	{
 		public static IPSConfig ToConfig(
 		this IPSDefualtSetting src )
@@ -52,6 +57,11 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 			res.StartupConfigName	=	src.StartupConfigName	;
 			res.SampleDiameter		=	src.SampleDiameter		;
 			res.ScanSpot			=	src.ScanSpot			;
+			res.AngFirst			=   src.AngFirst			;
+			res.AngStep				=   src.AngStep 			;
+			res.RhoFirst			=   src.RhoFirst			;
+			res.RhoStep				=   src.RhoStep 			;
+			res.RhoCount			=   src.RhoCount			;
 			res.Boxcar				=	src.Boxcar				;
 			res.Scan2Avg			=	src.Scan2Avg			;
 			res.IntegrationTime		=	src.IntegrationTime		;

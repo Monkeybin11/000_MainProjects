@@ -10,23 +10,28 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 	public class IPSConfig
 	{
 		// -- Configs config --
-		public string BaseDirPath;
-		public string StartupConfigName;
+		public string BaseDirPath { get; set; }
+		public string StartupConfigName { get; set; }
 
 		// -- scan config --
-		public int SampleDiameter;
-		public List<double[]> ScanSpot; // Polar
+		public int SampleDiameter { get; set; }
+		public List<double[]> ScanSpot { get; set; } // Polar 
+		public double AngFirst { get; set; }
+		public double AngStep { get; set; }
+		public double RhoFirst { get; set; }
+		public double RhoStep { get; set; }
+		public double RhoCount { get; set; }
 
-		// -- HW Config --
+		// -- HW Config Hidden--
 		// Spetrometer
-		public int Boxcar;
-		public int Scan2Avg;
-		public int IntegrationTime;
+		public int Boxcar { get; set; }
+		public int Scan2Avg { get; set; }
+		public int IntegrationTime { get; set; }
 
 		// Stage
-		public int XStgSpeed;
-		public int RStgSpeed;
-		public int RStgStep;
+		public int XStgSpeed { get; set; }
+		public int RStgSpeed { get; set; }
+		public int RStgStep { get; set; }
 	}
 
 	public static class IPSConfigExt
@@ -36,11 +41,9 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 			string dirpaht,
 			string name)
 		{
-			new XmlTool().WriteXmlClass( src , dirpaht , name );
+			XmlTool.WriteXmlClass( src , dirpaht , name );
 			return src;
 		}
-
-
 	}
 
 }
