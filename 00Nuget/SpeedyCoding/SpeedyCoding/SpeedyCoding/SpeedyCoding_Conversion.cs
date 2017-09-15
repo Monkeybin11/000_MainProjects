@@ -13,5 +13,7 @@ namespace SpeedyCoding
 			return src == null ? default( T ) : (T)src;
 		}
 
+		//public static Task<T> ToTask<T,A>( this )
+
 	}
 }

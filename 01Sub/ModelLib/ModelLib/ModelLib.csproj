@@ -61,7 +61,7 @@
     <Compile Include="ClassInstance\DeviceRunner.cs" />
     <Compile Include="ClassInstance\Either\Either.cs" />
     <Compile Include="ClassInstance\Either\LEither.cs" />
-    <Compile Include="ClassInstance\Either\SEither.cs" />
+    <Compile Include="ClassInstance\Either\TEither.cs" />
     <Compile Include="Data\Coordinate\Coordination.cs" />
     <Compile Include="Data\CreateLogger.cs" />
     <Compile Include="Data\ILogData.cs" />
@@ -69,7 +69,7 @@
     <Compile Include="Data\StgCtrl.cs" />
     <Compile Include="Data\StringLogger.cs" />
     <Compile Include="Factory\Logger\ILogger.cs" />
-    <Compile Include="Temp\Either.cs" />
+    <Compile Include="TypeClass\Either.cs" />
     <Compile Include="TypeClass\Coordination2D.cs" />
     <Compile Include="TypeClass\Device\Device.cs" />
     <Compile Include="TypeClass\IO.cs" />

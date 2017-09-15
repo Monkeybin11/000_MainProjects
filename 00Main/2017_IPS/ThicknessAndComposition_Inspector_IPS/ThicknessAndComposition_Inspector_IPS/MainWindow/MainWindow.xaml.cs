@@ -36,6 +36,8 @@ namespace ThicknessAndComposition_Inspector_IPS
 		private void Window_Loaded( object sender , RoutedEventArgs e )
 		{
 			WinConfig = new Win_Config();
+			WinConfig.evtStgSpeedSetChange += new StgSpeedEvent(Core.SetHWInternalParm);
+
 			ucLSMenu.evtBtn += new BtnEvt( LeftSideBtn );
 			Core = new IPSCore();
 			Config2UI( Core.Config );
@@ -76,6 +78,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 		public void LeftSideBtn( string name )
 		{
+			OpenFileDialog ofd = new OpenFileDialog();
 			switch ( name )
 			{
 				case "btnConnect":
@@ -83,13 +86,14 @@ namespace ThicknessAndComposition_Inspector_IPS
 				case "btnDisconnect":
 					break;
 				case "btnStart":
+					Core.Config = UI2IpsConfig();
 					Core.TestFunction();
-					// Main Set
-					// Main Start
+					//Core.ScanRun();
+
 					break;
 
 				case "btnLoadConfig":
-					OpenFileDialog ofd = new OpenFileDialog();
+					
 					if ( ofd.ShowDialog() == true )
 					{
 						Core.LoadConfig( ofd.FileName );
@@ -97,14 +101,19 @@ namespace ThicknessAndComposition_Inspector_IPS
 					break;
 
 				case "btnSaveCurrentConfig":
-					OpenFileDialog ofd2 = new OpenFileDialog();
-					if ( ofd2.ShowDialog() == true )
+					if ( ofd.ShowDialog() == true )
 					{
-						Core.SaveConfig( ofd2.FileName );
+						Core.Config = UI2IpsConfig();
+						Core.SaveConfig( ofd.FileName );
 					}
 					break;
 
 				case "btnLoadData":
+					if ( ofd.ShowDialog() == true )
+					{
+						Core.LoadConfig( ofd.FileName );
+						Config2UI( Core.Config );
+					}
 					break;
 
 				case "btnSaveRes":
@@ -121,47 +130,12 @@ namespace ThicknessAndComposition_Inspector_IPS
 			// Load config 
 			// Save config
 			// Save Raw Data
-			// 
+			// ToDo : 결과 저장 기능. 결과 디스플레이 , 두께 찾는기능 ( 스펙트럼데이터 -> 두께)
+			// ToDo : 서브기능 = 1. 레전드 표시 , 2. 스테이지 실시간 포지션  3. 스펙트로미터 실시가나 표시 
 
 		}
 
-
-	
-
-		#region MidFunc
-		IPSConfig UI2IpsConfig()
-		{
-			var res = new IPSConfig();
-			res.AngFirst		= ucLSMenu.nudAngFirst.Value			  .ToNonNullable();
-			res.AngStep			= ucLSMenu.nudAngStep.Value				  .ToNonNullable();
-			res.RhoFirst		= ucLSMenu.nudRhoFirst.Value			  .ToNonNullable();
-			res.RhoStep			= ucLSMenu.nudRhoStep.Value				  .ToNonNullable();
-			res.RhoCount		= ucLSMenu.nudRhoCount.Value			  .ToNonNullable();
-			res.IntegrationTime = (int)WinConfig.nudIntegrationTime.Value .ToNonNullable();
-			res.Scan2Avg		= (int)WinConfig.nudScan2Avg.Value		  .ToNonNullable();
-			res.Boxcar			= (int)WinConfig.nudBoxcar.Value		  .ToNonNullable();
-			res.XStgSpeed		= (int)WinConfig.nudXStgSpeed.Value		  .ToNonNullable();
-			res.RStgSpeed		= (int)WinConfig.nudRStgSpeed.Value		  .ToNonNullable();
-
-			return res;
-		}
-
-		void Config2UI(IPSConfig config)
-		{
-			ucLSMenu.nudAngFirst.Value			= config.AngFirst		 ;
-			ucLSMenu.nudAngStep.Value			= config.AngStep		 ;	
-			ucLSMenu.nudRhoFirst.Value			= config.RhoFirst		 ;
-			ucLSMenu.nudRhoStep.Value			= config.RhoStep		 ;	
-			ucLSMenu.nudRhoCount.Value			= config.RhoCount		 ;
-			WinConfig.nudIntegrationTime.Value	= config.IntegrationTime ; 
-			WinConfig.nudScan2Avg.Value			= config.Scan2Avg		 ;
-			WinConfig.nudBoxcar.Value			= config.Boxcar			 ;
-			WinConfig.nudXStgSpeed.Value		= config.XStgSpeed		 ;
-			WinConfig.nudRStgSpeed.Value		= config.RStgSpeed		 ;			
-		}
-
-
-		#endregion
+		
 
 		
 	}

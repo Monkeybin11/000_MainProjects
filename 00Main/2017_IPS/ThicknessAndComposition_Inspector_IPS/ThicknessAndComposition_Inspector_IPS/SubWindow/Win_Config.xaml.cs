@@ -15,17 +15,27 @@ using SpeedyCoding;
 
 namespace ThicknessAndComposition_Inspector_IPS
 {
+	public delegate void StgSpeedEvent( 
+		double rspeed 
+		, double xspeed 
+		, double scan2avg 
+		, double intetime , double boxcar );
+
 	/// <summary>
 	/// Interaction logic for Win_Config.xaml
 	/// </summary>
+	/// 
+
 	public partial class Win_Config : Window
 	{
+		double ComPort         ;
 		double XstgSpeed       ;
 		double RstgSpeed       ;
 		double Scan2Avg        ;
 		double IntegrationTIme ;
 		double Boxcar          ;
 
+		public event StgSpeedEvent evtStgSpeedSetChange;
 
 		public Win_Config()
 		{
@@ -34,17 +44,30 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 		private void btnSettingApply_Click( object sender , RoutedEventArgs e )
 		{
-			XstgSpeed		= nudXStgSpeed.Value		.ToNonNullable();
+			ComPort			= nudXStgPort.Value		    .ToNonNullable(); ;
 			RstgSpeed		= nudRStgSpeed.Value		.ToNonNullable();
+			XstgSpeed		= nudXStgSpeed.Value		.ToNonNullable();
 			Scan2Avg		= nudScan2Avg.Value			.ToNonNullable();
 			IntegrationTIme = nudIntegrationTime.Value	.ToNonNullable();
 			Boxcar			= nudBoxcar.Value			.ToNonNullable();
+
+			evtStgSpeedSetChange( 
+								RstgSpeed		,
+								XstgSpeed		,
+								Scan2Avg		,
+								IntegrationTIme ,
+								Boxcar			);
 
 		}
 
 		private void btnCancel_Click( object sender , RoutedEventArgs e )
 		{
-
+			nudXStgPort.Value         = ComPort          ;
+			nudXStgSpeed.Value		  = XstgSpeed		 ;
+			nudRStgSpeed.Value		  = RstgSpeed		 ;
+			nudScan2Avg.Value		  = Scan2Avg		 ;
+			nudIntegrationTime.Value  = IntegrationTIme  ;
+			nudBoxcar.Value			  = Boxcar			 ;
 		}
 	}
 }

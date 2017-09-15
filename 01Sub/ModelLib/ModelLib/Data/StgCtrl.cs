@@ -10,6 +10,8 @@ namespace ModelLib.Data
 	{
 		string Query( string msg );
 		bool Send( string msg );
+		bool WaitReady( int timeoutSec );
+		bool SendAndReady( string cmd , int timeoutSec = 0);
 
 		string Home			{get;set;}
 		string GoAbs		{get;set;}
@@ -19,11 +21,5 @@ namespace ModelLib.Data
 		string Pos			{get;set;}
 		string Go			{get;set;}
 		string Stop			{get;set;}
-
-
-
-
-
-
 	}
 }

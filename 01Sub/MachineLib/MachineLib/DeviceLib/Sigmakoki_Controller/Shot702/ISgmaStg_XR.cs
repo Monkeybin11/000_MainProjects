@@ -14,5 +14,9 @@
 		bool Open();
 		string Query( string cmd );
 		bool Send( string cmd );
+		bool WaitReady( int timeoutSec );
+		bool SendAndReady( string cmd , int timeoutSec = 0 );
+
+		void Close();
 	}
 }

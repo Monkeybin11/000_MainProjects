@@ -63,9 +63,9 @@
 
                 <xc:DoubleUpDown x:Name="nudAngFirst"   Grid.Row="1" Grid.Column="1"  Value="{Binding Path=MainWindow.Core.Config.AngFirst , Mode=TwoWay }"/>
                 <xc:DoubleUpDown x:Name="nudAngStep"    Grid.Row="1" Grid.Column="3"  Value="{Binding Path=MainWindow.Core.Config.AngStep , Mode=TwoWay }"/>
-                <xc:DoubleUpDown x:Name="nudRhoFirst"   Grid.Row="3" Grid.Column="1"  Value="{Binding Path=MainWindow.Core.Config.RhoFirst , Mode=TwoWay }"/>
-                <xc:DoubleUpDown x:Name="nudRhoStep"    Grid.Row="3" Grid.Column="3"  Value="{Binding Path=MainWindow.Core.Config.RhoStep , Mode=TwoWay }"/>
-                <xc:DoubleUpDown x:Name="nudRhoCount"   Grid.Row="4" Grid.Column="1"  Value="{Binding Path=MainWindow.Core.Config.RhoCount , Mode=TwoWay }"/>
+                <xc:DoubleUpDown x:Name="nudRFirst"   Grid.Row="3" Grid.Column="1"  Value="{Binding Path=MainWindow.Core.Config.RhoFirst , Mode=TwoWay }"/>
+                <xc:DoubleUpDown x:Name="nudRStep"    Grid.Row="3" Grid.Column="3"  Value="{Binding Path=MainWindow.Core.Config.RhoStep , Mode=TwoWay }"/>
+                <xc:DoubleUpDown x:Name="nudRCount"   Grid.Row="4" Grid.Column="1"  Value="{Binding Path=MainWindow.Core.Config.RhoCount , Mode=TwoWay }"/>
             </Grid>
         </StackPanel>
 

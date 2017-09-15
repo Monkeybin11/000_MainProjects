@@ -13,6 +13,7 @@ namespace MachineLib.DeviceLib
 	public class Maya_Spectrometer : IMaya_Spectrometer
 	{
 		int Index;
+		object key = new object();
 		NETWrapper Sptr; // Spectrometer
 		public List<double> Datas;
 		public List<double> WaveLen;
@@ -33,7 +34,10 @@ namespace MachineLib.DeviceLib
 		=> Sptr.openAllSpectrometers() > 0 ? true : false;
 
 		public double [ ] GetSpectrum()
-		=> Sptr.getSpectrum( Index );
+		{
+			lock ( key ) return Sptr.getSpectrum( Index );
+		}
+
 		public double [ ] GetWaveLen(  )
 		=> Sptr.getWavelengths( Index );
 

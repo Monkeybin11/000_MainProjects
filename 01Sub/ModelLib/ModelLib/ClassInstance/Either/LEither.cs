@@ -19,6 +19,14 @@ namespace ModelLib.ClassInstance
 			IsRight = true;
 		}
 
+		public LEither( R right , string left)
+		{
+			Right = right;
+			Left = left;
+			IsRight = true;
+		}
+
+
 		public LEither( string left , bool isleft = false )
 		{
 			Left = left;
@@ -37,6 +45,13 @@ namespace ModelLib.ClassInstance
 		this R val )
 		{
 			return new LEither<R>( val );
+		}
+
+		public static LEither<R> ToLEither<R>(
+		this R val ,
+		string left)
+		{
+			return new LEither<R>( val , left );
 		}
 
 
@@ -74,6 +89,8 @@ namespace ModelLib.ClassInstance
 			}
 			return new LEither<B>();
 		}
+
+		
 	}
 
 }

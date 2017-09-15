@@ -13,7 +13,7 @@ namespace ApplicationUtilTool.Communication
 	public enum SendStyle { String , ASCII , UTF8 }
     public class RS232
     {
-        SerialPort Port;
+        public SerialPort Port;
 		string End;
 		byte[] Delimiter;
 		Func<string,byte[]> ToByteArr;
@@ -48,10 +48,10 @@ namespace ApplicationUtilTool.Communication
 			}; 
 		}
 
-        public bool? Open() 
+		public bool? Open()
 		=> Port.IsOpen ? Port.Act( x => x.Close() )
-                             .Map( x => { x.Open(); return true as bool?; } ) 
-                       : null;
+							 .Map( x => { x.Open(); return true as bool?; } )
+					   : Port.Map( x => { x.Open(); return true as bool?; } );
 
 		public void Close()
 	   => Port.Close();

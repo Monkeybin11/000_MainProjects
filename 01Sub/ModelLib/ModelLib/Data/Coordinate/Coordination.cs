@@ -7,7 +7,7 @@ using ModelLib.TypeClass;
 
 namespace ModelLib.Data
 {
-	public interface Polar : Crd2D
+	public interface Polar : Crd2D , IFormattable
 	{
 		double R { get; set; }
 		double Rho { get; set; }
@@ -17,6 +17,23 @@ namespace ModelLib.Data
 	{
 		public double R { get; set; }
 		public double Rho { get; set; }
+		
+		
+
+		public override string ToString()
+		{
+			var strR = R.ToString();
+			var strRho = Rho.ToString();
+			
+
+			return strR +  "," + strRho ;
+		}
+
+
+		public PlrCrd(  )
+		{
+			
+		}
 
 		public PlrCrd( double r , double rho )
 		{
@@ -41,6 +58,9 @@ namespace ModelLib.Data
 	{
 		public double X { get; set; }
 		public double Y { get; set; }
+
+		public CrtnCrd()
+		{ }
 
 		public CrtnCrd( double x , double y )
 		{

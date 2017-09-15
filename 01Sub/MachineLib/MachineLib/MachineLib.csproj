@@ -87,6 +87,7 @@
     <Compile Include="DeviceLib\OceanOpticsMaya\Maya_Spectrometer.cs" />
     <Compile Include="DeviceLib\OceanOpticsMaya\Maya_Spectrometer_Virtual.cs" />
     <Compile Include="DeviceLib\Sigmakoki_Controller\Shot702\ISgmaStg_XR.cs" />
+    <Compile Include="DeviceLib\Sigmakoki_Controller\Shot702\ISgmaStg_XR12.cs" />
     <Compile Include="DeviceLib\Sigmakoki_Controller\Shot702\SgmaStg_XR.cs" />
     <Compile Include="DeviceLib\Sigmakoki_Controller\Shot702\SgmaStg_XR_Dummy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

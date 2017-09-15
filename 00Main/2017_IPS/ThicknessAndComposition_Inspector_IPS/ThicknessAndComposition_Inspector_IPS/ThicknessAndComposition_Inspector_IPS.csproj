@@ -99,23 +99,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="UC_LeftSideMenu.xaml.cs">
+    <Compile Include="MainWindow\MainWindow_HWFunc.cs" />
+    <Compile Include="UC\UC_LeftSideMenu.xaml.cs">
       <DependentUpon>UC_LeftSideMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC_MapInfo.xaml.cs">
+    <Compile Include="UC\UC_MapInfo.xaml.cs">
       <DependentUpon>UC_MapInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC_Status.xaml.cs">
+    <Compile Include="UC\UC_Status.xaml.cs">
       <DependentUpon>UC_Status.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Win_Config.xaml.cs">
+    <Compile Include="SubWindow\Win_Config.xaml.cs">
       <DependentUpon>Win_Config.xaml</DependentUpon>
     </Compile>
-    <Page Include="IPS_Style.xaml">
+    <Page Include="MainWindow\IPS_Style.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="MainWindow\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -123,23 +124,23 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UC_LeftSideMenu.xaml">
+    <Page Include="UC\UC_LeftSideMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC_MapInfo.xaml">
+    <Page Include="UC\UC_MapInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC_Status.xaml">
+    <Page Include="UC\UC_Status.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Win_Config.xaml">
+    <Page Include="SubWindow\Win_Config.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -206,6 +207,7 @@
       <Name>ThicknessAndComposition_Inspector_IPS_Data</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

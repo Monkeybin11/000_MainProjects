@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ModelLib.Data;
 
 namespace ThicknessAndComposition_Inspector_IPS_Data
 {
 	public class IPSDefualtSetting
 	{
+		public IPSDefualtSetting() { }
+
 		// -- Configs config --
-		public string BaseDirPath { get { return AppDomain.CurrentDomain.BaseDirectory + "\\" + "config"; } }
-		public string StartupConfigName { get { return "IPS_Defulat_config.xml"; }
-}
+		public string BaseDirPath { get { return AppDomain.CurrentDomain.BaseDirectory + "\\" + "config"; } set { } }
+		public string StartupConfigName { get { return "SettedConfig.xml"; } set { } }
 
 		// -- scan config --
-		public int SampleDiameter { get { return 4; } }
-		public List<double [ ]> ScanSpot 
+		public int SampleDiameter { get { return 4; } set { } }
+		public List<PlrCrd> ScanSpot 
 		{
 			get 
 			{
@@ -26,25 +28,27 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 					.SelectMany(
 						f => Enumerable.Range( 0 , 4 ).Select( x => (double)x * 45 ) ,
 						( f , s ) => new double [ ] { f * 0.5 , s * 45 } );
-				return output.Concat( output2 ).ToList(); ;
+				return ( output.Concat( output2 ) ).Select( x => new PlrCrd( x [ 0 ] , x [ 1 ] )).ToList();
 			}
-		 }
-		public double AngFirst { get { return 0; }  }
-		public double AngStep { get { return 45; }  }
-		public double RhoFirst { get { return 0.5; } }
-		public double RhoStep { get { return 0.5; }  }
-		public double RhoCount { get { return 100; }  }
+			set { }
+		}
+		public double AngFirst { get { return 0; } set { }  }
+		public double AngStep { get { return 45; } set { } }
+		public double RhoFirst { get { return 0.5; } set { } }
+		public double RhoStep { get { return 0.5; } set { } }
+		public double RhoCount { get { return 100; } set { } }
 
 		// -- HW Config --
 		// Spetrometer
-		public int Boxcar { get { return 3; } }
-		public int Scan2Avg { get { return 5; } }
-		public int IntegrationTime { get { return 100; } }
+		public int Boxcar { get { return 3; } set { } }
+		public int Scan2Avg { get { return 5; } set { } }
+		public int IntegrationTime { get { return 100; } set { } }
 
 		// Stage
-		public int XStgSpeed { get { return 100; } }
-		public int RStgSpeed { get { return 100; } }
-		public int RStgStep	{ get { return 2; } }
+		public int Port { get { return 4; } set { } }
+		public int XStgSpeed { get { return 100; } set { } }
+		public int RStgSpeed { get { return 100; } set { } }
+		public int RStgStep	{ get { return 2; } set { } }
 	}
 
 	public static class ConfigExt
@@ -57,11 +61,12 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 			res.StartupConfigName	=	src.StartupConfigName	;
 			res.SampleDiameter		=	src.SampleDiameter		;
 			res.ScanSpot			=	src.ScanSpot			;
+			res.Port				=   src.Port			    ;
 			res.AngFirst			=   src.AngFirst			;
 			res.AngStep				=   src.AngStep 			;
-			res.RhoFirst			=   src.RhoFirst			;
-			res.RhoStep				=   src.RhoStep 			;
-			res.RhoCount			=   src.RhoCount			;
+			res.RFirst			=   src.RhoFirst			;
+			res.RStep				=   src.RhoStep 			;
+			res.RCount			=   src.RhoCount			;
 			res.Boxcar				=	src.Boxcar				;
 			res.Scan2Avg			=	src.Scan2Avg			;
 			res.IntegrationTime		=	src.IntegrationTime		;

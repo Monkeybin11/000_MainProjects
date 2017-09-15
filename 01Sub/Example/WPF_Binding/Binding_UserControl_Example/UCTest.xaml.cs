@@ -22,7 +22,10 @@ namespace Binding_UserControl_Example
 	{
 		public UCTest()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 		}
+
+		public double Value { get; set; }
+		public string Text { get; set; }
 	}
 }

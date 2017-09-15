@@ -23,6 +23,11 @@ namespace Binding_UserControl_Example
 		public MainWindow()
 		{
 			InitializeComponent();
+			this.DataContext = new MainWindow()
+			{
+				Title = Guid.NewGuid().ToString();
+
+			}
 		}
 	}
 }

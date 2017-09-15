@@ -13,6 +13,7 @@ using ApplicationUtilTool.Log;
 using System.Windows;
 using SpeedyCoding;
 using System.Threading;
+using ModelLib.Data;
 
 namespace ThicknessAndComposition_Inspector_IPS_Core
 {
@@ -33,7 +34,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		string LogDirPath = AppDomain.CurrentDomain.BaseDirectory + "log";
 		string LogName = "";
-		//string LogName = "IPSLog.txt";
 
 		string CurrentSaveTime { get { return DateTime.Now.ToString( LogTime ); } }
 
@@ -43,7 +43,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		public IPSCore()
 		{
 			InitCore(); // Field Initialize
-			ConnectHW().FailShow( "Virtual Mode is Activated" );
+			ConnectHW( "COM" + Config.Port.ToString() ).FailShow( "Virtual Mode is Activated" );
 		}
 
 		public string TodayLogPath()
@@ -62,9 +62,9 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 						ConfigName.CheckAndCreateFile() );
 		}
 
-		public bool ConnectHW()
+		public bool ConnectHW(string comport)
 		{
-			Stg = new SgmaStg_XR();
+			Stg = new SgmaStg_XR( comport );
 			Spct = new Maya_Spectrometer();
 
 			var stg =  Stg.Open() == true 
@@ -77,10 +77,14 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 			if ( !stg || !spt )
 			{
+				Stg.Close();
 				Stg = new SgmaStg_XR_Virtual();
 				Spct = new Maya_Spectrometer_Virtual();
 			}
-			return !stg || !spt;
+
+			//Stg = new SgmaStg_XR_Virtual();
+
+			return stg && spt;
 		}
 
 		#endregion
@@ -89,38 +93,84 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		public void TestFunction()
 		{
-			Stg.Send( Stg.Home );
+			//Stg.SendAndReady( Stg.Home + Axis.R.ToIdx() );
+			//Stg.SendAndReady( Stg.Home + Axis.X.ToIdx() );
+			//Stg.SendAndReady( Stg.GoAbs + 5000.ToPos( Axis.X ) );
+			//Stg.SendAndReady( Stg.Go);
+			GoAbsPos( Axis.R , 6000 );
+			GoAbsPos( Axis.X , 6000 );
+			GoAbsPos( Axis.W , -5000 );
 			var res = Spct.GetSpectrum();
-			MessageBox.Show( res.GetLength(0).ToString() );
-
-			var temp = Config;
-
+			//MessageBox.Show( res.GetLength(0).ToString() );
 		}
 
-		public bool ScanRun()
+		// Find Thickness Function
+		public Func< LEither<double [ ]> , double [ ] , PlrCrd , LEither<double>> CalcPorce =>
+			( inten , wave , plrcrd ) =>
+			{
+				// ToDo : 두께 찾는 기능 구현 
+				Console.WriteLine("Processing running");
+				Thread.Sleep( 10000 );
+				return new LEither<double>( 123 );
+			};
+
+
+		public bool ScanRun() // Use Internal Config , not get config from method parameter
 		{
-			// create Task list. same length with Posittion List 
-			// Foreach PositionList 
-			//  move  -> measure
-			//  data save => create Task and Run task.
-			//  
-			//  Error
-			// if move error , measure error , calc error
-			// move error = timeout (Either Left) -> measure (Either Left) -> calc(Either Left)
-			// 
+			var calcTaskList = new Task<LEither<double>>[ Config.ScanSpot.Len() ];
+			var wavelength = Spct.GetWaveLen();
+
+			var res = new TEither( Stg as IStgCtrl , 12)
+						.Bind( x => x.Act( f => f.SendAndReady( f.Home + Axis.R ) ).ToTEither( 12 ) , "R Home Fail" ) 
+						.Bind( x => x.Act( f => f.SendAndReady( f.Home + Axis.X ) ).ToTEither( 10 ) , "X Home Fail" );
+			
+			var posIntenlist = Config.ScanSpot.Select( ( pos , i) => 
+			{
+				var logres = res
+				.Bind( x => x.Act( f => f.SendAndReady( f.GoAbs + pos.Rho.Degree2Pulse().ToPos( Axis.R ) ) ).ToTEither( 1 ) , "R Stage Move Command Fail" )
+				.Bind( x => x.Act( f => f.SendAndReady( f.GoAbs + pos.R.ToPos( Axis.X ) ) ).ToTEither( 1 ) , "X Stage Move Command Fail" )
+				.Bind( x => x.Act( f => f.SendAndReady( f.Go + Axis.X ) ).ToTEither( 1 ) , "Stage Movement Fail" )
+				.ToLEither( default( double[] ) );
+
+				var intenlist = logres.IsRight
+									? default(LEither<double[]>).Bind( x => Spct.GetSpectrum() ) 
+									: logres.Act( x => Lggr.Log(x.Left , true )); // Logging Error
+
+				calcTaskList[i] = Task.Run<LEither<double>>(  
+					() => logres.IsRight ? CalcPorce(intenlist,wavelength,pos)  // Estimate Thickness
+										 : new LEither<double>() );
 
 
+				return Tuple.Create(pos,intenlist);
+			} ).ToList(); // Raw Data
 
-			// stage ready position 
-			// spectrometer measrue
-			// repeate
+			// Thickness Result List
+			// ( You dont need to use try catch pattern for catch all exception from tasklist )
+			var thicknesses = Task.WhenAll( calcTaskList ).Result;
 
-			// save data 
 
-			// if scan is suceed start mapping map 
-			// do event 
+			// Pos Thickness Inten List 
+			var posThickInten = posIntenlist.Zip(thicknesses ,
+				(f,s) => new { Pos = f.Item1 , Thckness = s , Intensity = f.Item2 } );
 
-			return false;
+
+			// -- Integration Result -- // 
+			bool isright = thicknesses.Select( x => x.IsRight).Aggregate( (f,s) => f && s);
+			if ( isright )
+			{
+				var tasklogs = posThickInten.Where( x => x.Thckness.IsRight == false)
+											.Select( x => x.Pos.ToString()+" ||" + x.Thckness.Left )
+											.ActLoop( x => Lggr.Log(x , true));
+				return false;
+			}
+			else
+			{
+				// Succeed 
+				// 여기에서 리턴을 할건지 이벤트로 보낼건지 결정해야함. 
+				// 위에서 로깅은 이미 함.
+				 
+				return true;
+			}
 		}
 
 
@@ -149,34 +199,42 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		#region Trans
 
-		
-
-		#endregion	
 
 
-		// TODO : Run
-		// TODO : - movestage
-		// TODO : - scan 
-		// TODO : - scan 결과 가져오기 
+		#endregion
 
-		// TODO : Trans Display Data
+		#region Movement
+		public void SetHWInternalParm(double rspeed , double xspeed , double scan2avg , double intetime, double boxcar )
+		{
+			Stg.SendAndReady( Stg.SetSpeed + Axis.R.ToIdx() + rspeed.ToSpeed());
+			Stg.SendAndReady( Stg.SetSpeed + Axis.X.ToIdx() + xspeed.ToSpeed());
 
-		// TODO : Log Write
+			Spct.ScanAvg( ( int )scan2avg );
+			Spct.IntegrationTime( ( int )intetime );
+			Spct.BoxCar( (int)boxcar );
 
-		// TODO : analysis
+		}
 
+		public bool GoAbsPos( Axis axis , int pos1 , int pos2 = 99999 )
+		{
+			switch ( axis )
+			{
+				case Axis.R:
+					Stg.SendAndReady( Stg.GoAbs + pos1.ToPos( Axis.R ) );
+					break;
 
-		// TODO : Log System
-		// TODO : Check Spectrometer
-		// TODO : Check Stage
-		// TODO : Spct get
-		// TODO : stage move ( time out )
-		// TODO : -- Data --
-		// TODO : Create Display Data
-		// TODO : -- analysis --
-		// TODO : 각각의 작업중에 문제가 생기면 로그를 남기게 한다. 
-		// TODO : 일련의 작업을 완료후 로그가 있는지 체크한다. 
-		// TODO : 문제가 생겨서 발생한 로그는 앞에 시간을 적는다. 
+				case Axis.X:
+					Stg.SendAndReady( Stg.GoAbs + pos1.ToPos( Axis.X ) );
+					break;
 
+				case Axis.W:
+					Stg.SendAndReady( Stg.GoAbs + pos1.ToPos( Axis.R ) );
+					Stg.SendAndReady( Stg.GoAbs + pos2.ToPos( Axis.X ) );
+					break;
+			}
+			Stg.SendAndReady( Stg.Go );
+			return true;
+		}
+		#endregion
 	}
 }

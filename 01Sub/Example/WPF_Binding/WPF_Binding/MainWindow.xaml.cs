@@ -28,10 +28,11 @@ namespace WPF_Binding
 		public string haha = "aha";
 		public MainWindow()
 		{
-			CR = new Core();
+			
 			InitializeComponent();
 			DataContext = this;
-			
+			CR = new Core();
+
 
 
 		}

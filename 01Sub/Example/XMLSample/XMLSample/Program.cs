@@ -12,6 +12,15 @@ namespace XMLSample
     {
         static void Main( string [ ] args )
         {
+			string path3 = @"E:\Temp\xmltest\test.xml";
+
+			IPSDefualtSetting temp = new IPSDefualtSetting();
+			XmlTool.WriteXmlClass( temp , @"E:\Temp\xmltest\" , "test.xml" );
+
+
+
+			/*
+
 			string path = @"E:\Temp\test";
 			string path2 = @"E:\Temp\test\.test.txt";
 
@@ -42,6 +51,7 @@ namespace XMLSample
 				//XmlSerializer xs = new XmlSerializer(emp.GetType()); 
 				xs.Serialize( wr , con );
 			}
+			*/
 			Console.ReadLine();
         }
     }

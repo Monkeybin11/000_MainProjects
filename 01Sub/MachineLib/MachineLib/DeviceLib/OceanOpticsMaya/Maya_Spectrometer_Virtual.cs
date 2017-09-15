@@ -21,13 +21,21 @@ namespace MachineLib.DeviceLib
 		public double [ ] GetSpectrum()
 		{
 			Random rnd = new Random();
-			return Enumerable.Range(0,2068).Select( x => (double)rnd.Next(0,3000)).ToArray<double>();
+			var res = Enumerable.Range(0,2068).Select( x => (double)rnd.Next(0,3000)).ToArray<double>();
+			res [ 0 ] = 123;
+			res [ 1 ] = 456;
+			res [ 2 ] = 789;
+			return res;
 		}
 
 		public double [ ] GetWaveLen()
 		{
 			double w = (1120 - 200) / 2068.0;
-			return Enumerable.Range( 0 , 2068 ).Select( x => x * w + 200 ).ToArray<double>();
+			var res = Enumerable.Range( 0 , 2068 ).Select( x => x * w + 200 ).ToArray<double>();
+			res [ 0 ] = 123;
+			res [ 1 ] = 456;
+			res [ 2 ] = 789;
+			return res;
 		}
 
 		public IMaya_Spectrometer IntegrationTime( int time )

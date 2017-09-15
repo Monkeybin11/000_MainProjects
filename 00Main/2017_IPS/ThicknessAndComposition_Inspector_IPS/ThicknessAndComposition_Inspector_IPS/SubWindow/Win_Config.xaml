@@ -9,12 +9,14 @@
         x:Name="ScanSettingWindow"
         Title="Win_Config" Height="300" Width="400">
     <Grid>
-        <UniformGrid Columns="2" Rows="6">
-            <Label Content="X Stage Speed "/>
+        <UniformGrid Columns="2" Rows="7">
+            <Label Content="Stage Com Port "/>
+            <xc:DoubleUpDown x:Name="nudXStgPort"/>
+            <Label Content="R Stage Speed "/>
             <xc:DoubleUpDown x:Name="nudXStgSpeed"/>
             <Label Content="X Stage Speed "/>
             <xc:DoubleUpDown x:Name="nudRStgSpeed"/>
-            <Label Content="Spectrometer SCasn to Average "/>
+            <Label Content="Spectrometer Scasn to Average "/>
             <xc:DoubleUpDown x:Name="nudScan2Avg" />
             <Label Content="Spectrometer IntegrationTime "/>
             <xc:DoubleUpDown x:Name="nudIntegrationTime" />
@@ -22,7 +24,6 @@
             <xc:DoubleUpDown x:Name="nudBoxcar" />
             <Button x:Name="btnSettingApply" Content="Apply" Click="btnSettingApply_Click"/>
             <Button x:Name="btnCancel" Content="Cancel" Click="btnCancel_Click"/>
-
         </UniformGrid>
     </Grid>
 </Window>
