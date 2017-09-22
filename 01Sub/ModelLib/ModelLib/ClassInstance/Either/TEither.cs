@@ -31,7 +31,7 @@ namespace ModelLib.ClassInstance
 		{
 			Right = sr;
 			TimeOutSec = tim;
-			if ( Right == null ) IsRight = false;
+			if ( Right != null ) IsRight = true;
 		}
 
 		public TEither( IStgCtrl sr , bool pass , int tim = 20000)
@@ -39,7 +39,7 @@ namespace ModelLib.ClassInstance
 			Right = sr;
 			IsRight = pass;
 			TimeOutSec = tim;
-			if ( Right == null ) IsRight = false;
+			if ( Right != null ) IsRight = true;
 		}
 	}
 
@@ -88,7 +88,7 @@ namespace ModelLib.ClassInstance
 				int passtime = 0;
 				Stopwatch stw = new Stopwatch();
 				func( src.Right );
-				while ( passtime > src.TimeOutSec )
+				while ( passtime < src.TimeOutSec )
 				{
 					stw.Start();
 					if ( src.Right.Query( src.Right.Status ) 

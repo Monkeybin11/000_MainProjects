@@ -18,7 +18,7 @@
             <Button x:Name="btnLoadCsv" Content="Load" Click="btnLoadCsv_Click" />
             <Button x:Name="btnSaveImg" Content="Save Img" Click="btnSaveImg_Click"/>
         </UniformGrid>
-        <Canvas x:Name="cvsMain">
+        <Canvas x:Name="cvsMain" Grid.Column="1">
             <Canvas.Background>
                 <ImageBrush x:Name="ibrImg"/>
             </Canvas.Background>

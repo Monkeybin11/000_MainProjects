@@ -47,12 +47,13 @@ namespace ApplicationUtilTool.FileIO
 				}
 				else
 				{
+					MessageBox.Show( $"Current File ( {name} ) is not found.  defulat file is loaded" );
 					return clsDefulat;
 				}
 			}
 			catch ( Exception ex )
 			{
-				MessageBox.Show( "Config file is broken. Config is setted with defulat" );
+				MessageBox.Show( $"Config file ( {name} ) is broken. Config is setted with defulat" );
 				return clsDefulat;
 			}
 		}

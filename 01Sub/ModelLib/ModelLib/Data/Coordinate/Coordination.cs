@@ -9,42 +9,56 @@ namespace ModelLib.Data
 {
 	public interface Polar : Crd2D , IFormattable
 	{
-		double R { get; set; }
 		double Rho { get; set; }
+		double Theta { get; set; }
+		
 
 	}
 	public class PlrCrd : Polar
 	{
-		public double R { get; set; }
 		public double Rho { get; set; }
+		public double Theta { get; set; }
+		
 		
 		
 
 		public override string ToString()
 		{
-			var strR = R.ToString();
 			var strRho = Rho.ToString();
-			
-
-			return strR +  "," + strRho ;
+			var strTheta = Theta.ToString();
+			return strRho + "," + strTheta;
 		}
 
+		public string ToString( string format , IFormatProvider formatProvider )
+		{
+			var strRho = Rho.ToString();
+			var strTheta = Theta.ToString();
+			return strRho + "," + strTheta ;
+		}
 
 		public PlrCrd(  )
 		{
 			
 		}
 
-		public PlrCrd( double r , double rho )
+		public PlrCrd( double rho , double theta )
 		{
-			R = r;
 			Rho = rho;
+			Theta = theta;
+			
 		}
 	}
 	public class PlrUnit : Polar
 	{
-		public double R { get { return default( double ); } set { } }
+		public double Theta { get { return default( double ); } set { } }
 		public double Rho { get { return default( double ); } set { } }
+
+		public string ToString( string format , IFormatProvider formatProvider )
+		{
+			var strTheta = Theta.ToString();
+			var strRho = Rho.ToString();
+			return strRho + "," + strTheta;
+		}
 	}
 
 
@@ -87,8 +101,8 @@ namespace ModelLib.Data
 			if ( crtn != null ) return crtn;
 			else if ( polar == null ) return new CrtnUnit();
 			return new CrtnCrd(
-							   polar.R * Math.Cos( polar.Rho ) , // x
-							   polar.R * Math.Sin( polar.Rho ) // y
+							   polar.Theta * Math.Cos( polar.Rho ) , // x
+							   polar.Theta * Math.Sin( polar.Rho ) // y
 							   );
 		}
 
@@ -101,9 +115,10 @@ namespace ModelLib.Data
 
 			if ( polar != null ) return polar;
 			else if ( crtn == null ) return new PlrUnit();
+
 			return new PlrCrd(
 							   Math.Sqrt( crtn.X * crtn.X + crtn.Y * crtn.Y ) , // x
-							   Math.Atan2( crtn.Y , crtn.X )// y
+							   Math.Atan2( crtn.Y , crtn.X )*180/Math.PI + 180 // y
 							   );
 		}
 

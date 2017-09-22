@@ -35,7 +35,8 @@ namespace MachineLib.DeviceLib
 
 		public double [ ] GetSpectrum()
 		{
-			lock ( key ) return Sptr.getSpectrum( Index );
+			//lock ( key )
+				return Sptr.getSpectrum( Index );
 		}
 
 		public double [ ] GetWaveLen(  )

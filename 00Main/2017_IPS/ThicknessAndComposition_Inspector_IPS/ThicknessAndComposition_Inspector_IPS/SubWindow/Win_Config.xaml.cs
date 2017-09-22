@@ -44,13 +44,15 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 		private void btnSettingApply_Click( object sender , RoutedEventArgs e )
 		{
-			ComPort			= nudXStgPort.Value		    .ToNonNullable(); ;
+			this.Visibility = Visibility.Hidden;
+			ComPort			= nudXStgPort.Value		    .ToNonNullable(); 
 			RstgSpeed		= nudRStgSpeed.Value		.ToNonNullable();
 			XstgSpeed		= nudXStgSpeed.Value		.ToNonNullable();
 			Scan2Avg		= nudScan2Avg.Value			.ToNonNullable();
 			IntegrationTIme = nudIntegrationTime.Value	.ToNonNullable();
 			Boxcar			= nudBoxcar.Value			.ToNonNullable();
 
+			
 			evtStgSpeedSetChange( 
 								RstgSpeed		,
 								XstgSpeed		,
@@ -62,6 +64,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 		private void btnCancel_Click( object sender , RoutedEventArgs e )
 		{
+			this.Visibility = Visibility.Hidden;
 			nudXStgPort.Value         = ComPort          ;
 			nudXStgSpeed.Value		  = XstgSpeed		 ;
 			nudRStgSpeed.Value		  = RstgSpeed		 ;

@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThicknessAndComposition_Ins
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThicknessAndComposition_Inspector_IPS_Core", "..\ThicknessAndComposition_Inspector_IPS_Core\ThicknessAndComposition_Inspector_IPS_Core.csproj", "{38132163-46C7-4521-945D-054D11A6DB42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_UC_Lib", "..\..\..\02Starter\UI\WPF_UC_Lib\WPF_UC_Lib.csproj", "{4A46AB95-45A1-40C3-B107-96EC34A35CEE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThicknessAndComposition_Inspector_IPS_Data", "..\ThicknessAndComposition_Inspector_IPS_Data\ThicknessAndComposition_Inspector_IPS_Data.csproj", "{4BA9CDAE-111B-42D6-8428-AFB03D4E10A5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelLib", "..\..\..\01Sub\ModelLib\ModelLib\ModelLib.csproj", "{0AA6ABFC-7DC0-484D-B2D4-9AAD902F95ED}"
@@ -47,14 +45,6 @@ Global
 		{38132163-46C7-4521-945D-054D11A6DB42}.Release|Any CPU.Build.0 = Release|Any CPU
 		{38132163-46C7-4521-945D-054D11A6DB42}.Release|x64.ActiveCfg = Release|Any CPU
 		{38132163-46C7-4521-945D-054D11A6DB42}.Release|x64.Build.0 = Release|Any CPU
-		{4A46AB95-45A1-40C3-B107-96EC34A35CEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A46AB95-45A1-40C3-B107-96EC34A35CEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A46AB95-45A1-40C3-B107-96EC34A35CEE}.Debug|x64.ActiveCfg = Debug|x64
-		{4A46AB95-45A1-40C3-B107-96EC34A35CEE}.Debug|x64.Build.0 = Debug|x64
-		{4A46AB95-45A1-40C3-B107-96EC34A35CEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A46AB95-45A1-40C3-B107-96EC34A35CEE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A46AB95-45A1-40C3-B107-96EC34A35CEE}.Release|x64.ActiveCfg = Release|Any CPU
-		{4A46AB95-45A1-40C3-B107-96EC34A35CEE}.Release|x64.Build.0 = Release|Any CPU
 		{4BA9CDAE-111B-42D6-8428-AFB03D4E10A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4BA9CDAE-111B-42D6-8428-AFB03D4E10A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BA9CDAE-111B-42D6-8428-AFB03D4E10A5}.Debug|x64.ActiveCfg = Debug|x64

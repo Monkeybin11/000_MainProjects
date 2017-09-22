@@ -16,6 +16,9 @@ namespace Test
 	{
 		static void Main( string [ ] args )
 		{
+			test3();
+			test3();
+
 			byte[,] temp = new byte[2,2];
 
 			test2();
@@ -51,6 +54,9 @@ namespace Test
 				UseIntercept = true
 			};
 
+
+
+
 			double[][] inputs =
 			{
 				new double[] { 1, 1 },
@@ -72,12 +78,61 @@ namespace Test
 
 		}
 
-		public static void test3()
+		public static Func<double,double> CreateFunc(double a, double b )
 		{
-			LinearSpline tes = new LinearSpline();
+			return new Func<double , double>( x =>
+				  ( x * a + b )
+			);
 		}
 
 
+		public static void test3()
+		{
+			var poly2 = CreateFunc(1 , 1);
 
+			Random rnd = new Random();
+
+
+			var pos = Enumerable.Range( 0 , 20 ).Select( x => new double [ ] { x , poly2( x ) + rnd.NextDouble()  } ).ToArray();
+
+			double[] inputs = pos.Select( x => x[0]).ToArray();
+			double[] outputs = pos.Select( x => x[1]).ToArray();
+
+			var ls = new PolynomialLeastSquares()
+			{
+				Degree = 2
+			};
+
+			PolynomialRegression poly = ls.Learn(inputs, outputs);
+
+			double a = poly.Weights[0]; // a = 0
+			double b = poly.Weights[1]; // b = 0
+			double c = poly.Intercept; // c = 1
+
+			double[] predicted = poly.Transform(inputs);
+
+			double error = new SquareLoss(outputs).Loss(predicted);
+
+
+
+			var ols = new OrdinaryLeastSquares();
+
+			SimpleLinearRegression mul = ols.Learn(inputs , outputs);
+			double a1 = mul.Slope; // a = 0
+			double b1 = mul.Intercept; // b = 0
+
+			double[] simplepredict = mul.Transform(inputs);
+
+			double erroe2 = new SquaredHingeLoss(outputs).Loss(simplepredict);
+			Console.WriteLine( "Done" );
+
+		}
+
+
+		public void test4()
+		{
+			
+
+		}
 	}
 }

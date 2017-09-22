@@ -16,11 +16,11 @@ namespace ThicknessAndComposition_Inspector_IPS
 		IPSConfig UI2IpsConfig()
 		{
 			var res = new IPSConfig();
-			res.AngFirst = ucLSMenu.nudAngFirst.Value.ToNonNullable();
-			res.AngStep = ucLSMenu.nudAngStep.Value.ToNonNullable();
-			res.RFirst = ucLSMenu.nudRFirst.Value.ToNonNullable();
-			res.RStep = ucLSMenu.nudRStep.Value.ToNonNullable();
-			res.RCount = ucLSMenu.nudRCount.Value.ToNonNullable();
+			res.ThetaFirst = ucLSMenu.nudThetaFirst.Value.ToNonNullable();
+			res.ThetaStep = ucLSMenu.nudThetaStep.Value.ToNonNullable();
+			res.RhoFirst = ucLSMenu.nudRhoFirst.Value.ToNonNullable();
+			res.RhoStep = ucLSMenu.nudRhoStep.Value.ToNonNullable();
+			res.RhoCount = ucLSMenu.nudRhoCount.Value.ToNonNullable();
 			res.Port = ( int )WinConfig.nudXStgPort.Value.ToNonNullable();
 			res.IntegrationTime = ( int )WinConfig.nudIntegrationTime.Value.ToNonNullable();
 			res.Scan2Avg = ( int )WinConfig.nudScan2Avg.Value.ToNonNullable();
@@ -36,11 +36,11 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 		void Config2UI( IPSConfig config )
 		{
-			ucLSMenu.nudAngFirst.Value = config.AngFirst;
-			ucLSMenu.nudAngStep.Value = config.AngStep;
-			ucLSMenu.nudRFirst.Value = config.RFirst;
-			ucLSMenu.nudRStep.Value = config.RStep;
-			ucLSMenu.nudRCount.Value = config.RCount;
+			ucLSMenu.nudThetaFirst.Value = config.ThetaFirst;
+			ucLSMenu.nudThetaStep.Value = config.ThetaStep;
+			ucLSMenu.nudRhoFirst.Value = config.RhoFirst;
+			ucLSMenu.nudRhoStep.Value = config.RhoStep;
+			ucLSMenu.nudRhoCount.Value = config.RhoCount;
 			WinConfig.nudXStgPort.Value = config.Port;
 			WinConfig.nudIntegrationTime.Value = config.IntegrationTime;
 			WinConfig.nudScan2Avg.Value = config.Scan2Avg;

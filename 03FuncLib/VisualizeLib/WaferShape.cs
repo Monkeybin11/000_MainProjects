@@ -22,10 +22,10 @@ namespace VisualizeLib
 
 		public byte [ , , ] CreateWaferMask( int dia, int rStep, int rhoDegreestep )
 		{
-			var rhoRadinaStep = rhoDegreestep * Math.PI / 180;
+			double rhoRadinaStep = rhoDegreestep * Math.PI / 180;
 
 			var rlist   =  rStep.xRange( (int)(dia / 2 / rStep) , rStep );
-			var rholist =  0.xRange( (int)(2*Math.PI / rhoRadinaStep) , rhoRadinaStep );
+			var rholist =  (0.0).xRange( (int)(2*Math.PI / rhoRadinaStep) , rhoRadinaStep );
 
 			var crtnMx = rlist.SelectMany(
 									f => rholist ,

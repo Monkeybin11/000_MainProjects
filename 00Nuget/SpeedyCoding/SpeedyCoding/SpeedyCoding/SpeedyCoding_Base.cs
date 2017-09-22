@@ -66,6 +66,13 @@ namespace SpeedyCoding
 		#endregion
 
 		#region Function
+
+
+		public static Func<TSource , TResult> BuildFunc<TSource, TResult>(
+			this Func<TSource , TResult> function )
+		=> function;
+		
+
 		public static TResult Map<TSource, TResult>(
           this TSource src ,
           Func<TSource , TResult> fn )

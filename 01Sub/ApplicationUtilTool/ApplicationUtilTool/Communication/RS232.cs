@@ -19,11 +19,10 @@ namespace ApplicationUtilTool.Communication
 		Func<string,byte[]> ToByteArr;
 		Action<string> Send;
 		public Func<string,string> Query;
-	    
 
-
-		public RS232( SerialPort port , CommandEndStyle crlfstyle , SendStyle sendstyle , int reciveDelay)
+		public RS232( SerialPort port , CommandEndStyle crlfstyle , SendStyle sendstyle , int reciveDelay )
         {
+
             Port = port;
 
 			End = crlfstyle == CommandEndStyle.CR ? "\r" :
@@ -48,10 +47,10 @@ namespace ApplicationUtilTool.Communication
 			}; 
 		}
 
-		public bool? Open()
+		public bool Open()
 		=> Port.IsOpen ? Port.Act( x => x.Close() )
-							 .Map( x => { x.Open(); return true as bool?; } )
-					   : Port.Map( x => { x.Open(); return true as bool?; } );
+							 .Map( x => { x.Open(); return Port.IsOpen; } )
+					   : Port.Map( x => { x.Open(); return Port.IsOpen; } );
 
 		public void Close()
 	   => Port.Close();

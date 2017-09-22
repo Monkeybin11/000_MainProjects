@@ -575,7 +575,25 @@ namespace SpeedyCoding
             return output;
         }
 
-        public static TSrc [ ] [ ] [ ] ToJagged<TSrc>(
+		public static TSrc [ ] [ ] ToJagged<TSrc>(
+		 this TSrc [ , ] @this )
+		{
+			int rowL = @this.Len(0), fcolL = @this.Len(1);
+
+			TSrc[][] output = new TSrc[rowL][];
+			for ( int j = 0 ; j < rowL ; j++ )
+			{
+				TSrc[] second = new TSrc[fcolL];
+				for ( int i = 0 ; i < fcolL ; i++ )
+				{
+					second [ i ] = @this[j,i];
+				}
+				output [ j ] = second;
+			}
+			return output;
+		}
+
+		public static TSrc [ ] [ ] [ ] ToJagged<TSrc>(
            this TSrc [ , , ] @this )
         {
             int rowL = @this.Len(0), fcolL = @this.Len(1), scolL = @this.Len(2);
