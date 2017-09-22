@@ -88,11 +88,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpeedyCoding_Base.cs" />
     <Compile Include="SpeedyCoding_Collection.cs" />
+    <Compile Include="SpeedyCoding_Conversion.cs" />
     <Compile Include="SpeedyCoding_Drawing.cs" />
     <Compile Include="SpeedyCoding_IO.cs" />
+    <Compile Include="SpeedyCoding_Math.cs" />
     <Compile Include="SpeedyCoding_Matrix.cs" />
     <Compile Include="SpeedyCoding_PatternMatch.cs" />
     <Compile Include="SpeedyCoding_Reflection.cs" />
+    <Compile Include="SpeedyCoding_Statistic.cs" />
     <Compile Include="SpeedyCoding_WPF.cs" />
     <Compile Include="SpeedytCoding_Thread.cs" />
   </ItemGroup>

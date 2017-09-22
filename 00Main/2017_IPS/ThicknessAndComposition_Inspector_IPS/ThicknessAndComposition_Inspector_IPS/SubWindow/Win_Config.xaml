@@ -1,0 +1,29 @@
+﻿<Window x:Class="ThicknessAndComposition_Inspector_IPS.Win_Config"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ThicknessAndComposition_Inspector_IPS"
+        xmlns:xc ="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        x:Name="ScanSettingWindow"
+        Title="Win_Config" Height="300" Width="400">
+    <Grid>
+        <UniformGrid Columns="2" Rows="7">
+            <Label Content="Stage Com Port "/>
+            <xc:DoubleUpDown x:Name="nudXStgPort"/>
+            <Label Content="R Stage Speed "/>
+            <xc:DoubleUpDown x:Name="nudXStgSpeed"/>
+            <Label Content="X Stage Speed "/>
+            <xc:DoubleUpDown x:Name="nudRStgSpeed"/>
+            <Label Content="Spectrometer Scasn to Average "/>
+            <xc:DoubleUpDown x:Name="nudScan2Avg" />
+            <Label Content="Spectrometer IntegrationTime "/>
+            <xc:DoubleUpDown x:Name="nudIntegrationTime" />
+             <Label Content="Spectrometer Boxcar "/>
+            <xc:DoubleUpDown x:Name="nudBoxcar" />
+            <Button x:Name="btnSettingApply" Content="Apply" Click="btnSettingApply_Click"/>
+            <Button x:Name="btnCancel" Content="Cancel" Click="btnCancel_Click"/>
+        </UniformGrid>
+    </Grid>
+</Window>

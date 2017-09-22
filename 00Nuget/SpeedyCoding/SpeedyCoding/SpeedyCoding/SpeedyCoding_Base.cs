@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SpeedyCoding
 {
@@ -44,11 +45,35 @@ namespace SpeedyCoding
             Console.WriteLine();
             return src;
         }
-        #endregion
+
+		public static void Show(
+			this bool src ,
+			string trueMsg , 
+			string failMsg)
+		{
+			if ( src ) MessageBox.Show( trueMsg );
+			else MessageBox.Show( failMsg );
+		}
+
+		public static void FailShow(
+				this bool src ,
+				string failMsg )
+		{
+			if ( !src ) MessageBox.Show( failMsg );
+		}
 
 
-        #region Function
-        public static TResult Map<TSource, TResult>(
+		#endregion
+
+		#region Function
+
+
+		public static Func<TSource , TResult> BuildFunc<TSource, TResult>(
+			this Func<TSource , TResult> function )
+		=> function;
+		
+
+		public static TResult Map<TSource, TResult>(
           this TSource src ,
           Func<TSource , TResult> fn )
           => fn( src );
@@ -294,7 +319,6 @@ namespace SpeedyCoding
         }
         #endregion
 
-
         #region PatternMatch
 
 
@@ -364,7 +388,11 @@ namespace SpeedyCoding
             if ( order == 2 ) return src.GetLength( 2 );
             else return src.GetLength( 0 );
         }
-        #endregion  
-    }
+		#endregion
+
+		#region Convert
+		
+		#endregion
+	}
 }
 

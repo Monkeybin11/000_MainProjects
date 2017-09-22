@@ -47,11 +47,16 @@ namespace SpeedyCoding
 		}
 
 		public static IEnumerable<double> xRange(
-			this int start ,
+			this double start ,
 			int count ,
 			double step )
 		{
-			return Enumerable.Range( start , count ).Select( x => x * step );
+			List<double> output = new List<double>();
+			for ( double i = start ; i < count ; i = (i + 1)*step )
+			{
+				output.Add( i );
+			}
+			return output.AsEnumerable();	
 		}
 
 		public static IEnumerable<int> xRange(
@@ -61,5 +66,7 @@ namespace SpeedyCoding
 		{
 			return Enumerable.Range( start , count ).Select( x => x * step );
 		}
+
+	
 	}
 }

@@ -66,7 +66,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="SpeedyCoding, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\x64\Debug\SpeedyCoding.dll</HintPath>
+      <HintPath>..\..\..\..\2017PLVision\dll\SpeedyCoding.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

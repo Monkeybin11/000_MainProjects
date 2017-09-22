@@ -1,0 +1,24 @@
+﻿<Window x:Class="Spectrometer_OceanOptics.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Spectrometer_OceanOptics"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" LastChildFill="False" >
+            <Button x:Name="btnSTart" Content="start" Margin="3" Click="btnSTart_Click"/>
+            <Button x:Name="btnSTop" Content="stop" Margin="3" Click="btnSTop_Click"/>
+            <Button x:Name="btnADdPOint" Content="stop" Margin="3" Click="btnADdPOint_Click"/>
+        </DockPanel>
+        <lvc:CartesianChart x:Name="chart"  Series="{Binding SeriesCollection , UpdateSourceTrigger=PropertyChanged,Mode=TwoWay }" />
+        
+        
+    </Grid>
+</Window>

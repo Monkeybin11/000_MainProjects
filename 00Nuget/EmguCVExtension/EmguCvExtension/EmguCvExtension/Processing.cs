@@ -527,8 +527,11 @@ namespace EmguCvExtension
 
                 return output;
             } );
-
         }
+
+	
+
+
 
 		public static Func<Image<Bgr , byte> , Image<Bgr , byte>> FnMatrixWafer( int diameter , int flatzoneSize , Bgr color , int thickness )
 		{
