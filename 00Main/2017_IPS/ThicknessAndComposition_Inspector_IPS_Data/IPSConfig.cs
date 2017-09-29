@@ -11,7 +11,33 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 {
 	public class IPSConfig 
 	{
-		public IPSConfig() { } 
+		public IPSConfig()
+		{
+			
+		}
+
+		public void SetPosition()
+		{
+			var fnc = new Func<List<PlrCrd>>(()=> {
+				if ( RhoCount == 0 ) return null;
+				var first = new List<PlrCrd>();
+				var counter = RhoFirst == 0
+								? 1.Act( x => first.Add( new PlrCrd ( 0 , 0 ) ) )
+								: 0.Act( x => first.Add( new PlrCrd ( 0 , 0 ) ) );
+
+				var second = Enumerable.Range( counter, (int)RhoCount - counter) // if start rho is 0, next rho is 0 + rhostep and count is count -1 ( 1 of -1 is start counter)
+								.SelectMany( f => Enumerable.Range( 0 , (int)ThetaCount) ,
+											(f,s) => new PlrCrd(
+															ThetaFirst + s*ThetaStep ,
+															RhoFirst + f*RhoStep ))
+								.ToList();
+
+				return first.Act( x => x.AddRange( second ) ).OrderBy( x => x.Theta).ThenBy( x => x.Rho).ToList();
+
+			} );
+			ScanSpot = fnc();
+		}
+
 
 		// -- Configs config --
 		public string BaseDirPath { get; set; } 
@@ -21,23 +47,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 		public int SampleDiameter { get; set; }
 		public List<PlrCrd> ScanSpot
 		{
-			get
-			{
-				if ( RhoCount == 0 ) return null;
-				var first = new List<PlrCrd>();
-				var counter = RhoFirst == 0
-								? 1.Act( x => first.Add( new PlrCrd ( 0 , 0 ) ) )
-								: 0;
-
-				var second = Enumerable.Range( counter, (int)RhoCount - counter) // if start rho is 0, next rho is 0 + rhostep and count is count -1 ( 1 of -1 is start counter)
-								.SelectMany( f => Enumerable.Range( 0 , (int)ThetaCount) ,
-											(f,s) => new PlrCrd( RhoFirst + f*RhoStep
-																 , ThetaFirst + s*ThetaStep  ))
-								.ToList();
-
-				return first.Act( x => x.AddRange( second ) ).OrderBy( x => x.Theta).ThenBy( x => x.Rho).ToList();
-			}
-			set { }
+			get;set;
 		}
 
 		public double ThetaFirst { get; set; }  
@@ -84,8 +94,8 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 			var angcount = CalcAngCount( 0 , self.ThetaFirst , self.ThetaStep , 360 );
 			var res = from r in Enumerable.Range(0, (int)self.RhoCount)
 					  let rho = r*self.RhoStep + self.RhoFirst
-					  from a in self.ThetaFirst.xRange( angcount , self.ThetaStep)
-					  select new PlrCrd( r,a);
+					  from t in self.ThetaFirst.xRange( angcount , self.ThetaStep)
+					  select new PlrCrd( t,r);
 			return res.ToList();
 		}
 

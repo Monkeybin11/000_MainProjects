@@ -35,7 +35,7 @@ namespace LiveCharts_Example
 			//	.X(model => model.DateTime.Ticks)   //use DateTime.Ticks as X
 			//    .Y(model => model.Value);
 			//Charting.For<double>( mapper );
-			ChartValues = new ChartValues<ObservableValue>();
+			ChartValues = new ChartValues<double>();
 			DateTimeFormatter = value => value.ToString( "##.##" );
 			AxisStep = 10;
 			AxisUnit = 100;
@@ -47,7 +47,7 @@ namespace LiveCharts_Example
 		private double _axisMin;
 		private double _trend;
 
-		public ChartValues<ObservablePoint> ChartValues { get; set; }
+		public ChartValues<double> ChartValues { get; set; }
 		public Func<double , string> DateTimeFormatter { get; set; }
 		public double AxisStep { get; set; }
 		public double AxisUnit { get; set; }
@@ -119,4 +119,4 @@ namespace LiveCharts_Example
 		}
 	}
 }
-}
+

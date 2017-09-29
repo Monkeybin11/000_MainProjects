@@ -67,6 +67,70 @@ namespace SpeedyCoding
 			return Enumerable.Range( start , count ).Select( x => x * step );
 		}
 
-	
+		public static T Pick<T>(
+			this T [ ] [ ] self ,
+			int row ,
+			int col )
+		{
+			var rowlimit = self.Length; 
+			var collimit = self[0].Length;
+
+			if ( row >= rowlimit || col >= collimit )
+			{
+				return default(T);
+			}
+			return self [ row ] [ col ];
+		}
+
+		public static T Pick<T>(
+			this T [ , ] self ,
+			int row ,
+			int col )
+		{
+			var rowlimit = self.GetLength(0);
+			var collimit = self.GetLength(1);
+
+			if ( row >= rowlimit || col >= collimit )
+			{
+				return default( T );
+			}
+			return self [ row , col ];
+		}
+
+		public static T Pick<T>(
+			this T [ ] [ ] self ,
+			int[] rowcol  ) 
+		{
+			var rowlimit = self.Length;
+			var collimit = self[0].Length;
+
+			if ( rowcol[0] >= rowlimit 
+				|| rowcol[1] >= collimit 
+				|| rowcol [ 0 ]  < 0
+				|| rowcol [ 1 ]  < 0)
+			{
+				var de = default(T);
+				return default(T);
+			}
+			var temp = self [ rowcol[0] ] [ rowcol[1] ];
+			return self [ rowcol[0] ] [ rowcol[1] ];
+		}
+
+		public static T Pick<T>(
+			this T [ , ] self ,
+			int [ ] rowcol )
+		{
+			var rowlimit = self.GetLength(0);
+			var collimit = self.GetLength(1);
+
+			if ( rowcol [ 0 ] >= rowlimit || rowcol [ 1 ] >= collimit )
+			{
+				return default( T );
+			}
+			return self [ rowcol [ 0 ] , rowcol [ 1 ] ];
+		}
+
+
+
 	}
 }

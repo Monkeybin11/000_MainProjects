@@ -6,68 +6,78 @@
              xmlns:local="clr-namespace:ThicknessAndComposition_Inspector_IPS"
              xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="300" Background="AliceBlue">
-    <Grid>
+             d:DesignHeight="500" d:DesignWidth="300" Background="AliceBlue">
+    <Grid Background="LightCyan">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Button x:Name="btnConnect"           Content="Connect"              Grid.Column="0"  Grid.Row="0"     Click="LeftSideBtnClick"/>
-        <Button x:Name="btnDisconnect"        Content="Disconnect"           Grid.Column="1"  Grid.Row="0"     Click="LeftSideBtnClick"/>
-        <Button x:Name="btnStart"             Content="Start"                Grid.Column="0"  Grid.Row="1"     Click="LeftSideBtnClick"/>
-        <Button x:Name="btnLoadConfig"        Content="Load Config"          Grid.Column="1"  Grid.Row="1"     Click="LeftSideBtnClick"/>
-        <Button x:Name="btnLoadData"          Content="Load Data"            Grid.Column="0"  Grid.Row="2"     Click="LeftSideBtnClick"/>
-        <Button x:Name="btnSaveRes"           Content="Save"                 Grid.Column="1"  Grid.Row="2"     Click="LeftSideBtnClick"/>
-        <Button x:Name="btnSaveRaw"           Content="Save Raw Data"        Grid.Column="0"  Grid.Row="3"     Click="LeftSideBtnClick"/>
-        <Button x:Name="btnSaveCurrentConfig" Content="Save Current config"  Grid.Column="1"  Grid.Row="3"     Click="LeftSideBtnClick"/>
+        <DockPanel Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+            <Border CornerRadius="6" BorderThickness="2" BorderBrush="LightSteelBlue" DockPanel.Dock="Top">
+                <StackPanel Background="LightCyan">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="- Function -" Grid.ColumnSpan="2" Style="{StaticResource lblBase}" HorizontalAlignment="Center" FontWeight="ExtraBold" />
+                        <Button x:Name="btnConnect"           Content="Connect"              Grid.Column="0"  Grid.Row="1"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}" FontFamily="Yu Gothic UI Semibold"  />
+                        <Button x:Name="btnDisconnect"        Content="Disconnect"           Grid.Column="1"  Grid.Row="1"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
+                        <Button x:Name="btnStart"             Content="Start"                Grid.Column="0"  Grid.Row="2"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
+                        <Button x:Name="btnLoadConfig"        Content="Load Config"          Grid.Column="1"  Grid.Row="2"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
+                        <Button x:Name="btnLoadData"          Content="Load Data"            Grid.Column="0"  Grid.Row="3"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
+                        <Button x:Name="btnSaveRes"           Content="Save"                 Grid.Column="1"  Grid.Row="3"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
+                        <Button x:Name="btnSaveRaw"           Content="Save Raw Data"        Grid.Column="0"  Grid.Row="4"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
+                        <Button x:Name="btnSaveCurrentConfig" Content="Save Current config"  Grid.Column="1"  Grid.Row="4"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
 
-        <CheckBox x:Name="ckbAutoSave" Content="Auto Save" Grid.Row="4" />
-        <xc:DoubleUpDown x:Name="nud"  Grid.Column="1" Grid.Row="4" />
+                        <CheckBox x:Name="ckbAutoSave" Content="Auto Save" Grid.Row="5" Style="{StaticResource chkBase}"/>
+                        <xc:DoubleUpDown x:Name="nud"  Grid.Column="1" Grid.Row="6" Style="{StaticResource nudBase}"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </DockPanel>
+       
+        <DockPanel Margin="5" Grid.Row="1">
+            <Border CornerRadius="6" BorderThickness="2" BorderBrush="LightSteelBlue" DockPanel.Dock="Top"  VerticalAlignment="Stretch">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content=" - Angle (degree) -  " Grid.ColumnSpan="4"           Style="{StaticResource lblBase}" HorizontalAlignment="Center" FontWeight="ExtraBold"/>
+                    <Label Content="First" Grid.Row="1" Grid.Column="0"                  Style="{StaticResource lblBase}" />
+                    <Label Content="Step" Grid.Row="1" Grid.Column="2"                   Style="{StaticResource lblBase}"/>
+                    <Label Content=" - Rho (mm) -  " Grid.Row="2" Grid.ColumnSpan="4"    Style="{StaticResource lblBase}" HorizontalAlignment="Center" FontWeight="ExtraBold" />
+                    <Label Content="First" Grid.Row="3" Grid.Column="0"                  Style="{StaticResource lblBase}"/>
+                    <Label Content="Step"  Grid.Row="3" Grid.Column="2"                  Style="{StaticResource lblBase}"/>
+                    <Label Content="Count" Grid.Row="4" Grid.Column="0"                  Style="{StaticResource lblBase}"/>
+                    <Label Content="Rho Max =" Grid.Row="4" Grid.Column="2"              Style="{StaticResource lblBase}"/>
+                    <Label Content="100 (mm)" Grid.Row="4" Grid.Column="3"              Style="{StaticResource lblBase}"/>
 
-        <TextBox x:Name="txbAutoSave" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" />
-
-        <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Background="BlanchedAlmond">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Label Content=" - Angle (degree) -  " Grid.ColumnSpan="4"          />
-                <Label Content="First" Grid.Row="1" Grid.Column="0"                 />
-                <Label Content="Step" Grid.Row="1" Grid.Column="2"                  />
-                <Label Content=" - Rho (mm) -  " Grid.Row="2" Grid.ColumnSpan="4"   />
-                <Label Content="First" Grid.Row="3" Grid.Column="0"                 />
-                <Label Content="Step"  Grid.Row="3" Grid.Column="2"                 />
-                <Label Content="Count" Grid.Row="4" Grid.Column="0"                 />
-                <Label Content="Rho Max =" Grid.Row="4" Grid.Column="2"/>
-                <Label Content=" 100 (mm)" Grid.Row="4" Grid.Column="3"/>
-
-                <xc:DoubleUpDown x:Name="nudThetaFirst"   Grid.Row="1" Grid.Column="1"  Value="{Binding Path=MainWindow.Core.Config.AngFirst , Mode=TwoWay }"/>
-                <xc:DoubleUpDown x:Name="nudThetaStep"    Grid.Row="1" Grid.Column="3"  Value="{Binding Path=MainWindow.Core.Config.AngStep , Mode=TwoWay }"/>
-                <xc:DoubleUpDown x:Name="nudRhoFirst"   Grid.Row="3" Grid.Column="1"  Value="{Binding Path=MainWindow.Core.Config.RhoFirst , Mode=TwoWay }"/>
-                <xc:DoubleUpDown x:Name="nudRhoStep"    Grid.Row="3" Grid.Column="3"  Value="{Binding Path=MainWindow.Core.Config.RhoStep , Mode=TwoWay }"/>
-                <xc:DoubleUpDown x:Name="nudRhoCount"   Grid.Row="4" Grid.Column="1"  Value="{Binding Path=MainWindow.Core.Config.RhoCount , Mode=TwoWay }"/>
-            </Grid>
-        </StackPanel>
-
+                    <xc:DoubleUpDown x:Name="nudThetaFirst"   Grid.Row="1" Grid.Column="1"  Value="{Binding Path=MainWindow.Core.Config.AngFirst , Mode=TwoWay }" Style="{StaticResource nudBase}" />
+                    <xc:DoubleUpDown x:Name="nudThetaStep"    Grid.Row="1" Grid.Column="3"  Value="{Binding Path=MainWindow.Core.Config.AngStep , Mode=TwoWay }"  Style="{StaticResource nudBase}" />
+                    <xc:DoubleUpDown x:Name="nudRhoFirst"   Grid.Row="3" Grid.Column="1"    Value="{Binding Path=MainWindow.Core.Config.RhoFirst , Mode=TwoWay }" Style="{StaticResource nudBase}" />
+                    <xc:DoubleUpDown x:Name="nudRhoStep"    Grid.Row="3" Grid.Column="3"    Value="{Binding Path=MainWindow.Core.Config.RhoStep , Mode=TwoWay }"  Style="{StaticResource nudBase}" />
+                    <xc:DoubleUpDown x:Name="nudRhoCount"   Grid.Row="4" Grid.Column="1"    Value="{Binding Path=MainWindow.Core.Config.RhoCount , Mode=TwoWay }" Style="{StaticResource nudBase}" />
+                </Grid>
+            </Border>
+        </DockPanel>
     </Grid>
 </UserControl>

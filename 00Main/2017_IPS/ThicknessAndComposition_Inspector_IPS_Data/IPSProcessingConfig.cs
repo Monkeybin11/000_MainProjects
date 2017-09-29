@@ -8,11 +8,9 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 {
 	public class IPSProcessingConfig
 	{
-		public int IntglStart { get; set; }
-		public int IntglEnd { get; set; }
-		public double a { get; set; }
-		public double b { get; set; }
+		public int	  IntglStart { get;set;}
+		public int	  IntglEnd { get;set;}
+		public double a		{ get;set;}
+		public double b		{ get; set; }
 	}
-
-	
 }

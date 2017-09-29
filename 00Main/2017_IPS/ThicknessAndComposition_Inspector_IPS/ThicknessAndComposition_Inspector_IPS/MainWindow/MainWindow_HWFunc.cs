@@ -31,6 +31,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 			res.BaseDirPath = Core.ConfigBasePath;
 			res.StartupConfigName = Core.ConfigName;
 			res.ScanSpot = Core.Config.ScanSpot;
+			res.SetPosition();
 			return res;
 		}
 
