@@ -54,7 +54,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 		{
 			InitializeComponent();
 
-			DataContext = this;
+			//DataContext = this;
 
 			ChartValues = new ChartValues<double>();
 			DisFormatter = value => Math.Round(value).ToString();

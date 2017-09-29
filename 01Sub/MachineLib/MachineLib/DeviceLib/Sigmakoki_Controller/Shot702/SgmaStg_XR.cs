@@ -22,6 +22,7 @@ namespace MachineLib.DeviceLib
 		RS232 RS;
 		bool PrintMode;
 		public int TimeOut = 20000;
+		
 		object key = new object();
 
 		public string Home { get { return "H:"; } set { } } 
@@ -140,27 +141,51 @@ namespace MachineLib.DeviceLib
 
 	public static class SgmaExt
 	{
+		static int HomeOffset = 193000;
+
 		public static string ToPos(
 		this double pos )
-		=> pos > 0 ? "+P" + ( Math.Abs( pos ) ).ToString()
+		=> pos >= 0 ? "+P" + ( Math.Abs( pos ) ).ToString()
 				   : "-P" + ( Math.Abs( pos) ).ToString();
 		public static string ToPos(
 		this int pos )
-		=> pos > 0 ?  "+P" + ( Math.Abs( pos ) ).ToString()
+		=> pos >= 0 ?  "+P" + ( Math.Abs( pos ) ).ToString()
 				   :  "-P" + ( Math.Abs( pos ) ).ToString();
 
 		public static string ToPos(
 		this int pos ,
 		Axis axis )
-		=> pos > 0 ? ( axis.ToIdx() ).ToString() + "+P" + ( Math.Abs( pos ) ).ToString()
-				   : ( axis.ToIdx() ).ToString() + "-P" + ( Math.Abs( pos)    ).ToString();
+		=> pos >= 0 ? ( axis.ToIdx() ).ToString() + "+P" + ( Math.Abs( pos ) ).ToString()
+				   : ( axis.ToIdx() ).ToString() + "-P" + ( Math.Abs( pos ) ).ToString();
 
 
 		public static string ToPos(
 		this double pos ,
 		Axis axis )
-		=> pos > 0 ? ( axis.ToIdx() ).ToString() + "+P" + ( Math.Abs ( pos ) ).ToString()
+		=> pos >= 0 ? ( axis.ToIdx() ).ToString() + "+P" + ( Math.Abs ( pos ) ).ToString()
 				   : ( axis.ToIdx() ).ToString() + "-P" + ( Math.Abs( pos)     ).ToString();
+
+		public static string ToOffPos(
+		this double pos )
+		=> pos >= 0 ? "+P" + ( HomeOffset - Math.Abs( pos ) ).ToString()
+				   : "-P" + ( HomeOffset - Math.Abs( pos ) ).ToString();
+
+		public static string ToOffPos(
+		this int pos )
+		=> pos >= 0 ? "+P" + ( HomeOffset - Math.Abs( pos ) ).ToString()
+				   : "-P" + ( HomeOffset - Math.Abs( pos ) ).ToString();
+
+		public static string ToOffPos(
+		this int pos ,
+		Axis axis )
+		=> pos >= 0 ? ( axis.ToIdx() ).ToString() + "+P" + ( HomeOffset - Math.Abs( pos ) ).ToString()
+				   : ( axis.ToIdx() ).ToString() + "-P" + ( HomeOffset - Math.Abs( pos ) ).ToString();
+		public static string ToOffPos(
+		this double pos ,
+		Axis axis )
+		=> pos >= 0 ? ( axis.ToIdx() ).ToString() + "+P" + ( HomeOffset - Math.Abs( pos ) ).ToString()
+				   : ( axis.ToIdx() ).ToString() + "-P" + ( HomeOffset - Math.Abs( pos ) ).ToString();
+
 
 
 

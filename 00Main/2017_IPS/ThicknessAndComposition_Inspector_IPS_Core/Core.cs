@@ -35,6 +35,14 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		public System.Windows.Media.Imaging.BitmapSource ImgScanned { get { return ImgScanResult.ToBitmapSource(); } }
 		public System.Windows.Media.Imaging.BitmapSource ImgScaleBar { get { return Imgscalebar.ToBitmapSource(); } }
 
+		public List<int> PickedIdx = new List<int>();
+		public List<double> Wave = new List<double>();
+		public List<double> Refs = new List<double>();
+		public List<double> Darks = new List<double>();
+		public List<int> SDWaves = new List<int>();
+		public List<double> ReflctFactors = new List<double>();
+
+
 		#region Init
 		public IPSCore()
 		{
@@ -140,32 +148,38 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			{
 				double[] intendata = new double[] { };
 				double[] wav = new double[] { };
-
+		
 				PlrCrd crd = new PlrCrd(0,0);
 				double res = 355.46848;
 
-				if ( plrcrd.Rho != 0 )
+				try
 				{
-					var intentemp = LoadTestData();
-					var postemp = CreatedefualtPos();
+					if ( plrcrd.Rho != 0 )
+					{
+						var intentemp = LoadTestData();
+						var postemp = CreatedefualtPos();
 
-					intendata = intentemp [ counter ];
-					crd = postemp [ counter ];
-					wav = LoadWavelen();
+						intendata = intentemp [ counter ];
+						crd = postemp [ counter ];
+						wav = LoadWavelen();
 
-					var integ = intendata.Integral(wav , PrcConfig.IntglStart , PrcConfig.IntglEnd);
-					res = integ * PrcConfig.a + PrcConfig.b;
+						var integ = intendata.Integral(wav , PrcConfig.IntglStart , PrcConfig.IntglEnd);
+						res = integ * PrcConfig.a + PrcConfig.b;
 
-					//Console.WriteLine( "Coordinate : " + crd.ToString() );
-					//Console.WriteLine( "Integral : " + integ );
+						//Console.WriteLine( "Coordinate : " + crd.ToString() );
+						//Console.WriteLine( "Integral : " + integ );
 
-					updatecounter();
-					"updated".Print( counter.ToString() );
+						updatecounter();
+						"updated".Print( counter.ToString() );
+					}
+					else
+					{
+						"Not updated".Print( counter.ToString() );
+						plrcrd.ToString().Print( "Current POs" );
+					}
 				}
-				else
+				catch ( Exception )
 				{
-					"Not updated".Print( counter.ToString() );
-					plrcrd.ToString().Print( "Current POs" );
 				}
 				return Tuple.Create( crd , res.ToLEither() );
 			};
@@ -176,7 +190,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		//	( inten , wave , plrcrd ) =>
 		//	{
 		//		return Tuple.Create( plrcrd,
-		//							 inten.Bind( x => x.Integral(wave , PrcConfig.IntglStart , PrcConfig.IntglEnd), "Integral Fail" )
+		//							 inten.Bind( x => x.Integral(wave , PickedIdx ,Darks,Refs, ReflctFactors , PrcConfig.IntglStart , PrcConfig.IntglEnd), "Integral Fail" )
 		//								  .Bind( x => ( x*PrcConfig.a + PrcConfig.b).Print("result") ));
 		//	};
 
@@ -188,7 +202,94 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				return null;
 			}; */
 
+		public void Setdark() //sjw
+		{
+			Stg.SendAndReady( Stg.SetSpeed
+														 + Axis.W.ToIdx()
+														 + ( 18000 ).ToSpeed()
+														 + ( 18000 ).ToSpeed() );
+			FlgAutoUpdate = true;
+			Stg.SendAndReady( Stg.GoAbs + 0.ToPos( Axis.X ));
+			Stg.SendAndReady( Stg.Go);
+			Thread.Sleep( 500 );
+			var darkraw = BkD_Spctrm;
+			Darks = PickedIdx.Select( x => darkraw [ x ] ).ToList();
+			FlgAutoUpdate = false;
+
+		}
+
+		public void SetRef() //sjw
+		{
+			Stg.SendAndReady( Stg.SetSpeed
+														 + Axis.W.ToIdx()
+														 + ( 18000 ).ToSpeed()
+														 + ( 18000 ).ToSpeed() );
+			FlgAutoUpdate = true;
+			Stg.SendAndReady( Stg.GoAbs + 0.ToOffPos( Axis.X ) );
+			Stg.SendAndReady( Stg.Go );
+			Thread.Sleep( 500 );
+			var refraw = BkD_Spctrm;
+			Refs = PickedIdx.Select( x => refraw [ x ] ).ToList();
+			FlgAutoUpdate = false;
+		}
+
+		public void PickWaveIdx() //sjw
+		{
+			Bkd_WaveLen = Spctr.GetWaveLen();
+			var wave = Bkd_WaveLen.Select( x => (int)x).ToArray();
+			List<int> idxlist = new List<int>();
+			foreach ( var item in SDWaves )
+			{
+				var idx = Array.IndexOf( wave , item);
+				if(idx >= 0) idxlist.Add( idx );
+			}
+			PickedIdx = idxlist;
+		}
+
+		public void LoadReflextionDatas() //sjw
+		{
+			string path = @"C:\000_MainProjects\00Main\2017_IPS\ThicknessAndComposition_Inspector_IPS\ThicknessAndComposition_Inspector_IPS\bin\x64\Debug\10d_avg.csv";
+			CsvTool cv = new CsvTool();
+			var relec = cv.ReadCsv2String( path );
+
+			SDWaves = relec.Select( x => Convert.ToInt32( x [ 0 ]) ).ToList();
+			ReflctFactors = relec.Select( x => Convert.ToDouble( x [ 1 ]) ).ToList();
+		}
+
+
+
 		List<Tuple<PlrCrd,LEither<double>>> TempRes = new List<Tuple<PlrCrd, LEither<double>>>();
+		public bool ScanRun1()
+		{
+			counter = 0;
+			FlgAutoUpdate = true;
+
+			var calcTaskList = new Task< Tuple<PlrCrd , LEither<double> >>[ Config.ScanSpot.Len() ];
+			var wavelength = Bkd_WaveLen = Spctr.GetWaveLen();
+
+			SetHWInternalParm(
+		   Config.RStgSpeed ,
+		   Config.XStgSpeed ,
+		   Config.Scan2Avg ,
+		   Config.IntegrationTime ,
+		   Config.Boxcar
+		   );
+
+			var res1 = 0.ToPos( Axis.X );
+			var res = new TEither( Stg as IStgCtrl , 12)
+						//.Bind( x => x.Act( f =>
+						//	f.SendAndReady( f.Home + Axis.W.ToIdx() ) ).ToTEither( 12 ) , "R or X Home Fail" )
+						.Bind( x => x.Act( f =>
+									f.SendAndReady( f.GoAbs
+													+ 0.ToOffPos(Axis.X).Print() ) )
+											 .ToTEither( 1 ) , "Opposit Movement Fail" )
+								.Bind( x => x.Act( f =>
+									f.SendAndReady( f.Go ) ).ToTEither( 1 ) , "Stage Movement Fail" );
+
+			return true;
+		}
+
+
 		public bool ScanRun() // Use Internal Config , not get config from method parameter
 		{
 			counter = 0;
@@ -205,9 +306,16 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		   Config.Boxcar
 		   );
 
+
 			var res = new TEither( Stg as IStgCtrl , 12)
 						.Bind( x => x.Act( f =>
-							f.SendAndReady( f.Home + Axis.W.ToIdx() ) ).ToTEither( 12 ) , "R or X Home Fail" );
+							f.SendAndReady( f.Home + Axis.W.ToIdx() ) ).ToTEither( 12 ) , "R or X Home Fail" )
+						.Bind( x => x.Act( f =>
+									f.SendAndReady( f.GoAbs
+													+ 0.ToOffPos(Axis.X) ) )
+											 .ToTEither( 1 ) , "Opposit Movement Fail" )
+								.Bind( x => x.Act( f =>
+									f.SendAndReady( f.Go ) ).ToTEither( 1 ) , "Stage Movement Fail" );
 
 			var posIntenlist = Config.ScanSpot.Select( ( pos , i) =>
 				 {
@@ -216,7 +324,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 								.Bind( x => x.Act( f =>
 									f.SendAndReady( f.GoAbs
 													+ pos.Theta.Degree2Pulse().ToPos( Axis.W )
-													+ pos.Rho.mmToPulse().ToPos() ) )
+													+ pos.Rho.mmToPulse().ToOffPos() ) )
 											 .ToTEither( 1 ) , "R or X Stage Move Command Fail" )
 								.Bind( x => x.Act( f =>
 									f.SendAndReady( f.Go ) ).ToTEither( 1 ) , "Stage Movement Fail" )
@@ -237,10 +345,16 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			// Thickness Result List
 			// ( You dont need to use try catch pattern for catch all exception from tasklist )
 			var posThicknesses = Task.WhenAll( calcTaskList ).Result.Duplicate0ToAllTheta().ToList();
-			
+
 			// Reset Pos
-			res.Bind( x => x.Act( f => f.SendAndReady( f.GoAbs + 0.ToPos( Axis.W ) + 0.ToPos() ) ).ToTEither( 1 ) )
-			   .Bind( x => x.Act( f => f.SendAndReady( f.Go ) ).ToTEither( 1 ) );
+			Task.Run( () => { 
+			res.Bind( x => x.Act( f => Stg.SendAndReady( Stg.SetSpeed
+													     + Axis.W.ToIdx()
+													     + ( 18000 ).ToSpeed()
+													     + ( 18000 ).ToSpeed() )).ToTEither(1))
+				.Bind( x => x.Act( f => f.SendAndReady( f.GoAbs + 0.ToPos( Axis.W ) + 0.ToPos() ) ).ToTEither( 1 ) )
+			    .Bind( x => x.Act( f => f.SendAndReady( f.Go ) ).ToTEither( 1 ) );
+			} );
 
 			FlgAutoUpdate = false;
 			//For Simulation 
@@ -258,7 +372,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				var tasklogs = posThickInten.Where( x => x.Thickness.IsRight == false)
 											.Select( x => x.Pos.ToString()+" ||" + x.Thickness.Left )
 											.ActLoop( x => Lggr.Log(x , true));
-				ImgScanResult = new Image<Bgr , byte>(new byte[100,100,3]);
+				ImgScanResult = new Image<Bgr , byte>( @" C:\Temp\testImg034837.bmp " );
 				return false;
 			}
 			else
@@ -307,11 +421,13 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			var xyCm2 = xyCm1            .Interpol_Theta(divide).OrderBy( x => x[0]).ThenBy( x => x[1]).Select( x =>x).ToList();
 			var xyCm3 = xyCm2             .Interpol_Rho(divide).OrderBy( x => x[0]).ThenBy( x => x[1]).Select( x =>x).ToList();
 			var xyCm4 = xyCm3             .ToCartesianReslt().OrderBy( x=> x[0]).ThenBy( x => x[1]).Select( x =>x).ToList();
+
+
 			var xyCm = xyCm4              .Select( x => new
 									  {
 										   X  = offset + x[0] ,
 										   Y  = offset + x[1] ,
-										   Cm = cm[ (int)(( x[2] -min )/(max - min)*255) ]　//color double[r,g,b]
+										   Cm = (min - max) == 0 ? cm[127] : cm[ (int)(( x[2] -min )/(max - min)*255) ]　//color double[r,g,b]
 									  }).ToList();
 
 			//"-----  Fisrt  -----".Print();

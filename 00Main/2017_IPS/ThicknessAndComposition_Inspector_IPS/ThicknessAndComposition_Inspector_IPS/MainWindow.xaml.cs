@@ -32,7 +32,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 		public MainWindow()
 		{
 			InitializeComponent();
-			//DataContext = this;
+			DataContext = this;
 		}
 		private void Window_Loaded( object sender , RoutedEventArgs e )
 		{
@@ -107,7 +107,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 
 				case "btnStart":
-
+					//Core.ScanRun();
 					Core.Config = UI2IpsConfig();
 					ucLSStatus.lblProgress.Content = "InProgress";
 					var result = await Task<bool>.Run(()=> Core.ScanRun());
@@ -135,11 +135,11 @@ namespace ThicknessAndComposition_Inspector_IPS
 					break;
 
 				case "btnLoadData":
-					if ( ofd.ShowDialog() == true )
-					{
-						Core.LoadConfig( ofd.FileName );
-						Config2UI( Core.Config );
-					}
+					//if ( ofd.ShowDialog() == true )
+					//{
+					//	Core.LoadConfig( ofd.FileName );
+					//	Config2UI( Core.Config );
+					//}
 					break;
 
 				case "btnSaveRes":
@@ -152,9 +152,19 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 					break;
 
-				case "btnSaveRaw":
+				case "btnSetWave":
+					Core.LoadReflextionDatas();
+					Core.PickWaveIdx();
 					break;
 
+				case "btnDarkScan":
+					Core.Setdark();
+					break;
+
+				case "btnRefScan":
+					Core.SetRef();
+					break;
+				
 				default:
 					break;
 			}

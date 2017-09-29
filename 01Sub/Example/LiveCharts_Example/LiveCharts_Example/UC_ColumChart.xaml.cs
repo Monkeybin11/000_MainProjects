@@ -27,7 +27,7 @@ namespace LiveCharts_Example
 			get { return _Labels; }
 			set
 			{
-				_Labels = value;
+				//_Labels = value.Select( x => x.ToString() );
 				OnPropertyChanged( "Labels" );
 			}
 		}
