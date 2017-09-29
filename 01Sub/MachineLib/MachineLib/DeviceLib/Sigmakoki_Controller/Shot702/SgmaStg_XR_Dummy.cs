@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModelLib.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MachineLib.DeviceLib
 {
-	public class SgmaStg_XR_Virtual : ISgmaStg_XR
+	public class SgmaStg_XR_Virtual : ISgmaStg_XR , IStgCtrl
 	{
 		public string Home { get { return "H:"; } set { } } 
 		public string GoAbs	{ get{return "A:";} set { } }
@@ -25,7 +26,7 @@ namespace MachineLib.DeviceLib
 
 		public string Query( string cmd )
 		{
-			return "Virtual Mode";
+			return StatusOK;
 		}
 
 		public bool Send( string cmd )
@@ -44,7 +45,7 @@ namespace MachineLib.DeviceLib
 		public bool SendAndReady( string cmd , int timeoutSec = 0 )
 		{
 			Console.WriteLine( "Send : " + cmd );
-			Thread.Sleep( 1000 );
+			Thread.Sleep( 100 );
 			//return cmd == "H:1" ? false : true;
 			return true;
 		}

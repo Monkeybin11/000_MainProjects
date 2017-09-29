@@ -9,15 +9,17 @@ namespace ModelLib.Data
 {
 	public interface Polar : Crd2D , IFormattable
 	{
-		double Rho { get; set; }
 		double Theta { get; set; }
+		double Rho { get; set; }
+		
 		
 
 	}
 	public class PlrCrd : Polar
 	{
-		public double Rho { get; set; }
 		public double Theta { get; set; }
+		public double Rho { get; set; }
+		
 		
 		
 		
@@ -26,14 +28,14 @@ namespace ModelLib.Data
 		{
 			var strRho = Rho.ToString();
 			var strTheta = Theta.ToString();
-			return strRho + "," + strTheta;
+			return  strTheta + "," + strRho  ;
 		}
 
 		public string ToString( string format , IFormatProvider formatProvider )
 		{
 			var strRho = Rho.ToString();
 			var strTheta = Theta.ToString();
-			return strRho + "," + strTheta ;
+			return strTheta + "," + strRho;
 		}
 
 		public PlrCrd(  )
@@ -41,10 +43,11 @@ namespace ModelLib.Data
 			
 		}
 
-		public PlrCrd( double rho , double theta )
+		public PlrCrd( double theta , double rho  )
 		{
-			Rho = rho;
 			Theta = theta;
+			Rho = rho;
+			
 			
 		}
 	}
@@ -83,7 +86,7 @@ namespace ModelLib.Data
 		}
 	}
 
-	public class CrtnUnit : Cartesian
+	public class CrtnUnit : Cartesian // TODO : Not Complete yet
 	{
 		public double X { get { return default( double ); } set { } }
 		public double Y { get { return default( double ); } set { } }
@@ -100,9 +103,26 @@ namespace ModelLib.Data
 
 			if ( crtn != null ) return crtn;
 			else if ( polar == null ) return new CrtnUnit();
+
+
+			//Console.WriteLine("----------");
+			//Console.Write( "Theta : " );
+			//Console.Write( polar.Theta.ToString() );
+			//Console.Write("    Rho : ");
+			//Console.Write( polar.Rho .ToString());
+			//Console.Write("  =>  ");
+			//Console.Write("x : ");
+			//Console.Write( (polar.Rho * Math.Cos( polar.Theta * Math.PI / 180.0 )).ToString() );
+			//Console.Write("   Y : ");
+			//Console.Write( (polar.Rho * Math.Sin( polar.Theta * Math.PI / 180.0 )).ToString() );
+			//Console.WriteLine();
+		
+
+
+
 			return new CrtnCrd(
-							   polar.Theta * Math.Cos( polar.Rho ) , // x
-							   polar.Theta * Math.Sin( polar.Rho ) // y
+							   polar.Rho * Math.Cos( polar.Theta * Math.PI / 180.0 ) , // x
+							   polar.Rho * Math.Sin( polar.Theta * Math.PI / 180.0 ) // y
 							   );
 		}
 
@@ -117,9 +137,8 @@ namespace ModelLib.Data
 			else if ( crtn == null ) return new PlrUnit();
 
 			return new PlrCrd(
-							   Math.Sqrt( crtn.X * crtn.X + crtn.Y * crtn.Y ) , // x
-							   Math.Atan2( crtn.Y , crtn.X )*180/Math.PI + 180 // y
-							   );
+							   Math.Atan2( crtn.Y , crtn.X ) * 180 / Math.PI + 180 ,
+							   Math.Sqrt( crtn.X * crtn.X + crtn.Y * crtn.Y )  );
 		}
 
 

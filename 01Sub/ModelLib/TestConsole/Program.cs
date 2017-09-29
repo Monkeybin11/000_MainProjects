@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ModelLib.Monad;
 using MachineLib.DeviceLib;
+using System.IO;
 
 namespace TestConsole
 {
@@ -16,7 +17,22 @@ namespace TestConsole
 
 	class Program
 	{
+		static string path = @"E:\temp\pos.csv";
+		static string path2 = @"E:\temp\thckness.csv";
 		static void Main( string [ ] args )
+		{
+			var res = File.ReadAllLines(path);
+			var res1 = File.ReadAllText(path);
+			var res2 = File.ReadLines(path).ToList();
+			Console.WriteLine();
+
+
+		}
+
+
+
+
+		static void main2()
 		{
 			test1();
 			test2();
@@ -44,9 +60,6 @@ namespace TestConsole
 								c => c.Item1,
 								o => o.Item1,
 								(c , res) => Tuple.Create(c.Item1,c.Item2,res)).ToList();
-
-
-
 		}
 
 		static void test1() {

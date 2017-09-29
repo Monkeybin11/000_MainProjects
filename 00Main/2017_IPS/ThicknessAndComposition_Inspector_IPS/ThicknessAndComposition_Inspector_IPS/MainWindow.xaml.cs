@@ -26,18 +26,22 @@ namespace ThicknessAndComposition_Inspector_IPS
 	{
 		IPSCore Core { get; set; }
 		Win_Config WinConfig;
+		bool CoreRunning;
 
 		#region Load Close
 		public MainWindow()
 		{
 			InitializeComponent();
-			DataContext = this;
+			//DataContext = this;
 		}
 		private void Window_Loaded( object sender , RoutedEventArgs e )
 		{
 			WinConfig = new Win_Config();
 			ucLSMenu.evtBtn += new BtnEvt( LeftSideBtn );
 			Core = new IPSCore();
+			Core.evtConnection += new Action<bool,bool>( ucLSStatus.DisplayConnection );
+			//Core.evtScanStatus += new Action<string>( ucLSStatus.DisplayScanStatus );
+			Core.Connect();
 			WinConfig.evtStgSpeedSetChange += new StgSpeedEvent( Core.SetHWInternalParm );
 			Config2UI( Core.Config );
 		}
@@ -59,6 +63,8 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 		public void OptionMenuClick( object sender , RoutedEventArgs e )
 		{
+			if ( CoreRunning ) return;
+			CoreRunning = true;
 			var master = sender as MenuItem;
 			switch ( master.Name )
 			{
@@ -79,29 +85,41 @@ namespace ThicknessAndComposition_Inspector_IPS
 				default:
 					break;
 			}
+			CoreRunning = false;
 		}
 
 
 
-		public void LeftSideBtn( string name )
+		public async void LeftSideBtn( string name )
 		{
+			if ( CoreRunning ) return;
+			CoreRunning = true;
 			OpenFileDialog ofd = new OpenFileDialog();
+			Mouse.OverrideCursor = Cursors.Wait;
 			switch ( name )
 			{
 				case "btnConnect":
 					Window_Loaded( null , null );
 					break;
 				case "btnDisconnect":
+					Core.test();
 					break;
-				case "btnStart":
-					Core.Config = UI2IpsConfig();
-					//Core.TestFunction();
-					Core.ScanRun();
 
+
+				case "btnStart":
+
+					Core.Config = UI2IpsConfig();
+					ucLSStatus.lblProgress.Content = "InProgress";
+					var result = await Task<bool>.Run(()=> Core.ScanRun());
+					if ( result ) ucLSStatus.lblProgress.Content = "Ready";
+					else ucLSStatus.lblProgress.Content = ( "Ready (Interruped)" );
+					ucDataGrid.UpdateGrid( Core.ResultData.SpotDataList.Select( x => 
+																x.ToGridResult()).ToList() );
+					ucMapDisplay.DrawImg( Core.ImgScanned , Core.ImgScaleBar);
 					break;
+
 
 				case "btnLoadConfig":
-					
 					if ( ofd.ShowDialog() == true )
 					{
 						Core.LoadConfig( ofd.FileName );
@@ -125,6 +143,13 @@ namespace ThicknessAndComposition_Inspector_IPS
 					break;
 
 				case "btnSaveRes":
+					var temp = new List<double[]>();
+					temp.Add( new double [ ] { 300 , 100 } );
+					temp.Add( new double [ ] { 310 , 30 } );
+					temp.Add( new double [ ] { 320 , 210 } );
+					temp.Add( new double [ ] { 330 , 50 } );
+					ucHisto.CreateHistogram( temp );
+
 					break;
 
 				case "btnSaveRaw":
@@ -133,7 +158,8 @@ namespace ThicknessAndComposition_Inspector_IPS
 				default:
 					break;
 			}
-
+			Mouse.OverrideCursor = null;
+			CoreRunning = false;
 
 			// Load config 
 			// Save config
@@ -142,10 +168,11 @@ namespace ThicknessAndComposition_Inspector_IPS
 			// ToDo : 서브기능 = 1. 레전드 표시 , 2. 스테이지 실시간 포지션  3. 스펙트로미터 실시가나 표시 
 
 		}
-
 		
 
-		
+
+
+
 	}
 	
 }

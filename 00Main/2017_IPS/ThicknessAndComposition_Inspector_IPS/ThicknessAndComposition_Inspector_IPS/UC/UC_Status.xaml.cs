@@ -27,6 +27,19 @@ namespace ThicknessAndComposition_Inspector_IPS
 			InitializeComponent();
 		}
 
-		
+		public void DisplayConnection( bool stg , bool spct )
+		{
+			brdStgConnect.Background = stg ? Brushes.LimeGreen
+											: Brushes.OrangeRed;
+
+			brdSpctConnect.Background = spct ? Brushes.LimeGreen
+											: Brushes.OrangeRed;
+		}
+
+		public void DisplayScanStatus( string msg )
+		{
+			lblProgress.Content = msg;
+		}
+
 	}
 }

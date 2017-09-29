@@ -1,0 +1,19 @@
+﻿<Window x:Class="LiveCharts_Example.Columnchart_UCTEst"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LiveCharts_Example"
+        xmlns:uc ="clr-namespace:LiveCharts_Example"
+        mc:Ignorable="d"
+        Title="Columnchart_UCTEst" Height="300" Width="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <uc:UC_ColumChart x:Name="uctest"/>
+        <Button Name="btnstart" Grid.Column="1" Click="btnstart_Click"/>
+
+    </Grid>
+</Window>

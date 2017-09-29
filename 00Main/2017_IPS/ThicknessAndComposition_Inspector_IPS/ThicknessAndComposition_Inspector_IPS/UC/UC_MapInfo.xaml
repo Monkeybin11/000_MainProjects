@@ -6,17 +6,25 @@
              xmlns:local="clr-namespace:ThicknessAndComposition_Inspector_IPS"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="200">
-    <UniformGrid Rows="8" Columns="1" Background="Aquamarine">
-        
-        <DockPanel>
-            <Rectangle Fill="AliceBlue" Style="{StaticResource rectRside}"/>
-            <Label Content="100~200" Style="{StaticResource lblRSide}"/>
-        </DockPanel>
 
-        <DockPanel>
-            <Rectangle Fill="AliceBlue" Style="{StaticResource rectRside}"/>
-            <Label Content="100~200" Style="{StaticResource lblRSide}"/>
-        </DockPanel>
+    <DockPanel Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Border CornerRadius="6" BorderThickness="2" BorderBrush="LightSteelBlue" DockPanel.Dock="Top" >
+            <UniformGrid Rows="8" Columns="1" Background="LightCyan">
+                <DockPanel>
+                    <Rectangle Fill="Red" Style="{StaticResource rectRside}"/>
+                    <Label Content="100~200" Style="{StaticResource lblBase}"/>
+                </DockPanel>
 
-    </UniformGrid>
+                <DockPanel>
+                    <Rectangle Fill="Green" Style="{StaticResource rectRside}"/>
+                    <Label Content="100~200" Style="{StaticResource lblBase}"/>
+                </DockPanel>
+
+                <DockPanel>
+                    <Rectangle Fill="Blue" Style="{StaticResource rectRside}"/>
+                    <Label Content="100~200" Style="{StaticResource lblBase}"/>
+                </DockPanel>
+            </UniformGrid>
+        </Border>
+    </DockPanel>
 </UserControl>

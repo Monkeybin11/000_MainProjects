@@ -21,7 +21,7 @@ namespace MachineLib.DeviceLib
 		public double [ ] GetSpectrum()
 		{
 			Random rnd = new Random();
-			var res = Enumerable.Range(0,2068).Select( x => (double)rnd.Next(0,3000)).ToArray<double>();
+			var res = Enumerable.Range(0,1068).Select( x => (double)rnd.Next(1000,3000)).ToArray<double>();
 			res [ 0 ] = 123;
 			res [ 1 ] = 456;
 			res [ 2 ] = 789;
@@ -30,8 +30,8 @@ namespace MachineLib.DeviceLib
 
 		public double [ ] GetWaveLen()
 		{
-			double w = (1120 - 200) / 2068.0;
-			var res = Enumerable.Range( 0 , 2068 ).Select( x => x * w + 200 ).ToArray<double>();
+			double w = (1120 - 200) / 1068.0;
+			var res = Enumerable.Range( 0 , 1068 ).Select( x => x * w + 200 ).ToArray<double>();
 			res [ 0 ] = 123;
 			res [ 1 ] = 456;
 			res [ 2 ] = 789;

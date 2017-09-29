@@ -15,13 +15,14 @@ namespace MachineLib.DeviceLib
 {
 	public enum Axis { R = 1, X = 2 , W }
 
-	public class SgmaStg_XR : RS232Instance, IStgCtrl, ISgmaStg_XR, ISgmaStg_XR12
+	public class SgmaStg_XR : RS232Instance, IStgCtrl, ISgmaStg_XR
 	{
 		#region Base
 	    SerialPort Port;
 		RS232 RS;
 		bool PrintMode;
 		public int TimeOut = 20000;
+		object key = new object();
 
 		public string Home { get { return "H:"; } set { } } 
 		public string GoAbs	{ get{return "A:";} set { } }
@@ -60,7 +61,16 @@ namespace MachineLib.DeviceLib
 		}
 
 		public bool Open()
-		=> RS.Open() == true ? true : false; 
+		{
+			if ( RS.Open() )
+			{
+				return RS.Query( Status ) == StatusOK
+					? true
+					: false;
+			}
+			return false;
+		}
+		
 		
 
 
@@ -69,42 +79,58 @@ namespace MachineLib.DeviceLib
 
 		public bool Send( string cmd )
 		{
-			if ( PrintMode ) cmd.Print("Send");
-			return RS.Query( cmd ) == "OK"
-					? true
-					: false;
+			lock ( key )
+			{
+				if ( PrintMode ) cmd.Print( "Send" );
+				return RS.Query( cmd ) == "OK"
+						? true
+						: false;
+			}
+			
 		}
 
 		public string Query( string cmd )
 		{
-			if ( PrintMode ) cmd.Print( "Query" );
-			return RS.Query(  cmd  );
+			lock ( key )
+			{
+				if ( PrintMode ) cmd.Print( "Query" );
+				return RS.Query( cmd );
+			}
+			
 		}
 
 		public bool WaitReady( int timeoutSec)
 		{
-			Stopwatch stw = new Stopwatch();
-			stw.Start();
-			while ( RS.Query( Status ) != StatusOK )
+			lock ( key )
 			{
-				Thread.Sleep( 300 );
-				if ( timeoutSec > 0 && stw.ElapsedMilliseconds / 1000 > timeoutSec ) return false;
+				Stopwatch stw = new Stopwatch();
+				stw.Start();
+				while ( RS.Query( Status ) != StatusOK )
+				{
+					Thread.Sleep( 300 );
+					if ( timeoutSec > 0 && stw.ElapsedMilliseconds / 1000 > timeoutSec ) return false;
+				}
+				return true;
 			}
-			return true;
+			
 		}
 
 		public bool SendAndReady( string cmd , int timeoutSec = 0)
 		{
-			if ( PrintMode ) cmd.Print( "SendAndReady" );
-			var temp = RS.Query( cmd );
-			Stopwatch stw = new Stopwatch();
-			stw.Start();
-			while ( RS.Query( Status ) != StatusOK )
+			lock ( key )
 			{
-				Thread.Sleep( 300 );
-				if ( timeoutSec > 0 && stw.ElapsedMilliseconds / 1000 > timeoutSec ) return false;
+				if ( PrintMode ) cmd.Print( "SendAndReady" );
+				var temp = RS.Query( cmd );
+				Stopwatch stw = new Stopwatch();
+				stw.Start();
+				while ( RS.Query( Status ) != StatusOK )
+				{
+					Thread.Sleep( 300 );
+					if ( timeoutSec > 0 && stw.ElapsedMilliseconds / 1000 > timeoutSec ) return false;
+				}
+				return true;
 			}
-			return true;
+			
 		}
 
 		

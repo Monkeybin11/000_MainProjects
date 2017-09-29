@@ -25,12 +25,13 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 				var first = new List<PlrCrd>();
 				var counter = RhoFirst == 0
 								? 1.Act( x => first.Add( new PlrCrd ( 0 , 0 ) ) )
-								: 0;
+								: 0.Act( x => first.Add( new PlrCrd ( 0 , 0 ) ) );
 
 				var second = Enumerable.Range( counter, (int)RhoCount)
 								.SelectMany( f => Enumerable.Range( 0 , (int)ThetaCount) ,
-											(f,s) => new PlrCrd( RhoFirst + f*RhoStep 
-															     , ThetaFirst + s*ThetaStep  ))
+											(f,s) => new PlrCrd(  
+															  ThetaFirst + s*ThetaStep , 
+															  RhoFirst + f*RhoStep  ))
 								.ToList();
 
 				return first.Act( x => x.AddRange( second ));
@@ -88,6 +89,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 			res.IntegrationTime		=	src.IntegrationTime		;
 			res.XStgSpeed			=	src.XStgSpeed			;
 			res.RStgSpeed			=	src.RStgSpeed			;
+			res.SetPosition();
 			return res;
 		}
 	}

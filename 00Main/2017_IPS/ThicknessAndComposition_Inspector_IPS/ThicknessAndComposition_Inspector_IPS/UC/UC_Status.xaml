@@ -6,37 +6,67 @@
              xmlns:local="clr-namespace:ThicknessAndComposition_Inspector_IPS"
               xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="200" Background="AliceBlue">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Label Content="Status" Style="{StaticResource lblLeftStatus}" Grid.Column="0" Grid.Row="0" />
-        <Label x:Name="lblProgress" Style="{StaticResource lblLeftStatus}" Content="Wait" Grid.Column="1" Grid.Row="0" />
+             d:DesignHeight="300" d:DesignWidth="300" Background="LightCyan">
+        <DockPanel Margin="5" >
+        <Border CornerRadius="6" BorderThickness="2" BorderBrush="LightSteelBlue" DockPanel.Dock="Top">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content=" - Status -  " Grid.ColumnSpan="2"           Style="{StaticResource lblBase}" HorizontalAlignment="Center" FontWeight="ExtraBold"/>
 
-        <Label Content="X Pos" Style="{StaticResource lblLeftStatus}" Grid.Column="0" Grid.Row="1" />
-        <Label x:Name="lblXpos" Style="{StaticResource lblLeftStatus}" Content="100.111" Grid.Column="1" Grid.Row="1" />
-        <Label Style="{StaticResource lblLeftStatus}" HorizontalAlignment="Right" FontSize="7" Content="( mm )    " Grid.Column="1" Grid.Row="1" />
+                <DockPanel Margin="4" Grid.Row="1">
+                    <Border  CornerRadius="0" BorderThickness="2" BorderBrush="#E7D9BA" DockPanel.Dock="Top">
+                        <Grid Grid.Row="1" Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="3*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="  Connection Status   " Grid.ColumnSpan="4" Style="{StaticResource lblBase}" HorizontalAlignment="Center" FontWeight="SemiBold"/>
 
-        <Label Content="R Pos" Style="{StaticResource lblLeftStatus}" Grid.Column="0" Grid.Row="2" />
-        <Label x:Name="lblRpos" Style="{StaticResource lblLeftStatus}" Content="10.111" Grid.Column="1" Grid.Row="2" />
-        <Label Style="{StaticResource lblLeftStatus}" HorizontalAlignment="Right" FontSize="7" Content="( degree )" Grid.Column="1" Grid.Row="2" />
-
-        <Label Content="Temp" Style="{StaticResource lblLeftStatus}" Grid.Column="0" Grid.Row="3" />
-        <Label x:Name="lblTemp" Style="{StaticResource lblLeftStatus}" Content="10.111" Grid.Column="1" Grid.Row="3" />
-        <Label Style="{StaticResource lblLeftStatus}" HorizontalAlignment="Right" FontSize="7" Content="( C )" Grid.Column="1" Grid.Row="3" />
-
-
+                            <Border x:Name="brdStgConnect" CornerRadius="9" Background="OrangeRed" Width="20" Height="20" Grid.Row="1" />
+                            <Label Content="Stage" Style="{StaticResource lblConnection}" Grid.Column="1" Grid.Row="1" />
+                            <Border x:Name="brdSpctConnect" CornerRadius="9" Background="OrangeRed" Width="20" Height="20" Grid.Column="2" Grid.Row="1"/>
+                            <Label Content="Spectrometer" Style="{StaticResource lblConnection}" Grid.Column="3" Grid.Row="1"/>
+                        </Grid>
+                    </Border>
+                </DockPanel>
 
 
-    </Grid>
+                <UniformGrid Grid.Row="2" Rows="4" Columns="2">
+                    <Label Content="Status : "      Grid.Column="0" Grid.Row="1"                    Style="{StaticResource lblBase}"/>
+                    <Label x:Name="lblProgress"  Content="Ready" Grid.Column="1" Grid.Row="1"     Style="{StaticResource lblBase}" />
+
+                    <Label Content="X Position : "       Grid.Column="0" Grid.Row="2"                    Style="{StaticResource lblBase}" />
+                    <DockPanel>
+                        
+                        <Label x:Name="lblXpos" Content="100.111" Style="{StaticResource lblBase}" DockPanel.Dock="Left" />
+                        <Label                  Content="( mm )"  Style="{StaticResource lblUnit}" DockPanel.Dock="Right"/>
+                    </DockPanel>
+                    
+                    <Label Content="R Position : "       Grid.Column="0" Grid.Row="3"                    Style="{StaticResource lblBase}"   />
+                    
+                    <DockPanel>
+                        <Label x:Name="lblRpos" Content="10.111"      Style="{StaticResource lblBase}" DockPanel.Dock="Left"  />
+                        <Label                  Content="( degree )"  Style="{StaticResource lblUnit}" DockPanel.Dock="Right"/>
+                    </DockPanel>
+                   
+                  
+
+                </UniformGrid>
+
+            </Grid>
+        </Border>
+    </DockPanel>
 </UserControl>
