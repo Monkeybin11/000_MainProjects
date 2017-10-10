@@ -13,6 +13,8 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 {
 	public partial class IPSCore
 	{
+		public enum ScanReadyMode { Ref , Dark , WaveLen , Refelct , All};
+
 		public event Action<bool,bool> evtConnection;
 		public event Action<double,double> evtPos;
 		public event Action<string> evtScanStatus;
@@ -54,7 +56,8 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		#endregion	
 
 		bool FlgAutoUpdate;
-		
+		public bool FlgScanReady;
+		public bool FlgHomeDone;
 
 		Action AutoUpdateSpctrm =>
 			() => BkD_Spctrm = Spctr.GetSpectrum();

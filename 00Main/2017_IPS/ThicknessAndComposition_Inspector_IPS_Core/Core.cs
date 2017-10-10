@@ -138,9 +138,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		#endregion
 
 		#region MainFunction
-
-	
-
 		int counter = 0;
 		public Func<LEither<double [ ]> , double [ ] , PlrCrd ,
 						Tuple<PlrCrd , LEither<double>>> CalcPorce =>
@@ -194,70 +191,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		//								  .Bind( x => ( x*PrcConfig.a + PrcConfig.b).Print("result") ));
 		//	};
 
-
-		/*
-		Func<TEither,Tuple< PlrCrd , LEither<double[]> , Task<LEither<double>>[] >> ScanNode =
-			x =>
-			{
-				return null;
-			}; */
-
-		public void Setdark() //sjw
-		{
-			Stg.SendAndReady( Stg.SetSpeed
-														 + Axis.W.ToIdx()
-														 + ( 18000 ).ToSpeed()
-														 + ( 18000 ).ToSpeed() );
-			FlgAutoUpdate = true;
-			Stg.SendAndReady( Stg.GoAbs + 0.ToPos( Axis.X ));
-			Stg.SendAndReady( Stg.Go);
-			Thread.Sleep( 500 );
-			var darkraw = BkD_Spctrm;
-			Darks = PickedIdx.Select( x => darkraw [ x ] ).ToList();
-			FlgAutoUpdate = false;
-
-		}
-
-		public void SetRef() //sjw
-		{
-			Stg.SendAndReady( Stg.SetSpeed
-														 + Axis.W.ToIdx()
-														 + ( 18000 ).ToSpeed()
-														 + ( 18000 ).ToSpeed() );
-			FlgAutoUpdate = true;
-			Stg.SendAndReady( Stg.GoAbs + 0.ToOffPos( Axis.X ) );
-			Stg.SendAndReady( Stg.Go );
-			Thread.Sleep( 500 );
-			var refraw = BkD_Spctrm;
-			Refs = PickedIdx.Select( x => refraw [ x ] ).ToList();
-			FlgAutoUpdate = false;
-		}
-
-		public void PickWaveIdx() //sjw
-		{
-			Bkd_WaveLen = Spctr.GetWaveLen();
-			var wave = Bkd_WaveLen.Select( x => (int)x).ToArray();
-			List<int> idxlist = new List<int>();
-			foreach ( var item in SDWaves )
-			{
-				var idx = Array.IndexOf( wave , item);
-				if(idx >= 0) idxlist.Add( idx );
-			}
-			PickedIdx = idxlist;
-		}
-
-		public void LoadReflextionDatas() //sjw
-		{
-			string path = @"C:\000_MainProjects\00Main\2017_IPS\ThicknessAndComposition_Inspector_IPS\ThicknessAndComposition_Inspector_IPS\bin\x64\Debug\10d_avg.csv";
-			CsvTool cv = new CsvTool();
-			var relec = cv.ReadCsv2String( path );
-
-			SDWaves = relec.Select( x => Convert.ToInt32( x [ 0 ]) ).ToList();
-			ReflctFactors = relec.Select( x => Convert.ToDouble( x [ 1 ]) ).ToList();
-		}
-
-
-
+		
 		List<Tuple<PlrCrd,LEither<double>>> TempRes = new List<Tuple<PlrCrd, LEither<double>>>();
 		public bool ScanRun1()
 		{
@@ -299,23 +233,30 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			var wavelength = Bkd_WaveLen = Spctr.GetWaveLen();
 
 			SetHWInternalParm(
-		   Config.RStgSpeed ,
-		   Config.XStgSpeed ,
-		   Config.Scan2Avg ,
-		   Config.IntegrationTime ,
-		   Config.Boxcar
-		   );
+							  Config.RStgSpeed ,
+							  Config.XStgSpeed ,
+							  Config.Scan2Avg ,
+							  Config.IntegrationTime ,
+							  Config.Boxcar
+							  );
 
+			// Home And Check --
+			if ( !FlgHomeDone ) if ( !OpHome() ) return false;
+			FlgHomeDone = true;
 
-			var res = new TEither( Stg as IStgCtrl , 12)
-						.Bind( x => x.Act( f =>
-							f.SendAndReady( f.Home + Axis.W.ToIdx() ) ).ToTEither( 12 ) , "R or X Home Fail" )
-						.Bind( x => x.Act( f =>
-									f.SendAndReady( f.GoAbs
-													+ 0.ToOffPos(Axis.X) ) )
-											 .ToTEither( 1 ) , "Opposit Movement Fail" )
-								.Bind( x => x.Act( f =>
-									f.SendAndReady( f.Go ) ).ToTEither( 1 ) , "Stage Movement Fail" );
+			// Scan Ready And Check -- 
+			if ( FlgScanReady == false ) if ( !OpReady(ScanReadyMode.All) ) return false;
+			FlgScanReady = true;
+
+			var res = new TEither( Stg as IStgCtrl , 12);
+						//.Bind( x => x.Act( f =>
+						//	f.SendAndReady( f.Home + Axis.W.ToIdx() ) ).ToTEither( 12 ) , "R or X Home Fail" )
+						//.Bind( x => x.Act( f =>
+						//			f.SendAndReady( f.GoAbs
+						//							+ 0.ToOffPos(Axis.X) ) )
+						//					 .ToTEither( 1 ) , "Opposit Movement Fail" )
+						//		.Bind( x => x.Act( f =>
+						//			f.SendAndReady( f.Go ) ).ToTEither( 1 ) , "Stage Movement Fail" );
 
 			var posIntenlist = Config.ScanSpot.Select( ( pos , i) =>
 				 {
@@ -350,8 +291,8 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			Task.Run( () => { 
 			res.Bind( x => x.Act( f => Stg.SendAndReady( Stg.SetSpeed
 													     + Axis.W.ToIdx()
-													     + ( 18000 ).ToSpeed()
-													     + ( 18000 ).ToSpeed() )).ToTEither(1))
+													     + ( 50000 ).ToSpeed()
+													     + ( 200000 ).ToSpeed() )).ToTEither(1))
 				.Bind( x => x.Act( f => f.SendAndReady( f.GoAbs + 0.ToPos( Axis.W ) + 0.ToPos() ) ).ToTEither( 1 ) )
 			    .Bind( x => x.Act( f => f.SendAndReady( f.Go ) ).ToTEither( 1 ) );
 			} );
@@ -513,6 +454,115 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		#endregion
 
+		#region OpFun
+
+		public bool OpReady( ScanReadyMode mode )
+		{
+			Stg.SendAndReady( Stg.SetSpeed + Axis.W.ToIdx()
+										   + ( 50000 ).ToSpeed()
+										   + ( 200000 ).ToSpeed() );
+			LEither<bool> result = new LEither<bool>(true);
+			switch ( mode )
+			{
+				case ScanReadyMode.Dark:
+					result.Bind( x => OpSetdark() , "Dark Scan is Fail" );
+					break;
+
+				case ScanReadyMode.Ref:
+					result.Bind( x => OpSetRef() , "Referance Scan is Fail" );
+					break;
+
+				case ScanReadyMode.Refelct:
+					result.Bind( x => OpLoadReflecDatas() , "Refelct Scan is Fail" );
+					break;
+
+				case ScanReadyMode.WaveLen:
+					result.Bind( x => OpPickWaveIdx() , "WaveLength Scan is Fail" );
+					break;
+				case ScanReadyMode.All:
+					result.Bind( x => OpScanReady() , "Scan Ready is Fail" );
+					break;
+			}
+			return result.IsRight
+				? true
+				: false;
+		}
+
+		public bool OpScanReady()
+		{
+			return new LEither<bool>( true )
+					.Bind( x => OpSetdark() , "Dark Scan is Fail" )
+					.Bind( x => OpSetRef() , "Referance Scan is Fail" )
+					.IsRight
+				? true.Act( x => FlgScanReady = true )
+				: false.Act( x => FlgScanReady = false );
+		}
+
+		public bool OpSetdark() //sjw
+		{
+			FlgAutoUpdate = true;
+			Stg.SendAndReady( Stg.GoAbs + 0.ToPos( Axis.X ) );
+			Stg.SendAndReady( Stg.Go );
+			Thread.Sleep( 500 );
+			var darkraw = BkD_Spctrm;
+			Darks = PickedIdx.Select( x => darkraw [ x ] ).ToList();
+			FlgAutoUpdate = false;
+			return true;
+		}
+
+		public bool OpSetRef() //sjw
+		{
+			FlgAutoUpdate = true;
+			Stg.SendAndReady( Stg.GoAbs + 0.ToOffPos( Axis.X ) );
+			Stg.SendAndReady( Stg.Go );
+			Thread.Sleep( 500 );
+			var refraw = BkD_Spctrm;
+			Refs = PickedIdx.Select( x => refraw [ x ] ).ToList();
+			FlgAutoUpdate = false;
+			return true;
+		}
+
+		public bool OpPickWaveIdx() //sjw
+		{
+			Bkd_WaveLen = Spctr.GetWaveLen();
+			var wave = Bkd_WaveLen.Select( x => (int)x).ToArray();
+			List<int> idxlist = new List<int>();
+			foreach ( var item in SDWaves )
+			{
+				var idx = Array.IndexOf( wave , item);
+				if ( idx >= 0 ) idxlist.Add( idx );
+			}
+			PickedIdx = idxlist;
+			return true;
+		}
+
+		public bool OpHome()
+		{
+			var resHome = new TEither( Stg as IStgCtrl , 12)
+						.Bind( x => x.Act( f =>
+							f.SendAndReady( f.Home + Axis.W.ToIdx() ) ).ToTEither( 12 ) , "R or X Home Fail" );
+			//.Bind( x => x.Act( f =>
+			//			f.SendAndReady( f.GoAbs
+			//							+ 0.ToOffPos(Axis.X) ) )
+			//					 .ToTEither( 1 ) , "Opposit Movement Fail" )
+			//.Bind( x => x.Act( f =>
+			//	f.SendAndReady( f.Go ) ).ToTEither( 1 ) , "Stage Movement Fail" );
+			if ( !resHome.IsRight ) return false.Act( x => FlgHomeDone = false );
+			return true.Act( x => FlgHomeDone = true );
+		}
+
+		public bool OpLoadReflecDatas() //sjw
+		{
+			//string path = @"C:\000_MainProjects\00Main\2017_IPS\ThicknessAndComposition_Inspector_IPS\ThicknessAndComposition_Inspector_IPS\bin\x64\Debug\10d_avg.csv";
+			string path = AppDomain.CurrentDomain.BaseDirectory + "10d_avg.csv";
+			CsvTool cv = new CsvTool();
+			var relec = cv.ReadCsv2String( path );
+			SDWaves = relec.Select( x => Convert.ToInt32( x [ 0 ] ) ).ToList();
+			ReflctFactors = relec.Select( x => Convert.ToDouble( x [ 1 ] ) ).ToList();
+			return true;
+		}
+		#endregion
+
 		#region IO
 
 		public void LoadConfig( string path )
@@ -543,10 +593,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		#endregion
 
 		#region Trans
-
-
-
-
 		public IPSResult ToResult( List<PlrCrd> pos , List<double> thckness , List<double [ ]> intens , double [ ] wavelen )
 		{
 			var res = new IPSResult(wavelen );
@@ -556,13 +602,9 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			}
 			return res;
 		}
-
-
-
 		#endregion
 
 		#region SubFuntion
-
 		public void ShowSetting()
 		{
 			StringBuilder configlog = new StringBuilder();

@@ -10,10 +10,10 @@
     <Grid Background="White">
     <lvc:CartesianChart Margin="10" Hoverable="False" DataTooltip="{x:Null}"  Background="Lavender">
         <lvc:CartesianChart.Series>
-            <lvc:ColumnSeries
+            <lvc:ColumnSeries 
                     Values="{Binding ChartValues}"
-                    Stroke="Blue"
-                    StrokeThickness="2"
+                    Stroke="Blue" 
+                    StrokeThickness="2" 
                     />
         </lvc:CartesianChart.Series>
         <lvc:CartesianChart.AxisX>

@@ -29,17 +29,16 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="- Function -" Grid.ColumnSpan="2" Style="{StaticResource lblBase}" HorizontalAlignment="Center" FontWeight="ExtraBold" />
-                        <Button x:Name="btnReconnect"           Content="Reconnect"              Grid.Column="0"  Grid.Row="1"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}" FontFamily="Yu Gothic UI Semibold"  />
-                        <Button x:Name="btnRefScan"        Content="Ref"           Grid.Column="1"  Grid.Row="1"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
-                        <Button x:Name="btnStart"             Content="Start"                Grid.Column="0"  Grid.Row="2"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
-                        <Button x:Name="btnLoadConfig"        Content="Load Config"          Grid.Column="0"  Grid.Row="4"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
-                        <Button x:Name="btnLoadData"          Content="Load Data"            Grid.Column="0"  Grid.Row="3"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
-                        <Button x:Name="btnSetWave"           Content="WaveLen"                 Grid.Column="1"  Grid.Row="3"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
-                        <Button x:Name="btnDarkScan"           Content="Dark"        Grid.Column="1"  Grid.Row="2"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
-                        <Button x:Name="btnSaveCurrentConfig" Content="Save Current config"  Grid.Column="1"  Grid.Row="4"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
-
-                        <CheckBox x:Name="ckbAutoSave" Content="Auto Save" Grid.Row="5" Style="{StaticResource chkBase}"/>
-                        <xc:DoubleUpDown x:Name="nud"  Grid.Column="1" Grid.Row="6" Style="{StaticResource nudBase}"/>
+                        <Button x:Name="btnStart"             Content="Start"                Grid.Column="0"  Grid.Row="1"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}" Background="Pink" />
+                        <Button x:Name="btnSaveResult"        Content="Save"                 Grid.Column="1"  Grid.Row="1"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}" Background="YellowGreen"/>
+                        <Button x:Name="btnRefScan"           Content="Ref"                  Grid.Column="0"  Grid.Row="2"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
+                        <Button x:Name="btnDarkScan"          Content="Dark"                 Grid.Column="1"  Grid.Row="2"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
+                        <Button x:Name="btnSetWave"           Content="WaveLen"              Grid.Column="1"  Grid.Row="3"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
+                        <Button x:Name="btnLoadReflection"    Content="Load Reflection"      Grid.Column="0"  Grid.Row="3"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
+                        <Button x:Name="btnHome"              Content="Home"                 Grid.Column="0"  Grid.Row="4"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
+                        <Button x:Name="btnScanReady"         Content="Scan Ready"          Grid.Column="1"  Grid.Row="4"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
+                        <Button x:Name="btnReconnect"         Content="Reconnect"            Grid.Column="0"  Grid.Row="5"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
+                        <CheckBox x:Name="ckbAutoSave" Content="Auto Save" Grid.Column="1" Grid.Row="5" Style="{StaticResource chkBase}"/>
                     </Grid>
                 </StackPanel>
             </Border>
@@ -69,7 +68,7 @@
                     <Label Content="Step"  Grid.Row="3" Grid.Column="2"                  Style="{StaticResource lblBase}"/>
                     <Label Content="Count" Grid.Row="4" Grid.Column="0"                  Style="{StaticResource lblBase}"/>
                     <Label Content="Rho Max =" Grid.Row="4" Grid.Column="2"              Style="{StaticResource lblBase}"/>
-                    <Label Content="100 (mm)" Grid.Row="4" Grid.Column="3"              Style="{StaticResource lblBase}"/>
+                    <Label Content="100 (mm)" Grid.Row="4" Grid.Column="3"               Style="{StaticResource lblBase}"/>
 
                     <xc:DoubleUpDown x:Name="nudThetaFirst"   Grid.Row="1" Grid.Column="1"  Value="{Binding Path=MainWindow.Core.Config.AngFirst , Mode=TwoWay }" Style="{StaticResource nudBase}" />
                     <xc:DoubleUpDown x:Name="nudThetaStep"    Grid.Row="1" Grid.Column="3"  Value="{Binding Path=MainWindow.Core.Config.AngStep , Mode=TwoWay }"  Style="{StaticResource nudBase}" />

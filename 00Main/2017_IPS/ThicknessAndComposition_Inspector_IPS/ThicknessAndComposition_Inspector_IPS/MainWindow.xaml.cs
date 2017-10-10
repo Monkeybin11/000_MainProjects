@@ -44,6 +44,8 @@ namespace ThicknessAndComposition_Inspector_IPS
 			Core.Connect();
 			WinConfig.evtStgSpeedSetChange += new StgSpeedEvent( Core.SetHWInternalParm );
 			Config2UI( Core.Config );
+			if(!Core.OpLoadReflecDatas() || !Core.OpPickWaveIdx())
+				MessageBox.Show("Spectrometer Problem. Transfer wavelength fail.  Please restart spectrometer ") ;
 		}
 		private void Window_Closed( object sender , EventArgs e )
 		{
@@ -98,19 +100,37 @@ namespace ThicknessAndComposition_Inspector_IPS
 			Mouse.OverrideCursor = Cursors.Wait;
 			switch ( name )
 			{
-				case "btnConnect":
+				case "btnSaveResult":
+					break;
+				case "btnRefScan":
+					Core.OpReady( IPSCore.ScanReadyMode.Ref );
+					break;
+				case "btnDarkScan":
+					Core.OpReady( IPSCore.ScanReadyMode.Dark );
+					break;
+				case "btnSetWave":
+					Core.OpReady( IPSCore.ScanReadyMode.WaveLen );
+					break;
+				case "btnLoadReflection":
+					Core.OpReady( IPSCore.ScanReadyMode.Refelct );
+					break;
+				case "btnHome":
+					Core.OpHome();
+					break;
+				case "btnScanReady":
+					Core.OpReady(IPSCore.ScanReadyMode.All);
+					break;
+				case "btnReconnect":
 					Window_Loaded( null , null );
 					break;
-				case "btnDisconnect":
-					Core.test();
-					break;
-
 
 				case "btnStart":
 					//Core.ScanRun();
 					Core.Config = UI2IpsConfig();
 					ucLSStatus.lblProgress.Content = "InProgress";
+
 					var result = await Task<bool>.Run(()=> Core.ScanRun());
+
 					if ( result ) ucLSStatus.lblProgress.Content = "Ready";
 					else ucLSStatus.lblProgress.Content = ( "Ready (Interruped)" );
 					ucDataGrid.UpdateGrid( Core.ResultData.SpotDataList.Select( x => 
@@ -151,20 +171,6 @@ namespace ThicknessAndComposition_Inspector_IPS
 					ucHisto.CreateHistogram( temp );
 
 					break;
-
-				case "btnSetWave":
-					Core.LoadReflextionDatas();
-					Core.PickWaveIdx();
-					break;
-
-				case "btnDarkScan":
-					Core.Setdark();
-					break;
-
-				case "btnRefScan":
-					Core.SetRef();
-					break;
-				
 				default:
 					break;
 			}
