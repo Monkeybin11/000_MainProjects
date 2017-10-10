@@ -199,9 +199,9 @@ namespace MachineLib.DeviceLib
 		public static string ToSpeed(
 			this int speed )
 		{
-			string sspd = (speed/100).ToString();
+			string sspd = (speed/500).ToString();
 			string fspd = (speed).ToString();
-			return $"S{sspd}F{fspd}R300"; 
+			return $"S{sspd}F{fspd}R500"; 
 
 		}
 
