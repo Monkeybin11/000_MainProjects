@@ -76,13 +76,31 @@ namespace LiveCharts_Example
 			//var fre = RepresentativeValueAndFrequency
 			//				.Select( x => x[1]);
 			//
-			//ChartValues.Clear();
+			
+			ChartValues.Clear();
 			//ChartValues.AddRange( fre );
 			var r = new Random();
 			ChartValues.AddRange( Enumerable.Range( counter , 4 ).Select( x => ( double )( x + r.Next( 0 , 50 ) ) ) );
+			Labels = new string [ ] { "300","310","300","222" };
+			lbX.Labels = new [ ] { "300" , "310" , "300" , "222" }; 
+			//Labels = repVal.Select( x => Math.Round(x).ToString() ).ToArray();
+		}
+
+		public void CreateHistogram2( double[] src) // 
+		{
+			//var repVal = RepresentativeValueAndFrequency
+			//				.Select( x => x[0]);
+			//var fre = RepresentativeValueAndFrequency
+			//				.Select( x => x[1]);
+			//
+			//ChartValues.Clear();
+			//ChartValues.AddRange( fre );
+			var r = new Random();
+			ChartValues.AddRange( src );
 			Labels = new string [ ] { "300,310,300,222" };
 			//Labels = repVal.Select( x => Math.Round(x).ToString() ).ToArray();
 		}
+
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

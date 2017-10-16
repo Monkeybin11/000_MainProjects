@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,34 +10,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ThicknessAndComposition_Inspector_IPS
 {
 	/// <summary>
-	/// Interaction logic for UC_Map.xaml
+	/// Interaction logic for Win_SpctDisplay.xaml
 	/// </summary>
-	public partial class UC_Map : UserControl
+	public partial class Win_SpctDisplay : Window
 	{
-		public UC_Map()
+		public event Action evtCloseWin;
+		public Win_SpctDisplay()
 		{
 			InitializeComponent();
 		}
 
-		public void DrawImg(ImageSource src , ImageSource colormap ) // colormap need to be (255 x 3[rgb]) 
+		private void Window_Closing( object sender , System.ComponentModel.CancelEventArgs e )
 		{
-			
-			imgOri.ImageSource = src;
-			//imgOri.Dispatcher.BeginInvoke( new Action( () => imgOri.ImageSource = src ) );
-			imgScale.ImageSource = colormap;
-			
-
-
-
+			evtCloseWin();
 		}
-
-	
-
 	}
 }

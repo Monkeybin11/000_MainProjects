@@ -19,12 +19,25 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		public event Action<double,double> evtPos;
 		public event Action<string> evtScanStatus;
 		public event Action<BitmapSource> evtScanImg;
+		public event Action<IEnumerable<double>, IEnumerable<double>> evtSpectrum;
 
 
 		#region result Data
 		public IPSResult ResultData;
 
-		#endregion	
+		public List<int> PickedIdx = new List<int>();
+		public List<double> Wave = new List<double>();
+		public List<double> Refs = new List<double>();
+		public List<double> Darks = new List<double>();
+		public List<double> SDWaves = new List<double>();
+		public List<double> SelectedWaves = new List<double>();
+		public List<int> PickedFactorIdx = new List<int>();
+		public List<double> ReflctFactors = new List<double>();
+		public List<double> SelectedReflctFactors = new List<double>();
+		public int[] EstedThickness = new int[] { };
+
+		public int SpectrometerDelayTime { get { return Config.SpectrumWaitTime; } set { } }
+		#endregion
 
 		#region Static Data
 		public string ConfigBasePath = AppDomain.CurrentDomain.BaseDirectory + "config";
@@ -39,7 +52,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		string LogDirPath = AppDomain.CurrentDomain.BaseDirectory + "log";
 		string LogName = "";
 
-		double[] BkD_Spctrm = new double[] { }; // Background Data = Bkd_
+		public double[] BkD_Spctrm = new double[] { }; // Background Data = Bkd_
 		double[] Bkd_WaveLen = new double[] { }; 
 		double [ ] SpctrmDeciles {
 			get { return BkD_Spctrm
@@ -55,8 +68,9 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 					.ToArray(); } }
 		#endregion	
 
-		bool FlgAutoUpdate;
-		public bool FlgScanReady;
+		public bool FlgAutoUpdate;
+		public bool FlgDarkReady;
+		public bool FlgRefReady;
 		public bool FlgHomeDone;
 
 		Action AutoUpdateSpctrm =>

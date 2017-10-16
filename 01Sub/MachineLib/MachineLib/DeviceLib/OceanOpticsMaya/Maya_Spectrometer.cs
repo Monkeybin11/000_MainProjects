@@ -7,6 +7,7 @@ using ModelLib.TypeClass;
 using ModelLib.ClassInstance;
 using OmniDriver;
 using SpeedyCoding;
+using System.Windows.Forms;
 
 namespace MachineLib.DeviceLib
 {
@@ -14,7 +15,7 @@ namespace MachineLib.DeviceLib
 	{
 		int Index;
 		object key = new object();
-		NETWrapper Sptr; // Spectrometer
+		public NETWrapper Sptr; // Spectrometer
 		public List<double> Datas;
 		public List<double> WaveLen;
 
@@ -23,12 +24,28 @@ namespace MachineLib.DeviceLib
 			Sptr = new NETWrapper();
 			Datas = new List<double>();
 			WaveLen = new List<double>();
+			Sptr.setCorrectForElectricalDark( Index , 1 );
 		}
 
 		//public bool Run()
 		//{
 		//	throw new NotImplementedException();
 		//}
+		public void test()
+		{
+			Sptr.setCorrectForElectricalDark( Index , 1 );
+			Sptr.setIntegrationTime( Index , 300000 );
+			var res = Sptr.getIntegrationTime(Index);
+			var res2 = Sptr.getSpectrum(Index);
+			var maxint = res2.Max();
+			var maxpx = Array.IndexOf(res2, maxint);
+			string str =  "";
+			for ( int i = 0 ; i < res2.Length ; i++ )
+			{
+				str += res2 [ i ].ToString() + Environment.NewLine;
+			}
+			Clipboard.SetText( str );
+		}
 
 		public bool Connect()
 		=> Sptr.openAllSpectrometers() > 0 ? true : false;
@@ -36,7 +53,8 @@ namespace MachineLib.DeviceLib
 		public double [ ] GetSpectrum()
 		{
 			//lock ( key )
-				return Sptr.getSpectrum( Index );
+			Sptr.setCorrectForElectricalDark( Index , 1 );
+			return Sptr.getSpectrum( Index );
 		}
 
 		public double [ ] GetWaveLen(  )
@@ -52,8 +70,8 @@ namespace MachineLib.DeviceLib
 		public IMaya_Spectrometer Timeout( int millisec )
 		=> this.Act( x => Sptr.setTimeout( Index , millisec ) );
 
-		public IMaya_Spectrometer IntegrationTime( int time )
-		=> this.Act( x => Sptr.setIntegrationTime( Index , time ) );
+		public IMaya_Spectrometer IntegrationTime( int microsec )
+		=> this.Act( x => Sptr.setIntegrationTime( Index , microsec ) );
 
 		public IMaya_Spectrometer BoxCar( int width )
 		=> this.Act( x => Sptr.setBoxcarWidth( Index , width ) );

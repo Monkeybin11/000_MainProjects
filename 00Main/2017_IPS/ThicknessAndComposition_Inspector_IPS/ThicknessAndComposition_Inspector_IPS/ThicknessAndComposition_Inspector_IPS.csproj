@@ -126,8 +126,14 @@
     <Compile Include="UC_Histogram.xaml.cs">
       <DependentUpon>UC_Histogram.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UC_LiveLineChart.xaml.cs">
+      <DependentUpon>UC_LiveLineChart.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UC_Map.xaml.cs">
       <DependentUpon>UC_Map.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindow\Win_SpctDisplay.xaml.cs">
+      <DependentUpon>Win_SpctDisplay.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow\IPS_Style.xaml">
       <SubType>Designer</SubType>
@@ -169,7 +175,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UC_LiveLineChart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UC_Map.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubWindow\Win_SpctDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

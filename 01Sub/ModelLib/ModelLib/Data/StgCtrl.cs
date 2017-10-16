@@ -15,6 +15,7 @@ namespace ModelLib.Data
 
 		string Home			{get;set;}
 		string GoAbs		{get;set;}
+		string GoRel		{get;set;}
 		string SetSpeed		{get;set;}
 		string Status		{get;set;}
 		string StatusOK		{get;set;}
