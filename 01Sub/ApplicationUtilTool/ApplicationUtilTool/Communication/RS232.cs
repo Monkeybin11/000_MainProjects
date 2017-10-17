@@ -19,8 +19,9 @@ namespace ApplicationUtilTool.Communication
 		Func<string,byte[]> ToByteArr;
 		Action<string> Send;
 		public Func<string,string> Query;
+        bool NewLineRemove = false;
 
-		public RS232( SerialPort port , CommandEndStyle crlfstyle , SendStyle sendstyle , int reciveDelay )
+		public RS232( SerialPort port , CommandEndStyle crlfstyle , SendStyle sendstyle , int reciveDelay , bool newlineRemove = true)
         {
 
             Port = port;
@@ -38,6 +39,8 @@ namespace ApplicationUtilTool.Communication
 			ToByteArr = sendstyle == SendStyle.ASCII ? ToASCII : ToUTF8 ;
 
 			Send = sendstyle == SendStyle.String ? WriteString : WriteArr;
+
+            NewLineRemove = newlineRemove;
 
 			Query = text =>
 			{
@@ -57,7 +60,9 @@ namespace ApplicationUtilTool.Communication
 
 
 		Func<string> Read =>
-		() => Port.ReadExisting().Replace( "\r" , string.Empty ).Replace( "\n" , string.Empty );
+		() => Port.ReadExisting().Map( x => NewLineRemove == true
+                                                ? x.Replace( "\r" , string.Empty ).Replace( "\n" , string.Empty )
+                                                : x );
 
 
 		#region Function options 
