@@ -56,9 +56,8 @@
       <HintPath>dll\Interop.SPIIPLUSCOM660Lib.1.0.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="NETOmniDriver-NET40, Version=2.45.0.0, Culture=neutral, PublicKeyToken=5ceb6b3940bb24a4, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Ocean Optics\OmniDriver\OOI_HOME\NETOmniDriver-NET40.dll</HintPath>
+    <Reference Include="NETOmniDriver-NET40">
+      <HintPath>dll\NETOmniDriver-NET40.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
