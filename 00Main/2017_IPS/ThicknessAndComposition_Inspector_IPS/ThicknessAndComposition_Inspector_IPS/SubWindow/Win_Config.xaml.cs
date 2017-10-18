@@ -19,7 +19,9 @@ namespace ThicknessAndComposition_Inspector_IPS
 		double rspeed 
 		, double xspeed 
 		, double scan2avg 
-		, double intetime , double boxcar );
+		, double intetime 
+		, double boxcar 
+		, double waittime );
 
 	/// <summary>
 	/// Interaction logic for Win_Config.xaml
@@ -61,8 +63,8 @@ namespace ThicknessAndComposition_Inspector_IPS
 								XstgSpeed		,
 								Scan2Avg		,
 								IntegrationTIme ,
-								Boxcar			);
-			evtSpctWaitTime( SpectrometerDelayTime );
+								Boxcar			,
+								SpectrometerDelayTime );
 
 
 

@@ -29,6 +29,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 		IPSCore Core { get; set; }
 		Win_Config WinConfig;
 		Win_SpctDisplay WinSpct;
+		WIn_SinglePointAnalysis WinSingleScan;
 		bool CoreRunning;
 
 		#region Load Close
@@ -41,16 +42,25 @@ namespace ThicknessAndComposition_Inspector_IPS
 		{
 			WinConfig = new Win_Config();
 			WinSpct = new Win_SpctDisplay();
+			WinSingleScan = new WIn_SinglePointAnalysis();
 			ucLSMenu.evtBtn += new BtnEvt( LeftSideBtn );
-			Core = new IPSCore();
-			Core.evtConnection += new Action<bool,bool>( ucLSStatus.DisplayConnection );
-			Core.evtSpectrum += new Action<IEnumerable<double> , IEnumerable<double>>(
-				ucSpectrum.UpdateSeries );
-			//Core.evtScanStatus += new Action<string>( ucLSStatus.DisplayScanStatus );
-			Core.Connect();
-			WinConfig.evtStgSpeedSetChange += new StgSpeedEvent( Core.SetHWInternalParm );
-			WinConfig.evtSpctWaitTime += new Action<double>( Core.SetSpctWaitTime );
-			WinSpct.evtCloseWin += new Action( () => { Core.FlgAutoUpdate = false; FlgSpctDisplay = false; } );
+
+			Core = new IPSCore()
+				.Act( x => x.evtConnection += new Action<bool , bool>( ucLSStatus.DisplayConnection ) )
+				.Act( x => x.evtSpectrum += new Action<IEnumerable<double> , IEnumerable<double>>( ucSpectrum.UpdateSeries ) )
+				.Act( x => x.evtSngSignal += new Action<IEnumerable<double> , IEnumerable<double> , IEnumerable<double>,double>( WinSingleScan.DrawSignal ) )
+				.Act( x => x.Connect());
+
+			WinConfig
+				.Act( x => x.evtStgSpeedSetChange += new StgSpeedEvent( Core.SetHWInternalParm ) );
+
+			WinSpct 
+				.Act( x => x.evtCloseWin += new Action( () => { Core.FlgAutoUpdate = false; FlgSpctDisplay = false; } ) );
+
+			WinSingleScan 
+				.Act( x => x.evtScanStart += new Action<double[], int, int>( Core.StartManualRunEvent ) );
+			
+
 			Config2UI( Core.Config );
 			if(!Core.OpLoadAbsReflecDatas() 
 				|| !Core.OpPickWaveIdx() 
@@ -108,11 +118,34 @@ namespace ThicknessAndComposition_Inspector_IPS
 					}
 					
 					break;
+
+			
+					
+
+					break;
+
 				case "menuExit":
 					Environment.Exit( Environment.ExitCode );
 					break;
 			}
 
+		}
+
+		public void AnalysisMenuClick( object sender , RoutedEventArgs e )
+		{
+			if ( CoreRunning ) return;
+			CoreRunning = true;
+			var master = sender as MenuItem;
+			switch ( master.Name )
+			{
+				case "menuSinglePosScan":
+					WinSingleScan.Visibility = Visibility.Visible;
+					break;
+
+				default:
+					break;
+			}
+			CoreRunning = false;
 		}
 
 		public void OptionMenuClick( object sender , RoutedEventArgs e )
@@ -235,7 +268,8 @@ namespace ThicknessAndComposition_Inspector_IPS
 					ucLSStatus.lblProgress.Content = "InProgress";
 					Core.ScanPos = new ScanPosData();
 					Core.ScanPos.RhoList [ 3 ] = ucLSMenu.nudOuterLength.Value.ToNonNullable();
-					var result = await Task<bool>.Run(()=> Core.ScanRun());
+
+					var result = await Task<bool>.Run(()=> Core.ScanAutoRun());
 
 					if ( result )
 					{
@@ -279,11 +313,6 @@ namespace ThicknessAndComposition_Inspector_IPS
 			// ToDo : 서브기능 = 1. 레전드 표시 , 2. 스테이지 실시간 포지션  3. 스펙트로미터 실시가나 표시 
 
 		}
-		
-
-
-
-
 	}
 	
 }

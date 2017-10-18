@@ -79,6 +79,7 @@
     <Compile Include="Backup_3.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="Core_Background.cs" />
+    <Compile Include="Core_Canvas.cs" />
     <Compile Include="Core_ResultIO.cs" />
     <Compile Include="Core_SubFunction.cs" />
     <Compile Include="IPSExtension.cs" />

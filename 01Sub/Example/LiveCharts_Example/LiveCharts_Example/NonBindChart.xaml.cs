@@ -13,6 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using LiveCharts.Definitions.Series;
+using LiveCharts.Wpf;
 
 namespace LiveCharts_Example
 {
@@ -28,12 +30,27 @@ namespace LiveCharts_Example
 
 		private void btnstart_Click( object sender , RoutedEventArgs e )
 		{
-			ChartValues<double> ChartDatas = new ChartValues<double>();
-
+			ChartValues<double> chartDatas1 = new ChartValues<double>();
+			ChartValues<double> chartDatas2 = new ChartValues<double>();
 			var rnd = new Random();
-			var datas = Enumerable.Range( 0 , 100 ).Select( x => ( double )( x + rnd.Next( 10 ) ));
-			ChartDatas.AddRange( datas );
-			srsMain.Values = ChartDatas;
+			var datas1 = Enumerable.Range( 0 , 100 ).Select( x => ( double )( x + rnd.Next( 10 ) ));
+			var datas2 = Enumerable.Range( 0 , 100 ).Select( x => ( double )( x/2 + rnd.Next( 5 ) ));
+			chartDatas1.AddRange( datas1 );
+			chartDatas2.AddRange( datas2 );
+
+
+			SeriesCollection src = new SeriesCollection();
+
+			LineSeries temp1 = new LineSeries();
+			LineSeries temp2 = new LineSeries();
+			temp1.Values = chartDatas1;
+			temp2.Values = chartDatas2;
+			temp1.DataLabels = false;
+			temp1.PointGeometrySize = 0;
+
+			src.Add( temp1 );
+			src.Add( temp2 );
+			chartmain.Series = src;
 
 		}
 	}

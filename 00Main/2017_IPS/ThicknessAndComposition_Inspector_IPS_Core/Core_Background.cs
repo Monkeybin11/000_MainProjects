@@ -20,6 +20,8 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		public event Action<string> evtScanStatus;
 		public event Action<BitmapSource> evtScanImg;
 		public event Action<IEnumerable<double>, IEnumerable<double>> evtSpectrum;
+		public event Action<IEnumerable<double>, IEnumerable<double> , IEnumerable<double> , double > evtSngSignal;
+
 
 
 		#region result Data

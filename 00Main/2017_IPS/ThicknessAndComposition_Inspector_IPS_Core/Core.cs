@@ -181,7 +181,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 
 		public Func<LEither<double [ ]> , IEnumerable<double>  , PlrCrd ,
-						Tuple<PlrCrd , LEither<double> , double [ ]>> CalcPorce =>
+						Tuple<PlrCrd , LEither<double> , double [ ]>> ToThickness =>
 			( reflections , wave , plrcrd ) =>
 			{
 				return Tuple.Create( plrcrd,
@@ -190,20 +190,19 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 									 reflections.Right);
 			};
 
-		public async Task<bool> ScanRun() // Use Internal Config , not get config from method parameter
+		public async Task<bool> ScanAutoRun() // Use Internal Config , not get config from method parameter
 		{
-			
 			OpMaxSpeed();
 			OpORGMaxSpeed();
 			counter = 0;
-			
 
 			SetHWInternalParm(
 							  Config.RStgSpeed ,
 							  Config.XStgSpeed ,
 							  Config.Scan2Avg ,
 							  Config.IntegrationTime ,
-							  Config.Boxcar
+							  Config.Boxcar ,
+							  Config.SpectrumWaitTime
 							  );
 			// Ref Check --
 			if ( !FlgRefReady ) return false.Act( x => MessageBox.Show("Set Referance Please"));
@@ -217,8 +216,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			if ( FlgDarkReady == false ) if ( !OpReady( ScanReadyMode.Dark ) ) return false;
 			FlgDarkReady = true;
 
-			//ScanPos = new ScanPosData();
-			"fUNCTION CREATAION".Print();
 			var toReflect = FnCalReflections(Darks,Refs,SelectedReflctFactors);
 			var toSelected = FnIdxDataPicker(PickedIdx);
 			var thetas = GetPosThetas(ScanPos);
@@ -228,7 +225,9 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			var wavelength = SDWaves;
 			var res = new TEither( Stg as IStgCtrl , 12);
 
-			FlgAutoUpdate = true;
+
+
+			//FlgAutoUpdate = true;
 			// Get Pos-Intensity || Task Calc Thickness --
 			int taskcounter = 0;
 			var posIntenlist = ScanPos.RhoList.Select( ( rho , i ) =>
@@ -249,17 +248,18 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 							f.SendAndReady( f.Go );
 						} ).ToTEither() , "R Stage Move Command Fail" )
 													.ToLEither( new double [ ] { } );
-						Thread.Sleep(SpectrometerDelayTime);
+						//Thread.Sleep(SpectrometerDelayTime);
 
 						var intenlist = logres.IsRight
-													? logres.Bind( x => toSelected( BkD_Spctrm ) )
+													//? logres.Bind( x => toSelected( BkD_Spctrm ) )
+													? logres.Bind( x => toSelected( Spctr.GetSpectrum() ) )
 													: logres.Act( x => Lggr.Log(x.Left , true )); // Logging Error
 
 						evtSpectrum( intenlist.Right , SelectedWaves );
 						calcTaskList[ taskcounter++ ] // 여기서 두께를 계산하게 됨
 										= Task.Run<Tuple<PlrCrd , LEither<double> ,double[] >>(
 											() => logres.IsRight
-													? CalcPorce(
+													? ToThickness(
 														toReflect(intenlist.Right)
 															.ToLEither(intenlist.Left),
 														wavelength,
@@ -296,7 +296,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				).ToArray());
 
 			// Reset Pos --
-			Task.Run( () =>
+			await Task.Run( () =>
 				res.Bind( x => x.Act( f => f.SendAndReady( f.GoAbs + 0.ToPos( Axis.W ) + 0.ToPos() ) ).ToTEither( 1 ) )
 				   .Bind( x => x.Act( f => f.SendAndReady( f.Go ) ).ToTEither( 1 ) ));
 			FlgAutoUpdate = false;
@@ -342,91 +342,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				return true;
 			}
 		}
-
-
-
-
-		public bool OnePointScan()
-		{
-			OpMaxSpeed();
-			OpORGMaxSpeed();
-			counter = 0;
-
-
-			SetHWInternalParm(
-							  Config.RStgSpeed ,
-							  Config.XStgSpeed ,
-							  Config.Scan2Avg ,
-							  Config.IntegrationTime ,
-							  Config.Boxcar
-							  );
-			// Ref Check --
-			if ( !FlgRefReady ) return false.Act( x => MessageBox.Show( "Set Referance Please" ) );
-
-			// Home And Check --
-			
-			FlgHomeDone = true;
-
-			// Scan Ready And Check -- 
-			if ( FlgDarkReady == false ) if ( !OpReady( ScanReadyMode.Dark ) ) return false;
-			FlgDarkReady = true;
-
-			var spos = new ScanPosData();
-			var toReflect = FnCalReflections(Darks,Refs,SelectedReflctFactors);
-			var toSelected = FnIdxDataPicker(PickedIdx);
-			var thetas = GetPosThetas(spos);
-			var calcTaskList =
-					new Task< Tuple<PlrCrd , LEither<double> >>
-					[spos.ThetaList.Select( x => x.Length).Aggregate((f,s) => f+ s) ];
-			var wavelength = SDWaves;
-			var res = new TEither( Stg as IStgCtrl , 12);
-
-			FlgAutoUpdate = true;
-
-			Stg.SendAndReady( Stg.GoAbs + 100.mmToPulse().ToOffPos( Axis.X ) );
-			Stg.SendAndReady( Stg.Go );
-
-
-			Thread.Sleep( SpectrometerDelayTime );
-			var pos = new PlrCrd(0,100);
-			var curinten = toSelected( BkD_Spctrm );
-			var reflec = toReflect(curinten);
-			var inte = reflec.Integral( wavelength , Config.IntglStart , Config.IntglEnd );
-			var thickness = ( inte * Config.Weight + Config.Bias );
-
-			//string reflectPath = @"C:\temp\reflections.csv";
-			//string intenPath	= @"C:\temp\inten.csv";
-			//string refPath		= @"C:\temp\ref.csv";
-			//string darkPath		= @"C:\temp\dark.csv";
-			//
-			//savetest(reflectPath, reflec );
-			//savetest(intenPath	, curinten );
-			//savetest(refPath	,	Refs.ToArray());
-			//savetest( darkPath	, Darks.ToArray()	 );
-			return true;
-		}
-
-		public void savetest(string path , double[] datas)
-		{
-			try
-			{
-				StringBuilder stb = new StringBuilder();
-
-				foreach ( var item in datas )
-				{
-					stb.Append( item.ToString() );
-					stb.Append( Environment.NewLine );
-				}
-
-				File.WriteAllText( path , stb.ToString() );
-			}
-			catch ( Exception )
-			{
-				Console.WriteLine( "Write Fail" );
-			}
-			
-		}
-
 		#endregion
 	}
 }

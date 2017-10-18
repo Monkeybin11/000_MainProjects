@@ -44,7 +44,8 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 							  Config.XStgSpeed ,
 							  Config.Scan2Avg ,
 							  Config.IntegrationTime ,
-							  Config.Boxcar
+							   Config.Boxcar ,
+							  Config.SpectrumWaitTime
 							  );
 					result.Bind( x => OpSetRef() , "Referance Scan is Fail" )
 						  .Bind( x => x.Act( f => FlgRefReady = true));
@@ -68,7 +69,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		{
 			Stg.SendAndReady( Stg.GoAbs + 0.ToPos( Axis.X ) );
 			Stg.SendAndReady( Stg.Go );
-			Thread.Sleep( SpectrometerDelayTime );
 			var darkraw = Spctr.GetSpectrum();
 			Task.Run(() => evtSpectrum( darkraw , SelectedWaves ));
 			Darks = PickedIdx.Select( x => darkraw [ x ] ).ToList();
@@ -82,8 +82,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			 {
 				 Stg.SendAndReady( Stg.GoAbs + 0.ToOffPos( Axis.X ) );
 				 Stg.SendAndReady( Stg.Go );
-				 Thread.Sleep( SpectrometerDelayTime );
-
 				 refraw = Spctr.GetSpectrum();
 				 evtSpectrum( refraw , SelectedWaves );
 				 Refs = PickedIdx.Select( x => refraw [ x ] ).ToList();
@@ -222,14 +220,14 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		public void SetComPort( double port ) => Config.Port = ( int )port;
 
-		public void SetHWInternalParm( double rspeed , double xspeed , double scan2avg , double intetime , double boxcar )
+		public void SetHWInternalParm( double rspeed , double xspeed , double scan2avg , double intetime , double boxcar , double millisec )
 		{
 			Config.RStgSpeed = ( int )rspeed;
 			Config.XStgSpeed = ( int )xspeed;
 			Config.Scan2Avg = ( int )scan2avg;
 			Config.IntegrationTime = ( int )intetime;
-			Config.SpectrumWaitTime = ( int )intetime;
 			Config.Boxcar = ( int )boxcar;
+			Config.SpectrumWaitTime = ( int )millisec;
 
 			Stg.SendAndReady( "S:24" );
 			Stg.SendAndReady( "S:15" );
@@ -246,11 +244,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			Spctr.BoxCar( Config.Boxcar );
 		}
 
-		public void SetSpctWaitTime( double millisec )
-		{
-			Config.SpectrumWaitTime = (int)millisec;
-		}
-
+	
 		public bool GoAbsPos( Axis axis , int pos1 , int pos2 = 99999 )
 		{
 			switch ( axis )

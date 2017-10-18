@@ -28,6 +28,11 @@
                 <MenuItem x:Name="menuShowConfig" Header="Show Config"        Style="{StaticResource menuItem}" Click="OptionMenuClick"/>
                 <MenuItem x:Name="menuSetDefualtConfig" Header="Set Defualt Config"        Style="{StaticResource menuItem}" Click="OptionMenuClick"/>
             </MenuItem>
+
+            <MenuItem Header="Analysis" >
+                <MenuItem x:Name="menuSinglePosScan" Header="Veiw Spctrum    "          Style="{StaticResource menuItem}" Click="AnalysisMenuClick"/>
+            </MenuItem>
+
         </Menu>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>

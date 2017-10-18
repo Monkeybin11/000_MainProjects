@@ -137,7 +137,7 @@ namespace ModelLib.Data
 			else if ( crtn == null ) return new PlrUnit();
 
 			return new PlrCrd(
-							   Math.Atan2( crtn.Y , crtn.X ) * 180 / Math.PI + 180 ,
+							   Math.Atan2( crtn.Y , crtn.X ) * 180 / Math.PI  ,
 							   Math.Sqrt( crtn.X * crtn.X + crtn.Y * crtn.Y )  );
 		}
 

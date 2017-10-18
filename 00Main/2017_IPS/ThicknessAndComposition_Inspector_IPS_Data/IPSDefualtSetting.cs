@@ -21,11 +21,11 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 		// Spetrometer
 		public int Boxcar { get { return 5; } set { } }
 		public int Scan2Avg { get { return 50; } set { } }
-		public int IntegrationTime { get { return 8; } set { } }
+		public int IntegrationTime { get { return 120; } set { } }
 		public int SpectrumWaitTime { get { return 500; } set { } }
 
 		// Stage
-		public int Port { get { return 4; } set { } }
+		public int Port { get { return 7; } set { } }
 		public int XStgSpeed { get { return 50000; } set { } }
 		public int RStgSpeed { get { return 100000; } set { } }
 

@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.ComponentModel;
 using LiveCharts;
 using LiveCharts.Configurations;
+using LiveCharts.Wpf;
 
 namespace ThicknessAndComposition_Inspector_IPS
 {
@@ -39,6 +40,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 			srsMain.Focusable = false;
 			srsMain.Title = "Real Time Spectrum";
 			srsMain.Fill = Brushes.Transparent;
+			srsMain.PointGeometrySize = 0;
 			axisY.MaxValue = 60000;
 			axisY.MinValue = 0;
 			DataContext = this;
@@ -53,14 +55,19 @@ namespace ThicknessAndComposition_Inspector_IPS
 			dts [ 0 ] = dts [ 2 ];
 			dts [ 1 ] = dts [ 2 ];
 
-			ChartValues<double[]> ChartDatas = new ChartValues<double[]>();
-			ChartDatas.AddRange(
+			ChartValues<double[]> chartDatas = new ChartValues<double[]>();
+			chartDatas.AddRange(
 				Enumerable.Range( 0 , datas.Count() )
 				.Where( ( _ , i ) => i % 10 == 0 )
 				.Select( x => new double [ 2 ] { lbls [ x ] , dts [ x ] } )
 				);
-			srsMain.Dispatcher.BeginInvoke( ( Action )( () => srsMain.Values = ChartDatas ) );
+			srsMain.Dispatcher.BeginInvoke( ( Action )( () => srsMain.Values = chartDatas ) );
 		}
+
+		int SeriesCounter = 1;
+		
+
+
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

@@ -51,9 +51,18 @@ namespace ApplicationUtilTool.Communication
 		}
 
 		public bool Open()
-		=> Port.IsOpen ? Port.Act( x => x.Close() )
-							 .Map( x => { x.Open(); return Port.IsOpen; } )
-					   : Port.Map( x => { x.Open(); return Port.IsOpen; } );
+		{
+			try
+			{
+				return Port.IsOpen ? Port.Act( x => x.Close() )
+										 .Map( x => { x.Open(); return Port.IsOpen; } )
+								   : Port.Map( x => { x.Open(); return Port.IsOpen; } );
+			}
+			catch ( Exception )
+			{
+				return false;
+			}
+		}
 
 		public void Close()
 	   => Port.Close();
