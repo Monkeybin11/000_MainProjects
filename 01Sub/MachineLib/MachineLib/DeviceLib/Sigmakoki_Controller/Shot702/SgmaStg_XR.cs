@@ -22,10 +22,13 @@ namespace MachineLib.DeviceLib
 		RS232 RS;
 		bool PrintMode;
 		public int TimeOut = 20000;
+		public int WaitRecivems = 30;
+		
 		object key = new object();
 
 		public string Home { get { return "H:"; } set { } } 
 		public string GoAbs	{ get{return "A:";} set { } }
+		public string GoRel	{ get{return "M:";} set { } }
 		public string SetSpeed { get{return "D:";} set { } }
 		public string Status	{ get{return "!:";} set { } }
 		public string StatusOK { get{return "R"; } set { } }
@@ -39,7 +42,8 @@ namespace MachineLib.DeviceLib
 			Port = new SerialPort()
 							.Act( x =>
 							{
-								x.PortName = comport;
+								//x.PortName = comport;
+								x.PortName = "COM7";
 								x.BaudRate = 38400;
 								x.DataBits = 8;
 								x.Parity = Parity.None;
@@ -107,7 +111,7 @@ namespace MachineLib.DeviceLib
 				stw.Start();
 				while ( RS.Query( Status ) != StatusOK )
 				{
-					Thread.Sleep( 300 );
+					Thread.Sleep( WaitRecivems );
 					if ( timeoutSec > 0 && stw.ElapsedMilliseconds / 1000 > timeoutSec ) return false;
 				}
 				return true;
@@ -125,7 +129,7 @@ namespace MachineLib.DeviceLib
 				stw.Start();
 				while ( RS.Query( Status ) != StatusOK )
 				{
-					Thread.Sleep( 300 );
+					Thread.Sleep( WaitRecivems );
 					if ( timeoutSec > 0 && stw.ElapsedMilliseconds / 1000 > timeoutSec ) return false;
 				}
 				return true;
@@ -140,27 +144,61 @@ namespace MachineLib.DeviceLib
 
 	public static class SgmaExt
 	{
+		/*
+		Shot 702 X and R Stage 
+		 
+			 
+			 
+			 
+		*/
+
+
+
+		static int HomeOffset = 194000;
+
 		public static string ToPos(
 		this double pos )
-		=> pos > 0 ? "+P" + ( Math.Abs( pos ) ).ToString()
+		=> pos >= 0 ? "+P" + ( Math.Abs( pos ) ).ToString()
 				   : "-P" + ( Math.Abs( pos) ).ToString();
 		public static string ToPos(
 		this int pos )
-		=> pos > 0 ?  "+P" + ( Math.Abs( pos ) ).ToString()
+		=> pos >= 0 ?  "+P" + ( Math.Abs( pos ) ).ToString()
 				   :  "-P" + ( Math.Abs( pos ) ).ToString();
 
 		public static string ToPos(
 		this int pos ,
 		Axis axis )
-		=> pos > 0 ? ( axis.ToIdx() ).ToString() + "+P" + ( Math.Abs( pos ) ).ToString()
-				   : ( axis.ToIdx() ).ToString() + "-P" + ( Math.Abs( pos)    ).ToString();
+		=> pos >= 0 ? ( axis.ToIdx() ).ToString() + "+P" + ( Math.Abs( pos ) ).ToString()
+				   : ( axis.ToIdx() ).ToString() + "-P" + ( Math.Abs( pos ) ).ToString();
 
 
 		public static string ToPos(
 		this double pos ,
 		Axis axis )
-		=> pos > 0 ? ( axis.ToIdx() ).ToString() + "+P" + ( Math.Abs ( pos ) ).ToString()
+		=> pos >= 0 ? ( axis.ToIdx() ).ToString() + "+P" + ( Math.Abs ( pos ) ).ToString()
 				   : ( axis.ToIdx() ).ToString() + "-P" + ( Math.Abs( pos)     ).ToString();
+
+		public static string ToOffPos(
+		this double pos )
+		=> pos >= 0 ? "+P" + ( HomeOffset - Math.Abs( pos ) ).ToString()
+				   : "-P" + ( HomeOffset - Math.Abs( pos ) ).ToString();
+
+		public static string ToOffPos(
+		this int pos )
+		=> pos >= 0 ? "+P" + ( HomeOffset - Math.Abs( pos ) ).ToString()
+				   : "-P" + ( HomeOffset - Math.Abs( pos ) ).ToString();
+
+		public static string ToOffPos(
+		this int pos ,
+		Axis axis )
+		=> pos >= 0 ? ( axis.ToIdx() ).ToString() + "+P" + ( HomeOffset - Math.Abs( pos ) ).ToString()
+				   : ( axis.ToIdx() ).ToString() + "-P" + ( HomeOffset - Math.Abs( pos ) ).ToString();
+		public static string ToOffPos(
+		this double pos ,
+		Axis axis )
+		=> pos >= 0 ? ( axis.ToIdx() ).ToString() + "+P" + ( HomeOffset - Math.Abs( pos ) ).ToString()
+				   : ( axis.ToIdx() ).ToString() + "-P" + ( HomeOffset - Math.Abs( pos ) ).ToString();
+
 
 
 
@@ -174,10 +212,9 @@ namespace MachineLib.DeviceLib
 		public static string ToSpeed(
 			this int speed )
 		{
-			string sspd = (speed/100).ToString();
+			string sspd = ((int)(speed/50)).ToString();
 			string fspd = (speed).ToString();
 			return $"S{sspd}F{fspd}R300"; 
-
 		}
 
 		public static int Degree2Pulse(
@@ -191,9 +228,15 @@ namespace MachineLib.DeviceLib
 		this int degree
 		)
 		{
-			return ( int )( degree / 0.001 );
+			return ( int )( degree * 1000 );
 		}
 
+		public static int Pulse2Degree(
+		this double pulse
+		)
+		{
+			return ( int )( pulse / 1000 );
+		}
 
 		public static int mmToPulse(
 			this double pos
@@ -207,6 +250,13 @@ namespace MachineLib.DeviceLib
 			)
 		{
 			return ( int )( pos * 1000 );
+		}
+
+		public static int PulseTomm(
+	this int pulse
+	)
+		{
+			return ( int )( pulse / 1000 );
 		}
 
 

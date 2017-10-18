@@ -25,12 +25,7 @@ namespace TestConsole
 			var res1 = File.ReadAllText(path);
 			var res2 = File.ReadLines(path).ToList();
 			Console.WriteLine();
-
-
 		}
-
-
-
 
 		static void main2()
 		{

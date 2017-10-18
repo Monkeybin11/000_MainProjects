@@ -9,7 +9,7 @@ namespace SpeedyCoding
 	public static class SpeedyCoding_Math
 	{
 		public static double Integral(
-			this IEnumerable<double> self ,
+			this IEnumerable<int> self ,
 			int startidx ,
 			int endidx )
 		{
@@ -29,12 +29,12 @@ namespace SpeedyCoding
 
 		public static double Integral(
 			this IEnumerable<double> self ,
-			IEnumerable<double> indices ,
+			IEnumerable<int> indices ,
 			int startidx ,
 			int endidx )
 		{
 			if ( startidx >= endidx
-				|| startidx > self.Count()
+				|| startidx > indices.Max()
 				|| endidx < 0 )
 				return 0;
 
@@ -43,8 +43,53 @@ namespace SpeedyCoding
 						: startidx;
 
 			var end  = endidx ;
+			var res = self.Where( ( _ , i ) => indices.ElementAt(i) >= start && indices.ElementAt( i ) <= end ).Sum();
+			Console.WriteLine( "Integral result : " + res.ToString() );
+			return res;
+		}
 
-			return self.Where( ( _ , i ) => indices.ElementAt(i) >= start && indices.ElementAt( i ) <= end ).Sum();
+
+
+		public static double Integral(
+			this IEnumerable<double> self ,
+			IEnumerable<double> indices ,
+			double startidx ,
+			double endidx )
+		{
+			if ( startidx >= endidx
+				|| startidx > indices.Max()
+				|| endidx < 0 )
+				return 0;
+
+			var start = startidx < 0
+						? 0
+						: startidx;
+
+			var end  = endidx ;
+			var res = self.Where( ( _ , i ) => indices.ElementAt(i) >= start && indices.ElementAt( i ) <= end ).Sum();
+			return res;
+		}
+
+
+		public static double Integral(
+			this IEnumerable<double> self ,
+			IEnumerable<double> indices ,
+			int startidx ,
+			int endidx )
+		{
+			if ( startidx >= endidx
+				|| startidx > indices.Max()
+				|| endidx < 0 )
+				return 0;
+
+			var start = startidx < 0
+						? 0
+						: startidx;
+
+			var end  = endidx ;
+			var res = self.Where( ( _ , i ) => indices.ElementAt(i) >= start && indices.ElementAt( i ) <= end ).Sum();
+			Console.WriteLine( "Integral result : " + res.ToString() );
+			return res;
 		}
 
 

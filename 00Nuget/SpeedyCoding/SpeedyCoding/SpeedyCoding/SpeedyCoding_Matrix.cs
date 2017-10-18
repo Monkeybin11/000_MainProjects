@@ -140,7 +140,50 @@ namespace SpeedyCoding
             return result.ToArray();
         }
 
-        public static TSrc [ ] [ ] Padding<TSrc>(
+		public static TSrc [ ] Flatten<TSrc>(
+		  this TSrc [ , ] src )
+		{
+			int fsize = src.GetLength(0);
+			int ssize = src.GetLength(1);
+
+
+			int totalSize =  fsize + ssize;
+			List<TSrc> result = new List<TSrc>();
+			for ( int f = 0 ; f < fsize ; f++ )
+			{
+				for ( int s = 0 ; s < ssize ; s++ )
+				{
+					result.Add( src [ f , s ] );
+				}
+			}
+			return result.ToArray();
+		}
+
+		public static TSrc [ ] Flatten<TSrc>(
+		  this TSrc [ ,, ] src )
+		{
+			int fsize = src.GetLength(0);
+			int ssize = src.GetLength(1);
+			int tsize = src.GetLength(2);
+
+
+			int totalSize =  fsize + ssize + tsize;
+			List<TSrc> result = new List<TSrc>();
+			for ( int f = 0 ; f < fsize ; f++ )
+			{
+				for ( int s = 0 ; s < ssize ; s++ )
+				{
+					for ( int t = 0 ; t < tsize ; t++ )
+					{
+						result.Add( src [ f , s , t ] );
+					}
+				}
+			}
+			return result.ToArray();
+		}
+
+
+		public static TSrc [ ] [ ] Padding<TSrc>(
     this TSrc [ ] [ ] @this ,
     int padSize )
         {

@@ -86,6 +86,9 @@
     <Compile Include="Columnchart_UCTEst.xaml.cs">
       <DependentUpon>Columnchart_UCTEst.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NonBindChart.xaml.cs">
+      <DependentUpon>NonBindChart.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UC_ColumChart.xaml.cs">
       <DependentUpon>UC_ColumChart.xaml</DependentUpon>
     </Compile>
@@ -126,6 +129,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NonBindChart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UC_ColumChart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

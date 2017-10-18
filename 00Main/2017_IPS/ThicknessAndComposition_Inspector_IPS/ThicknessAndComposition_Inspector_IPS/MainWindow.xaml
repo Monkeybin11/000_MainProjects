@@ -15,15 +15,24 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Style="{StaticResource menu}">
             <MenuItem Header="File">
-                <MenuItem Header="Save RawData" Style="{StaticResource menuItem}">
-                </MenuItem>
+                <MenuItem x:Name="menuSaveResultonly" Header="Save ResultData" Style="{StaticResource menuItem}" Click="FileMenuClick"/>
+                <MenuItem x:Name="menuSaveRawonly" Header="Save RawData" Style="{StaticResource menuItem}" Click="FileMenuClick"/>
+                <MenuItem x:Name="menuSaveImageonly" Header="Save ImageData" Style="{StaticResource menuItem}" Click="FileMenuClick"/>
+                <MenuItem x:Name="menuSaveConfig" Header="Save Config" Style="{StaticResource menuItem}" Click="FileMenuClick"/>
+                <MenuItem x:Name="menuExit" Header="Exit" Style="{StaticResource menuItem}" Click="FileMenuClick"/>
+
             </MenuItem>
             <MenuItem Header="Option" >
-                <MenuItem x:Name="menuLoadConfig" Header="Load Scan Config"          Style="{StaticResource menuItem}" Click="OptionMenuClick"/>
-                <MenuItem x:Name="menuCreateConfig" Header="Create New Config"       Style="{StaticResource menuItem}" Click="OptionMenuClick"/>
-                <MenuItem x:Name="menuSetSpecStg" Header="Setting Hardware"          Style="{StaticResource menuItem}" Click="OptionMenuClick"/>
-                <MenuItem x:Name="menuShowConfig" Header="Show CurrentConfig"        Style="{StaticResource menuItem}" Click="OptionMenuClick"/>
+                <MenuItem x:Name="menuViewSpct" Header="Veiw Spctrum    "          Style="{StaticResource menuItem}" Click="OptionMenuClick"/>
+                <MenuItem x:Name="menuSetSpecStg" Header="Setting H/W"          Style="{StaticResource menuItem}" Click="OptionMenuClick"/>
+                <MenuItem x:Name="menuShowConfig" Header="Show Config"        Style="{StaticResource menuItem}" Click="OptionMenuClick"/>
+                <MenuItem x:Name="menuSetDefualtConfig" Header="Set Defualt Config"        Style="{StaticResource menuItem}" Click="OptionMenuClick"/>
             </MenuItem>
+
+            <MenuItem Header="Analysis" >
+                <MenuItem x:Name="menuSinglePosScan" Header="Veiw Spctrum    "          Style="{StaticResource menuItem}" Click="AnalysisMenuClick"/>
+            </MenuItem>
+
         </Menu>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -46,21 +55,13 @@
                 </Grid.RowDefinitions>
                 <uc:UC_Map x:Name="ucMapDisplay"   />
                 <UniformGrid Grid.Row="1" Columns="2"  >
+                    <uc:UC_LiveLineChart x:Name="ucSpectrum" Grid.Column="2" />
                     <uc:UC_Histogram x:Name="ucHisto" Margin="10"/>
-                    <uc:UC_Histogram x:Name="ucHisto2" Margin="10"/>
                 </UniformGrid>
 
             </Grid>
-
-
-            <Grid  Grid.Column="2" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="3*"/>
-                </Grid.RowDefinitions>
-                <uc:UC_MapInfo x:Name="ucMapInfo"/>
-                <uc:UC_DataGrid x:Name="ucDataGrid" Grid.Row="1" Background="blue"/>
-            </Grid>
+                <uc:UC_DataGrid x:Name="ucDataGrid" Grid.Column="2" Background="blue"/>
+               
         </Grid>
     </Grid>
 </Window>

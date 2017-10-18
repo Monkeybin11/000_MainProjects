@@ -7,9 +7,9 @@
         xmlns:xc ="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         x:Name="ScanSettingWindow"
-        Title="Win_Config" Height="300" Width="400">
+        Title="Win_Config" Height="400" Width="400">
     <Grid>
-        <UniformGrid Columns="2" Rows="7">
+        <UniformGrid Columns="2" Rows="8">
             <Label Content="Stage Com Port "/>
             <xc:DoubleUpDown x:Name="nudXStgPort"/>
             <Label Content="R Stage Speed "/>
@@ -22,6 +22,8 @@
             <xc:DoubleUpDown x:Name="nudIntegrationTime" />
              <Label Content="Spectrometer Boxcar "/>
             <xc:DoubleUpDown x:Name="nudBoxcar" />
+            <Label Content="Spectrometer Wait Time "/>
+            <xc:DoubleUpDown x:Name="nudSpctWait" />
             <Button x:Name="btnSettingApply" Content="Apply" Click="btnSettingApply_Click"/>
             <Button x:Name="btnCancel" Content="Cancel" Click="btnCancel_Click"/>
         </UniformGrid>

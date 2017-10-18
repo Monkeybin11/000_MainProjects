@@ -19,7 +19,9 @@ namespace ThicknessAndComposition_Inspector_IPS
 		double rspeed 
 		, double xspeed 
 		, double scan2avg 
-		, double intetime , double boxcar );
+		, double intetime 
+		, double boxcar 
+		, double waittime );
 
 	/// <summary>
 	/// Interaction logic for Win_Config.xaml
@@ -34,8 +36,10 @@ namespace ThicknessAndComposition_Inspector_IPS
 		double Scan2Avg        ;
 		double IntegrationTIme ;
 		double Boxcar          ;
+		double SpectrometerDelayTime          ;
 
 		public event StgSpeedEvent evtStgSpeedSetChange;
+		public event Action<double> evtSpctWaitTime;
 
 		public Win_Config()
 		{
@@ -51,14 +55,18 @@ namespace ThicknessAndComposition_Inspector_IPS
 			Scan2Avg		= nudScan2Avg.Value			.ToNonNullable();
 			IntegrationTIme = nudIntegrationTime.Value	.ToNonNullable();
 			Boxcar			= nudBoxcar.Value			.ToNonNullable();
+			SpectrometerDelayTime = nudSpctWait.Value.ToNonNullable();
 
-			
+
 			evtStgSpeedSetChange( 
 								RstgSpeed		,
 								XstgSpeed		,
 								Scan2Avg		,
 								IntegrationTIme ,
-								Boxcar			);
+								Boxcar			,
+								SpectrometerDelayTime );
+
+
 
 		}
 

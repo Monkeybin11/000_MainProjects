@@ -1,0 +1,29 @@
+﻿<Window x:Class="LiveCharts_Example.NonBindChart"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LiveCharts_Example"
+         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        mc:Ignorable="d"
+        Title="NonBindChart" Height="300" Width="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="1"  >
+            <Button x:Name="btnchange" DockPanel.Dock="Top"   Content="Change"/>
+            <Button x:Name="btnstart"  DockPanel.Dock="Top" Content="start" Click="btnstart_Click"/>
+            <Button x:Name="btnstop"   DockPanel.Dock="Top"    Content="stop" />
+        </DockPanel>
+        <lvc:CartesianChart x:Name="chartmain" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}">
+           
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis x:Name="axisX">
+                   
+                </lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+        </lvc:CartesianChart>
+    </Grid>
+</Window>

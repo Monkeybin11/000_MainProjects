@@ -54,28 +54,49 @@ namespace ThicknessAndComposition_Inspector_IPS
 		{
 			InitializeComponent();
 
-			DataContext = this;
+			//DataContext = this;
 
 			ChartValues = new ChartValues<double>();
 			DisFormatter = value => Math.Round(value).ToString();
+			DataContext = this;
 		}
 		int counter = 0;
 
-		public void CreateHistogram( IEnumerable<double[]> RepresentativeValueAndFrequency ) // 
+		public void CreateHistogram( ) // 
 		{
-			var repVal = RepresentativeValueAndFrequency
-							.Select( x => x[0]);
-			var fre = RepresentativeValueAndFrequency
-							.Select( x => x[1]);
-
-			//ChartValues.Clear();
+			//var repVal = RepresentativeValueAndFrequency
+			//				.Select( x => x[0]);
+			//var fre = RepresentativeValueAndFrequency
+			//				.Select( x => x[1]);
+			//
+			ChartValues.Clear();
 			//ChartValues.AddRange( fre );
 			var r = new Random();
 			ChartValues.AddRange( Enumerable.Range( counter , 20 ).Select( x => ( double )( x + r.Next( 0 , 50 ) ) ) );
 			Labels = new string [ ] { "300,310,300,200" };
 			//Labels = repVal.Select( x => Math.Round(x).ToString() ).ToArray();
+			
 		}
 
+		public void CreateHistogram2( double [ ] src ) // 
+		{
+			//var repVal = RepresentativeValueAndFrequency
+			//				.Select( x => x[0]);
+			//var fre = RepresentativeValueAndFrequency
+			//				.Select( x => x[1]);
+			//
+			ChartValues.Clear();
+			//ChartValues.AddRange( fre );
+			var r = new Random();
+			ChartValues.AddRange( src );
+			Labels = new[ ] { "300,310,300,222" };
+			//Labels = repVal.Select( new[ ] { "300,310,300,222" };x => Math.Round(x).ToString() ).ToArray();
+		}
+
+		public void DrawHistogram(double[] src)
+		{
+
+		}
 
 
 

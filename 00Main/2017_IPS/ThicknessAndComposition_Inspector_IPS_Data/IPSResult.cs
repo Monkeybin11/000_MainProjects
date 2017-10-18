@@ -10,9 +10,9 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 	public class IPSResult
 	{
 		public List<SpotData> SpotDataList;
-		public double[] WaveLen;
+		public List<double> WaveLen;
 
-		public IPSResult( double[] wavelen )
+		public IPSResult( List<double> wavelen )
 		{
 			WaveLen = wavelen;
 			SpotDataList = new List<SpotData>();
@@ -25,21 +25,24 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 		// For Genrelize  
 		//public CrtnCrd CrtnPos;
 		public PlrCrd	PlrPos;
+		public CrtnCrd CrtPos { get { return PlrPos.ToCartesian() as CrtnCrd; } }
 		public double	Thickness;
 		public double[] IntenList;
+		public double[] Refelctivityes;
 
-		public SpotData( PlrCrd pos , double thckness , double [ ] intens )
+		public SpotData( PlrCrd pos , double thckness , double [ ] intens , double[] reflectivityes )
 		{
 			PlrPos		= pos;
 			Thickness	= thckness;
 			IntenList	= intens;
+			Refelctivityes = reflectivityes;
 		}
 	}
 
 	public class IPSResult_ForGrid
 	{
-		public string Theta { get; set; }
-		public string Rho { get; set; }
+		public string X { get; set; }
+		public string Y { get; set; }
 		public string Thickness { get; set; }
 	}
 
@@ -58,10 +61,11 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 		public static IPSResult_ForGrid ToGridResult(
 			this SpotData self )
 		{
+			var cartesian = self.PlrPos.ToCartesian();
 			return new IPSResult_ForGrid()
 			{
-				Theta = Math.Round(self.PlrPos.Theta).ToString() ,
-				Rho = Math.Round( self.PlrPos.Rho).ToString(  ) ,
+				X = cartesian.X.ToString("N5") ,
+				Y = cartesian.Y.ToString("N5") ,
 				Thickness = self.Thickness.ToString( "N4" )
 			};
 		}

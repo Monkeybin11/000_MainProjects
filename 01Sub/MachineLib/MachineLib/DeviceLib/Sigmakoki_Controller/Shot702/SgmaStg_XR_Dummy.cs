@@ -12,6 +12,7 @@ namespace MachineLib.DeviceLib
 	{
 		public string Home { get { return "H:"; } set { } } 
 		public string GoAbs	{ get{return "A:";} set { } }
+		public string GoRel { get { return "M:"; } set { } }
 		public string SetSpeed { get{return "D:";} set { } }
 		public string Status	{ get{return "!:";} set { } }
 		public string StatusOK { get{return "R"; } set { } }

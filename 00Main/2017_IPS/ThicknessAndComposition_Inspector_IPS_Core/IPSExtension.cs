@@ -29,7 +29,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			this IPSResult self )
 		=> self.SpotDataList.Select( x =>
 							   new double [ ] { Math.Round( x.PlrPos.Theta)
-												, Math.Round(x.PlrPos.Rho)
+												, Math.Round(x.PlrPos.Rho/10.0)
 												, x.Thickness } )
 							 .ToList();
 
