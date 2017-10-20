@@ -139,7 +139,7 @@
     <Compile Include="SubWindow\Win_SpctDisplay.xaml.cs">
       <DependentUpon>Win_SpctDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WIn_SinglePointAnalysis.xaml.cs">
+    <Compile Include="SubWindow\WIn_SinglePointAnalysis.xaml.cs">
       <DependentUpon>WIn_SinglePointAnalysis.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow\IPS_Style.xaml">
@@ -198,7 +198,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WIn_SinglePointAnalysis.xaml">
+    <Page Include="SubWindow\WIn_SinglePointAnalysis.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

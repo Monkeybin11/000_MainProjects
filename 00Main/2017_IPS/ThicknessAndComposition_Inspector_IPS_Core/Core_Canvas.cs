@@ -9,6 +9,7 @@ using ModelLib.Data;
 using MachineLib.DeviceLib;
 using ModelLib.ClassInstance;
 using System.Threading;
+using System.IO;
 
 namespace ThicknessAndComposition_Inspector_IPS_Core
 {
@@ -49,9 +50,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				f.SendAndReady( f.Go );
 
 			}).ToTEither() ,  "R Stage Move Command Fail" );
-
 			var moveResLog = stgMoveRes.ToLEither(new double[]{ });
-
 			int curcount = 0;
 			while ( true )
 			{
@@ -70,17 +69,10 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				curcount++;
 			}
 
-
-
-
 			return true;
-		
-
-
-
-
-
 		}
+
+		
 
 	}
 }
