@@ -38,7 +38,7 @@ namespace SpeedyCoding
                                             : f + 1.Act( x => output.Add( f ) ) );
             return output;
         }
-
+		
 		public static IEnumerable<int> xRange(
 		this int start ,
 		int count )

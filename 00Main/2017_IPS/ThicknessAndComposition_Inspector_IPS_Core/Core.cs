@@ -269,7 +269,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 					}).ToList();
 			}).SelectMany( x => x ).ToList(); // List [ Result , Result , Result  ] 
 
-
 			// Thickness Result List --
 			// ( You dont need to use try catch pattern for catch all exception from tasklist )
 			//var posThicknesses = Task.WhenAll( calcTaskList ).Result.Duplicate0ToAllTheta().ToList();

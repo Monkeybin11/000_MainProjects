@@ -97,6 +97,16 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 										 : new double [ 3 ];
 			   } ).ToList();
 
+		public static string ToTempDataFormat(
+			this IEnumerable<double> wave ,
+			IEnumerable<double> inten ,
+			IEnumerable<double> reflect )
+		{
+			StringBuilder stb = new StringBuilder();
+			wave.ActLoop( ( x , i ) => stb.Append( x.ToString() + ',' + inten.ElementAt(i).ToString() + ',' + reflect.ElementAt(i).ToString() + Environment.NewLine ) );
+			return stb.ToString();
+		}
+
 
 
 		[DllImport( "gdi32" )]

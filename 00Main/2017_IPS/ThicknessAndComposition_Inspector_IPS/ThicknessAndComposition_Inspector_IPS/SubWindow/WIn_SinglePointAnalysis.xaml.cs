@@ -13,6 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SpeedyCoding;
+using System.Threading;
 
 namespace ThicknessAndComposition_Inspector_IPS
 {
@@ -30,6 +32,8 @@ namespace ThicknessAndComposition_Inspector_IPS
 		double[] Waves = new double[] { } ;
 		List<string> Time = new List<string>();
 		bool waveSetted;
+		string TempPathInten;
+		string TempPathReflect;
 		public WIn_SinglePointAnalysis()
 		{
 			InitializeComponent();
@@ -40,23 +44,55 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 		private void btnSinglePosStart_Click( object sender , RoutedEventArgs e )
 		{
-			evtScanStart(
-				new double [ ]
+			Spectruns = new List<double [ ]>();
+			Reflectivitys = new List<double [ ]>();
+			Thicknesses = new List<double>();
+			Waves = new double [ ] { };
+			Time = new List<string>();
+
+			TempPathInten = txbTempBackupFile.Text;
+			waveSetted = false;
+			try
+			{
+				if ( ( bool )ckbTempBackup.IsChecked )
 				{
+					var path = System.IO.Path.GetFullPath( txbTempBackupFile.Text ).CheckAndCreateDir()
+								+"\\"
+								+ DateTime.Now.ToString( "yyMMdd__HH;mm;ss" );
+					TempPathInten = path + "_Inten.csv";
+					TempPathReflect = path + "_Refelct.csv";
+					Thread.Sleep( 300 );
+				}
+				
+
+
+				evtScanStart(
+					new double [ ]
+					{
 					(double)nudXposSingle.Value,
 					(double)nudYposSingle.Value
-				} ,
-				( int )nudIntervalSingle.Value,
-				( int )nudCountSingel.Value
-				);
-			Counter = 0;
+					} ,
+					( int )nudIntervalSingle.Value ,
+					( int )nudCountSingel.Value
+					);
+				Counter = 0;
+			}
+			catch ( Exception )
+			{
+				MessageBox.Show( "Setted Temp Save Path is not Valid" );
+				throw;
+			}
+
+			
+			
 		}
 
 		public void DrawSignal( IEnumerable<double> spct , IEnumerable<double> reflect , IEnumerable<double> wave ,double thckn )
 		{
 			Thicknesses.Add( thckn );
+			string currentTime = DateTime.Now.ToString( "yyMMdd__HH_mm_ss" );
 
-			Time.Add( DateTime.Now.ToString( "yyMMdd__HH_mm_ss" ) );
+			Time.Add( currentTime );
 			ucIntensitiychart.AddNewSeries( spct , wave , thckn.ToString("N2") , Counter);
 			Spectruns.Add( spct.ToArray() );
 			if ( !waveSetted ) Waves = wave.ToArray();
@@ -65,6 +101,40 @@ namespace ThicknessAndComposition_Inspector_IPS
 			lblSingleScanStatus.Dispatcher.BeginInvoke( ( Action )( () => lblSingleScanStatus.Content = Counter.ToString() ) );
 			Reflectivitys.Add( reflect.ToArray() );
 			Counter++;
+
+
+			bool needbackup = false;
+			this.Dispatcher.Invoke( ( Action )( () => needbackup = ( bool )ckbTempBackup.IsChecked ) );
+			if ( !waveSetted && needbackup )
+			{
+				var stb = new StringBuilder()
+					.Act( x => x.Append("WaveLen," + wave.Select( y => y.ToString())
+														.Aggregate((f,s) => f + ',' + s)));
+				File.WriteAllText( TempPathInten , stb.ToString() );
+				File.WriteAllText( TempPathReflect , stb.ToString() );
+				waveSetted = true;
+			}
+
+			
+			if ( needbackup )
+			{
+				var stbInten = new StringBuilder()
+					.Act( x => x.Append( currentTime + ',' ));
+				var stbReflc = new StringBuilder()
+					.Act( x => x.Append( currentTime + ',' ) );
+
+				File.AppendAllText( TempPathInten , 
+					stbInten.Act( x => x.Append( 
+						spct.Select( y => y.ToString() )
+							.Aggregate( ( f , s ) => f + ',' + s ) ) ).ToString()
+						+ Environment.NewLine );
+				File.AppendAllText( TempPathReflect ,
+					stbReflc.Act( x => x.Append(
+						reflect.Select( y => y.ToString() )
+							.Aggregate( ( f , s ) => f + ',' + s ) ) ).ToString() 
+						+ Environment.NewLine );
+			}
+
 		}
 
 		

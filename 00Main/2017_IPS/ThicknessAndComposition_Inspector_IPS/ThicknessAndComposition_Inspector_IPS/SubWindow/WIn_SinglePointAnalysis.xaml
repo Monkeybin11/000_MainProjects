@@ -19,7 +19,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="1" >
+        <Grid Grid.Row="1" Grid.RowSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -27,6 +27,10 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -52,6 +56,11 @@
             <xc:DoubleUpDown x:Name="nudYposSingle"       Grid.Row="3" Grid.Column="1"    Value="10" Style="{StaticResource nudBase}" />
             <xc:DoubleUpDown x:Name="nudIntervalSingle"   Grid.Row="4" Grid.Column="1"    Value="3"  Style="{StaticResource nudBase}" />
             <xc:DoubleUpDown x:Name="nudCountSingel"      Grid.Row="5" Grid.Column="1"    Value="3"  Style="{StaticResource nudBase}" />
+
+            <CheckBox x:Name="ckbTempBackup" Content="TempBackup" Grid.Row="6" Grid.ColumnSpan="2" Style="{StaticResource chkBase}" VerticalAlignment="Bottom"/>
+            <Label Content="Path :" Style="{StaticResource lblBase}" Grid.Row="7"/>
+            <TextBox x:Name="txbTempBackupFile" Text="E:\IPSTemp\tempMenualScanDatas" Grid.Row="7"  Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="70,0,5,0"/>
+
         </Grid>
        
 
