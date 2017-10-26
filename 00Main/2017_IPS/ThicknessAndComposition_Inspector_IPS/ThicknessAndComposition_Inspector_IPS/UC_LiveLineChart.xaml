@@ -9,7 +9,7 @@
              d:DesignHeight="200" d:DesignWidth="300">
     <DockPanel  Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Border CornerRadius="6" BorderThickness="2" BorderBrush="LightSteelBlue" DockPanel.Dock="Top">
-            <lvc:CartesianChart x:Name="chtLiveLine" Margin="5"  DisableAnimations="True"  Hoverable="False" DataTooltip="{x:Null}" >
+            <lvc:CartesianChart x:Name="chtLiveLine" Margin="5"  DisableAnimations="True"  Hoverable="True"  >
                 <lvc:CartesianChart.Series>
                     <lvc:LineSeries 
                     x:Name="srsMain">

@@ -24,8 +24,8 @@ namespace ThicknessAndComposition_Inspector_IPS
 	/// </summary>
 	public partial class UC_LiveLineChartMulti : UserControl , INotifyPropertyChanged
 	{
-		SeriesCollection SeriesList = new SeriesCollection();
-		List<Brush> SeriesColors = new List<Brush>();
+		SeriesCollection SeriesColl = new SeriesCollection();
+		//List<Brush> SeriesColors = new List<Brush>();
 
 		public UC_LiveLineChartMulti()
 		{
@@ -41,14 +41,13 @@ namespace ThicknessAndComposition_Inspector_IPS
 			axisY.MaxValue = 60000;
 			axisY.MinValue = 0;
 
-			SeriesColors = typeof (Brushes).GetProperties().
-												Select(p => p.GetValue(null) as Brush ).
-												ToList();
+			//SeriesColors = typeof (Brushes).GetProperties().
+			//									Select(p => p.GetValue(null) as Brush ).
+			//									ToList();
 			DataContext = this;
 
 		}
 
-		int ColorCounter = 10;
 		public void AddNewSeries( IEnumerable<double> datas , IEnumerable<double> labels )
 		{
 			chtLiveLine.LegendLocation = LegendLocation.None;
@@ -72,25 +71,22 @@ namespace ThicknessAndComposition_Inspector_IPS
 				newseries.DataLabels = false;
 				newseries.PointGeometrySize = 0;
 				newseries.Fill = Brushes.Transparent;
-				newseries.Foreground = SeriesColors [ ColorCounter++ ];
 				var src = new SeriesCollection();
 
-				src.Add( newseries );
+				SeriesColl.Add( newseries );
 
-				foreach ( var item in SeriesList )
+				foreach ( var item in SeriesColl )
 				{
-					src.Add( item );
+					SeriesColl.Add( item );
 				}
-				SeriesList = src;
-				this.Dispatcher.BeginInvoke( ( Action )( () => chtLiveLine.Series = SeriesList ) );
+				this.Dispatcher.BeginInvoke( ( Action )( () => chtLiveLine.Series = SeriesColl ) );
 
 			} ) );
 		}
 
-			public void AddNewSeries( IEnumerable<double> datas , IEnumerable<double> labels , string title , int colorcounter = -1)
+			public void AddNewSeries( IEnumerable<double> datas , IEnumerable<double> labels , string title)
 		{
 			this.Dispatcher.BeginInvoke((Action)(()=> chtLiveLine.LegendLocation = LegendLocation.Right ));
-			//ChartDatas.Clear();
 			var dts = datas.ToArray();
 			var lbls = labels.ToArray();
 			dts [ 0 ] = dts [ 2 ];
@@ -109,22 +105,9 @@ namespace ThicknessAndComposition_Inspector_IPS
 				newseries.DataLabels = false;
 				newseries.PointGeometrySize = 0;
 				newseries.Fill = Brushes.Transparent;
-
-				if(colorcounter > 0) newseries.Foreground = SeriesColors [ colorcounter ];
-				else newseries.Foreground = SeriesColors [ ColorCounter++ ];
 				newseries.Title = title;
-				var src = new SeriesCollection();
-				//newseries.Foreground = Brushes.BlueViolet;
-
-				src.Add( newseries );
-
-				foreach ( var item in SeriesList )
-				{
-					src.Add( item );
-				}
-				SeriesList = src;
-				this.Dispatcher.BeginInvoke( ( Action )( () => chtLiveLine.Series = SeriesList ) );
-
+				SeriesColl.Add( newseries );
+				this.Dispatcher.BeginInvoke( ( Action )( () => chtLiveLine.Series = SeriesColl ) );
 			} ) );
 
 
@@ -134,8 +117,8 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 		public void ClearSeries()
 		{
-			SeriesList = new SeriesCollection();
-			this.Dispatcher.BeginInvoke( ( Action )( () => chtLiveLine.Series = SeriesList ) );
+			SeriesColl = new SeriesCollection();
+			this.Dispatcher.BeginInvoke( ( Action )( () => chtLiveLine.Series = SeriesColl ) );
 		}
 
 

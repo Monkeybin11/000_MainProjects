@@ -55,8 +55,8 @@
                 </Grid.RowDefinitions>
                 <uc:UC_Map x:Name="ucMapDisplay"   />
                 <UniformGrid Grid.Row="1" Columns="2"  >
-                    <uc:UC_LiveLineChart x:Name="ucSpectrum" Grid.Column="2" />
-                    <uc:UC_Histogram x:Name="ucHisto" Margin="10"/>
+                    <uc:UC_LiveLineChart x:Name="ucSpectrum" />
+                    <uc:UC_LiveLineChart x:Name="ucRefelectivity" />
                 </UniformGrid>
 
             </Grid>

@@ -40,6 +40,9 @@ namespace ThicknessAndComposition_Inspector_IPS
 		}
 		private void Window_Loaded( object sender , RoutedEventArgs e )
 		{
+			ucSpectrum.Title = "Raw Spectrum";
+			ucRefelectivity.Title = "Refelectivity";
+
 			WinConfig = new Win_Config();
 			WinSpct = new Win_SpctDisplay();
 			WinSingleScan = new WIn_SinglePointAnalysis();
@@ -48,7 +51,9 @@ namespace ThicknessAndComposition_Inspector_IPS
 			Core = new IPSCore()
 				.Act( x => x.evtConnection += new Action<bool , bool>( ucLSStatus.DisplayConnection ) )
 				.Act( x => x.evtSpectrum += new Action<IEnumerable<double> , IEnumerable<double>>( ucSpectrum.UpdateSeries ) )
-				.Act( x => x.evtSngSignal += new Action<IEnumerable<double> , IEnumerable<double> , IEnumerable<double>,double>( WinSingleScan.DrawSignal ) )
+				.Act( x => x.evtRefelectivity += new Action<IEnumerable<double> , IEnumerable<double>>( ucRefelectivity.UpdateSeries ) )
+				.Act( x => x.evtSngSignal += new Action<IEnumerable<double> , IEnumerable<double> , IEnumerable<double> , double , int>( WinSingleScan.DrawSignal ) )
+				.Act( x => x.evtSingleMeasureComplete += new Action( WinSingleScan.ToReadyState ) )
 				.Act( x => x.Connect());
 
 			WinConfig
@@ -58,7 +63,8 @@ namespace ThicknessAndComposition_Inspector_IPS
 				.Act( x => x.evtCloseWin += new Action( () => { Core.FlgAutoUpdate = false; FlgSpctDisplay = false; } ) );
 
 			WinSingleScan 
-				.Act( x => x.evtScanStart += new Action<double[], int, int>( Core.StartManualRunEvent ) );
+				.Act( x => x.evtScanStart += new Action<double[], int, int>( Core.StartManualRunEvent ) )
+				.Act( x => x.evtStopSingleScan += new Action ( () => Core.FlgCoreSingleScan = false) );
 			
 
 			Config2UI( Core.Config );
@@ -247,7 +253,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 					var data = Enumerable.Range(0,50).Select( x => (double)x).ToArray();
 					Random rnd = new Random();
 					double[] data2 = new double[4] { rnd.Next(10) *10 , rnd.Next(10) * 10 , rnd.Next(10) * 10 ,  rnd.Next(10) *10};
-					ucHisto.CreateHistogram2( data2 );
+					//ucHisto.CreateHistogram2( data2 );
 					//ucHisto.CreateHistogram( );
 					//Core.OnePointScan();
 					//Core.OpHome();

@@ -25,6 +25,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 	public partial class WIn_SinglePointAnalysis : Window
 	{
 		public event Action<double[],int,int> evtScanStart;
+		public event Action evtStopSingleScan;
 		int Counter;
 		List<double[]> Spectruns = new List<double[]>();
 		List<double[]> Reflectivitys = new List<double[]>();
@@ -34,16 +35,20 @@ namespace ThicknessAndComposition_Inspector_IPS
 		bool waveSetted;
 		string TempPathInten;
 		string TempPathReflect;
+		bool IsReady;
+
 		public WIn_SinglePointAnalysis()
 		{
 			InitializeComponent();
 			//ucIntensitiychart.chtLiveLine.
 			ucReflectivityChart.axisY.MaxValue = 100;
-
+			IsReady = true;
 		}
 
 		private void btnSinglePosStart_Click( object sender , RoutedEventArgs e )
 		{
+			if ( !IsReady ) return;
+			IsReady = false;
 			Spectruns = new List<double [ ]>();
 			Reflectivitys = new List<double [ ]>();
 			Thicknesses = new List<double>();
@@ -75,32 +80,35 @@ namespace ThicknessAndComposition_Inspector_IPS
 					( int )nudIntervalSingle.Value ,
 					( int )nudCountSingel.Value
 					);
-				Counter = 0;
 			}
 			catch ( Exception )
 			{
 				MessageBox.Show( "Setted Temp Save Path is not Valid" );
 				throw;
 			}
-
-			
-			
 		}
 
-		public void DrawSignal( IEnumerable<double> spct , IEnumerable<double> reflect , IEnumerable<double> wave ,double thckn )
+		
+		public void ToReadyState()
+		{
+			IsReady = true;
+		}
+
+
+		public void DrawSignal( IEnumerable<double> spct , IEnumerable<double> reflect , IEnumerable<double> wave ,double thckn , int count)
 		{
 			Thicknesses.Add( thckn );
 			string currentTime = DateTime.Now.ToString( "yyMMdd__HH_mm_ss" );
 
 			Time.Add( currentTime );
-			ucIntensitiychart.AddNewSeries( spct , wave , thckn.ToString("N2") , Counter);
+			ucIntensitiychart.AddNewSeries( spct , wave , thckn.ToString("N2") );
+			lblSingleScanStatus.Dispatcher.BeginInvoke( ( Action )( () => lblSingleScanStatus.Content = count.ToString() ) );
 			Spectruns.Add( spct.ToArray() );
 			if ( !waveSetted ) Waves = wave.ToArray();
 
-			ucReflectivityChart.AddNewSeries( reflect , wave , thckn.ToString( "N2" ) , Counter );
-			lblSingleScanStatus.Dispatcher.BeginInvoke( ( Action )( () => lblSingleScanStatus.Content = Counter.ToString() ) );
+			ucReflectivityChart.AddNewSeries( reflect , wave , thckn.ToString( "N2" )  );
+			
 			Reflectivitys.Add( reflect.ToArray() );
-			Counter++;
 
 
 			bool needbackup = false;
@@ -184,6 +192,11 @@ namespace ThicknessAndComposition_Inspector_IPS
 				File.WriteAllText( spctpath,stbspcts.ToString() );
 				File.WriteAllText( rflctpath,stbrflct.ToString() );
 			}
+		}
+
+		private void btnStop_Click( object sender , RoutedEventArgs e )
+		{
+			evtStopSingleScan();
 		}
 	}
 }

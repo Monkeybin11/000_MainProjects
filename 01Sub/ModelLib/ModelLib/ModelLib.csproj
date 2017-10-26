@@ -69,6 +69,13 @@
     <Compile Include="Data\StgCtrl.cs" />
     <Compile Include="Data\StringLogger.cs" />
     <Compile Include="Factory\Logger\ILogger.cs" />
+    <Compile Include="GraphNodeInstance\AddNode.cs" />
+    <Compile Include="GraphNodeInstance\Affine.cs" />
+    <Compile Include="GraphNodeInstance\GraphLayer.cs" />
+    <Compile Include="GraphNodeInstance\MulNode.cs" />
+    <Compile Include="GraphNodeInstance\Relu.cs" />
+    <Compile Include="GraphNodeInstance\Sigmoid.cs" />
+    <Compile Include="GraphNodeInstance\SoftmaxWithLoss.cs" />
     <Compile Include="TypeClass\Either.cs" />
     <Compile Include="TypeClass\Coordination2D.cs" />
     <Compile Include="TypeClass\Device\Device.cs" />
@@ -86,6 +93,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Optimizer\" />
     <Folder Include="Temp\Functor\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

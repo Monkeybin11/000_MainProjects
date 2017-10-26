@@ -246,6 +246,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 						{
 							f.SendAndReady( f.GoAbs + ((ScanPos.MovePosList[i][j] + 360 * (i > 1 ? i-1 : 0 ) )).Degree2Pulse().ToPos(Axis.R) );
 							f.SendAndReady( f.Go );
+							Thread.Sleep(500);
 						} ).ToTEither() , "R Stage Move Command Fail" )
 													.ToLEither( new double [ ] { } );
 						//Thread.Sleep(SpectrometerDelayTime);
@@ -256,11 +257,13 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 													: logres.Act( x => Lggr.Log(x.Left , true )); // Logging Error
 
 						evtSpectrum( intenlist.Right , SelectedWaves );
+						
 						calcTaskList[ taskcounter++ ] // 여기서 두께를 계산하게 됨
 										= Task.Run<Tuple<PlrCrd , LEither<double> ,double[] >>(
 											() => logres.IsRight
 													? ToThickness(
 														toReflect(intenlist.Right)
+															.Act( x => evtRefelectivity( x , SelectedWaves ))
 															.ToLEither(intenlist.Left),
 														wavelength,
 														pos )  // Estimate Thickness

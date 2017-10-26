@@ -42,8 +42,8 @@ namespace MachineLib.DeviceLib
 			Port = new SerialPort()
 							.Act( x =>
 							{
-								//x.PortName = comport;
-								x.PortName = "COM7";
+								x.PortName = comport;
+								//x.PortName = "COM7";
 								x.BaudRate = 38400;
 								x.DataBits = 8;
 								x.Parity = Parity.None;

@@ -15,8 +15,12 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 {
 	public partial class IPSCore
 	{
+
+		public event Action evtSingleMeasureComplete;
 		public void StartManualRunEvent( double [ ] TargetPosTR , int intervalsec , int count )
 		{
+			if ( FlgCoreSingleScan ) return;
+			FlgCoreSingleScan = true;
 			Task.Run( () => ScanManualRun( TargetPosTR , intervalsec , count ) );
 		}
 
@@ -51,24 +55,32 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 			}).ToTEither() ,  "R Stage Move Command Fail" );
 			var moveResLog = stgMoveRes.ToLEither(new double[]{ });
-			int curcount = 0;
-			while ( true )
+			
+			lock ( keySingle )
 			{
-				if ( curcount == count ) break;
+				int curcount = 0;
+				while ( FlgCoreSingleScan )
+				{
+					Console.WriteLine( "Current Count : {0} , Limit Count : {1}" , curcount , count );
 
-				var currentInten = Spctr.GetSpectrum();
-				var reflet =  toReflect(currentInten);
-				var thckn = ToThickness(
+					if ( curcount == count ) break;
+
+					var currentInten = Spctr.GetSpectrum();
+					var reflet =  toReflect(currentInten);
+					var thckn = ToThickness(
 												reflet.ToLEither() ,
 												SelectedWaves,
 												plrpos )
 											.Item2.Right;
 
-				evtSngSignal( currentInten , reflet , SelectedWaves , thckn );
-				Thread.Sleep( intervalsec * 1000 );
-				curcount++;
+					evtSngSignal( currentInten , reflet , SelectedWaves , thckn , curcount );
+					Thread.Sleep( intervalsec * 1000 );
+					curcount++;
+				}
 			}
-
+			Console.WriteLine( "Complete" );
+			evtSingleMeasureComplete();
+			FlgCoreSingleScan = false;
 			return true;
 		}
 

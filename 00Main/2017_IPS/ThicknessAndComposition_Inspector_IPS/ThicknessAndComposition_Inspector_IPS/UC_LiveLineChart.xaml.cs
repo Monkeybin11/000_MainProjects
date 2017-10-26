@@ -22,11 +22,13 @@ namespace ThicknessAndComposition_Inspector_IPS
 	/// <summary>
 	/// Interaction logic for UC_LiveLineChart.xaml
 	/// </summary>
-	public partial class UC_LiveLineChart : UserControl , INotifyPropertyChanged
+	public partial class UC_LiveLineChart : UserControl, INotifyPropertyChanged
 	{
 		//public ChartValues<double[]> ChartDatas { get; set; }
 
-	
+		public string Title { set { srsMain.Title = value; } }
+
+
 		public UC_LiveLineChart()
 		{
 			InitializeComponent();
@@ -35,13 +37,13 @@ namespace ThicknessAndComposition_Inspector_IPS
 				.X(model => model[0])            //use DateTime.Ticks as X
                 .Y(model => model[1]);           //use the value property as Y
 
-			Charting.For<double[]>( mapper );
+			Charting.For<double [ ]>( mapper );
 			//srsMain.DataLabels = false;
 			srsMain.Focusable = false;
 			srsMain.Title = "Real Time Spectrum";
 			srsMain.Fill = Brushes.Transparent;
 			srsMain.PointGeometrySize = 0;
-			axisY.MaxValue = 60000;
+			axisY.MaxValue = 70000;
 			axisY.MinValue = 0;
 			DataContext = this;
 		}
@@ -65,7 +67,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 		}
 
 		int SeriesCounter = 1;
-		
+
 
 
 

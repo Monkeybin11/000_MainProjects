@@ -20,8 +20,19 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		public event Action<string> evtScanStatus;
 		public event Action<BitmapSource> evtScanImg;
 		public event Action<IEnumerable<double>, IEnumerable<double>> evtSpectrum;
-		public event Action<IEnumerable<double>, IEnumerable<double> , IEnumerable<double> , double > evtSngSignal;
+		public event Action<IEnumerable<double>, IEnumerable<double>> evtRefelectivity;
+		public event Action<IEnumerable<double>, IEnumerable<double> , IEnumerable<double> , double , int > evtSngSignal;
 
+		#region Status
+
+		public bool FlgAutoUpdate;
+		public bool FlgDarkReady;
+		public bool FlgRefReady;
+		public bool FlgHomeDone;
+		public bool FlgCoreSingleScan = false;
+
+		object keySingle = new object();
+		#endregion
 
 
 		#region result Data
@@ -70,10 +81,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 					.ToArray(); } }
 		#endregion	
 
-		public bool FlgAutoUpdate;
-		public bool FlgDarkReady;
-		public bool FlgRefReady;
-		public bool FlgHomeDone;
+	
 
 		Action AutoUpdateSpctrm =>
 			() => BkD_Spctrm = Spctr.GetSpectrum();

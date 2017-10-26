@@ -30,6 +30,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -60,6 +61,7 @@
             <CheckBox x:Name="ckbTempBackup" Content="TempBackup" Grid.Row="6" Grid.ColumnSpan="2" Style="{StaticResource chkBase}" VerticalAlignment="Bottom"/>
             <Label Content="Path :" Style="{StaticResource lblBase}" Grid.Row="7"/>
             <TextBox x:Name="txbTempBackupFile" Text="E:\IPSTemp\tempMenualScanDatas" Grid.Row="7"  Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="70,0,5,0"/>
+            <Button x:Name="btnStop" Content="Stop" Style="{StaticResource btnBase}" Grid.Row="8" Click="btnStop_Click"/>
 
         </Grid>
        

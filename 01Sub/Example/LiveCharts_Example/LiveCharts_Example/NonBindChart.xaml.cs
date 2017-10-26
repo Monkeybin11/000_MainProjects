@@ -23,6 +23,8 @@ namespace LiveCharts_Example
 	/// </summary>
 	public partial class NonBindChart : Window
 	{
+
+		SeriesCollection src = new SeriesCollection();
 		public NonBindChart()
 		{
 			InitializeComponent();
@@ -39,18 +41,24 @@ namespace LiveCharts_Example
 			chartDatas2.AddRange( datas2 );
 
 
-			SeriesCollection src = new SeriesCollection();
+			
 
 			LineSeries temp1 = new LineSeries();
 			LineSeries temp2 = new LineSeries();
+
 			temp1.Values = chartDatas1;
 			temp2.Values = chartDatas2;
 			temp1.DataLabels = false;
 			temp1.PointGeometrySize = 0;
+			temp1.Fill = Brushes.Transparent;
 
 			src.Add( temp1 );
 			src.Add( temp2 );
 			chartmain.Series = src;
+
+			// 1 : SeriesCollection
+			// 2 :    |_ Line Sereis , Column Sereis ...
+			// 3:           |_ Chart Data
 
 		}
 	}

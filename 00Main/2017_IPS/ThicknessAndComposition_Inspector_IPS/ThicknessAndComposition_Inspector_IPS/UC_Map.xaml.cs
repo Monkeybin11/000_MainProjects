@@ -32,10 +32,6 @@ namespace ThicknessAndComposition_Inspector_IPS
 			imgOri.ImageSource = src;
 			//imgOri.Dispatcher.BeginInvoke( new Action( () => imgOri.ImageSource = src ) );
 			imgScale.ImageSource = colormap;
-			
-
-
-
 		}
 
 	
