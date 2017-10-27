@@ -250,13 +250,14 @@ namespace ThicknessAndComposition_Inspector_IPS
 					Core.OpReady( IPSCore.ScanReadyMode.Refelct );
 					break;
 				case "btnHome":
-					var data = Enumerable.Range(0,50).Select( x => (double)x).ToArray();
-					Random rnd = new Random();
-					double[] data2 = new double[4] { rnd.Next(10) *10 , rnd.Next(10) * 10 , rnd.Next(10) * 10 ,  rnd.Next(10) *10};
+					Core.OpORGMaxSpeed();
+					Core.OpHome();
+					//var data = Enumerable.Range(0,50).Select( x => (double)x).ToArray();
+					//Random rnd = new Random();
+					//double[] data2 = new double[4] { rnd.Next(10) *10 , rnd.Next(10) * 10 , rnd.Next(10) * 10 ,  rnd.Next(10) *10};
 					//ucHisto.CreateHistogram2( data2 );
 					//ucHisto.CreateHistogram( );
 					//Core.OnePointScan();
-					//Core.OpHome();
 					break;
 				case "btnScanReady":
 					Core.OpReady(IPSCore.ScanReadyMode.All);

@@ -117,7 +117,8 @@ namespace ThicknessAndComposition_Inspector_IPS
 			{
 				var stb = new StringBuilder()
 					.Act( x => x.Append("WaveLen," + wave.Select( y => y.ToString())
-														.Aggregate((f,s) => f + ',' + s)));
+														.Aggregate((f,s) => f + ',' + s)
+												 + Environment.NewLine));
 				File.WriteAllText( TempPathInten , stb.ToString() );
 				File.WriteAllText( TempPathReflect , stb.ToString() );
 				waveSetted = true;

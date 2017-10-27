@@ -20,6 +20,7 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using EmguCvExtension;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace ThicknessAndComposition_Inspector_IPS_Core
 {
@@ -56,7 +57,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			var min = thlist.Min();
 			var max = thlist.Max();
 
-			var cm = new ColorMap().RB_cm;
+			var cm = new ColorMap().Inferno_cm;
 			var xyCm1 = src.Result2TRThArr().OrderBy( x => x[1]).Select( x =>x).ToList();
 			var xyCm2 = xyCm1            .Interpol_Theta(divide).OrderBy( x => x[0]).ThenBy( x => x[1]).Select( x =>x).ToList();
 			var xyCm3 = xyCm2             .Interpol_Rho(divide).OrderBy( x => x[0]).ThenBy( x => x[1]).Select( x =>x).ToList();
@@ -75,13 +76,40 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 								.Act( x => x.Start());
 
 			var imgshiftoffset = 10;
-			var offset = src.SpotDataList.Select( x => x.PlrPos.Rho/10.0).Max();
-			var thlist = src.SpotDataList.Select( x => x.Thickness);
-			var min = thlist.Min();
-			var max = thlist.Max();
+			var offset = src.SpotDataList.Select( x => x.PlrPos.Rho/10.0).Max(); // Padding Size
+			var thcklist = src.SpotDataList.Select( x => x.Thickness);
 
-			var cm = new ColorMap().RB_cm;
+			// Choose Data Scale 
+			// normalization -> In trust region 95% , fit outlier data to boundary -> rescale from  0 to 255   
+			//var pinnedArr = GCHandle.Alloc( thcklist , GCHandleType.Pinned);
 
+			//int size = Marshal.SizeOf(thcklist);
+			//var pointer = Marshal.AllocHGlobal(size);
+			//Marshal.StructureToPtr( thcklist , pointer , true );
+
+
+
+			//var inputarr = new Mat(new int[] { 1, thcklist.Count() } , Emgu.CV.CvEnum.DepthType.Cv64F ,  pointer  );
+			//CvInvoke.MeanStdDev( inputarr , ref mean , ref std );
+			//Matrix<double> datas = new Matrix<double>(1, thcklist.Count() , pointer);
+			//pinnedArr.Free();
+
+			//var zscore = thcklist.Select( x => (x - mean.V0)/std.V0 )
+			//							  .Select( x => x >  1.96 ? 1.96 :
+			//											x < -1.96 ? -1.96
+			//											: x).ToArray()
+			//							  ;
+
+			//var n = (double)thcklist.Count();
+			//var mean = thcklist.Sum()/n;
+			//var std = Math.Sqrt( thcklist.Select( x => Math.Pow(x - mean,2)).Sum() /  n );
+
+			var min = thcklist.Min();
+			var max = thcklist.Max();
+
+			var cm = new ColorMap().Inferno_cm;
+
+			// Interpolation
 			var srcdatas = src.Result2TRThArr().Select( x =>x).ToList();
 
 			for ( int i = 0 ; i < divide ; i++ )
@@ -90,11 +118,16 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 								   .Interpol_Rho( 1 ).Select( x => x ).ToList();
 			}
 
+			// Extact Color Position
 			var xyCm = srcdatas.ToCartesianReslt()
 							.OrderBy( x=> x[0])
 							.ThenBy( x => x[1])
 							.AsParallel()
 							.AsOrdered()
+							//.Select( x => new double[] { x[0] , x[1] , ( x[2] - mean ) / std } )
+							//.Select( x => new double[] { x[0] , x[1] , x[2] >  1.96 ? 1.96 :
+							//										   x[2] < -1.96 ? -1.96
+							//										   : x[2] } )
 							.Select( x => new
 										{
 											X  = offset + x[0] ,
@@ -160,7 +193,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		{
 
 			var scalebar = new byte[255,2,3];
-			var cm = new ColorMap().RB_cm;
+			var cm = new ColorMap().Inferno_cm;
 			for ( int i = 0 ; i < 255 ; i++ )
 			{
 				scalebar [ i , 0 , 0 ] = ( byte )( cm [ i ] [ 0 ] * 255 );
