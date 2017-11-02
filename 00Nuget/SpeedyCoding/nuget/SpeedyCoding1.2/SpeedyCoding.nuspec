@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>SpeedyCoding</id>
+    <version>1.2</version>
+    <title>SpeedyCoding</title>
+    <authors>pimier15 (So Jae Woo)</authors>
+    <owners>pimier15 (So Jae Woo)</owners>
+    <licenseUrl>https://github.com/pimier15/000_MainProjects/tree/master/00Nuget/SpeedyCoding/SpeedyCoding/SpeedyCoding</licenseUrl>
+    <projectUrl>https://github.com/pimier15/000_MainProjects/tree/master/00Nuget/SpeedyCoding/SpeedyCoding/SpeedyCoding</projectUrl>
+    <iconUrl>https://github.com/pimier15/000_MainProjects/tree/master/00Nuget/SpeedyCoding/SpeedyCoding/SpeedyCoding</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This package is for avoid boiler plate code and get readable code easily. No dependecy and all method are extension method </description>
+    <releaseNotes>Fisrt Stable Version ( ver 1.2) </releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>Extension CodeImprovement Readable</tags>
+  </metadata>
+</package>
