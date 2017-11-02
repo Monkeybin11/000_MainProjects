@@ -52,11 +52,11 @@ namespace SpeedyCoding
 			double step )
 		{
 			List<double> output = new List<double>();
-			for ( double i = start ; i < count ; i = (i + 1)*step )
+			for ( int i = 0 ; i < count ; i ++ )
 			{
-				output.Add( i );
+				output.Add( start + i*step );
 			}
-			return output.AsEnumerable();	
+			return output;	
 		}
 
 		public static IEnumerable<int> xRange(
