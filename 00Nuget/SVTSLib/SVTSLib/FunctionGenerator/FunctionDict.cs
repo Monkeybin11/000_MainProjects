@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SVTSLib.FunctionGenerator
 {
-	class FunctionDict
+	public class FunctionDict
 	{
+		
 	}
 }

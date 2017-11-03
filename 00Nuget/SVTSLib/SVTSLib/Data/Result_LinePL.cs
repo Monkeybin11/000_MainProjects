@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace SVTSLib.Data
 {
-	class Output_LinePL
+	public class Result_LinePL<F> : ResultOutput where F : ResultFormat
 	{
+
+
+		public List<F> ResultList;
 	}
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SVTSLib.Data
 {
-	class ResultData
+	class ResultData : result
 	{
 	}
 }
