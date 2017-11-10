@@ -85,7 +85,6 @@
     <Compile Include="GraphNodeInstance\Relu.cs" />
     <Compile Include="GraphNodeInstance\Sigmoid.cs" />
     <Compile Include="GraphNodeInstance\SoftmaxWithLoss.cs" />
-    <Compile Include="NewType\ValPos.cs" />
     <Compile Include="Test\AmplifiedTest.cs" />
     <Compile Include="TypeClass\Either.cs" />
     <Compile Include="TypeClass\Coordination2D.cs" />
@@ -104,6 +103,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="NewType\" />
     <Folder Include="Optimizer\" />
     <Folder Include="Temp\Functor\" />
   </ItemGroup>
