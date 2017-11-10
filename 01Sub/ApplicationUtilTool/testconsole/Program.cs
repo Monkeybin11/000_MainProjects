@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApplicationUtilTool;
+using static ApplicationUtilTool.FileIO.CsvTool;
 
 namespace testconsole
 {
@@ -15,7 +16,7 @@ namespace testconsole
             CurrentPath = AppDomain.CurrentDomain.BaseDirectory;
             iniTool ini = new iniTool(CurrentPath + "test.ini");
 
-
+			
             //var val1 = Enum.GetNames( typeof( testenum ) );
             //var val2 = val1.Select( x => Tuple.Create( x , DateTime.Now.ToString("ss") ) ).ToList();
             //ini.WriteValue( "sec1" , "test1" , "22" );
