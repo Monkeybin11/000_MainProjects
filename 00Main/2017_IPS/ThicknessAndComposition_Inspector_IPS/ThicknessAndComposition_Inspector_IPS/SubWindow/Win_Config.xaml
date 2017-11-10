@@ -7,7 +7,7 @@
         xmlns:xc ="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         x:Name="ScanSettingWindow"
-        Title="Win_Config" Height="400" Width="400">
+        Title="Win_Config" Height="400" Width="400" Closing="ScanSettingWindow_Closing" >
     <Grid>
         <UniformGrid Columns="2" Rows="8">
             <Label Content="Stage Com Port "/>

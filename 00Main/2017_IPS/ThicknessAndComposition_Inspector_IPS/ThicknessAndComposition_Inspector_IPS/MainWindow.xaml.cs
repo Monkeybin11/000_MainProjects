@@ -49,22 +49,22 @@ namespace ThicknessAndComposition_Inspector_IPS
 			ucLSMenu.evtBtn += new BtnEvt( LeftSideBtn );
 
 			Core = new IPSCore()
-				.Act( x => x.evtConnection += new Action<bool , bool>( ucLSStatus.DisplayConnection ) )
-				.Act( x => x.evtSpectrum += new Action<IEnumerable<double> , IEnumerable<double>>( ucSpectrum.UpdateSeries ) )
-				.Act( x => x.evtRefelectivity += new Action<IEnumerable<double> , IEnumerable<double>>( ucRefelectivity.UpdateSeries ) )
-				.Act( x => x.evtSngSignal += new Action<IEnumerable<double> , IEnumerable<double> , IEnumerable<double> , double , int>( WinSingleScan.DrawSignal ) )
-				.Act( x => x.evtSingleMeasureComplete += new Action( WinSingleScan.ToReadyState ) )
+				.Act( x => x.evtConnection += ucLSStatus.DisplayConnection )
+				.Act( x => x.evtSpectrum +=  ucSpectrum.UpdateSeries  )
+				.Act( x => x.evtRefelectivity += ucRefelectivity.UpdateSeries ) 
+				.Act( x => x.evtSngSignal +=WinSingleScan.DrawSignal ) 
+				.Act( x => x.evtSingleMeasureComplete += WinSingleScan.ToReadyState ) 
 				.Act( x => x.Connect());
 
 			WinConfig
-				.Act( x => x.evtStgSpeedSetChange += new StgSpeedEvent( Core.SetHWInternalParm ) );
-
+				.Act( x => x.evtStgSpeedSetChange += Core.SetHWInternalParm )
+				.Act( x => x.evtClose += () => this.IsEnabled = true );
 			WinSpct 
-				.Act( x => x.evtCloseWin += new Action( () => { Core.FlgAutoUpdate = false; FlgSpctDisplay = false; } ) );
+				.Act( x => x.evtCloseWin += () => { Core.FlgAutoUpdate = false; FlgSpctDisplay = false; } ) ;
 
 			WinSingleScan 
-				.Act( x => x.evtScanStart += new Action<double[], int, int>( Core.StartManualRunEvent ) )
-				.Act( x => x.evtStopSingleScan += new Action ( () => Core.FlgCoreSingleScan = false) );
+				.Act( x => x.evtScanStart += Core.StartManualRunEvent ) 
+				.Act( x => x.evtStopSingleScan += () => Core.FlgCoreSingleScan = false);
 			
 
 			Config2UI( Core.Config );
@@ -76,6 +76,8 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 
 		}
+
+
 		private void Window_Closed( object sender , EventArgs e )
 		{
 			Core.Act( x => x.Config = UI2IpsConfig() )
@@ -180,7 +182,11 @@ namespace ThicknessAndComposition_Inspector_IPS
 					break;
 
 				case "menuSetSpecStg":
+					var temp = WinConfig.IsActive;
+					var temp2 = WinConfig.IsEnabled;
+					var temp3 = WinConfig.IsVisible;
 					WinConfig.Show();
+					this.IsEnabled = false;
 					break;
 
 

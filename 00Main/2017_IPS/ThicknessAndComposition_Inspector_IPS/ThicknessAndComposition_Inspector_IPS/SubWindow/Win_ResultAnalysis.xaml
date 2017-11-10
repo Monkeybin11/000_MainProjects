@@ -4,9 +4,41 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ThicknessAndComposition_Inspector_IPS.SubWindow"
+        xmlns:uc="clr-namespace:ThicknessAndComposition_Inspector_IPS"
+        xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Win_ResultAnalysis" Height="300" Width="300">
+        Title="Win_ResultAnalysis" Height="600" Width="1000">
+    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
     <Grid>
-        
-    </Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.15*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+            <Grid Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Button Name="btnLoad" Content="Load" Style="{StaticResource btnBase}" Click="btnLoad_Click"/>
+                <Button Name="btnAlyBound" Content="Apply" Grid.Column="1" Style="{StaticResource btnBase}"/>
+                <Label Content="   WaveLength  :" Grid.Column="2" Style="{StaticResource lblBase}"/>
+                <xc:DoubleUpDown Name="nudDown" Grid.Column="3" Style="{StaticResource nudBase}" HorizontalAlignment="Center" />
+                <Label Content="~" Grid.Column="4" Style="{StaticResource lblBase}"/>
+                <xc:DoubleUpDown Name="nudUp" Grid.Column="5" Style="{StaticResource nudBase}" HorizontalAlignment="Center" />
+            </Grid>
+            <uc:UC_AnalysisMap Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"/>
+            <uc:UC_LiveLineChartMulti Grid.Row="1" Grid.Column="1"/>
+            <uc:UC_LiveLineChartMulti Grid.Row="2" Grid.Column="1"/>
+        </Grid>
+    </DockPanel>
 </Window>

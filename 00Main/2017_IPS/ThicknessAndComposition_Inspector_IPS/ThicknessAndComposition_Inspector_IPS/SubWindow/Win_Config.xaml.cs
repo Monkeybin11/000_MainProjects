@@ -40,6 +40,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 		public event StgSpeedEvent evtStgSpeedSetChange;
 		public event Action<double> evtSpctWaitTime;
+		public event Action evtClose;
 
 		public Win_Config()
 		{
@@ -66,8 +67,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 								Boxcar			,
 								SpectrometerDelayTime );
 
-
-
+			evtClose();
 		}
 
 		private void btnCancel_Click( object sender , RoutedEventArgs e )
@@ -79,6 +79,14 @@ namespace ThicknessAndComposition_Inspector_IPS
 			nudScan2Avg.Value		  = Scan2Avg		 ;
 			nudIntegrationTime.Value  = IntegrationTIme  ;
 			nudBoxcar.Value			  = Boxcar			 ;
+			evtClose();
+		}
+
+		private void ScanSettingWindow_Closing( object sender , System.ComponentModel.CancelEventArgs e )
+		{
+			this.Visibility = Visibility.Hidden;
+			e.Cancel = true;
+			evtClose();
 		}
 	}
 }

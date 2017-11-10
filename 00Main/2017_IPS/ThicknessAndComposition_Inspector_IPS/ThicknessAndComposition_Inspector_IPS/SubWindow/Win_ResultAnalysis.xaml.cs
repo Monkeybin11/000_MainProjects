@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ThicknessAndComposition_Inspector_IPS_Core;
 
 namespace ThicknessAndComposition_Inspector_IPS.SubWindow
 {
@@ -22,6 +24,19 @@ namespace ThicknessAndComposition_Inspector_IPS.SubWindow
 		public Win_ResultAnalysis()
 		{
 			InitializeComponent();
+
+			//AnalysisCore ACore=  new AnalysisCore();
+
+		}
+
+		private void btnLoad_Click( object sender , RoutedEventArgs e )
+		{
+			OpenFileDialog ofd = new OpenFileDialog();
+			if ( ofd.ShowDialog() == true )
+			{
+
+
+			}
 		}
 	}
 }

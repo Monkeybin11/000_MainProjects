@@ -35,7 +35,6 @@
                         <Label Content="191-" HorizontalAlignment="Right"  VerticalAlignment="Center" FontSize="10"/>
                         <Label Content="128-" HorizontalAlignment="Right"  VerticalAlignment="Center" FontSize="10"/>
                         <Label Content="0-"   HorizontalAlignment="Right"  VerticalAlignment="Center" FontSize="10"/>
-
                     </UniformGrid>
                 </Grid>
               

@@ -50,6 +50,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\00Main\2017_IPS\ThicknessAndComposition_Inspector_IPS\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,6 +62,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AmplifiedType\EnumerableExt.cs" />
+    <Compile Include="AmplifiedType\Handler.cs" />
+    <Compile Include="AmplifiedType\Maybe.cs" />
+    <Compile Include="AmplifiedType\Nothing.cs" />
     <Compile Include="ClassInstance\DeviceRunner.cs" />
     <Compile Include="ClassInstance\Either\Either.cs" />
     <Compile Include="ClassInstance\Either\LEither.cs" />
@@ -68,6 +76,7 @@
     <Compile Include="Data\LogData.cs" />
     <Compile Include="Data\StgCtrl.cs" />
     <Compile Include="Data\StringLogger.cs" />
+    <Compile Include="Data\ValPos.cs" />
     <Compile Include="Factory\Logger\ILogger.cs" />
     <Compile Include="GraphNodeInstance\AddNode.cs" />
     <Compile Include="GraphNodeInstance\Affine.cs" />
@@ -76,6 +85,8 @@
     <Compile Include="GraphNodeInstance\Relu.cs" />
     <Compile Include="GraphNodeInstance\Sigmoid.cs" />
     <Compile Include="GraphNodeInstance\SoftmaxWithLoss.cs" />
+    <Compile Include="NewType\ValPos.cs" />
+    <Compile Include="Test\AmplifiedTest.cs" />
     <Compile Include="TypeClass\Either.cs" />
     <Compile Include="TypeClass\Coordination2D.cs" />
     <Compile Include="TypeClass\Device\Device.cs" />
@@ -95,6 +106,9 @@
   <ItemGroup>
     <Folder Include="Optimizer\" />
     <Folder Include="Temp\Functor\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
