@@ -18,7 +18,6 @@ namespace TestConsole
 	class Program
 	{
 		static string path = @"E:\temp\pos.csv";
-		static string path2 = @"E:\temp\thckness.csv";
 		static void Main( string [ ] args )
 		{
 			var res = File.ReadAllLines(path);

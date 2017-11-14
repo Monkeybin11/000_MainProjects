@@ -79,10 +79,12 @@
     <Compile Include="Backup_2.cs" />
     <Compile Include="Backup_3.cs" />
     <Compile Include="Core.cs" />
+    <Compile Include="Core_Analysis.cs" />
     <Compile Include="Core_Background.cs" />
     <Compile Include="Core_Canvas.cs" />
     <Compile Include="Core_ResultIO.cs" />
     <Compile Include="Core_SubFunction.cs" />
+    <Compile Include="DrawHelper_Analysis.cs" />
     <Compile Include="IPSExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="test.cs" />

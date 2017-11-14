@@ -16,7 +16,7 @@ namespace ModelLib.Test
 
 			var j2 = Just(2);
 
-			var j3 = j + j2; 
+			//var j3 = j + j2; 
 
 		}
 

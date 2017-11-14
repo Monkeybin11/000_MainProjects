@@ -26,7 +26,6 @@ namespace ThicknessAndComposition_Inspector_IPS
 	{
 		public event Action<double[],int,int> evtScanStart;
 		public event Action evtStopSingleScan;
-		int Counter;
 		List<double[]> Spectruns = new List<double[]>();
 		List<double[]> Reflectivitys = new List<double[]>();
 		List<double> Thicknesses = new List<double>();

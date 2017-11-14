@@ -39,7 +39,6 @@ namespace ThicknessAndComposition_Inspector_IPS
 		double SpectrometerDelayTime          ;
 
 		public event StgSpeedEvent evtStgSpeedSetChange;
-		public event Action<double> evtSpctWaitTime;
 		public event Action evtClose;
 
 		public Win_Config()

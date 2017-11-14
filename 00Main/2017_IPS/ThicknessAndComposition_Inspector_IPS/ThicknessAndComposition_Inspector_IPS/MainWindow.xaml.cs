@@ -18,9 +18,13 @@ using ThicknessAndComposition_Inspector_IPS_Data;
 using SpeedyCoding;
 using System.Threading;
 using System.IO;
+using static ModelLib.Handler; 
+using ModelLib.AmplifiedType;
 
 namespace ThicknessAndComposition_Inspector_IPS
 {
+	
+
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
@@ -30,6 +34,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 		Win_Config WinConfig;
 		Win_SpctDisplay WinSpct;
 		WIn_SinglePointAnalysis WinSingleScan;
+		Win_ResultAnalysis WinResAnalysis;
 		bool CoreRunning;
 
 		#region Load Close
@@ -46,6 +51,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 			WinConfig = new Win_Config();
 			WinSpct = new Win_SpctDisplay();
 			WinSingleScan = new WIn_SinglePointAnalysis();
+			//WinResAnalysis = new Win_ResultAnalysis();
 			ucLSMenu.evtBtn += new BtnEvt( LeftSideBtn );
 
 			Core = new IPSCore()
@@ -126,11 +132,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 					}
 					
 					break;
-
-			
-					
-
-					break;
+				
 
 				case "menuExit":
 					Environment.Exit( Environment.ExitCode );
@@ -149,6 +151,14 @@ namespace ThicknessAndComposition_Inspector_IPS
 				case "menuSinglePosScan":
 					WinSingleScan.Visibility = Visibility.Visible;
 					break;
+
+				case "menuMapAnalysis":
+					WinResAnalysis = new Win_ResultAnalysis( Core.ImgScanned ,
+															 Core.ResultData == null ? None : JournalEntry   );
+					WinResAnalysis.Show();
+					this.IsEnabled = false;
+					break;
+
 
 				default:
 					break;
@@ -182,9 +192,6 @@ namespace ThicknessAndComposition_Inspector_IPS
 					break;
 
 				case "menuSetSpecStg":
-					var temp = WinConfig.IsActive;
-					var temp2 = WinConfig.IsEnabled;
-					var temp3 = WinConfig.IsVisible;
 					WinConfig.Show();
 					this.IsEnabled = false;
 					break;
@@ -199,13 +206,14 @@ namespace ThicknessAndComposition_Inspector_IPS
 					Config2UI(Core.Config);
 					break;
 
+				
+
 				default:
 					break;
 			}
 			CoreRunning = false;
 		}
 
-		bool changer = false;
 
 		public async void LeftSideBtn( string name )
 		{

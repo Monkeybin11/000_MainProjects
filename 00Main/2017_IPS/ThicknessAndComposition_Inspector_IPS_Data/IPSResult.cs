@@ -47,7 +47,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 	}
 
 
-	public class DisplayDaya
+	public class DisplayData
 	{
 		public double X;
 		public double Y;

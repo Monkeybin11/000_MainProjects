@@ -30,7 +30,8 @@
             </MenuItem>
 
             <MenuItem Header="Analysis" >
-                <MenuItem x:Name="menuSinglePosScan" Header="Veiw Spctrum    "          Style="{StaticResource menuItem}" Click="AnalysisMenuClick"/>
+                <MenuItem x:Name="menuSinglePosScan" Header="Spctrum View Window    "          Style="{StaticResource menuItem}" Click="AnalysisMenuClick"/>
+                <MenuItem x:Name="menuMapAnalysis" Header="Result Analysis Window "           Style="{StaticResource menuItem}" Click="AnalysisMenuClick"/>
             </MenuItem>
 
         </Menu>

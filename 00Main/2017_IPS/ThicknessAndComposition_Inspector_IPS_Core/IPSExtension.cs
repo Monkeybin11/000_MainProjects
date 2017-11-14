@@ -136,7 +136,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			}
 		}
 
-		public static BitmapSource ToBitmapSource( this System.Drawing.Bitmap source )
+		public static BitmapSource BitmapToBitmapSource( this System.Drawing.Bitmap source )
 		{
 			try
 			{

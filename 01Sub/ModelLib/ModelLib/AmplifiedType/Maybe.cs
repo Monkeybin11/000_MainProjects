@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using Unit = System.ValueTuple;
 
 
+
+
 namespace ModelLib.AmplifiedType
 {
-	using static Handler;
-	public static partial class Handler
+	using static ModelLib.Handler;
+	namespace ModelLib
 	{
-		public static Maybe<A> Just<A>( A value ) => new Maybe.Just<A>( value );
-		public static Maybe.Nothing None => Maybe.Nothing.Default; 
+		using Maybe;
+		public static partial class Handler
+		{
+			public static Maybe<A> Just<A>( A value ) => new Maybe.Just<A>( value );
+			public static Maybe.Nothing None => Maybe.Nothing.Default;
+		}
 	}
 
 	public struct Maybe<A> // Define TypeClass
@@ -37,11 +43,6 @@ namespace ModelLib.AmplifiedType
 		{
 			if ( isJust ) yield return Value;
 		}
-
-
-
-
-
 	}
 
 	namespace Maybe // TypeClass Instance Impelemnt 

@@ -103,23 +103,6 @@ namespace ModelLib.Data
 
 			if ( crtn != null ) return crtn;
 			else if ( polar == null ) return new CrtnUnit();
-
-
-			//Console.WriteLine("----------");
-			//Console.Write( "Theta : " );
-			//Console.Write( polar.Theta.ToString() );
-			//Console.Write("    Rho : ");
-			//Console.Write( polar.Rho .ToString());
-			//Console.Write("  =>  ");
-			//Console.Write("x : ");
-			//Console.Write( (polar.Rho * Math.Cos( polar.Theta * Math.PI / 180.0 )).ToString() );
-			//Console.Write("   Y : ");
-			//Console.Write( (polar.Rho * Math.Sin( polar.Theta * Math.PI / 180.0 )).ToString() );
-			//Console.WriteLine();
-		
-
-
-
 			return new CrtnCrd(
 							   polar.Rho * Math.Cos( polar.Theta * Math.PI / 180.0 ) , // x
 							   polar.Rho * Math.Sin( polar.Theta * Math.PI / 180.0 ) // y

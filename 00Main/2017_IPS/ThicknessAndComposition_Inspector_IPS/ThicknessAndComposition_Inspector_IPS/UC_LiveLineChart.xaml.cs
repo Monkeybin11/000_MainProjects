@@ -48,7 +48,6 @@ namespace ThicknessAndComposition_Inspector_IPS
 			DataContext = this;
 		}
 
-		bool FlgFirst = true;
 		public void UpdateSeries( IEnumerable<double> datas , IEnumerable<double> labels )
 		{
 			//ChartDatas.Clear();
@@ -65,14 +64,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 				);
 			srsMain.Dispatcher.BeginInvoke( ( Action )( () => srsMain.Values = chartDatas ) );
 		}
-
-		int SeriesCounter = 1;
-
-
-
-
 		public event PropertyChangedEventHandler PropertyChanged;
-
 		public void OnPropertyChanged( string propertyName = null )
 		{
 			if ( PropertyChanged != null )

@@ -71,12 +71,14 @@
     <Compile Include="ClassInstance\Either\LEither.cs" />
     <Compile Include="ClassInstance\Either\TEither.cs" />
     <Compile Include="Data\Coordinate\Coordination.cs" />
+    <Compile Include="Data\Coordinate\CoordinateFunctions.cs" />
     <Compile Include="Data\CreateLogger.cs" />
     <Compile Include="Data\ILogData.cs" />
     <Compile Include="Data\LogData.cs" />
+    <Compile Include="Data\NewType\WidthHeight.cs" />
     <Compile Include="Data\StgCtrl.cs" />
     <Compile Include="Data\StringLogger.cs" />
-    <Compile Include="Data\ValPos.cs" />
+    <Compile Include="Data\Coordinate\ValPosCrt.cs" />
     <Compile Include="Factory\Logger\ILogger.cs" />
     <Compile Include="GraphNodeInstance\AddNode.cs" />
     <Compile Include="GraphNodeInstance\Affine.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="GraphNodeInstance\Sigmoid.cs" />
     <Compile Include="GraphNodeInstance\SoftmaxWithLoss.cs" />
     <Compile Include="Test\AmplifiedTest.cs" />
+    <Compile Include="Data\Coordinate\ValPosPlr.cs" />
     <Compile Include="TypeClass\Either.cs" />
     <Compile Include="TypeClass\Coordination2D.cs" />
     <Compile Include="TypeClass\Device\Device.cs" />
@@ -106,6 +109,7 @@
     <Folder Include="NewType\" />
     <Folder Include="Optimizer\" />
     <Folder Include="Temp\Functor\" />
+    <Folder Include="TypeClassInstance\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
