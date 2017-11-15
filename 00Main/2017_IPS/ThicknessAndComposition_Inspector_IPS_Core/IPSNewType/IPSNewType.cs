@@ -93,6 +93,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 	public class WaveLength
 	{
 		public readonly Maybe<double> Value;
+		
 		public WaveLength()
 		{
 			Value = None;
