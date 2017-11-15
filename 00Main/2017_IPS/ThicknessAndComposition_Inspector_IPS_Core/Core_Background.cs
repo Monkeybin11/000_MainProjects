@@ -17,7 +17,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		public event Action<bool,bool> evtConnection;
 		public event Action<IEnumerable<double>, IEnumerable<double>> evtSpectrum;
-		public event Action<IEnumerable<double>, IEnumerable<double>> evtRefelectivity;
+		public event Action<IEnumerable<double>, IEnumerable<double>> evtRefleectivity;
 		public event Action<IEnumerable<double>, IEnumerable<double> , IEnumerable<double> , double , int > evtSngSignal;
 
 		#region Status

@@ -57,7 +57,7 @@
                 <uc:UC_Map x:Name="ucMapDisplay"   />
                 <UniformGrid Grid.Row="1" Columns="2"  >
                     <uc:UC_LiveLineChart x:Name="ucSpectrum" />
-                    <uc:UC_LiveLineChart x:Name="ucRefelectivity" />
+                    <uc:UC_LiveLineChart x:Name="ucReflectivity" />
                 </UniformGrid>
 
             </Grid>

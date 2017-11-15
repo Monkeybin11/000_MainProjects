@@ -29,12 +29,12 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 	public partial class IPSCore
 	{
 		#region Trans
-		public IPSResult ToResult( List<PlrCrd> pos , List<double> thckness , List<double [ ]> intens , List<double [ ]> refelctivityes , List<double> wavelen )
+		public IPSResult ToResult( List<PlrCrd> pos , List<double> thckness , List<double [ ]> intens , List<double [ ]> reflectivities , List<double> wavelen )
 		{
 			var res = new IPSResult(wavelen );
 			for ( int i = 0 ; i < pos.Count ; i++ )
 			{
-				res.SpotDataList.Add( new SpotData( pos [ i ] , thckness [ i ] , intens [ i ] , refelctivityes [i]) );
+				res.SpotDataList.Add( new SpotData( pos [ i ] , thckness [ i ] , intens [ i ] , reflectivities [i]) );
 			}
 			return res;
 		}
@@ -156,7 +156,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				stb_raw.Append( wavelen [ i ].ToString() );
 				result.SpotDataList.ForEach( x =>
 				{
-					stb_raw.Append( "," + x.Refelctivityes [ i ] );
+					stb_raw.Append( "," + x.Reflectivity [ i ] );
 				} );
 				stb_raw.Append( Environment.NewLine );
 			}

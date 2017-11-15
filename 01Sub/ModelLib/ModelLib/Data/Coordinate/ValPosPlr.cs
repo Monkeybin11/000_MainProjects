@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace ModelLib
+namespace ModelLib.AmplifiedType
 {
 	using ModelLib.Data;
 	public static partial class Handler

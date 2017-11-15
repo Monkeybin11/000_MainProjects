@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace ModelLib
+namespace ModelLib.AmplifiedType
 {
 	using ModelLib.Data;
 	public static partial class Handler

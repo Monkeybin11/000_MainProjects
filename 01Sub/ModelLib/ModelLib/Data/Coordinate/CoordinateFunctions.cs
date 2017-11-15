@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelLib
+namespace ModelLib.AmplifiedType
 {
 	using ModelLib.Data;
 	using ModelLib.Data.NewType;
 	using ModelLib.AmplifiedType;
-	using static ModelLib.Handler;
 	public static partial class Handler
 	{
 		public static Func<ValPosCrt , ValPosCrt> FnReScale

@@ -18,23 +18,23 @@ using ThicknessAndComposition_Inspector_IPS_Data;
 using SpeedyCoding;
 using System.Threading;
 using System.IO;
-using static ModelLib.Handler; 
+using static ModelLib.AmplifiedType.Handler; 
 using ModelLib.AmplifiedType;
 
 namespace ThicknessAndComposition_Inspector_IPS
 {
-	
+	using static ModelLib.AmplifiedType.Handler;
 
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		
 		IPSCore Core { get; set; }
 		Win_Config WinConfig;
 		Win_SpctDisplay WinSpct;
 		WIn_SinglePointAnalysis WinSingleScan;
-		Win_ResultAnalysis WinResAnalysis;
 		bool CoreRunning;
 
 		#region Load Close
@@ -46,18 +46,17 @@ namespace ThicknessAndComposition_Inspector_IPS
 		private void Window_Loaded( object sender , RoutedEventArgs e )
 		{
 			ucSpectrum.Title = "Raw Spectrum";
-			ucRefelectivity.Title = "Refelectivity";
+			ucReflectivity.Title = "Reflectivity";
 
 			WinConfig = new Win_Config();
 			WinSpct = new Win_SpctDisplay();
 			WinSingleScan = new WIn_SinglePointAnalysis();
-			//WinResAnalysis = new Win_ResultAnalysis();
 			ucLSMenu.evtBtn += new BtnEvt( LeftSideBtn );
 
 			Core = new IPSCore()
 				.Act( x => x.evtConnection += ucLSStatus.DisplayConnection )
 				.Act( x => x.evtSpectrum +=  ucSpectrum.UpdateSeries  )
-				.Act( x => x.evtRefelectivity += ucRefelectivity.UpdateSeries ) 
+				.Act( x => x.evtRefleectivity += ucReflectivity.UpdateSeries ) 
 				.Act( x => x.evtSngSignal +=WinSingleScan.DrawSignal ) 
 				.Act( x => x.evtSingleMeasureComplete += WinSingleScan.ToReadyState ) 
 				.Act( x => x.Connect());
@@ -71,6 +70,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 			WinSingleScan 
 				.Act( x => x.evtScanStart += Core.StartManualRunEvent ) 
 				.Act( x => x.evtStopSingleScan += () => Core.FlgCoreSingleScan = false);
+
 			
 
 			Config2UI( Core.Config );
@@ -153,12 +153,16 @@ namespace ThicknessAndComposition_Inspector_IPS
 					break;
 
 				case "menuMapAnalysis":
-					WinResAnalysis = new Win_ResultAnalysis( Core.ImgScanned ,
-															 Core.ResultData == null ? None : JournalEntry   );
-					WinResAnalysis.Show();
+					new Win_ResultAnalysis( Core.ImgScanned == null ?
+												None :
+												Just( Core.ImgScanned ),
+										    Core.ResultData == null ? 
+												None : 
+												Just( Core.ResultData) )
+									.Act( x => x.evtClose += () => this.IsEnabled = true )
+									.Act( x => x.Show()); 
 					this.IsEnabled = false;
 					break;
-
 
 				default:
 					break;
@@ -236,7 +240,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 							Core.Refs ,
 							Core.SelectedReflctFactors );
 						Core.SaveRawReflectivity(
-							sfd.FileName + "_Refelctivity.csv" ,
+							sfd.FileName + "_Reflectivity.csv" ,
 							Core.ResultData ,
 							Core.SelectedWaves );
 						Core.SaveImage( sfd.FileName + "_MapImage.png" );

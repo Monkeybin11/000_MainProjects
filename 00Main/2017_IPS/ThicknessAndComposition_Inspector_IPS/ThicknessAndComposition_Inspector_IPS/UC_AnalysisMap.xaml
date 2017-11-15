@@ -11,7 +11,7 @@
             <Grid>
                 <Canvas Grid.Column="0" ClipToBounds="True" Margin="15">
                     <Canvas.Background>
-                        <ImageBrush x:Name="imgOri" Stretch="Uniform"  RenderOptions.BitmapScalingMode="Fant"   />
+                        <ImageBrush x:Name="imgMap" Stretch="Uniform"  RenderOptions.BitmapScalingMode="Fant"   />
                     </Canvas.Background>
                 </Canvas>
             </Grid>

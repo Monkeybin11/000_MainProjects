@@ -68,7 +68,7 @@
 
         <Label Grid.Row="0" Grid.Column="1" Content="Intensity" DockPanel.Dock="Top" HorizontalAlignment="Center" Style="{StaticResource lblBase}"/>
         <uc:UC_LiveLineChartMulti x:Name="ucIntensitiychart"  Grid.Row="1" Grid.Column="1" />
-        <Label Grid.Row="2" Grid.Column="1" Content="Refelectivity" DockPanel.Dock="Top" HorizontalAlignment="Center" Style="{StaticResource lblBase}"/>
+        <Label Grid.Row="2" Grid.Column="1" Content="Reflectivity" DockPanel.Dock="Top" HorizontalAlignment="Center" Style="{StaticResource lblBase}"/>
         <uc:UC_LiveLineChartMulti x:Name="ucReflectivityChart" Grid.Row="3" Grid.Column="1"/>
 
 

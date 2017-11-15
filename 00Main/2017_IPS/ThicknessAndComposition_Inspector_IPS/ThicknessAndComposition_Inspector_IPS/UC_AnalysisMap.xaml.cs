@@ -20,7 +20,7 @@ using Emgu.CV.Structure;
 namespace ThicknessAndComposition_Inspector_IPS
 {
 	using static ThicknessAndComposition_Inspector_IPS_Core.Core_Helper;
-	using static ModelLib.Handler;
+	using static ModelLib.AmplifiedType.Handler;
 	using ModelLib.AmplifiedType;
 	using ModelLib.Data;
 	/// <summary>
@@ -34,9 +34,9 @@ namespace ThicknessAndComposition_Inspector_IPS
 		}
 
 
-		public void SetupImage()
+		public void SetupImage(BitmapSource src)
 		{
-
+			imgMap.ImageSource = src;
 		}
 
 		public void DrawImage(IPSResult result )
@@ -64,16 +64,6 @@ namespace ThicknessAndComposition_Inspector_IPS
 			var scaledPosList = result.SpotDataList.Map(x => x.CrtPos)
 												   .Map(toValPos)
 												   .ToList();
-
-
-			
-
-
-
-
-
-
-
 		}
 
 

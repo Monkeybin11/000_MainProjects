@@ -55,8 +55,17 @@ namespace SpeedyCoding
             return result;
         }
 
-        // ( [ third ] x second ) x first order 
-        public static Tsrc [ , , ] Reshape<Tsrc>(
+		// ( [ third ] x second ) x first order 
+		/// <summary>
+		/// result [ f , s , t ] = src [ idx++ ]. data is setted third order first
+		/// </summary>
+		/// <typeparam name="Tsrc"></typeparam>
+		/// <param name="src"></param>
+		/// <param name="first"></param>
+		/// <param name="second"></param>
+		/// <param name="third"></param>
+		/// <returns></returns>
+		public static Tsrc [ , , ] Reshape<Tsrc>(
             this Tsrc [ ] src
             , int first
             , int second
@@ -71,15 +80,23 @@ namespace SpeedyCoding
                 {
                     for ( int t = 0 ; t < third ; t++ )
                     {
-                        result [ f , s , t ] = src [ idx++ ];
+						result [ f , s , t ] = src [ idx++ ];
                     }
                 }
             }
             return result;
         }
 
-        // ( [ second ] x first )  order 
-        public static Tuple<TSrc , int , int> [ ] ZipFlattenReshape<TSrc>(
+		// ( [ second ] x first )  order 
+		/// <summary>
+		/// result [ f , s  ] = src [ idx++ ]. data is setted second order first
+		/// </summary>
+		/// <typeparam name="TSrc"></typeparam>
+		/// <param name="this"></param>
+		/// <param name="row"></param>
+		/// <param name="col"></param>
+		/// <returns></returns>
+		public static Tuple<TSrc , int , int> [ ] ZipFlattenReshape<TSrc>(
           this TSrc [ ] @this
           , int row
           , int col )
@@ -273,7 +290,8 @@ namespace SpeedyCoding
             return output;
         }
 
-        public static T [ ] Tranpose<T>(
+		[Obsolete]
+        public static T [ ] Transpose<T>(
             this T [ ] src ,
             int currentRowNum,
             int currentColumnNum)
@@ -287,7 +305,28 @@ namespace SpeedyCoding
                 }
             }
             return output.ToArray();
-        } 
+        }
+
+		public static T [ ] [ ] Transpose<T>(
+			this T [ ] [ ] src )
+		{
+			int rownum = src.Length;
+			int colnum = src[0].Length;
+
+			T[][] res = new T[colnum][];
+			for ( int i = 0 ; i < colnum ; i++ )
+			{
+				T[] rowline = new T[rownum];
+
+				for ( int j = 0 ; j < rownum ; j++ )
+				{
+					rowline [ j ] = src [j] [i];
+				}
+				res [ i ] = rowline;
+			}
+			return res;
+		}
+
 
         #endregion
 
@@ -747,6 +786,15 @@ namespace SpeedyCoding
                                     flist.Dot( slist ) ).ToArray();
         }
 
+		/// <summary>
+		/// ElementWise dot for particular region. output is same size with target mask
+		/// </summary>
+		/// <typeparam name="Tsrc"></typeparam>
+		/// <param name="this"></param>
+		/// <param name="target"></param>
+		/// <param name="startYX"></param>
+		/// <param name="hw"></param>
+		/// <returns></returns>
         public static Tsrc [ ] [ ] PartialDot<Tsrc>(
              this Tsrc [ ] [ ] @this ,
              dynamic [ ] [ ] target ,
@@ -772,7 +820,15 @@ namespace SpeedyCoding
             return output;
         }
 
-        public static double [ ] [ ] PartialDot(
+		/// <summary>
+		///  ElementWise dot for particular region. output is same size with target mask
+		/// </summary>
+		/// <param name="this"></param>
+		/// <param name="target"></param>
+		/// <param name="startYX"></param>
+		/// <param name="hw"></param>
+		/// <returns></returns>
+		public static double [ ] [ ] PartialDot(
            this double [ ] [ ] @this ,
            double [ ] [ ] target ,
            int [ ] startYX ,

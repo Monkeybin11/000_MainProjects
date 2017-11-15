@@ -6,22 +6,20 @@ using Unit = System.ValueTuple;
 
 
 namespace ModelLib.AmplifiedType
-{
-	using static ModelLib.Handler;
-	namespace ModelLib
-	{
+{ 
 		using Maybe;
+	using static ModelLib.AmplifiedType.Handler;
 		public static partial class Handler
 		{
 			public static Maybe<A> Just<A>( A value ) => new Maybe.Just<A>( value );
 			public static Maybe.Nothing None => Maybe.Nothing.Default;
 		}
-	}
+	
 
-	public struct Maybe<A> // Define TypeClass
+	public struct Maybe<A> : IEquatable<Maybe.Nothing>, IEquatable<Maybe<A>>// Define TypeClass 
 	{
-		readonly A Value;
-		readonly bool isJust;
+		public readonly A Value;
+		public readonly bool isJust;
 		bool isNothing => isJust;
 
 		Maybe( A value )
@@ -43,7 +41,14 @@ namespace ModelLib.AmplifiedType
 		{
 			if ( isJust ) yield return Value;
 		}
-	}
+
+		public bool Equals( Maybe.Nothing other )
+			=> this.isJust ? false : true;
+
+		public bool Equals( Maybe<A> other )
+			=> this.isJust == other.isJust
+			&& ( this.Value.Equals( other.Value ) );
+	}   
 
 	namespace Maybe // TypeClass Instance Impelemnt 
 	{
