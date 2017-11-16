@@ -26,6 +26,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 	using static System.IO.Path;
 	using static StateCreator;
 	using static IPSAnalysis.Handler;
+	using static ModelLib.AmplifiedType.Handler;
 
 	/// <summary>
 	/// Interaction logic for Win_ResultAnalysis.xaml
@@ -33,37 +34,28 @@ namespace ThicknessAndComposition_Inspector_IPS
 	public partial class Win_ResultAnalysis : Window
 	{
 		AnalysisState State;
-
 		public event Action evtClose;
 		IPSResult ResultData;
 
-
-
-
-
-		public Win_ResultAnalysis( Maybe<BitmapSource> img , Maybe<IPSResult> result )
+		public Win_ResultAnalysis( Maybe<BitmapSource> img , Maybe<IPSResult> result ) 
 		{
 			InitializeComponent();
 			var defualtImg = new Image<Gray,byte>(100,100, new Gray(100) );
 
 			result.Match(
-					() => defualtImg.ToBitmapSource() ,
-					res => res.Map( x => img.Match(
-						() => CreateMap( res , 6 ).Item1 [ 0 ].ToBitmapSource() ,
-						thisimg => thisimg ) ) )
-				.Act( x => ucAnalysisMap.SetImage( x ) ); // DrawMap
+					() =>  Just( defualtImg.ToBitmapSource() )
+							.ForEach( ucAnalysisMap.SetImage ) ,
 
-
-			//result.Match(
-			//			() => defualtImg.ToBitmapSource() ,
-			//			res => res.Act( x => ucAnalysisMap.CrerateScanPosBtn( x ) )
-			//					  .Map( x => img.Match(
-			//				() => CreateMap( res , 6 ).Item1 [ 0 ].ToBitmapSource() ,
-			//				thisimg => thisimg ) ))
-			//		.Act( x => ucAnalysisMap.SetupImage( x ) );
-
+					res => Just( res )
+							.ForEach( ucAnalysisMap.SetBtnTag )
+							.Map( x => CreateMapImg( img )( res ) )
+							.ForEach( ucAnalysisMap.SetImage ));
 		}
 
+		Func<IPSResult , BitmapSource> CreateMapImg( Maybe<BitmapSource> img )
+			=> res => img.Match(
+						() => CreateMap( res , 6 ).Item1 [ 0 ].ToBitmapSource() ,
+						thisimg => thisimg );
 
 		void InitializeState()
 		{

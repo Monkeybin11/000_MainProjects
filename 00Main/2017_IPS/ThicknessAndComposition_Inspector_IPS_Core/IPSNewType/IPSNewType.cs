@@ -116,7 +116,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 	public class Reflectivity
 	{
-		readonly Maybe<double> Value;
+		public readonly Maybe<double> Value;
 
 		public Reflectivity()
 		{
@@ -160,7 +160,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 	public class Thickness
 	{
-		readonly Maybe<double> Value;
+		public readonly Maybe<double> Value;
 
 		public Thickness()
 		{
@@ -179,6 +179,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		public static implicit operator Maybe<double>( Thickness self )
 			=> self.Value;
+
 		public static implicit operator Thickness( double x )
 			=> new Thickness( x );
 	}

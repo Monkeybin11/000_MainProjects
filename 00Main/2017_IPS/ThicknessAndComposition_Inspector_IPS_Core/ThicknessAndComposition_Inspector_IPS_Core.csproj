@@ -65,6 +65,10 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ValueTuple, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\ThicknessAndComposition_Inspector_IPS\packages\System.ValueTuple.4.3.1\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -78,14 +82,13 @@
     <Compile Include="Backup_1.cs" />
     <Compile Include="Backup_2.cs" />
     <Compile Include="Backup_3.cs" />
-    <Compile Include="BaseFunc\BaseFunc_Analysis.cs" />
+    <Compile Include="Analysis\BaseFunc_Analysis.cs" />
     <Compile Include="Core.cs" />
-    <Compile Include="Core_Analysis.cs" />
+    <Compile Include="Analysis\Core_Analysis.cs" />
     <Compile Include="Core_Background.cs" />
     <Compile Include="Core_Canvas.cs" />
     <Compile Include="Core_ResultIO.cs" />
     <Compile Include="Core_SubFunction.cs" />
-    <Compile Include="DrawHelper_Analysis.cs" />
     <Compile Include="IPSExtension.cs" />
     <Compile Include="IPSNewType\IPSNewType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -115,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

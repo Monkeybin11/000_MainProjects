@@ -9,7 +9,7 @@
     <DockPanel Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Border CornerRadius="6" BorderThickness="2" BorderBrush="RoyalBlue" DockPanel.Dock="Top" >
             <Grid>
-                <Canvas Grid.Column="0" ClipToBounds="True" Margin="15">
+                <Canvas Name="cvsMap" Grid.Column="0" ClipToBounds="True" Margin="15">
                     <Canvas.Background>
                         <ImageBrush x:Name="imgMap" Stretch="Uniform"  RenderOptions.BitmapScalingMode="Fant"   />
                     </Canvas.Background>
