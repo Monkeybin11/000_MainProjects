@@ -16,25 +16,34 @@ using ThicknessAndComposition_Inspector_IPS_Core;
 using ThicknessAndComposition_Inspector_IPS_Data;
 using Emgu.CV;
 using Emgu.CV.Structure;
+using IPSAnalysis;
+using static IPSAnalysis.Handler;
 
 namespace ThicknessAndComposition_Inspector_IPS
 {
 	using static ThicknessAndComposition_Inspector_IPS_Core.Core_Helper;
 	using static ModelLib.AmplifiedType.Handler;
+	using static IPSDataHandler.Handler;
 	using ModelLib.AmplifiedType;
 	using ModelLib.Data;
+
+	public enum MsgType { Add , Remove , ChangeWav }
+
 	/// <summary>
 	/// Interaction logic for UC_AnalysisMap.xaml
 	/// </summary>
 	public partial class UC_AnalysisMap : UserControl
 	{
+	
+
+
 		public UC_AnalysisMap()
 		{
 			InitializeComponent();
 		}
 
 
-		public void SetupImage(BitmapSource src)
+		public void SetImage(BitmapSource src)
 		{
 			imgMap.ImageSource = src;
 		}
@@ -44,12 +53,10 @@ namespace ThicknessAndComposition_Inspector_IPS
 			var res = CreateMap(result , 6);
 			var mapimg = res.Item1[0];
 			var scalebar = res.Item1[1];
-
 			// need draw 
-
 		}
 
-		public void CrerateScanPosBtn( IPSResult result )
+		public List<ValPosCrt> CalcTagPos( IPSResult result )
 		{
 			var w0 = 15;
 			var h0 = 15;
@@ -64,8 +71,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 			var scaledPosList = result.SpotDataList.Map(x => x.CrtPos)
 												   .Map(toValPos)
 												   .ToList();
+			return scaledPosList;
 		}
-
-
 	}
 }

@@ -110,8 +110,8 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		public static implicit operator Maybe<double>( WaveLength self )
 			=> self.Value;
-		public static implicit operator WaveLength( double x )
-			=> new WaveLength( x );
+		public static implicit operator WaveLength( Maybe<double> x )
+			=> x.isJust ? new WaveLength( x.Value ) : new WaveLength();
 	}
 
 	public class Reflectivity
@@ -141,7 +141,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 	public class Intensity
 	{
-		readonly Maybe<double> Value;
+		public readonly Maybe<double> Value;
 		public Intensity()
 		{
 			Value = None;

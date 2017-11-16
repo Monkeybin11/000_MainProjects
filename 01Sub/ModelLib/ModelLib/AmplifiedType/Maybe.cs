@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unit = System.ValueTuple;
 
 
@@ -75,16 +76,24 @@ namespace ModelLib.AmplifiedType
 		public static Maybe<B> Bind<A, B>
 			( this Maybe<A> self , Func<A , Maybe<B>> f )
 			=> self.Match(
-				Nothing : () => None ,
-				Just : x => f( x ));
+				Nothing: () => None ,
+				Just: x => f( x ) );
 
 		public static IEnumerable<B> Bind<A, B>
-			( this Maybe<A> self , Func<A , IEnumerable<B>> f)
-			=> self.AsEnumerable().Bind(f);
+			( this Maybe<A> self , Func<A , IEnumerable<B>> f )
+			=> self.AsEnumerable().Bind( f );
 
-	}
+		public static Maybe<B> Map<A, B>
+			( this Maybe<A> self , Func<A , B> f )
+			=> self.Match(
+				() => None ,
+				x => Just( f( x ) ) );
 
+		public static Maybe<Unit> ForEach<A>
+			( this Maybe<A> self , Action<A> act )
+			=> Map( self , act.ToFunc() );
 
+		}
 }
 
 

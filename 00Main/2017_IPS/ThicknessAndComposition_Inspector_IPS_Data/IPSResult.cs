@@ -18,6 +18,8 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 			SpotDataList = new List<SpotData>();
 		}
 
+		
+
 	}
 
 	public class SpotData

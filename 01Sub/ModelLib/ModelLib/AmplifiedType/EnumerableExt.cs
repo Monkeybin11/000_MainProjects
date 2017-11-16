@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Unit = System.ValueTuple;
+using System.Collections.Immutable;
 
 namespace ModelLib.AmplifiedType
 {
@@ -20,6 +21,9 @@ namespace ModelLib.AmplifiedType
 		public static IEnumerable<R> Map<T, R>
 		 ( this IEnumerable<T> list , Func<T , R> func )
 		  => list.Select( func );
+
+	
+
 
 		public static R Match<T, R>( this IEnumerable<T> list
 		, Func<R> Empty , Func<T , IEnumerable<T> , R> Otherwise )
@@ -41,6 +45,10 @@ namespace ModelLib.AmplifiedType
 
 		public static IEnumerable<T> Flatten<T>( this IEnumerable<IEnumerable<T>> list )
 			=> list.SelectMany( x => x );
+
+		public static IEnumerable<Unit> ForEach<A>
+			( this IEnumerable<A> self , Action<A> act )
+			=> self.Map( act.ToFunc() ).ToImmutableList();
 
 	}
 }

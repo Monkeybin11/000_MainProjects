@@ -20,65 +20,108 @@ using Emgu.CV.Util;
 
 namespace ThicknessAndComposition_Inspector_IPS
 {
+	using IPSAnalysis;
 	using ModelLib.AmplifiedType;
 	using static Core_Helper;
 	using static System.IO.Path;
+	using static StateCreator;
+	using static IPSAnalysis.Handler;
 
 	/// <summary>
 	/// Interaction logic for Win_ResultAnalysis.xaml
 	/// </summary>
 	public partial class Win_ResultAnalysis : Window
 	{
+		AnalysisState State;
+
 		public event Action evtClose;
 		IPSResult ResultData;
 
-		//public Win_ResultAnalysis()
-		//{
-		//	Console.WriteLine( "In1" );
-		//	InitializeComponent();
-		//
-		//	//AnalysisCore ACore=  new AnalysisCore();
-		//
-		//}
+
+
+
 
 		public Win_ResultAnalysis( Maybe<BitmapSource> img , Maybe<IPSResult> result )
 		{
 			InitializeComponent();
-
-
-			// result is maybe
-
-			Action<IPSResult> dataExist = 
-				res =>
-				{
-					//var src = img;
-					//ResultData = result.Value; // UC로 -> 버튼 //  여기에는 리턴으로 Maybe에 있는 값을 가져와야 한다. 
-				};
 			var defualtImg = new Image<Gray,byte>(100,100, new Gray(100) );
 
-
 			result.Match(
-						() => defualtImg.ToBitmapSource() ,
-						res => res.Act( x => ucAnalysisMap.CrerateScanPosBtn( x ) )
-								  .Map( x => img.Match(
-							() => CreateMap( res , 6 ).Item1 [ 0 ].ToBitmapSource() ,
-							thisimg => thisimg ) ))
-					.Act( x => ucAnalysisMap.SetupImage( x ) );
+					() => defualtImg.ToBitmapSource() ,
+					res => res.Map( x => img.Match(
+						() => CreateMap( res , 6 ).Item1 [ 0 ].ToBitmapSource() ,
+						thisimg => thisimg ) ) )
+				.Act( x => ucAnalysisMap.SetImage( x ) ); // DrawMap
+
+
+			//result.Match(
+			//			() => defualtImg.ToBitmapSource() ,
+			//			res => res.Act( x => ucAnalysisMap.CrerateScanPosBtn( x ) )
+			//					  .Map( x => img.Match(
+			//				() => CreateMap( res , 6 ).Item1 [ 0 ].ToBitmapSource() ,
+			//				thisimg => thisimg ) ))
+			//		.Act( x => ucAnalysisMap.SetupImage( x ) );
 
 		}
+
+
+		void InitializeState()
+		{
+			// 그림 있는지
+			// 그림 
+		}
+
+		void Update( MsgType msg , int idx )
+		{
+			AnalysisState newState;
+			switch ( msg )
+			{
+				case MsgType.Add:
+
+					break;
+
+				case MsgType.Remove:
+
+
+					break;
+
+
+				case MsgType.ChangeWav:
+
+
+					break;
+			}
+
+			// Trans New State
+		}
+
 
 		public void UpdateResultData()
 		{
 
 		}
 
+		// Load Data -> State
 		private void btnLoad_Click( object sender , RoutedEventArgs e )
 		{
 			OpenFileDialog ofd = new OpenFileDialog();
+			ofd.Filter = "Csv Files (.csv)|*.txt|All Files (*.*)|*.*";
 			if ( ofd.ShowDialog() == true )
 			{
-				Core_Analysis core = new Core_Analysis();
-				core.ScarpIpsResult( ofd.FileName );
+				var res = StateFrom( ofd.FileName );
+				if ( res.isJust )
+				{
+					int i = 0;
+					State = CreateState( res.Value.ToDictionary( x => i++ ) ); // Set State
+
+					// DrawMap
+					CreateMap( State.ToIPSResult() , 6 ).Item1 [ 0 ].ToBitmapSource()
+						.Act(x => ucAnalysisMap.SetImage( x ));
+				}
+				else
+				{
+					MessageBox.Show( "File is not valid. please select other file" );
+				}
 			}
 		}
 
@@ -87,4 +130,27 @@ namespace ThicknessAndComposition_Inspector_IPS
 			evtClose();
 		}
 	}
+
+	public static class Adaptor
+	{
+		public static IPSResult ToIPSResult(
+			this AnalysisState self )
+		{
+			List<SpotData> spotlist;
+			List<double> WaveLen = AnalysisState.WaveMinMax.ToList();
+
+			spotlist = self.State.Select( x =>
+
+				new SpotData
+				( null ,
+					x.Value.Thickness.Value.Value ,
+					x.Value.IntenList.Select( f => f.Value.Value ).ToArray() ,
+					x.Value.Reflectivity.Select( f => f.Value.Value ).ToArray() ) ).ToList();
+
+			var res = new IPSResult(WaveLen) { SpotDataList = spotlist  };
+			return res;
+		}
+
+	}
+
 }
