@@ -33,6 +33,8 @@ namespace IPSDataHandler
 		public static Maybe<double> ParseToDouble( string s )
 		{
 			double result;
+			double.TryParse( s , out result );
+			
 			return double.TryParse( s , out result )
 			   ? Just( result ) : None;
 		}
@@ -106,12 +108,16 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		}
 
 		static bool IsValid( double val ) // Type Constrain
-			=> val < 0;
+			=> val > 0;
 
 		public static implicit operator Maybe<double>( WaveLength self )
 			=> self.Value;
 		public static implicit operator WaveLength( Maybe<double> x )
 			=> x.isJust ? new WaveLength( x.Value ) : new WaveLength();
+
+		public static implicit operator double( WaveLength self )
+			=> self.Value.Value;
+
 	}
 
 	public class Reflectivity
@@ -130,16 +136,20 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		}
 
 		static bool IsValid( double val ) // Type Constrain
-			=> val > 100 || val < 0;
+			=> val < 100 || val > 0;
 
 
 		public static implicit operator Maybe<double>( Reflectivity self )
 			=> self.Value;
 		public static implicit operator Reflectivity( Maybe<double> x )
 			=> x.isJust ? new Reflectivity( x.Value ) : new Reflectivity();
+
+		public static implicit operator double( Reflectivity self )
+			=> self.Value.Value;
+
 	}
 
-	public class Intensity
+	public class Intensity 
 	{
 		public readonly Maybe<double> Value;
 		public Intensity()
@@ -156,6 +166,11 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			=> self.Value;
 		public static implicit operator Intensity( Maybe<double> x )
 		=> x.isJust ? new Intensity( x.Value ) : new Intensity();
+		public static implicit operator double( Intensity self )
+		=> self.Value.Value;
+
+
+
 	}
 
 	public class Thickness
@@ -182,14 +197,16 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		public static implicit operator Thickness( double x )
 			=> new Thickness( x );
+		public static implicit operator double( Thickness self )
+			=> self.Value.Value;
 	}
 
 
 	public class mCrtCrd
 	{
-		readonly Maybe<CrtnCrd> Pos;
-
-		public mCrtCrd()
+		public readonly Maybe<CrtnCrd> Pos;
+		   
+  		public mCrtCrd()
 		{
 			Pos = None;
 		}

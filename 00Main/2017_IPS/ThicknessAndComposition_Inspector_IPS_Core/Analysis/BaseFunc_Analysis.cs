@@ -49,21 +49,31 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				&& File.Exists( rftPath )
 				&& File.Exists( rawPath ) )
 			{
+				// missing Data => Exit Flow
+
+
 				var posThickness = File.ReadAllLines( resPath )
 										 .ResultRefine(0)
-										 .ToPosThickness();
+										 .ToPosThickness()
+										 .ToArray();
 
 				var wavLis = File.ReadAllLines( rftPath )
 								.ColumnRead(0)
-								.ToWaveLen();
+								.ToWaveLen()
+								.ToArray();
+
+
+				// missing Data => interpolation 
 
 				var rftList  = File.ReadAllLines( rftPath )
 								.ResultRefine(1)
-								.ToReflectivity();
+								.ToReflectivity()
+								.ToArray();
 
 				var rawList  = File.ReadAllLines( rawPath )
 								.ResultRefine(4)
-								.ToIntensity();
+								.ToIntensity()
+								.ToArray();
 
 				var scanResult = Range( 0 , posThickness.Count() )
 								.Map( i => new IPSResultData
@@ -126,8 +136,9 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 	{
 		public static IEnumerable<string> ColumnRead(
 			this IEnumerable<string> src ,
-			int colNum )
-			=> src.Map( x => x.Split( ',' ) [ colNum ] ); 
+			int colNum ,
+			int headerSkip = 0)
+			=> src.Skip(headerSkip).Map( x => x.Split( ',' ) [ colNum ] ); 
 
 		public static IEnumerable<string[]> ResultRefine( 
 			this IEnumerable<string> src ,

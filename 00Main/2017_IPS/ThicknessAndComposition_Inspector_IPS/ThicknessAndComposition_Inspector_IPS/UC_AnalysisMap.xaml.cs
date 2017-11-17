@@ -60,6 +60,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 		}
 
+
 		private void DrawBtnTag( List<ValPosCrt> tagPos) // done
 		{
 			int posNum = tagPos.Count;
@@ -80,19 +81,27 @@ namespace ThicknessAndComposition_Inspector_IPS
 		private Button CheckButton( int i ) // done 
 		{
 			var btn = new Button();
-			btn.Name = i.ToString();
-			btn.Width = 50;
-			btn.Height = 50;
+			btn.Name = "btn" + i.ToString();
+			btn.Width = 20;
+			btn.Height = 20;
+			btn.VerticalAlignment = VerticalAlignment.Stretch;
+			btn.HorizontalAlignment = HorizontalAlignment.Stretch;
 			btn.Click += ClickIdx;
 			return btn;
 		}
 
 		public void ClickIdx( object sender , RoutedEventArgs e ) // done
 		{
-			if ( Keyboard.IsKeyDown( Key.LeftCtrl ) )
-				evtClickedIndex( ( sender as Button ).Name , MsgType.Remove);
-			else
-				evtClickedIndex( ( sender as Button ).Name , MsgType.Add);
+			try
+			{
+				if ( Keyboard.IsKeyDown( Key.LeftCtrl ) ) // Remove with ctrl
+					evtClickedIndex( ( sender as Button ).Name.Replace("btn" , "") , MsgType.Remove );
+				else
+					evtClickedIndex( ( sender as Button ).Name.Replace( "btn" , "" ) , MsgType.Add );
+			}
+			catch ( Exception )
+			{ }
+		
 		}
 
 
@@ -102,6 +111,11 @@ namespace ThicknessAndComposition_Inspector_IPS
 			var h0 = 30;
 			var w1 = this.ActualWidth;
 			var h1 = this.ActualHeight;
+
+			var w2 = this.Width;
+			var h2 = this.Height;
+
+
 
 			var RealToCanvas = FnReScale( w0 , h0 , w1 , h1, w1/2 , h1/2);
 

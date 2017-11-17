@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ThicknessAndComposition_Inspector_IPS"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
-    <DockPanel Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <DockPanel Name="dckPanel" Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Border CornerRadius="6" BorderThickness="2" BorderBrush="RoyalBlue" DockPanel.Dock="Top" >
             <Grid>
                 <Canvas Name="cvsMap" Grid.Column="0" ClipToBounds="True" Margin="15">

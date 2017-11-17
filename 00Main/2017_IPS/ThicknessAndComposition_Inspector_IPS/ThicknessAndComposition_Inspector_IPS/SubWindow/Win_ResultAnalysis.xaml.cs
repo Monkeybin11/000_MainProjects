@@ -27,6 +27,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 	using static StateCreator;
 	using static IPSAnalysis.Handler;
 	using static ModelLib.AmplifiedType.Handler;
+	using ModelLib.Data;
 
 	/// <summary>
 	/// Interaction logic for Win_ResultAnalysis.xaml
@@ -96,25 +97,34 @@ namespace ThicknessAndComposition_Inspector_IPS
 		// Load Data -> State
 		private void btnLoad_Click( object sender , RoutedEventArgs e )
 		{
-			OpenFileDialog ofd = new OpenFileDialog();
-			ofd.Filter = "Csv Files (.csv)|*.txt|All Files (*.*)|*.*";
-			if ( ofd.ShowDialog() == true )
+			try
 			{
-				var res = StateFrom( ofd.FileName );
-				if ( res.isJust )
+				OpenFileDialog ofd = new OpenFileDialog();
+				ofd.Filter = "Csv Files (.csv)|*.csv|All Files (*.*)|*.*";
+				if ( ofd.ShowDialog() == true )
 				{
-					int i = 0;
-					State = CreateState( res.Value.ToDictionary( x => i++ ) ); // Set State
-
-					// DrawMap
-					CreateMap( State.ToIPSResult() , 6 ).Item1 [ 0 ].ToBitmapSource()
-						.Act(x => ucAnalysisMap.SetImage( x ));
-				}
-				else
-				{
-					MessageBox.Show( "File is not valid. please select other file" );
+					var res = StateFrom( ofd.FileName ); //  여기부터 체크를 해야한다. 
+					if ( res.isJust )
+					{
+						int i = 0;
+						State = CreateState( res.Value.ToDictionary( x => i++ ) ); // Set State
+						var ipsRes = State.ToIPSResult();
+						// DrawMap
+						CreateMap( ipsRes , 6 ).Item1 [ 0 ].ToBitmapSource()
+							//.Act( x => ucAnalysisMap.SetImage( x ) )
+							.Act( x => ucAnalysisMap.SetBtnTag(ipsRes)); // 여기서부터 버튼 태그 생성 이벤트 발생 
+					}
+					else
+					{
+						MessageBox.Show( "File is not valid. please select other file" );
+					}
 				}
 			}
+			catch ( Exception ex )
+			{
+				MessageBox.Show( ex.ToString() );
+			}
+			
 		}
 
 		private void Window_Closing( object sender , System.ComponentModel.CancelEventArgs e )
@@ -129,15 +139,16 @@ namespace ThicknessAndComposition_Inspector_IPS
 			this AnalysisState self )
 		{
 			List<SpotData> spotlist;
-			List<double> WaveLen = AnalysisState.WaveMinMax.ToList();
+			var temp = self.State[0].WaveLegth.ToList();
+			List<double> WaveLen = self.State[0].WaveLegth.Select( x => (double)x).ToList();
 
 			spotlist = self.State.Select( x =>
 
 				new SpotData
-				( null ,
+				(   x.Value.Position.Pos.Value.ToPolar() as PlrCrd,
 					x.Value.Thickness.Value.Value ,
-					x.Value.IntenList.Select( f => f.Value.Value ).ToArray() ,
-					x.Value.Reflectivity.Select( f => f.Value.Value ).ToArray() ) ).ToList();
+					x.Value.IntenList.Select( f => (double)f ).ToArray() ,
+					x.Value.Reflectivity.Select( f => ( double )f ).ToArray() ) ).ToList();
 
 			var res = new IPSResult(WaveLen) { SpotDataList = spotlist  };
 			return res;

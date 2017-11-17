@@ -35,8 +35,11 @@
                 <Label Content="~" Grid.Column="4" Style="{StaticResource lblBase}"/>
                 <xc:DoubleUpDown Name="nudUp" Grid.Column="5" Style="{StaticResource nudBase}" HorizontalAlignment="Center" />
             </Grid>
-            <uc:UC_AnalysisMap x:Name="ucAnalysisMap" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"/>
-            <uc:UC_LiveLineChartMulti Grid.Row="1" Grid.Column="1"/>
+            <DockPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                <uc:UC_AnalysisMap x:Name="ucAnalysisMap" DockPanel.Dock="Left" />
+
+            </DockPanel>
+             <uc:UC_LiveLineChartMulti Grid.Row="1" Grid.Column="1"/>
             <uc:UC_LiveLineChartMulti Grid.Row="2" Grid.Column="1"/>
         </Grid>
     </DockPanel>
