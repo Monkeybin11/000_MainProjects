@@ -32,7 +32,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		public static event Action<mCrtCrd , IPSResultData> evtResult;
 		//public event Action<> evtThickness;
 
-		public static Maybe<List<IPSResultData>> StateFrom( string path )
+		public static Maybe<List<IPSResultData>> ResultDataFrom( string path )
 		{
 			var headname = path.Split('_').First();
 			var basepath =  GetDirectoryName(path);

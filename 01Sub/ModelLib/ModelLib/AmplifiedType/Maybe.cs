@@ -83,7 +83,7 @@ namespace ModelLib.AmplifiedType
 			( this Maybe<A> self , Func<A , IEnumerable<B>> f )
 			=> self.AsEnumerable().Bind( f );
 
-		public static Maybe<B> Map<A, B>
+		public static Maybe<B> Lift<A, B>
 			( this Maybe<A> self , Func<A , B> f )
 			=> self.Match(
 				() => None ,
@@ -91,7 +91,7 @@ namespace ModelLib.AmplifiedType
 
 		public static Maybe<Unit> ForEach<A>
 			( this Maybe<A> self , Action<A> act )
-			=> Map( self , act.ToFunc() );
+			=> Lift( self , act.ToFunc() );
 
 		}
 }

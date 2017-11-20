@@ -98,19 +98,44 @@ namespace ThicknessAndComposition_Inspector_IPS
 				.Where( ( _ , i ) => i % 10 == 0 )
 				.Select( x => new double [ 2 ] { lbls [ x ] , dts [ x ] } )
 				);
+			var newseries = CreateSeries(chartDatas);
 
 			this.Dispatcher.BeginInvoke( ( Action )( () => {
-				var newseries = new LineSeries();
-				newseries.Values = chartDatas;
-				newseries.DataLabels = false;
-				newseries.PointGeometrySize = 0;
-				newseries.Fill = Brushes.Transparent;
-				newseries.Title = title;
 				SeriesColl.Add( newseries );
 				this.Dispatcher.BeginInvoke( ( Action )( () => chtLiveLine.Series = SeriesColl ) );
 			} ) );
+		}
 
+		public void BatchDrawSeries( IEnumerable<double [ ]> datasList , IEnumerable<double> labels  )
+		{
+			chtLiveLine.LegendLocation = LegendLocation.None;
+			//ChartDatas.Clear();
+			var dts = datas.ToArray();
+			var lbls = labels.ToArray();
+			dts [ 0 ] = dts [ 2 ];
+			dts [ 1 ] = dts [ 2 ];
 
+			ChartValues<double[]> chartDatas = new ChartValues<double[]>();
+			chartDatas.AddRange(
+				Enumerable.Range( 0 , datas.Count() )
+				.Where( ( _ , i ) => i % 10 == 0 )
+				.Select( x => new double [ 2 ] { lbls [ x ] , dts [ x ] } )
+				);
+
+			var newseries = CreateSeries(chartDatas);
+
+			this.Dispatcher.BeginInvoke( ( Action )( () =>
+			{
+				var src = new SeriesCollection();
+				SeriesColl.Add( newseries );
+
+				foreach ( var item in SeriesColl )
+				{
+					SeriesColl.Add( item );
+				}
+				this.Dispatcher.BeginInvoke( ( Action )( () => chtLiveLine.Series = SeriesColl ) );
+
+			} ) );
 
 
 		}
@@ -120,6 +145,21 @@ namespace ThicknessAndComposition_Inspector_IPS
 			SeriesColl = new SeriesCollection();
 			this.Dispatcher.BeginInvoke( ( Action )( () => chtLiveLine.Series = SeriesColl ) );
 		}
+
+		#region sub Func
+
+		LineSeries CreateSeries( ChartValues<double [ ]> chartDatas )
+		{
+			var newseries = new LineSeries();
+			newseries.Values = chartDatas;
+			newseries.DataLabels = false;
+			newseries.PointGeometrySize = 0;
+			newseries.Fill = Brushes.Transparent;
+			return newseries;
+		}
+
+
+		#endregion
 
 
 		public event PropertyChangedEventHandler PropertyChanged;

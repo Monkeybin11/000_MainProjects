@@ -54,15 +54,16 @@ namespace ThicknessAndComposition_Inspector_IPS
 		{
 
 			Just( result )
-				.Map( CalcTagPos )
+				.Lift( CalcTagPos )
 				.ForEach( DrawBtnTag );
 			var poslist = CalcTagPos(result);
 
 		}
 
 
-		private void DrawBtnTag( List<ValPosCrt> tagPos) // done
+		private void DrawBtnTag( List<ValPosCrt> tagPos ) // done
 		{
+			cvsMap.Children.Clear();
 			int posNum = tagPos.Count;
 
 			StackPanel[] temp = new StackPanel[ posNum ];
@@ -71,8 +72,8 @@ namespace ThicknessAndComposition_Inspector_IPS
 			for ( int i = 0 ; i < posNum ; i++ )
 			{
 				var btntemp = CheckButton(i);
-				Canvas.SetLeft( btntemp , tagPos [ i ].X );
-				Canvas.SetTop( btntemp , tagPos [ i ].Y );
+				Canvas.SetLeft( btntemp , tagPos [ i ].X - btntemp.Width/2 );
+				Canvas.SetTop( btntemp , tagPos [ i ].Y - btntemp.Height/2 );
 				cvsMap.Children.Add( btntemp );
 				btn [ i ] = btntemp;
 			}
@@ -82,10 +83,10 @@ namespace ThicknessAndComposition_Inspector_IPS
 		{
 			var btn = new Button();
 			btn.Name = "btn" + i.ToString();
-			btn.Width = 20;
-			btn.Height = 20;
-			btn.VerticalAlignment = VerticalAlignment.Stretch;
-			btn.HorizontalAlignment = HorizontalAlignment.Stretch;
+			btn.Width = 10;
+			btn.Height = 10;
+			btn.Opacity = 0.9;
+			btn.Background = Brushes.LawnGreen; 
 			btn.Click += ClickIdx;
 			return btn;
 		}
@@ -94,10 +95,18 @@ namespace ThicknessAndComposition_Inspector_IPS
 		{
 			try
 			{
+				var self = sender as Button;
 				if ( Keyboard.IsKeyDown( Key.LeftCtrl ) ) // Remove with ctrl
-					evtClickedIndex( ( sender as Button ).Name.Replace("btn" , "") , MsgType.Remove );
+				{
+					self.Background = Brushes.LawnGreen;
+					evtClickedIndex( ( sender as Button ).Name.Replace( "btn" , "" ) , MsgType.Remove );
+				}
 				else
+				{
+					self.Background = Brushes.OrangeRed;
 					evtClickedIndex( ( sender as Button ).Name.Replace( "btn" , "" ) , MsgType.Add );
+				}
+					
 			}
 			catch ( Exception )
 			{ }
@@ -107,17 +116,17 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 		private List<ValPosCrt> CalcTagPos( IPSResult result ) // done
 		{
-			var w0 = 30;
-			var h0 = 30;
-			var w1 = this.ActualWidth;
-			var h1 = this.ActualHeight;
+			var w0 = 300;
+			var h0 = 300;
+			var w1 = this.ActualWidth - 60;
+			var h1 = this.ActualHeight - 60;
 
 			var w2 = this.Width;
 			var h2 = this.Height;
 
 
 
-			var RealToCanvas = FnReScale( w0 , h0 , w1 , h1, w1/2 , h1/2);
+			var RealToCanvas = FnReScale( w0 , h0 , w1 , h1, w1/2+10 , h1/2+10);
 
 			Func<CrtnCrd , ValPosCrt> toValPos
 				= pos => RealToCanvas( ValPosCrt(pos.X, pos.Y) );
