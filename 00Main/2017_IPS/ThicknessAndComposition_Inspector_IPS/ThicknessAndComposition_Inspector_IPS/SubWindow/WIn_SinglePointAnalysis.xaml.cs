@@ -35,7 +35,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 		bool waveSetted;
 		string TempPathInten;
 		string TempPathReflect;
-		bool IsReady;
+		public bool IsReady;
 
 		public WIn_SinglePointAnalysis()
 		{
@@ -198,6 +198,11 @@ namespace ThicknessAndComposition_Inspector_IPS
 		private void btnStop_Click( object sender , RoutedEventArgs e )
 		{
 			evtStopSingleScan();
+		}
+
+		private void Window_Loaded( object sender, RoutedEventArgs e )
+		{
+
 		}
 	}
 }

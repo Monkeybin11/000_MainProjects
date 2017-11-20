@@ -7,7 +7,7 @@
         xmlns:uc="clr-namespace:ThicknessAndComposition_Inspector_IPS"
         xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="WIn_SinglePointAnalysis" Height="600" Width="700" Closing="Window_Closing">
+        Title="WIn_SinglePointAnalysis" Height="600" Width="700" Closing="Window_Closing" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>

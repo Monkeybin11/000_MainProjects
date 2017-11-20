@@ -81,7 +81,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 			Core.Act( x => x.Config = UI2IpsConfig() )
 				.Act( x => x.SaveConfig( x.ConfigFullPath ) )
 				.Act( x => x.SavePrcConfig( x.PrcConfigFullPath ) );
-			WinConfig.Close();
+			WinConfig.Visibility = Visibility.Hidden;
 			Environment.Exit( Environment.ExitCode );
 		}
 
@@ -124,12 +124,6 @@ namespace ThicknessAndComposition_Inspector_IPS
 					}
 					
 					break;
-
-			
-					
-
-					break;
-
 				case "menuExit":
 					Environment.Exit( Environment.ExitCode );
 					break;
@@ -146,6 +140,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 			{
 				case "menuSinglePosScan":
 					WinSingleScan.Visibility = Visibility.Visible;
+					WinSingleScan.IsReady = true;
 					break;
 
 				default:
@@ -180,7 +175,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 					break;
 
 				case "menuSetSpecStg":
-					WinConfig.Show();
+					WinConfig.Visibility = Visibility.Visible;
 					break;
 
 

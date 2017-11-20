@@ -32,8 +32,8 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		IPSErrorMsgData    Err; // 에러 데이터 공통 메세지 클래스 
 		Logger             Lggr; // 같은 로그 파일에 사용하기 위해서 전역 변수로 만들었다. 
 		ISgmaStg_XR        Stg;
-		//IMaya_Spectrometer Spctr;
-		Maya_Spectrometer Spctr;
+		IMaya_Spectrometer Spctr;
+		//Maya_Spectrometer Spctr;
 		Image<Bgr,byte> ImgScanResult;
 		Image<Bgr,byte> Imgscalebar;
 		public System.Windows.Media.Imaging.BitmapSource ImgScanned { get { return ImgScanResult.ToBitmapSource(); } }
@@ -99,7 +99,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			{
 				Stg.Close();
 				Stg = new SgmaStg_XR_Virtual();
-				//Spctr = new Maya_Spectrometer_Virtual();
+				Spctr = new Maya_Spectrometer_Virtual();
 			}
 
 			evtConnection( stg , spt );
