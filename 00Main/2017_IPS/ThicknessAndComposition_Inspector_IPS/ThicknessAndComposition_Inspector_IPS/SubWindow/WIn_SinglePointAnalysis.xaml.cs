@@ -41,6 +41,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 			InitializeComponent();
 			//ucIntensitiychart.chtLiveLine.
 			ucReflectivityChart.axisY.MaxValue = 100;
+			ucIntensitiychart.axisY.MaxValue = 60000;
 			IsReady = true;
 		}
 

@@ -30,7 +30,6 @@ namespace ThicknessAndComposition_Inspector_IPS
 	using static ModelLib.AmplifiedType.Handler;
 	using ModelLib.Data;
 	using static IPSAnalysis.AnalysisFunc;
-	using static Adaptor;
 
 
 	/// <summary>
@@ -38,9 +37,8 @@ namespace ThicknessAndComposition_Inspector_IPS
 	/// </summary>
 	public partial class Win_ResultAnalysis : Window
 	{
-		AnalysisState State;
+		AnalysisState StateLib;
 		public event Action evtClose;
-		IPSResultData[] ResultDataLib;
 		Func < AnalysisState , Maybe<AnalysisState>> UpdateState;
 
 
@@ -61,7 +59,16 @@ namespace ThicknessAndComposition_Inspector_IPS
 							.Lift( x => CreateMapImg( img )( res ) )
 							.ForEach( ucAnalysisMap.SetImage ));
 
-			ResultDataLib = null; // result.ToResultData();
+			ucIntensityChart.SetExtractor( ExtractInten );
+			ucReflectivityChart.SetExtractor( ExtractRflct );
+
+			ucIntensityChart.lblTitle.Content = "Intensity";
+			ucIntensityChart.axisY.Title = "Intensity";
+			ucIntensityChart.Ysprtor.Step = 5000;
+
+			ucReflectivityChart.lblTitle.Content = "Reflectivity";
+			ucReflectivityChart.axisY.Title = "Reflectivity";
+			ucReflectivityChart.Ysprtor.Step = 10;
 		}
 
 		private void btnLoad_Click( object sender , RoutedEventArgs e )
@@ -74,15 +81,20 @@ namespace ThicknessAndComposition_Inspector_IPS
 				if ( res.isJust ) // Error Handle. Change this Flow to railroad o style
 				{
 					int i = 0;
-
 					// Not handle Error Value. Need Change Flow for Error in future
-					var ipsRes = CreateState( res.Value.ToDictionary( x => i++ ) )
-										.Act( x => State = x )
-										.Map( Adaptor.ToIPSResult )
-										.Act( x => ucAnalysisMap.SetBtnTag(x))
-										.Map( x => CreateMap( x , 6 ) )
-										.Map( x => x.Item1[0].ToBitmapSource() )
-										.Act( x => ucAnalysisMap.SetImage(x) );
+					//CreateState( res.Value.ToDictionary( x => i++ ) )
+
+					ucIntensityChart.Reset();
+					ucReflectivityChart.Reset();
+					
+
+					CreateState( res.Value.ToDictionary( x => i++ ))
+						.Map( SetStateLib )
+						.Map( Adaptor.ToIPSResult )
+						.Act( x => ucAnalysisMap.SetBtnTag(x) )
+						.Map( x => CreateMap( x , 6 ) )
+						.Map( x => x.Item1[0].ToBitmapSource() )
+						.Act( x => ucAnalysisMap.SetImage(x) );
 				}
 				else
 				{
@@ -91,40 +103,67 @@ namespace ThicknessAndComposition_Inspector_IPS
 			}
 		}
 
+		private void btnAlyBound_Click( object sender , RoutedEventArgs e )
+		{
+			var min = nudDown.Value.ToNonNullable();
+			var max = nudUp.Value.ToNonNullable();
+
+			InOutUpdate( MsgType.ChangeWav , 
+						 minmax: new double [ ] { min , max } );
+		}
+
+
+		#region Initialize
+
+		void SetChart()
+		{
+			ucReflectivityChart.axisY.MaxValue = 100;
+			ucReflectivityChart.axisY.MinValue = 1;
+
+			ucIntensityChart.axisY.MaxValue = 60000;
+			ucIntensityChart.axisY.MinValue = 0;
+		}
+
+		#endregion
+
 		#region Main Function
 
-		void InOutUpdate( string idx , MsgType msg )
+		void InOutUpdate( MsgType msg , string idx = null , double [ ] minmax = null )
 		{
-			int index;
-			if ( !int.TryParse( idx , out index ) )
-			{
-				MessageBox.Show( " Loaded File is Worng Index " );
-				return;
-			}
+			UpdateState = state => msg == MsgType.ChangeWav
+								? ChangeState( state , msg  , minmax : minmax )
+								: ChangeState( state , msg  , idx );
 
-			UpdateState = state => ChangeState( state , index , msg );
-
-			Just( State )
+			Just( StateLib )
 				.Bind( UpdateState ) //Need to Change this. Neew Apply partial apply for pure 
 				.Bind( RefreshState )
 				.ForEach( SendState ); // 상태 전파
 		}
 
-
-
+		void SendState( AnalysisState state ) // side func
+			=> state.Act( x => ucIntensityChart.UpdateSeries( x ) )
+					.Act( x => ucReflectivityChart.UpdateSeries( x ) );
 		#endregion
 
 		#region Sub Function
-		AnalysisState ChangeState( AnalysisState state , int idx , MsgType msg , double[] minmax = null)
+		AnalysisState ChangeState( AnalysisState state , MsgType msg , string idx = null, double[] minmax = null)
 		{
+			
+			int index = -1;
+			if ( idx != null && !int.TryParse( idx , out index ) )
+			{
+				MessageBox.Show( " Loaded File is Worng Index " );
+				return StateLib;
+			}
+
 			// Change State
 			switch ( msg )
 			{
 				case MsgType.Add:
-					return Add( state , ResultDataLib [ idx ] , idx );
+					return Add( state , StateLib.State [ index ] , index );
 
 				case MsgType.Remove:
-					return Pop(state , idx);
+					return Pop(state , index );
 
 				case MsgType.ChangeWav:
 					return ChangeWaveLen( state , minmax );
@@ -134,37 +173,25 @@ namespace ThicknessAndComposition_Inspector_IPS
 			}
 		}
 
-
 		Maybe<AnalysisState> RefreshState( AnalysisState newstate )
 		{
-			State = newstate;
-			return State;
+			StateLib = newstate;
+			return StateLib;
 		}
-
-		void SendState( AnalysisState state ) // side func
-		{
-			State = state;
-			
-			//여기에서 갱신된 상태를 보내야 한다. <<<<<<<<<<<<<
-
-			// send to reflect graph 
-			// send to inten graph 
-		
-		}
-
-		// Load Data -> State
-
 
 		Func<IPSResult , BitmapSource> CreateMapImg( Maybe<BitmapSource> img )
 			=> res => img.Match(
 						() => CreateMap( res , 6 ).Item1 [ 0 ].ToBitmapSource() ,
 						thisimg => thisimg );
 
-
+		AnalysisState SetStateLib( AnalysisState state )
+			=> StateLib = state;
 		#endregion
 
 		private void Window_Closing( object sender , System.ComponentModel.CancelEventArgs e )
 			 =>evtClose();
+
+		
 	}
 
 	public static class Adaptor
@@ -180,9 +207,9 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 				new SpotData
 				(   x.Value.Position.Pos.Value.ToPolar() as PlrCrd,
-					x.Value.Thickness.Value.Value ,
-					x.Value.IntenList.Select( f => (double)f ).ToArray() ,
-					x.Value.Reflectivity.Select( f => ( double )f ).ToArray() ) ).ToList();
+					x.Value.DThicckness ,
+					x.Value.DInenList.ToArray() ,
+					x.Value.DReflectivity.ToArray() )).ToList();
 
 			var res = new IPSResult(WaveLen) { SpotDataList = spotlist  };
 			return res;

@@ -25,6 +25,14 @@ namespace SpeedyCoding
             return src; 
         }
 
+
+		/// <summary>
+		/// Index of element that satisfy condition
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="src"></param>
+		/// <param name="cond"></param>
+		/// <returns></returns>
         public static List<int> IndicesOf<T>(
            this IEnumerable<T> src ,
            Func<T , bool> cond )
@@ -67,6 +75,14 @@ namespace SpeedyCoding
 			return Enumerable.Range( start , count ).Select( x => x * step );
 		}
 
+		/// <summary>
+		/// Pick only element that in range for prevent outofindex exception
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="self"></param>
+		/// <param name="row"></param>
+		/// <param name="col"></param>
+		/// <returns></returns>
 		public static T Pick<T>(
 			this T [ ] [ ] self ,
 			int row ,

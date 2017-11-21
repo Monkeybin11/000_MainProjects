@@ -36,7 +36,7 @@ namespace ModelLib.AmplifiedType
 		public static implicit operator Maybe<A>(A value) => value == null ? None : Just(value);
 
 		public B Match<B>( Func<B> Nothing , Func<A , B> Just )
-		  => isJust ? Just( Value ) : Nothing();
+		  =>         isJust ? Just( Value ) : Nothing();
 
 		public IEnumerable<A> AsEnumerable()
 		{

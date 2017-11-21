@@ -38,14 +38,15 @@ namespace ThicknessAndComposition_Inspector_IPS
 	/// </summary>
 	public partial class UC_AnalysisMap : UserControl
 	{
-		public event Action<string,MsgType> evtClickedIndex;
+		public event Action<MsgType,string,double[]> evtClickedIndex;
 
 		public UC_AnalysisMap()
 		{
 			InitializeComponent();
+
 		}
 
-		public void SetImage(BitmapSource src) // done 
+		public void SetImage( BitmapSource src ) // done 
 		{
 			imgMap.ImageSource = src;
 		}
@@ -71,11 +72,16 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 			for ( int i = 0 ; i < posNum ; i++ )
 			{
-				var btntemp = CheckButton(i);
-				Canvas.SetLeft( btntemp , tagPos [ i ].X - btntemp.Width/2 );
-				Canvas.SetTop( btntemp , tagPos [ i ].Y - btntemp.Height/2 );
-				cvsMap.Children.Add( btntemp );
-				btn [ i ] = btntemp;
+				var newbtn = CheckButton(i);
+				Canvas.SetLeft( newbtn , tagPos [ i ].X - newbtn.Width / 2 );
+				Canvas.SetTop( newbtn , tagPos [ i ].Y - newbtn.Height / 2 );
+				cvsMap.Children.Add( newbtn );
+				btn [ i ] = newbtn;
+
+				var newlbl = TagLabel(tagPos[i].Value);
+				Canvas.SetLeft( newlbl , tagPos [ i ].X - newbtn.Width / 2 - 10 );
+				Canvas.SetTop( newlbl , tagPos [ i ].Y - newbtn.Height / 2 - 15 );
+				cvsMap.Children.Add( newlbl );
 			}
 		}
 
@@ -86,9 +92,21 @@ namespace ThicknessAndComposition_Inspector_IPS
 			btn.Width = 10;
 			btn.Height = 10;
 			btn.Opacity = 0.9;
-			btn.Background = Brushes.LawnGreen; 
+			btn.Background = Brushes.LawnGreen;
 			btn.Click += ClickIdx;
 			return btn;
+		}
+
+		private Label TagLabel(double name)
+		{
+			var lbl = new Label();
+			lbl.Content = name.ToString("###.#");       
+			lbl.FontSize = 8;
+			lbl.Background = Brushes.Transparent;
+			lbl.Foreground = Brushes.AntiqueWhite;
+			lbl.HorizontalAlignment = HorizontalAlignment.Left;
+			lbl.VerticalAlignment = VerticalAlignment.Top;
+			return lbl;
 		}
 
 		public void ClickIdx( object sender , RoutedEventArgs e ) // done
@@ -98,19 +116,21 @@ namespace ThicknessAndComposition_Inspector_IPS
 				var self = sender as Button;
 				if ( Keyboard.IsKeyDown( Key.LeftCtrl ) ) // Remove with ctrl
 				{
+					( sender as Button ).Name.Print( "Remove " );
 					self.Background = Brushes.LawnGreen;
-					evtClickedIndex( ( sender as Button ).Name.Replace( "btn" , "" ) , MsgType.Remove );
+					evtClickedIndex( MsgType.Remove ,( sender as Button ).Name.Replace( "btn" , "" ) , null );
 				}
 				else
 				{
+					( sender as Button ).Name.Print( "Add " );
 					self.Background = Brushes.OrangeRed;
-					evtClickedIndex( ( sender as Button ).Name.Replace( "btn" , "" ) , MsgType.Add );
+					evtClickedIndex( MsgType.Add , ( sender as Button ).Name.Replace( "btn" , "" ) , null);
 				}
-					
+
 			}
-			catch ( Exception )
-			{ }
-		
+			catch ( Exception ex )
+			{ ex.Print( "Map Click Error Msg " ); }
+
 		}
 
 
@@ -128,13 +148,15 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 			var RealToCanvas = FnReScale( w0 , h0 , w1 , h1, w1/2+10 , h1/2+10);
 
-			Func<CrtnCrd , ValPosCrt> toValPos
-				= pos => RealToCanvas( ValPosCrt(pos.X, pos.Y) );
+			Func< Tuple< CrtnCrd ,double> , ValPosCrt> toValPos
+				= posval => RealToCanvas( ValPosCrt(posval.Item1.X, posval.Item1.Y , posval.Item2 ) );
 
-			var scaledPosList = result.SpotDataList.Map(x => x.CrtPos)
+			var scaledPosList = result.SpotDataList.Map(x => Tuple.Create( x.CrtPos , x.Thickness))
 												   .Map(toValPos)
 												   .ToList();
 			return scaledPosList;
 		}
+
+	
 	}
 }

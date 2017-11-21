@@ -153,9 +153,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 					break;
 
 				case "menuMapAnalysis":
-					new Win_ResultAnalysis( Core.ImgScanned == null ?
-												None :
-												Just( Core.ImgScanned ),
+					new Win_ResultAnalysis( Core.ImgScanned ,
 										    Core.ResultData == null ? 
 												None : 
 												Just( Core.ResultData) )

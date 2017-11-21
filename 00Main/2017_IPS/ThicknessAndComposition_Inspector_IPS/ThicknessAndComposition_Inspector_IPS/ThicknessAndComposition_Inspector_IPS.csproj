@@ -125,6 +125,9 @@
     <Compile Include="SubWindow\Win_ResultAnalysis.xaml.cs">
       <DependentUpon>Win_ResultAnalysis.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestRemoveplss.xaml.cs">
+      <DependentUpon>TestRemoveplss.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UC\UC_AnalysisLMenu.xaml.cs">
       <DependentUpon>UC_AnalysisLMenu.xaml</DependentUpon>
     </Compile>
@@ -139,6 +142,9 @@
     </Compile>
     <Compile Include="SubWindow\Win_Config.xaml.cs">
       <DependentUpon>Win_Config.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC_AnalysisChart.xaml.cs">
+      <DependentUpon>UC_AnalysisChart.xaml</DependentUpon>
     </Compile>
     <Compile Include="UC_AnalysisMap.xaml.cs">
       <DependentUpon>UC_AnalysisMap.xaml</DependentUpon>
@@ -184,6 +190,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="TestRemoveplss.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UC\UC_AnalysisLMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -201,6 +211,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SubWindow\Win_Config.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC_AnalysisChart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -8,12 +8,15 @@ namespace SpeedyCoding
 {
 	public static class SpeedyCoding_Conversion
 	{
+		/// <summary>
+		/// Nullable to non-nullable 
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="src"></param>
+		/// <returns></returns>
 		public static T ToNonNullable<T>( this Nullable<T> src ) where T : struct
 		{
 			return src == null ? default( T ) : (T)src;
 		}
-
-		//public static Task<T> ToTask<T,A>( this )
-
 	}
 }
