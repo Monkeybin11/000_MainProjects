@@ -86,6 +86,7 @@
     <Compile Include="Analysis\Core_Analysis.cs" />
     <Compile Include="Core_Background.cs" />
     <Compile Include="Core_Canvas.cs" />
+    <Compile Include="Core_Fitting.cs" />
     <Compile Include="Core_ResultIO.cs" />
     <Compile Include="Core_SubFunction.cs" />
     <Compile Include="IPSExtension.cs" />
