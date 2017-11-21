@@ -169,7 +169,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			//string path = AppDomain.CurrentDomain.BaseDirectory + @"absreflect\Siref10.csv";
 			string path = AppDomain.CurrentDomain.BaseDirectory + @"absreflect\10deg_siabsreflect.csv";
 			CsvTool cv = new CsvTool();
-			var relec = cv.ReadCsv2String( path.CheckAndCreateFile() );
+			var relec = cv.ReadCsv2String( path );
 			SDWaves = relec.Select( x => Convert.ToDouble( x [ 0 ] ) ).ToList();
 			ReflctFactors = relec.Select( x => Convert.ToDouble( x [ 1 ] ) ).ToList();
 			return true;
