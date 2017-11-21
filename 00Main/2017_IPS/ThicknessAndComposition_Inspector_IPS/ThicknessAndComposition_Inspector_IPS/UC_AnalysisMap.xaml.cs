@@ -38,14 +38,15 @@ namespace ThicknessAndComposition_Inspector_IPS
 	/// </summary>
 	public partial class UC_AnalysisMap : UserControl
 	{
-		public event Action<string,MsgType> evtClickedIndex;
+		public event Action<MsgType,string,double[]> evtClickedIndex;
 
 		public UC_AnalysisMap()
 		{
 			InitializeComponent();
+
 		}
 
-		public void SetImage(BitmapSource src) // done 
+		public void SetImage( BitmapSource src ) // done 
 		{
 			imgMap.ImageSource = src;
 		}
@@ -54,14 +55,16 @@ namespace ThicknessAndComposition_Inspector_IPS
 		{
 
 			Just( result )
-				.Map( CalcTagPos )
+				.Lift( CalcTagPos )
 				.ForEach( DrawBtnTag );
 			var poslist = CalcTagPos(result);
 
 		}
 
-		private void DrawBtnTag( List<ValPosCrt> tagPos) // done
+
+		private void DrawBtnTag( List<ValPosCrt> tagPos ) // done
 		{
+			cvsMap.Children.Clear();
 			int posNum = tagPos.Count;
 
 			StackPanel[] temp = new StackPanel[ posNum ];
@@ -69,49 +72,91 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 			for ( int i = 0 ; i < posNum ; i++ )
 			{
-				var btntemp = CheckButton(i);
-				Canvas.SetLeft( btntemp , tagPos [ i ].X );
-				Canvas.SetTop( btntemp , tagPos [ i ].Y );
-				cvsMap.Children.Add( btntemp );
-				btn [ i ] = btntemp;
+				var newbtn = CheckButton(i);
+				Canvas.SetLeft( newbtn , tagPos [ i ].X - newbtn.Width / 2 );
+				Canvas.SetTop( newbtn , tagPos [ i ].Y - newbtn.Height / 2 );
+				cvsMap.Children.Add( newbtn );
+				btn [ i ] = newbtn;
+
+				var newlbl = TagLabel(tagPos[i].Value);
+				Canvas.SetLeft( newlbl , tagPos [ i ].X - newbtn.Width / 2 - 10 );
+				Canvas.SetTop( newlbl , tagPos [ i ].Y - newbtn.Height / 2 - 15 );
+				cvsMap.Children.Add( newlbl );
 			}
 		}
 
 		private Button CheckButton( int i ) // done 
 		{
 			var btn = new Button();
-			btn.Name = i.ToString();
-			btn.Width = 50;
-			btn.Height = 50;
+			btn.Name = "btn" + i.ToString();
+			btn.Width = 10;
+			btn.Height = 10;
+			btn.Opacity = 0.9;
+			btn.Background = Brushes.LawnGreen;
 			btn.Click += ClickIdx;
 			return btn;
 		}
 
+		private Label TagLabel(double name)
+		{
+			var lbl = new Label();
+			lbl.Content = name.ToString("###.#");       
+			lbl.FontSize = 8;
+			lbl.Background = Brushes.Transparent;
+			lbl.Foreground = Brushes.AntiqueWhite;
+			lbl.HorizontalAlignment = HorizontalAlignment.Left;
+			lbl.VerticalAlignment = VerticalAlignment.Top;
+			return lbl;
+		}
+
 		public void ClickIdx( object sender , RoutedEventArgs e ) // done
 		{
-			if ( Keyboard.IsKeyDown( Key.LeftCtrl ) )
-				evtClickedIndex( ( sender as Button ).Name , MsgType.Remove);
-			else
-				evtClickedIndex( ( sender as Button ).Name , MsgType.Add);
+			try
+			{
+				var self = sender as Button;
+				if ( Keyboard.IsKeyDown( Key.LeftCtrl ) ) // Remove with ctrl
+				{
+					( sender as Button ).Name.Print( "Remove " );
+					self.Background = Brushes.LawnGreen;
+					evtClickedIndex( MsgType.Remove ,( sender as Button ).Name.Replace( "btn" , "" ) , null );
+				}
+				else
+				{
+					( sender as Button ).Name.Print( "Add " );
+					self.Background = Brushes.OrangeRed;
+					evtClickedIndex( MsgType.Add , ( sender as Button ).Name.Replace( "btn" , "" ) , null);
+				}
+
+			}
+			catch ( Exception ex )
+			{ ex.Print( "Map Click Error Msg " ); }
+
 		}
 
 
 		private List<ValPosCrt> CalcTagPos( IPSResult result ) // done
 		{
-			var w0 = 30;
-			var h0 = 30;
-			var w1 = this.ActualWidth;
-			var h1 = this.ActualHeight;
+			var w0 = 300;
+			var h0 = 300;
+			var w1 = this.ActualWidth - 60;
+			var h1 = this.ActualHeight - 60;
 
-			var RealToCanvas = FnReScale( w0 , h0 , w1 , h1, w1/2 , h1/2);
+			var w2 = this.Width;
+			var h2 = this.Height;
 
-			Func<CrtnCrd , ValPosCrt> toValPos
-				= pos => RealToCanvas( ValPosCrt(pos.X, pos.Y) );
 
-			var scaledPosList = result.SpotDataList.Map(x => x.CrtPos)
+
+			var RealToCanvas = FnReScale( w0 , h0 , w1 , h1, w1/2+10 , h1/2+10);
+
+			Func< Tuple< CrtnCrd ,double> , ValPosCrt> toValPos
+				= posval => RealToCanvas( ValPosCrt(posval.Item1.X, posval.Item1.Y , posval.Item2 ) );
+
+			var scaledPosList = result.SpotDataList.Map(x => Tuple.Create( x.CrtPos , x.Thickness))
 												   .Map(toValPos)
 												   .ToList();
 			return scaledPosList;
 		}
+
+	
 	}
 }

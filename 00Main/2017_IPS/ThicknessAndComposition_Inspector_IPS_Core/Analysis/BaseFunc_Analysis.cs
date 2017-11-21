@@ -32,7 +32,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		public static event Action<mCrtCrd , IPSResultData> evtResult;
 		//public event Action<> evtThickness;
 
-		public static Maybe<List<IPSResultData>> StateFrom( string path )
+		public static Maybe<List<IPSResultData>> ResultDataFrom( string path )
 		{
 			var headname = path.Split('_').First();
 			var basepath =  GetDirectoryName(path);
@@ -49,21 +49,33 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				&& File.Exists( rftPath )
 				&& File.Exists( rawPath ) )
 			{
+				// missing Data => Exit Flow
+
+
 				var posThickness = File.ReadAllLines( resPath )
 										 .ResultRefine(0)
-										 .ToPosThickness();
+										 .ToPosThickness()
+										 .ToArray();
 
 				var wavLis = File.ReadAllLines( rftPath )
 								.ColumnRead(0)
-								.ToWaveLen();
+								.ToWaveLen()
+								.ToArray();
+
+
+				// missing Data => interpolation 
 
 				var rftList  = File.ReadAllLines( rftPath )
 								.ResultRefine(1)
-								.ToReflectivity();
+								.ToReflectivity()
+								.ToArray()
+								.Transpose();
 
 				var rawList  = File.ReadAllLines( rawPath )
 								.ResultRefine(4)
-								.ToIntensity();
+								.ToIntensity()
+								.ToArray()
+								.Transpose();
 
 				var scanResult = Range( 0 , posThickness.Count() )
 								.Map( i => new IPSResultData
@@ -121,13 +133,46 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				if ( _WaveLegth == null ) _WaveLegth = value;
 			}
 		}
+
+		public IEnumerable<double> DInenList
+		{
+			get
+			{
+				foreach ( var item in IntenList )
+					yield return item;
+			}
+		}
+
+		public IEnumerable<double> DReflectivity
+		{
+			get
+			{
+				foreach ( var item in Reflectivity )
+					yield return item;
+			}
+		}
+
+		public IEnumerable<double> DWaveLength
+		{
+			get
+			{
+				foreach ( var item in _WaveLegth )
+					yield return item;
+			}
+		}
+
+		public double DThicckness => Thickness;
+
+
+
 	}
 	public static class BaseFunc_Analysis
 	{
 		public static IEnumerable<string> ColumnRead(
 			this IEnumerable<string> src ,
-			int colNum )
-			=> src.Map( x => x.Split( ',' ) [ colNum ] ); 
+			int colNum ,
+			int headerSkip = 0)
+			=> src.Skip(headerSkip).Map( x => x.Split( ',' ) [ colNum ] ); 
 
 		public static IEnumerable<string[]> ResultRefine( 
 			this IEnumerable<string> src ,
@@ -158,6 +203,8 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			this IEnumerable<string> self )
 			=> self.Select( f => ( WaveLength ) ParseToDouble( f ) ).ToArray();
 
+
+		
 
 	}
 }
