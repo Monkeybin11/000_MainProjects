@@ -23,7 +23,7 @@ namespace ApplicationUtilTool.FileIO
 				}
 				return true;
 			}
-			catch ( Exception ex)
+			catch ( Exception)
 			{
 				MessageBox.Show( "Config Folder Access Violation" );
 				return false;
@@ -51,7 +51,7 @@ namespace ApplicationUtilTool.FileIO
 					return clsDefulat;
 				}
 			}
-			catch ( Exception ex )
+			catch ( Exception )
 			{
 				MessageBox.Show( $"Config file ( {name} ) is broken. Config is setted with defulat" );
 				return clsDefulat;

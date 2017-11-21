@@ -18,6 +18,8 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 			SpotDataList = new List<SpotData>();
 		}
 
+		
+
 	}
 
 	public class SpotData
@@ -28,14 +30,14 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 		public CrtnCrd CrtPos { get { return PlrPos.ToCartesian() as CrtnCrd; } }
 		public double	Thickness;
 		public double[] IntenList;
-		public double[] Refelctivityes;
+		public double[] Reflectivity;
 
 		public SpotData( PlrCrd pos , double thckness , double [ ] intens , double[] reflectivityes )
 		{
 			PlrPos		= pos;
 			Thickness	= thckness;
 			IntenList	= intens;
-			Refelctivityes = reflectivityes;
+			Reflectivity = reflectivityes;
 		}
 	}
 
@@ -47,7 +49,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 	}
 
 
-	public class DisplayDaya
+	public class DisplayData
 	{
 		public double X;
 		public double Y;

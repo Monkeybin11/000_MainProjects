@@ -30,7 +30,8 @@
             </MenuItem>
 
             <MenuItem Header="Analysis" >
-                <MenuItem x:Name="menuSinglePosScan" Header="Veiw Spctrum    "          Style="{StaticResource menuItem}" Click="AnalysisMenuClick"/>
+                <MenuItem x:Name="menuSinglePosScan" Header="Spctrum View Window    "          Style="{StaticResource menuItem}" Click="AnalysisMenuClick"/>
+                <MenuItem x:Name="menuMapAnalysis" Header="Result Analysis Window "           Style="{StaticResource menuItem}" Click="AnalysisMenuClick"/>
             </MenuItem>
 
         </Menu>
@@ -56,7 +57,7 @@
                 <uc:UC_Map x:Name="ucMapDisplay"   />
                 <UniformGrid Grid.Row="1" Columns="2"  >
                     <uc:UC_LiveLineChart x:Name="ucSpectrum" />
-                    <uc:UC_LiveLineChart x:Name="ucRefelectivity" />
+                    <uc:UC_LiveLineChart x:Name="ucReflectivity" />
                 </UniformGrid>
 
             </Grid>

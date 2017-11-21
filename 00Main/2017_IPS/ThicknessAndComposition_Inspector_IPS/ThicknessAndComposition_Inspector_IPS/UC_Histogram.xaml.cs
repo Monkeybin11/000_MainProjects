@@ -26,7 +26,6 @@ namespace ThicknessAndComposition_Inspector_IPS
 		public string [ ] Labels { get; set; }
 		private double _axisMax;
 		private double _axisMin;
-		private double _trend;
 
 		public ChartValues<double> ChartValues { get; set; }
 		public Func<double , string> DisFormatter { get; set; }

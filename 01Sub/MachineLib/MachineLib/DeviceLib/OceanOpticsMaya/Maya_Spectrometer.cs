@@ -27,25 +27,7 @@ namespace MachineLib.DeviceLib
 			Sptr.setCorrectForElectricalDark( Index , 1 );
 		}
 
-		//public bool Run()
-		//{
-		//	throw new NotImplementedException();
-		//}
-		public void test()
-		{
-			Sptr.setCorrectForElectricalDark( Index , 1 );
-			Sptr.setIntegrationTime( Index , 300000 );
-			var res = Sptr.getIntegrationTime(Index);
-			var res2 = Sptr.getSpectrum(Index);
-			var maxint = res2.Max();
-			var maxpx = Array.IndexOf(res2, maxint);
-			string str =  "";
-			for ( int i = 0 ; i < res2.Length ; i++ )
-			{
-				str += res2 [ i ].ToString() + Environment.NewLine;
-			}
-			Clipboard.SetText( str );
-		}
+	
 
 		public bool Connect()
 		=> Sptr.openAllSpectrometers() > 0 ? true : false;

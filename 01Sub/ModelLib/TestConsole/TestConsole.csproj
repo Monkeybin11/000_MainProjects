@@ -63,10 +63,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MaybeTest.cs" />
     <Compile Include="MyAverage.cs" />
     <Compile Include="MyHobby.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValPosTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -23,6 +23,7 @@ using System.Diagnostics;
 
 namespace ThicknessAndComposition_Inspector_IPS_Core
 {
+	using static Core_Helper;
 	public partial class IPSCore
 	{
 		public ScanPosData ScanPos; 
@@ -263,7 +264,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 											() => logres.IsRight
 													? ToThickness(
 														toReflect(intenlist.Right)
-															.Act( x => evtRefelectivity( x , SelectedWaves ))
+															.Act( x => evtRefleectivity( x , SelectedWaves ))
 															.ToLEither(intenlist.Left),
 														wavelength,
 														pos )  // Estimate Thickness
@@ -322,7 +323,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				var tasklogs = posThickIntenReflc.Where( x => x.Thickness.IsRight == false)
 											.Select( x => x.Pos.ToString()+" ||" + x.Thickness.Left )
 											.ActLoop( x => Lggr.Log(x , true));
-				ImgScanResult = new Image<Bgr , byte>( @" C:\Temp\testImg034837.bmp " );
+				ImgScanResult = new Image<Bgr , byte>( 100,100, new Bgr(100,100,100) );
 				return false;
 			}
 			else
