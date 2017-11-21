@@ -16,9 +16,9 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		public enum ScanReadyMode { Ref , Dark , WaveLen , Refelct , All};
 
 		public event Action<bool,bool> evtConnection;
-		//public event Action<double,double> evtPos;
-		//public event Action<string> evtScanStatus;
-		//public event Action<BitmapSource> evtScanImg;
+		public event Action<double,double> evtPos;
+		public event Action<string> evtScanStatus;
+		public event Action<BitmapSource> evtScanImg;
 		public event Action<IEnumerable<double>, IEnumerable<double>> evtSpectrum;
 		public event Action<IEnumerable<double>, IEnumerable<double>> evtRefelectivity;
 		public event Action<IEnumerable<double>, IEnumerable<double> , IEnumerable<double> , double , int > evtSngSignal;

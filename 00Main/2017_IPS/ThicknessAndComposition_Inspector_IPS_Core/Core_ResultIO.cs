@@ -53,7 +53,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		public Image<Bgr , byte> [ ] CreateMap2( IPSResult src , int divide )
 		{
-			//var imgshiftoffset = 5;
+			var imgshiftoffset = 5;
 			var offset = src.SpotDataList.Select( x => x.PlrPos.Rho/10).Max();
 			var thlist = src.SpotDataList.Select( x => x.Thickness);
 			var min = thlist.Min();
