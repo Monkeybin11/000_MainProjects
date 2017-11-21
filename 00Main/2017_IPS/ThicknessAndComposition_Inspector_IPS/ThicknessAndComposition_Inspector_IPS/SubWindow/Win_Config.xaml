@@ -1,4 +1,4 @@
-﻿<Window x:Class="ThicknessAndComposition_Inspector_IPS.Win_Config"
+﻿<Window	x:Class="ThicknessAndComposition_Inspector_IPS.Win_Config"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,7 @@
         xmlns:xc ="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         x:Name="ScanSettingWindow"
-        Title="Win_Config" Height="400" Width="400">
+        Title="Win_Config" Height="400" Width="400" Loaded="ScanSettingWindow_Loaded" >
     <Grid>
         <UniformGrid Columns="2" Rows="8">
             <Label Content="Stage Com Port "/>

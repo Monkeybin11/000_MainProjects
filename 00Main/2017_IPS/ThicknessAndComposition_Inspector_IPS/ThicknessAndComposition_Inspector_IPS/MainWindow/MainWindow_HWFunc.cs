@@ -43,6 +43,14 @@ namespace ThicknessAndComposition_Inspector_IPS
 			WinConfig.nudRStgSpeed.Value = config.RStgSpeed;
 			WinConfig.nudSpctWait.Value = config.SpectrumWaitTime;
 
+			WinConfig.nudXStgPort.Value			= config.Port;
+			WinConfig.nudIntegrationTime.Value = config.IntegrationTime;
+			WinConfig.nudScan2Avg.Value			= config.Scan2Avg;
+			WinConfig.nudBoxcar.Value			= config.Boxcar;
+			WinConfig.nudXStgSpeed.Value = config.XStgSpeed;
+			WinConfig.nudRStgSpeed.Value = config.RStgSpeed;
+			WinConfig.nudSpctWait.Value = config.SpectrumWaitTime;
+
 			ucLSMenu.nudWeight		.Value = config.Weight;
 			ucLSMenu.nudBias		.Value = config.Bias;
 			ucLSMenu.nudIntglStart	.Value = config.IntglStart;

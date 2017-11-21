@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SpeedyCoding;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
+using System.ComponentModel;
 
 namespace ThicknessAndComposition_Inspector_IPS
 {
@@ -41,14 +44,27 @@ namespace ThicknessAndComposition_Inspector_IPS
 		public event StgSpeedEvent evtStgSpeedSetChange;
 		public event Action evtClose;
 
+		private const int GWL_STYLE = -16;
+		private const int WS_SYSMENU = 0x80000;
+		[DllImport( "user32.dll", SetLastError = true )]
+		private static extern int GetWindowLong( IntPtr hWnd, int nIndex );
+		[DllImport( "user32.dll" )]
+		private static extern int SetWindowLong( IntPtr hWnd, int nIndex, int dwNewLong );
+
 		public Win_Config()
 		{
 			InitializeComponent();
 		}
 
+		//public void SetVisible( bool istrue )
+		//{
+		//	if ( istrue ) base.Visibility = Visibility.Visible;
+		//	else base.Visibility = Visibility.Hidden;
+		//}
+
 		private void btnSettingApply_Click( object sender , RoutedEventArgs e )
 		{
-			this.Visibility = Visibility.Hidden;
+			Visibility = Visibility.Hidden;
 			ComPort			= nudXStgPort.Value		    .ToNonNullable(); 
 			RstgSpeed		= nudRStgSpeed.Value		.ToNonNullable();
 			XstgSpeed		= nudXStgSpeed.Value		.ToNonNullable();
@@ -71,7 +87,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 		private void btnCancel_Click( object sender , RoutedEventArgs e )
 		{
-			this.Visibility = Visibility.Hidden;
+			Visibility = Visibility.Hidden;
 			nudXStgPort.Value         = ComPort          ;
 			nudXStgSpeed.Value		  = XstgSpeed		 ;
 			nudRStgSpeed.Value		  = RstgSpeed		 ;
@@ -87,5 +103,19 @@ namespace ThicknessAndComposition_Inspector_IPS
 			e.Cancel = true;
 			evtClose();
 		}
+
+		private void ScanSettingWindow_Loaded( object sender, RoutedEventArgs e )
+		{
+			var hwnd = new WindowInteropHelper(this).Handle;
+			SetWindowLong( hwnd, GWL_STYLE, GetWindowLong( hwnd, GWL_STYLE ) & ~WS_SYSMENU );
+		}
+		protected override void OnClosing( CancelEventArgs e )
+		{
+			base.OnClosing( e );
+			e.Cancel = true;
+		}
+
 	}
+
+	
 }
