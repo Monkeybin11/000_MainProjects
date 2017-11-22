@@ -143,25 +143,25 @@
     <Compile Include="SubWindow\Win_Config.xaml.cs">
       <DependentUpon>Win_Config.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC_AnalysisChart.xaml.cs">
+    <Compile Include="UC\UC_AnalysisChart.xaml.cs">
       <DependentUpon>UC_AnalysisChart.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC_AnalysisMap.xaml.cs">
+    <Compile Include="UC\UC_AnalysisMap.xaml.cs">
       <DependentUpon>UC_AnalysisMap.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC_DataGrid.xaml.cs">
+    <Compile Include="UC\UC_DataGrid.xaml.cs">
       <DependentUpon>UC_DataGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC_Histogram.xaml.cs">
+    <Compile Include="UC\UC_Histogram.xaml.cs">
       <DependentUpon>UC_Histogram.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC_LiveLineChart.xaml.cs">
+    <Compile Include="UC\UC_LiveLineChart.xaml.cs">
       <DependentUpon>UC_LiveLineChart.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC_LiveLineChartMulti.xaml.cs">
+    <Compile Include="UC\UC_LiveLineChartMulti.xaml.cs">
       <DependentUpon>UC_LiveLineChartMulti.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC_Map.xaml.cs">
+    <Compile Include="UC\UC_Map.xaml.cs">
       <DependentUpon>UC_Map.xaml</DependentUpon>
     </Compile>
     <Compile Include="SubWindow\Win_SpctDisplay.xaml.cs">
@@ -214,31 +214,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC_AnalysisChart.xaml">
+    <Page Include="UC\UC_AnalysisChart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC_AnalysisMap.xaml">
+    <Page Include="UC\UC_AnalysisMap.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC_DataGrid.xaml">
+    <Page Include="UC\UC_DataGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC_Histogram.xaml">
+    <Page Include="UC\UC_Histogram.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC_LiveLineChart.xaml">
+    <Page Include="UC\UC_LiveLineChart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC_LiveLineChartMulti.xaml">
+    <Page Include="UC\UC_LiveLineChartMulti.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC_Map.xaml">
+    <Page Include="UC\UC_Map.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -309,7 +309,11 @@
       <Name>ThicknessAndComposition_Inspector_IPS_Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="UC\Analysis\" />
+    <Folder Include="UC\Main\" />
+    <Folder Include="UC\SingleScna\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

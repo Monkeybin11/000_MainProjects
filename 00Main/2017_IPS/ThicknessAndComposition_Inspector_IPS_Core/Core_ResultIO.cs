@@ -289,7 +289,8 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			//var grayimgData = new byte[(int)(imgsize*sizemultiflier + imgshiftoffset*2.0) ,(int)(imgsize*sizemultiflier+imgshiftoffset*2.0),1];
 			Image<Bgr,byte> img = new Image<Bgr, byte>(imgData);
 			//Image<Gray,byte> grayimg = new Image<Gray, byte>(grayimgData);
-
+			Console.WriteLine();
+			Console.WriteLine( "  --- Datas  ---" );
 			var circleLst = xyCm.Select(x =>
 									new
 									{
@@ -297,20 +298,20 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 																			(int)(x.X*sizemultiflier)+imgshiftoffset,
 																			(int)(x.Y*sizemultiflier)+imgshiftoffset),
 
-										color = new MCvScalar(x.Cm[2]*255 , x.Cm[1]*255 , x.Cm[0]*255)
+										color = new MCvScalar(x.Cm[2]*255 , x.Cm[1]*255 , x.Cm[0]*255).Act(test22)
 									});
 
 
 
 			circleLst.ActLoop( x => CvInvoke.Circle( img , x.pos , dotSize , x.color , -1 , Emgu.CV.CvEnum.LineType.EightConnected ) );
 			//circleLst.ActLoop( (x,i) => CvInvoke.Circle( grayimg , x.pos , dotSize , new MCvScalar( xyCm[i].Gry) , -1 , Emgu.CV.CvEnum.LineType.EightConnected ) );
+			var res1 = xyCm [ 0 ].Cm [ 0 ] * 255;
+			var res2 = xyCm [ 0 ].Cm [ 1 ] * 255;
+			var res3 = xyCm [ 0 ].Cm [ 2 ] * 255;
+
 
 			img = img.Median( 5 );
 			img = img.SmoothGaussian( 3 );
-			img.Save( @"E:\temp\test.png" );
-			//grayimg = grayimg.Median( 5 );
-			//grayimg = grayimg.SmoothGaussian( 3 );
-			//grayimg.Data.Flatten();
 
 			return Tuple.Create(
 					 new Image<Bgr , byte> [ ] { img , scalebarTask.Result } ,
@@ -318,13 +319,29 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			//grayimg.Data.Flatten().Select(x => (int)x).ToArray() );
 		}
 
+		static Action<MCvScalar> test22 =
+			x => {
+				var r = x.V0.ToString();
+				var g = x.V1.ToString();
+				var b = x.V2.ToString();
+				Console.WriteLine( b.ToString() + " , " + g.ToString() + " , " + r.ToString() );
+			};
+
+
 		public static Image<Bgr , byte> CreateScalebar()
 		{
-
+			Console.WriteLine();
+			Console.WriteLine("  --- ScaleBar  ---");
 			var scalebar = new byte[255,2,3];
 			var cm = new ColorMap().Inferno_cm;
 			for ( int i = 0 ; i < 255 ; i++ )
 			{
+				var b =cm [ i ] [ 0 ] * 255;
+				var g =cm [ i ] [ 1 ] * 255;
+				var r =cm [ i ] [ 2 ] * 255;
+
+				Console.WriteLine( b.ToString() + " , " + g.ToString() + " , " + r.ToString() );
+
 				scalebar [ i , 0 , 0 ] = ( byte )( cm [ i ] [ 0 ] * 255 );
 				scalebar [ i , 0 , 1 ] = ( byte )( cm [ i ] [ 1 ] * 255 );
 				scalebar [ i , 0 , 2 ] = ( byte )( cm [ i ] [ 2 ] * 255 );
@@ -332,6 +349,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				scalebar [ i , 1 , 1 ] = ( byte )( cm [ i ] [ 1 ] * 255 );
 				scalebar [ i , 1 , 2 ] = ( byte )( cm [ i ] [ 2 ] * 255 );
 			}
+
 			return new Image<Bgr , byte>( scalebar );
 		}
 	}
