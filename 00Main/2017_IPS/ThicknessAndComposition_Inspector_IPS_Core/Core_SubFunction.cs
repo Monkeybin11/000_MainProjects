@@ -362,7 +362,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 						}
 					}
 					return output;
-
 				}
 				catch ( Exception ex )
 				{

@@ -9,12 +9,12 @@ using SpeedyCoding;
 using ModelLib.Data;
 using ModelLib.Data.NewType;
 using ModelLib.AmplifiedType;
+using ThicknessAndComposition_Inspector_IPS_Data;
+using ThicknessAndComposition_Inspector_IPS_Core;
 
-namespace ThicknessAndComposition_Inspector_IPS_Core
+namespace AnalysisBase
 {
 	using ModelLib.Data;
-	using ModelLib.Data.NewType;
-	using ModelLib.AmplifiedType;
 	using static System.IO.Path;
 	using static IPSDataHandler.Handler;
 	using static ModelLib.AmplifiedType.Handler;
@@ -23,6 +23,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 	using static IPSAnalysis.Handler;
 	using System.IO;
 	using static System.Linq.Enumerable;
+	using ThicknessAndComposition_Inspector_IPS_Data;
 
 	public static class StateCreator
 	{
@@ -231,9 +232,49 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		public static WaveLength [ ] ToWaveLen(
 			this IEnumerable<string> self )
 			=> self.Select( f => ( WaveLength ) ParseToDouble( f ) ).ToArray();
+	}
 
+	public static class Adaptor
+	{
+		public static IPSResult ToIPSResult(
+			this AnalysisState self )
+		{
+			List<SpotData> spotlist;
+			var temp = self.State[0].WaveLegth.ToList();
+			List<double> WaveLen = self.State[0].WaveLegth.Select( x => (double)x).ToList();
 
-		
+			spotlist = self.State.Select( x =>
 
+				new SpotData
+				( x.Value.Position.Pos.Value.ToPolar() as PlrCrd ,
+					x.Value.DThickness ,
+					x.Value.DIntenList.ToArray() ,
+					x.Value.DReflectivity.ToArray() ) ).ToList();
+
+			var res = new IPSResult(WaveLen) { SpotDataList = spotlist  };
+			return res;
+		}
+
+		public static AnalysisState ToState(
+			this IPSResult self )
+		{
+			var resState = new Dictionary<int, IPSResultData>();
+			var wave = self.WaveLen;
+			var count = self.SpotDataList.Count();
+			int i = 0;
+
+			foreach ( var spot in self.SpotDataList )
+			{
+				var dictdata = new IPSResultData(
+					spot.IntenList,
+					spot.Reflectivity,
+					wave,
+					spot.Thickness,
+					new mCrtCrd( Just(spot.CrtPos.X) , Just(spot.CrtPos.Y) )); // 
+
+				resState.Add( i++ , dictdata );
+			}
+			return CreateState( resState );
+		}
 	}
 }

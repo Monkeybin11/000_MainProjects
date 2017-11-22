@@ -17,6 +17,7 @@ namespace IPSAnalysis
 	using ThicknessAndComposition_Inspector_IPS_Core;
 	using static IPSAnalysis.Handler;
 	using static AnalysisState;
+	using AnalysisBase;
 
 	public static partial class Handler
 	{

@@ -18,6 +18,7 @@ using SpeedyCoding;
 using Emgu.CV.Structure;
 using Emgu.CV;
 using Emgu.CV.Util;
+using AnalysisBase;
 
 namespace ThicknessAndComposition_Inspector_IPS
 {
@@ -206,51 +207,5 @@ namespace ThicknessAndComposition_Inspector_IPS
 		
 	}
 
-	public static class Adaptor
-	{
-		public static IPSResult ToIPSResult(
-			this AnalysisState self )
-		{
-			List<SpotData> spotlist;
-			var temp = self.State[0].WaveLegth.ToList();
-			List<double> WaveLen = self.State[0].WaveLegth.Select( x => (double)x).ToList();
-
-			spotlist = self.State.Select( x =>
-
-				new SpotData
-				(   x.Value.Position.Pos.Value.ToPolar() as PlrCrd,
-					x.Value.DThickness ,
-					x.Value.DIntenList.ToArray() ,
-					x.Value.DReflectivity.ToArray() )).ToList();
-
-			var res = new IPSResult(WaveLen) { SpotDataList = spotlist  };
-			return res;
-		}
-
-		public static AnalysisState ToState(
-			this IPSResult self )
-		{
-			var resState = new Dictionary<int, IPSResultData>();
-			var wave = self.WaveLen;
-			var count = self.SpotDataList.Count();
-			int i = 0;
-
-			foreach ( var spot in self.SpotDataList )
-			{
-				var dictdata = new IPSResultData(
-					spot.IntenList,
-					spot.Reflectivity,
-					wave,
-					spot.Thickness,
-					new mCrtCrd( Just(spot.CrtPos.X) , Just(spot.CrtPos.Y) )); // 
-
-				resState.Add( i++ , dictdata );
-			}
-			return CreateState(resState);
-		}
-
-
-
-	}
-
+	
 }

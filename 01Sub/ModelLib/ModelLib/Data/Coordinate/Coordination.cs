@@ -119,8 +119,10 @@ namespace ModelLib.Data
 			if ( polar != null ) return polar;
 			else if ( crtn == null ) return new PlrUnit();
 
+			var theta = Math.Atan2( crtn.Y , crtn.X ) * 180 / Math.PI;
+
 			return new PlrCrd(
-							   Math.Atan2( crtn.Y , crtn.X ) * 180 / Math.PI  ,
+							   theta < 0 ? 360 + theta : theta ,
 							   Math.Sqrt( crtn.X * crtn.X + crtn.Y * crtn.Y )  );
 		}
 
