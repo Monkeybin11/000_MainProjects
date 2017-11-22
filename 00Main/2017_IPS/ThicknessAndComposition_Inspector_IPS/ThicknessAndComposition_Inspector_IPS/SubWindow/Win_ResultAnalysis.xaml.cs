@@ -46,19 +46,23 @@ namespace ThicknessAndComposition_Inspector_IPS
 		{
 			InitializeComponent();
 
-			var defualtImg = new Image<Gray,byte>(100,100, new Gray(100) );
+			Loaded += delegate
+			{
+				var defualtImg = new Image<Gray,byte>(100,100, new Gray(100) );
 
-			ucAnalysisMap.evtClickedIndex += InOutUpdate; // Update Event
+				ucAnalysisMap.evtClickedIndex += InOutUpdate; // Update Event
 
-			result.Match(
-					() =>  Just( defualtImg.ToBitmapSource() )
-							.ForEach( ucAnalysisMap.SetImage ) ,
+				result.Match(
+						() => Just( defualtImg.ToBitmapSource() )
+								.ForEach( ucAnalysisMap.SetImage ),
 
-					res => Just( res )
-							.ForEach( ucAnalysisMap.SetBtnTag )
-							.Lift( x => CreateMapImg( img )( res ) )
-							.ForEach( ucAnalysisMap.SetImage ));
+						res => Just( res )
+								.ForEach( ucAnalysisMap.SetBtnTag )
+								.Lift( x => CreateMapImg( img )( res ) )
+								.ForEach( ucAnalysisMap.SetImage ) );
 
+			};
+		
 			ucIntensityChart.SetExtractor( ExtractInten );
 			ucReflectivityChart.SetExtractor( ExtractRflct );
 
