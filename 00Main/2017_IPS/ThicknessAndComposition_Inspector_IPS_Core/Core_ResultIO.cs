@@ -44,7 +44,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		#region Visualize
 		public void DrawTest()
 		{
-			CreateMap( ResultData , 6 )
+			CreateMapandBar( ResultData , 6 )
 					.Act( x => ImgScanResult = x.Item1 [ 0 ] )
 					.Act( x => Imgscalebar = x.Item1 [ 1 ] )
 					.Act( x => EstedThickness = x.Item2 );
@@ -197,7 +197,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 	public static class Core_Helper
 	{
-		public static Tuple<Image<Bgr , byte> [ ] , int [ ]> CreateMap( IPSResult src , int divide )
+		public static Tuple<Image<Bgr , byte> [ ] , int [ ]> CreateMapandBar( IPSResult src , int divide )
 		{
 
 			int dotSize = 4;
@@ -324,6 +324,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			return new Image<Bgr , byte>( scalebar );
 		}
 
+		public static Image<Bgr,byte> CreateMa
 
 
 	}

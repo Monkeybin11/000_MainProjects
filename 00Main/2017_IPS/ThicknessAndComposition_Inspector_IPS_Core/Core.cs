@@ -252,9 +252,9 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 													.ToLEither( new double [ ] { } );
 						//Thread.Sleep(SpectrometerDelayTime);
 
-						var intenlist = logres.IsRight
+						var intenlist = logres.IsRight // Todo : Change to Match Function
 													//? logres.Bind( x => toSelected( BkD_Spctrm ) )
-													? logres.Bind( x => toSelected( Spctr.GetSpectrum() ) )
+													? logres.Bind( x => toSelected( Spctr.GetSpectrum() ) ) // Todo : Change to only toSelected( Spctr.GetSpectrum() ), not bind. cuz endpoint
 													: logres.Act( x => Lggr.Log(x.Left , true )); // Logging Error
 
 						evtSpectrum( intenlist.Right , SelectedWaves );
@@ -337,7 +337,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				ResultData = ToResult( poses , thckneses , intens , reflec , SelectedWaves );
 				Stopwatch stw = new Stopwatch();
 				stw.Start();
-				CreateMap( ResultData , 6 )
+				CreateMapandBar( ResultData , 6 )
 					.Act( x => ImgScanResult = x.Item1 [ 0 ] )
 					.Act( x => Imgscalebar = x.Item1 [ 1 ] )
 					.Act( x => EstedThickness = x.Item2 );

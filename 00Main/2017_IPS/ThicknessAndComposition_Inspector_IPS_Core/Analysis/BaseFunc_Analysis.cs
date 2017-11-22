@@ -121,6 +121,19 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		private static WaveLength[] _WaveLegth;
 
+		public IPSResultData( IEnumerable<double> inten , IEnumerable<double> refl , IEnumerable<double> wave , double thickness , mCrtCrd pos )
+		{
+			IntenList = new Intensity [ ] { };
+			Reflectivity = new Reflectivity [ ] { };
+			Thickness = thickness;
+			Position = pos;
+
+			DIntenList = inten;
+			DReflectivity = refl;
+			DWaveLength = wave;
+		}
+
+
 		public WaveLength [ ] WaveLegth
 		{
 			get
@@ -134,12 +147,17 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			}
 		}
 
-		public IEnumerable<double> DInenList
+		public IEnumerable<double> DIntenList
 		{
 			get
 			{
 				foreach ( var item in IntenList )
 					yield return item;
+			} 
+
+			set
+			{
+				IntenList = value.Select( x => ( Intensity )Just( x ) ).ToArray();
 			}
 		}
 
@@ -150,6 +168,11 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				foreach ( var item in Reflectivity )
 					yield return item;
 			}
+
+			set
+			{
+				Reflectivity = value.Select( x => ( Reflectivity )Just( x ) ).ToArray();
+			}
 		}
 
 		public IEnumerable<double> DWaveLength
@@ -159,9 +182,15 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				foreach ( var item in _WaveLegth )
 					yield return item;
 			}
+
+			set
+			{
+				WaveLegth = value.Select( x => ( WaveLength )Just( x ) ).ToArray();
+			}
+
 		}
 
-		public double DThicckness => Thickness;
+		public double DThickness => Thickness;
 
 
 

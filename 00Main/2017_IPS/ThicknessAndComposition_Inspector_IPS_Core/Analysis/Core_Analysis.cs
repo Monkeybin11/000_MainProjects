@@ -148,7 +148,7 @@ namespace IPSAnalysis
 
 		#region Exractor
 		public static IEnumerable<double [ ]> ExtractInten( AnalysisState state )
-			=> state.State.Select( x => x.Value.DInenList.ToArray() );
+			=> state.State.Select( x => x.Value.DIntenList.ToArray() );
 
 		public static IEnumerable<double [ ]> ExtractRflct( AnalysisState state )
 			=> state.State.Select( x => x.Value.DReflectivity.ToArray() );

@@ -92,7 +92,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 						.Map( SetStateLib )
 						.Map( Adaptor.ToIPSResult )
 						.Act( x => ucAnalysisMap.SetBtnTag(x) )
-						.Map( x => CreateMap( x , 6 ) )
+						.Map( x => CreateMapandBar( x , 6 ) )
 						.Map( x => x.Item1[0].ToBitmapSource() )
 						.Act( x => ucAnalysisMap.SetImage(x) );
 				}
@@ -181,7 +181,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 		Func<IPSResult , BitmapSource> CreateMapImg( Maybe<BitmapSource> img )
 			=> res => img.Match(
-						() => CreateMap( res , 6 ).Item1 [ 0 ].ToBitmapSource() ,
+						() => CreateMapandBar( res , 6 ).Item1 [ 0 ].ToBitmapSource() ,
 						thisimg => thisimg );
 
 		AnalysisState SetStateLib( AnalysisState state )
@@ -207,8 +207,8 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 				new SpotData
 				(   x.Value.Position.Pos.Value.ToPolar() as PlrCrd,
-					x.Value.DThicckness ,
-					x.Value.DInenList.ToArray() ,
+					x.Value.DThickness ,
+					x.Value.DIntenList.ToArray() ,
 					x.Value.DReflectivity.ToArray() )).ToList();
 
 			var res = new IPSResult(WaveLen) { SpotDataList = spotlist  };
