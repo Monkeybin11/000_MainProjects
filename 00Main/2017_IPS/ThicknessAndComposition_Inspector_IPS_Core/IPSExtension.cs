@@ -52,7 +52,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			{
 				stb.AppendLine(  item[0].ToString() + "," + item[1] + "," + item[2]  );
 			}
-			File.WriteAllText( @"F:\temp\thetainterpol.csv" , stb.ToString() );
+			File.WriteAllText( @"E:\temp\thetainterpol.csv" , stb.ToString() );
 
 
 

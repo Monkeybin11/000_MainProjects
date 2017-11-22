@@ -208,7 +208,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				Console.WriteLine(   temp);
 				stb.AppendLine( temp );
 			}
-			File.WriteAllText( @"F:\temp\test.csv", stb.ToString() );
+			File.WriteAllText( @"E:\temp\test.csv", stb.ToString() );
 
 
 			int dotSize = 5;
@@ -307,7 +307,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 			img = img.Median( 5 );
 			img = img.SmoothGaussian( 3 );
-			img.Save( @"F:\temp\test.png" );
+			img.Save( @"E:\temp\test.png" );
 			//grayimg = grayimg.Median( 5 );
 			//grayimg = grayimg.SmoothGaussian( 3 );
 			//grayimg.Data.Flatten();

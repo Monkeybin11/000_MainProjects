@@ -32,9 +32,9 @@
                 <Button Name="btnLoad" Content="Load Data" Style="{StaticResource btnBase}" Click="btnLoad_Click"/>
                 <Button Name="btnAlyBound" Content="Apply WaveLength" Grid.Column="1" Style="{StaticResource btnBase}" Click="btnAlyBound_Click"/>
                 <Label Content="   WaveLength  :" Grid.Column="2" Style="{StaticResource lblBase}"/>
-                <xc:DoubleUpDown Name="nudDown" Grid.Column="3" Style="{StaticResource nudBase}" HorizontalAlignment="Center" />
+                <xc:DoubleUpDown Name="nudDown" Value="200" Grid.Column="3" Style="{StaticResource nudBase}" HorizontalAlignment="Center" />
                 <Label Content="~" Grid.Column="4" Style="{StaticResource lblBase}"/>
-                <xc:DoubleUpDown Name="nudUp" Grid.Column="5" Style="{StaticResource nudBase}" HorizontalAlignment="Center" />
+                <xc:DoubleUpDown Name="nudUp" Value="1100" Grid.Column="5" Style="{StaticResource nudBase}" HorizontalAlignment="Center" />
                 <Label Grid.Column="6" Content="CTRL + Click : Remove Point" Style="{StaticResource lblBase}"/>
             </Grid>
             <Viewbox Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Stretch="Fill">

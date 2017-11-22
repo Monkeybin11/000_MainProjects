@@ -9,7 +9,7 @@
              d:DesignHeight="500" d:DesignWidth="300" >
     <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1.6*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <DockPanel Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
@@ -39,7 +39,7 @@
                         <Button x:Name="btnScanReady"         Content="Scan Ready"           Grid.Column="0"  Grid.Row="5"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
                         <Button x:Name="btnReconnect"         Content="Reconnect"            Grid.Column="1"  Grid.Row="5"     Click="LeftSideBtnClick" Style="{StaticResource btnBase}"/>
                         
-                     <xc:DoubleUpDown x:Name="nudOuterLength" Value="148"                  Grid.Column="1"  Grid.Row="5"  Style="{StaticResource nudBase}"    />
+                   
                     </Grid>
             </Border>
         </DockPanel>
@@ -48,6 +48,8 @@
             <Border CornerRadius="6" BorderThickness="2" BorderBrush="LightSteelBlue" DockPanel.Dock="Top"  VerticalAlignment="Stretch" Background="LightCyan">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -65,10 +67,12 @@
                     <Label Content=" - Integral Region -  " Grid.Row="2" Grid.ColumnSpan="4"    Style="{StaticResource lblBase}" HorizontalAlignment="Center" FontWeight="ExtraBold" />
                     <Label Content="Start" Grid.Row="3" Grid.Column="0"                 Style="{StaticResource lblBase}" />
                     <Label Content="End  " Grid.Row="3" Grid.Column="2"                 Style="{StaticResource lblBase}"/>
+                    <Label Content=" - Last Edge Length -   " Grid.Row="4" Grid.ColumnSpan="4"  Style="{StaticResource lblBase}" HorizontalAlignment="Center" FontWeight="ExtraBold"/>
                     <xc:DoubleUpDown x:Name="nudWeight"   Grid.Row="1" Grid.Column="1"  Value="{Binding Path=MainWindow.Core.Config.AngFirst , Mode=TwoWay }" Style="{StaticResource nudBase}" />
                     <xc:DoubleUpDown x:Name="nudBias"    Grid.Row="1" Grid.Column="3"  Value="{Binding Path=MainWindow.Core.Config.AngStep , Mode=TwoWay }"  Style="{StaticResource nudBase}" />
                     <xc:DoubleUpDown x:Name="nudIntglStart"   Grid.Row="3" Grid.Column="1"    Value="{Binding Path=MainWindow.Core.Config.RhoFirst , Mode=TwoWay }" Style="{StaticResource nudBase}" />
                     <xc:DoubleUpDown x:Name="nudIntglEnd"    Grid.Row="3" Grid.Column="3"    Value="{Binding Path=MainWindow.Core.Config.RhoStep , Mode=TwoWay }"  Style="{StaticResource nudBase}" />
+                    <xc:DoubleUpDown x:Name="nudOuterLength" Value="148"  Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"  Style="{StaticResource nudBase}"    />
                 </Grid>
             </Border>
         </DockPanel>
