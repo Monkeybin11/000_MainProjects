@@ -56,11 +56,12 @@ namespace ThicknessAndComposition_Inspector_IPS
 						() => Just( defualtImg.ToBitmapSource() )
 								.ForEach( ucAnalysisMap.SetImage ),
 
-						res => Just( res )
+						res => 
+								Just( res )
+								.Lift( SetStateLib )
 								.ForEach( ucAnalysisMap.SetBtnTag )
 								.Lift( x => CreateMapImg( img )( res ) )
 								.ForEach( ucAnalysisMap.SetImage ) );
-
 			};
 		
 			ucIntensityChart.SetExtractor( ExtractInten );
@@ -190,6 +191,13 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 		AnalysisState SetStateLib( AnalysisState state )
 			=> StateLib = state;
+
+		IPSResult SetStateLib( IPSResult result )
+		{
+			StateLib = result.ToState();
+			return result;
+		} 
+
 		#endregion
 
 		private void Window_Closing( object sender , System.ComponentModel.CancelEventArgs e )
@@ -218,6 +226,30 @@ namespace ThicknessAndComposition_Inspector_IPS
 			var res = new IPSResult(WaveLen) { SpotDataList = spotlist  };
 			return res;
 		}
+
+		public static AnalysisState ToState(
+			this IPSResult self )
+		{
+			var resState = new Dictionary<int, IPSResultData>();
+			var wave = self.WaveLen;
+			var count = self.SpotDataList.Count();
+
+
+			foreach ( var spot in self.SpotDataList )
+			{
+				var dictdata = new IPSResultData(
+					spot.IntenList,
+					spot.Reflectivity,
+					wave,
+					spot.Thickness,
+					new mCrtCrd( Just(spot.CrtPos.X) , Just(spot.CrtPos.Y) ));
+
+				resState.Add( count++ , dictdata );
+			}
+			return CreateState(resState);
+		}
+
+
 
 	}
 

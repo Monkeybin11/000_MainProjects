@@ -39,29 +39,25 @@ namespace IPSAnalysis
 		{
 			try
 			{
+				State = dict == null
+							? new Dictionary<int , IPSResultData>()
+							: dict;
 
-			
-			State = dict == null
-						? new Dictionary<int, IPSResultData>() 
-						: dict;
-
-			var temp = new double [ ]
+				var temp = new double [ ]
 							{
 								AnalysisState._State.First().Value.WaveLegth[1],
 								AnalysisState._State.First().Value.WaveLegth.Last()
 							};
 
-
-
-			WaveMinMax = waveMinMax != null 
-						? waveMinMax
-						:new double [ ]
-							{
+				WaveMinMax = waveMinMax != null
+							? waveMinMax
+							: new double [ ]
+								{
 								AnalysisState._State.First().Value.WaveLegth[1],
 								AnalysisState._State.First().Value.WaveLegth.Last()
-							};
+								};
 			}
-			catch ( Exception ex)
+			catch ( Exception ex )
 			{
 				ex.ToString().Print();
 			}
@@ -69,11 +65,6 @@ namespace IPSAnalysis
 
 		public AnalysisState Defualt()
 			=> new AnalysisState();
-
-		
-
-		
-
 	}
 
 	public static class AnalysisFunc
