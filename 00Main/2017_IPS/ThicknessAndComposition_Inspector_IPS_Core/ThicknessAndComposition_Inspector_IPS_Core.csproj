@@ -78,9 +78,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Backup_1.cs" />
-    <Compile Include="Backup_2.cs" />
-    <Compile Include="Backup_3.cs" />
+    <Compile Include="Backup\Backup_1.cs" />
+    <Compile Include="Backup\Backup_2.cs" />
+    <Compile Include="Backup\Backup_3.cs" />
     <Compile Include="Analysis\BaseFunc_Analysis.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="Analysis\Core_Analysis.cs" />
