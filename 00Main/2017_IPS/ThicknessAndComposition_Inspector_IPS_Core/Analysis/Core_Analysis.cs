@@ -43,12 +43,6 @@ namespace IPSAnalysis
 							? new Dictionary<int , IPSResultData>()
 							: dict;
 
-				var temp = new double [ ]
-							{
-								AnalysisState._State.First().Value.WaveLegth[1],
-								AnalysisState._State.First().Value.WaveLegth.Last()
-							};
-
 				WaveMinMax = waveMinMax != null
 							? waveMinMax
 							: new double [ ]

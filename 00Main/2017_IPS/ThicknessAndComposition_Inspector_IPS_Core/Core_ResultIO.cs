@@ -60,7 +60,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			var max = thlist.Max();
 
 			var cm = new ColorMap().Inferno_cm;
-			var xyCm1 = src.Result2TRThArr().OrderBy( x => x[1]).Select( x =>x).ToList();
+			var xyCm1 = src.Result2TRThArr().OrderBy( x => x[1]).Select( x =>x).ToList(); 
 			var xyCm2 = xyCm1            .Interpol_Theta(divide).OrderBy( x => x[0]).ThenBy( x => x[1]).Select( x =>x).ToList();
 			var xyCm3 = xyCm2             .Interpol_Rho(divide).OrderBy( x => x[0]).ThenBy( x => x[1]).Select( x =>x).ToList();
 			var xyCm4 = xyCm3             .ToCartesianReslt().OrderBy( x=> x[0]).ThenBy( x => x[1]).Select( x =>x).ToList();
@@ -199,8 +199,19 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 	{
 		public static Tuple<Image<Bgr , byte> [ ] , int [ ]> CreateMapandBar( IPSResult src , int divide )
 		{
+			StringBuilder stb = new StringBuilder();
 
-			int dotSize = 4;
+
+			foreach ( var item in src.SpotDataList )
+			{
+				string temp = item.CrtPos.X.ToString()+"," + item.CrtPos.Y.ToString() + "," + item.Thickness.ToString();
+				Console.WriteLine(   temp);
+				stb.AppendLine( temp );
+			}
+			File.WriteAllText( @"F:\temp\test.csv", stb.ToString() );
+
+
+			int dotSize = 5;
 			var sizemultiflier = 8;
 			var scalebarTask = new Task<Image<Bgr,byte>>(
 									() => CreateScalebar())
@@ -296,7 +307,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 			img = img.Median( 5 );
 			img = img.SmoothGaussian( 3 );
-
+			img.Save( @"F:\temp\test.png" );
 			//grayimg = grayimg.Median( 5 );
 			//grayimg = grayimg.SmoothGaussian( 3 );
 			//grayimg.Data.Flatten();
@@ -323,10 +334,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			}
 			return new Image<Bgr , byte>( scalebar );
 		}
-
-		public static Image<Bgr,byte> CreateMa
-
-
 	}
 
 }

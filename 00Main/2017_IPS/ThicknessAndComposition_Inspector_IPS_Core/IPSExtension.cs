@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Media.Imaging;
 using System.Windows;
 using Emgu.CV;
+using System.IO;
 
 namespace ThicknessAndComposition_Inspector_IPS_Core
 {
@@ -45,6 +46,16 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			var processData = src.Concat( lastdatas ).OrderBy( x=> x[0]).ThenBy(x =>x[1]).ToList(); // Use this data for interpolate
 			List<double[]> total = new List<double[]>( processData ); // insert 360 degree
 			var rholsit = total.Select( x => x[1]).Distinct().ToList(); // Extract Unique Element
+
+			StringBuilder stb = new StringBuilder();
+			foreach ( var item in total )
+			{
+				stb.AppendLine(  item[0].ToString() + "," + item[1] + "," + item[2]  );
+			}
+			File.WriteAllText( @"F:\temp\thetainterpol.csv" , stb.ToString() );
+
+
+
 
 			foreach ( var rho in rholsit )
 			{

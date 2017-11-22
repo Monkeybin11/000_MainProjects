@@ -45,7 +45,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 		public Win_ResultAnalysis( BitmapSource img , Maybe<IPSResult> result ) 
 		{
 			InitializeComponent();
-
+			StateLib = new AnalysisState();
 			Loaded += delegate
 			{
 				var defualtImg = new Image<Gray,byte>(100,100, new Gray(100) );
@@ -91,8 +91,8 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 					ucIntensityChart.Reset();
 					ucReflectivityChart.Reset();
-					
 
+					StateLib = new AnalysisState();
 					CreateState( res.Value.ToDictionary( x => i++ ))
 						.Map( SetStateLib )
 						.Map( Adaptor.ToIPSResult )
@@ -233,7 +233,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 			var resState = new Dictionary<int, IPSResultData>();
 			var wave = self.WaveLen;
 			var count = self.SpotDataList.Count();
-
+			int i = 0;
 
 			foreach ( var spot in self.SpotDataList )
 			{
@@ -242,9 +242,9 @@ namespace ThicknessAndComposition_Inspector_IPS
 					spot.Reflectivity,
 					wave,
 					spot.Thickness,
-					new mCrtCrd( Just(spot.CrtPos.X) , Just(spot.CrtPos.Y) ));
+					new mCrtCrd( Just(spot.CrtPos.X) , Just(spot.CrtPos.Y) )); // 
 
-				resState.Add( count++ , dictdata );
+				resState.Add( i++ , dictdata );
 			}
 			return CreateState(resState);
 		}
