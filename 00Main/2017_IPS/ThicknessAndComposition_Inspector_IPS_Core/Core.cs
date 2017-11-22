@@ -117,7 +117,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				while ( true )
 				{
 					if ( FlgAutoUpdate )
-					//if ( true )
 					{
 						AutoUpdateSpctrm();
 						
@@ -202,8 +201,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 							  Config.XStgSpeed ,
 							  Config.Scan2Avg ,
 							  Config.IntegrationTime ,
-							  Config.Boxcar ,
-							  Config.SpectrumWaitTime
+							  Config.Boxcar 
 							  );
 			// Ref Check --
 			if ( !FlgRefReady ) return false.Act( x => MessageBox.Show("Set Referance Please"));

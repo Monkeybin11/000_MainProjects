@@ -44,8 +44,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 							  Config.XStgSpeed ,
 							  Config.Scan2Avg ,
 							  Config.IntegrationTime ,
-							   Config.Boxcar ,
-							  Config.SpectrumWaitTime
+							   Config.Boxcar 
 							  );
 					result.Bind( x => OpSetRef() , "Referance Scan is Fail" )
 						  .Bind( x => x.Act( f => FlgRefReady = true));
@@ -220,14 +219,13 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		public void SetComPort( double port ) => Config.Port = ( int )port;
 
-		public void SetHWInternalParm( double rspeed , double xspeed , double scan2avg , double intetime , double boxcar , double millisec )
+		public void SetHWInternalParm( double rspeed , double xspeed , double scan2avg , double intetime , double boxcar )
 		{
 			Config.RStgSpeed = ( int )rspeed;
 			Config.XStgSpeed = ( int )xspeed;
 			Config.Scan2Avg = ( int )scan2avg;
 			Config.IntegrationTime = ( int )intetime;
 			Config.Boxcar = ( int )boxcar;
-			Config.SpectrumWaitTime = ( int )millisec;
 
 			Stg.SendAndReady( "S:24" );
 			Stg.SendAndReady( "S:15" );

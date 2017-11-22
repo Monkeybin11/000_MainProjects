@@ -71,10 +71,14 @@ namespace ThicknessAndComposition_Inspector_IPS
 			ucIntensityChart.lblTitle.Content = "Intensity";
 			ucIntensityChart.axisY.Title = "Intensity";
 			ucIntensityChart.Ysprtor.Step = 5000;
+			ucIntensityChart.axisY.MaxValue = 61000;
+			ucIntensityChart.axisY.MinValue = 0;
 
 			ucReflectivityChart.lblTitle.Content = "Reflectivity";
 			ucReflectivityChart.axisY.Title = "Reflectivity";
 			ucReflectivityChart.Ysprtor.Step = 10;
+			ucReflectivityChart.axisY.MaxValue = 110;
+			ucReflectivityChart.axisY.MinValue = 0;
 		}
 
 		private void btnLoad_Click( object sender , RoutedEventArgs e )

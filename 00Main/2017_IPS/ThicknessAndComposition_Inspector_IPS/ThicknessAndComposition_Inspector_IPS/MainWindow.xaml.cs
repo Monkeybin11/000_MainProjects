@@ -184,9 +184,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 					 {
 						 while ( FlgSpctDisplay )
 						 {
-							 Console.WriteLine( "Trs Data" );
 							 WinSpct.ucSpctShart.UpdateSeries( Core.BkD_Spctrm , Core.SelectedWaves );
-							 Console.WriteLine( Core.BkD_Spctrm.Count() < 1 ? "NO data" : Core.BkD_Spctrm.Last().ToString() );
 							 Thread.Sleep( Core.SpectrometerDelayTime );
 						 }
 					 } );

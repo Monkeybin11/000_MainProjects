@@ -25,7 +25,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 		public int Boxcar { get; set; }
 		public int Scan2Avg { get; set; }
 		public int IntegrationTime { get; set; }
-		public int SpectrumWaitTime { get; set; }
+		public int SpectrumWaitTime { get { return IntegrationTime * Scan2Avg + 20; } }
 
 		// Stage
 		public int Port { get; set; }

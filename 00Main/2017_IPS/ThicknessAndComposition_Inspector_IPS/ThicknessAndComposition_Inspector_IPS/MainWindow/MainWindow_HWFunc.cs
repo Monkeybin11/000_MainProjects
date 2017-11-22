@@ -19,7 +19,6 @@ namespace ThicknessAndComposition_Inspector_IPS
 			res.Port = ( int )WinConfig.nudXStgPort.Value.ToNonNullable();
 			res.IntegrationTime = ( int )WinConfig.nudIntegrationTime.Value.ToNonNullable();
 			res.Scan2Avg = ( int )WinConfig.nudScan2Avg.Value.ToNonNullable();
-			res.SpectrumWaitTime = ( int )WinConfig.nudSpctWait.Value.ToNonNullable();
 			res.Boxcar = ( int )WinConfig.nudBoxcar.Value.ToNonNullable();
 			res.XStgSpeed = ( int )WinConfig.nudXStgSpeed.Value.ToNonNullable();
 			res.RStgSpeed = ( int )WinConfig.nudRStgSpeed.Value.ToNonNullable();
@@ -41,7 +40,6 @@ namespace ThicknessAndComposition_Inspector_IPS
 			WinConfig.nudBoxcar.Value = config.Boxcar;
 			WinConfig.nudXStgSpeed.Value = config.XStgSpeed;
 			WinConfig.nudRStgSpeed.Value = config.RStgSpeed;
-			WinConfig.nudSpctWait.Value = config.SpectrumWaitTime;
 
 			ucLSMenu.nudWeight		.Value = config.Weight;
 			ucLSMenu.nudBias		.Value = config.Bias;

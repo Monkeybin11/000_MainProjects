@@ -47,16 +47,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			List<double[]> total = new List<double[]>( processData ); // insert 360 degree
 			var rholsit = total.Select( x => x[1]).Distinct().ToList(); // Extract Unique Element
 
-			StringBuilder stb = new StringBuilder();
-			foreach ( var item in total )
-			{
-				stb.AppendLine(  item[0].ToString() + "," + item[1] + "," + item[2]  );
-			}
-			File.WriteAllText( @"E:\temp\thetainterpol.csv" , stb.ToString() );
-
-
-
-
 			foreach ( var rho in rholsit )
 			{
 				var res = total.Where( x => x[1] == rho).Select( x => x).OrderBy( x => x[0] ).ToList(); // Extract All degree had same Rho set( t , r) -> set(t | r = k)
