@@ -30,8 +30,6 @@ namespace AnalysisBase
 		public static event Action<mCrtCrd ,Intensity[] > evtIntenList;
 		public static event Action<mCrtCrd , Reflectivity[] > evtRflectList;
 		public static event Action<mCrtCrd , Thickness> evtThickness;
-		public static event Action<mCrtCrd , IPSResultData> evtResult;
-		//public event Action<> evtThickness;
 
 		public static Maybe<List<IPSResultData>> ResultDataFrom( string path )
 		{

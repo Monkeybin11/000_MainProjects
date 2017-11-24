@@ -9,23 +9,22 @@
         x:Name="ScanSettingWindow"
         Title="Win_Config" Height="400" Width="400" Closing="ScanSettingWindow_Closing" >
     <Grid>
-        <UniformGrid Columns="2" Rows="8">
-            <Label Content="Stage Com Port "/>
-            <xc:DoubleUpDown x:Name="nudXStgPort"/>
-            <Label Content="R Stage Speed "/>
-            <xc:DoubleUpDown x:Name="nudXStgSpeed"/>
-            <Label Content="X Stage Speed "/>
-            <xc:DoubleUpDown x:Name="nudRStgSpeed"/>
-            <Label Content="Spectrometer Scasn to Average "/>
-            <xc:DoubleUpDown x:Name="nudScan2Avg" />
-            <Label Content="Spectrometer IntegrationTime "/>
-            <xc:DoubleUpDown x:Name="nudIntegrationTime" />
-             <Label Content="Spectrometer Boxcar "/>
-            <xc:DoubleUpDown x:Name="nudBoxcar" />
-            <Label Content="Spectrometer Wait Time "/>
-            <xc:DoubleUpDown x:Name="nudSpctWait" />
-            <Button x:Name="btnSettingApply" Content="Apply" Click="btnSettingApply_Click"/>
-            <Button x:Name="btnCancel" Content="Cancel" Click="btnCancel_Click"/>
+        <UniformGrid Columns="2" Rows="7">
+            <Label Content="Stage Com Port " Style="{StaticResource lblBase}"/>
+			<xc:DoubleUpDown x:Name="nudXStgPort" Style="{StaticResource nudBase}"/>
+			<Label Content="R Stage Speed " Style="{StaticResource lblBase}"/>
+			<xc:DoubleUpDown x:Name="nudXStgSpeed" Style="{StaticResource nudBase}"/>
+			<Label Content="X Stage Speed " Style="{StaticResource lblBase}"/>
+			<xc:DoubleUpDown x:Name="nudRStgSpeed" Style="{StaticResource nudBase}"/>
+			<Label Content="Spectrometer Scasn to Average " Style="{StaticResource lblBase}"/>
+			<xc:DoubleUpDown x:Name="nudScan2Avg" Style="{StaticResource nudBase}"/>
+			<Label Content="Spectrometer IntegrationTime " Style="{StaticResource lblBase}"/>
+			<xc:DoubleUpDown x:Name="nudIntegrationTime" Style="{StaticResource nudBase}"/>
+			<Label Content="Spectrometer Boxcar " Style="{StaticResource lblBase}"/>
+            <xc:DoubleUpDown x:Name="nudBoxcar" Style="{StaticResource nudBase}"/>
+          
+            <Button x:Name="btnSettingApply" Content="Apply" Click="btnSettingApply_Click" Style="{StaticResource btnBase}"/>
+            <Button x:Name="btnCancel" Content="Cancel" Click="btnCancel_Click" Style="{StaticResource btnBase}"/>
         </UniformGrid>
     </Grid>
 </Window>

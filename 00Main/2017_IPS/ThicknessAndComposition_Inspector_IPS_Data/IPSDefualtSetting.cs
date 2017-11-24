@@ -52,7 +52,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 			res.Boxcar				=	src.Boxcar				;
 			res.Scan2Avg			=	src.Scan2Avg			;
 			res.IntegrationTime		=	src.IntegrationTime		;
-			res.SpectrumWaitTime = src.SpectrumWaitTime;
 			res.XStgSpeed			=	src.XStgSpeed			;
 			res.RStgSpeed			=	src.RStgSpeed			;
 			res.Weight				=	src.Weight				;

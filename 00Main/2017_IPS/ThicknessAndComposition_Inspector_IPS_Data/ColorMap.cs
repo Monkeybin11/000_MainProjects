@@ -8,6 +8,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 {
 	public class ColorMap
 	{
+		
 		public double [ ] [ ] RB_cm
 		{
 			get
@@ -275,7 +276,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 			}
 		}
 
-		public double [ ] [ ] Inferno_cm
+		public double [ ] [ ] Inferno_cm // R G B
 		{
 			get
 			{
@@ -537,7 +538,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 					new double[]{1,0.93588,0.13349          },
 					new double[]{1,0.94097,0.13541          },
 					new double[]{1,0.94606,0.13735          }
-				};
+				}.Reverse().ToArray();
 
 			}
 		}

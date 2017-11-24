@@ -56,9 +56,14 @@ namespace ThicknessAndComposition_Inspector_IPS
 			Charting.For<double [ ]>( mapper );
 			DataContext = this;
 
-			axisX.Unit = 100;
 			axisX.Title = "WaveLength";
-			
+
+			axisX.MaxValue = 1200;
+			axisX.MinValue = 200;
+		
+
+
+
 			ClearSeries();
 
 		}

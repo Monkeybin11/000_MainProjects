@@ -53,7 +53,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		public Image<Bgr , byte> [ ] CreateMap2( IPSResult src , int divide )
 		{
-			var imgshiftoffset = 5;
 			var offset = src.SpotDataList.Select( x => x.PlrPos.Rho/10).Max();
 			var thlist = src.SpotDataList.Select( x => x.Thickness);
 			var min = thlist.Min();
@@ -66,17 +65,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			var xyCm4 = xyCm3             .ToCartesianReslt().OrderBy( x=> x[0]).ThenBy( x => x[1]).Select( x =>x).ToList();
 
 			return null;
-		}
-
-	
-		public System.Windows.Media.Imaging.BitmapSource GetImage()
-		{
-			return new Image<Bgr , byte>( @"C:\Temp\testImg052538.bmp" ).ToBitmapSource();
-		}
-
-		public System.Windows.Media.Imaging.BitmapSource GetImage2()
-		{
-			return new Image<Bgr , byte>( @"C:\Temp\testImg051743.bmp" ).ToBitmapSource();
 		}
 
 		#endregion
@@ -199,17 +187,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 	{
 		public static Tuple<Image<Bgr , byte> [ ] , int [ ]> CreateMapandBar( IPSResult src , int divide )
 		{
-			StringBuilder stb = new StringBuilder();
-
-
-			foreach ( var item in src.SpotDataList )
-			{
-				string temp = item.CrtPos.X.ToString()+"," + item.CrtPos.Y.ToString() + "," + item.Thickness.ToString();
-				Console.WriteLine(   temp);
-				stb.AppendLine( temp );
-			}
-			File.WriteAllText( @"E:\temp\test.csv", stb.ToString() );
-
+			
 
 			int dotSize = 5;
 			var sizemultiflier = 8;
@@ -252,8 +230,59 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			var cm = new ColorMap().Inferno_cm;
 
 			// Interpolation
-			var srcdatas = src.Result2TRThArr().Select( x =>x).ToList();
 
+
+			var srcdatas = src.Result2TRThArr().Select( x =>x).ToList();
+			/*
+			#region 
+			// Extact Color Position
+			"".Print();
+			"".Print();
+			"".Print();
+			"STart Point".Print();
+			var xyCm2 = srcdatas.ToCartesianReslt()
+							.OrderBy( x=> x[0])
+							.ThenBy( x => x[1])
+							.AsParallel()
+							.AsOrdered()
+							//.Select( x => new double[] { x[0] , x[1] , ( x[2] - mean ) / std } )
+							//.Select( x => new double[] { x[0] , x[1] , x[2] >  1.96 ? 1.96 :
+							//										   x[2] < -1.96 ? -1.96
+							//										   : x[2] } )
+							.Select( x => new
+							{
+								X  = offset + x[0] ,
+								Y  = offset + x[1] ,
+								Cm = (min - max) == 0
+													? cm[127]  //color double[r,g,b]
+													: cm[ (int)(( x[2] -min )/(max - min)*255) ] ,
+								Gry = (int)(( x[2] -min )/(max - min)*255 + 1)
+							}).ToList();
+
+			var circleLst2 = xyCm2.Select((x,i) =>
+									new
+									{
+										pos = new System.Drawing.Point(
+																			(int)(x.X*sizemultiflier)+imgshiftoffset,
+																			(int)(x.Y*sizemultiflier)+imgshiftoffset),
+
+										color = new MCvScalar(x.Cm[2]*255 , x.Cm[1]*255 , x.Cm[0]*255).Act( test22 )
+									}).ToArray();
+			"End Point".Print();
+			"".Print();
+			"".Print();
+			"".Print();
+			#endregion
+			var imgsize = Math.Max(
+				 xyCm2.Select( x => x.X).Max(),
+				 xyCm2.Select( x => x.Y).Max()
+				);
+
+			var imgData = new byte[(int)(imgsize*sizemultiflier + imgshiftoffset*2.0) ,(int)(imgsize*sizemultiflier+imgshiftoffset*2.0),3];
+			Image<Bgr,byte> img = new Image<Bgr, byte>(imgData);
+			circleLst2.ActLoop( x => CvInvoke.Circle( img, x.pos, dotSize, x.color, -1, Emgu.CV.CvEnum.LineType.EightConnected ) );
+			*/
+			
 			for ( int i = 0 ; i < divide ; i++ )
 			{
 				srcdatas = srcdatas.Interpol_Theta( 1 ).Select( x => x ).ToList()
@@ -291,24 +320,20 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			//Image<Gray,byte> grayimg = new Image<Gray, byte>(grayimgData);
 			Console.WriteLine();
 			Console.WriteLine( "  --- Datas  ---" );
-			var circleLst = xyCm.Select(x =>
+			var circleLst = xyCm.Select((x,i) =>
 									new
 									{
 										pos = new System.Drawing.Point(
 																			(int)(x.X*sizemultiflier)+imgshiftoffset,
 																			(int)(x.Y*sizemultiflier)+imgshiftoffset),
 
-										color = new MCvScalar(x.Cm[2]*255 , x.Cm[1]*255 , x.Cm[0]*255).Act(test22)
+										color = new MCvScalar(x.Cm[2]*255 , x.Cm[1]*255 , x.Cm[0]*255).Act(k => { if(i %500 == 0) { test22(k); } } )
 									});
 
 
 
 			circleLst.ActLoop( x => CvInvoke.Circle( img , x.pos , dotSize , x.color , -1 , Emgu.CV.CvEnum.LineType.EightConnected ) );
 			//circleLst.ActLoop( (x,i) => CvInvoke.Circle( grayimg , x.pos , dotSize , new MCvScalar( xyCm[i].Gry) , -1 , Emgu.CV.CvEnum.LineType.EightConnected ) );
-			var res1 = xyCm [ 0 ].Cm [ 0 ] * 255;
-			var res2 = xyCm [ 0 ].Cm [ 1 ] * 255;
-			var res3 = xyCm [ 0 ].Cm [ 2 ] * 255;
-
 
 			img = img.Median( 5 );
 			img = img.SmoothGaussian( 3 );
@@ -330,24 +355,16 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		public static Image<Bgr , byte> CreateScalebar()
 		{
-			Console.WriteLine();
-			Console.WriteLine("  --- ScaleBar  ---");
 			var scalebar = new byte[255,2,3];
 			var cm = new ColorMap().Inferno_cm;
 			for ( int i = 0 ; i < 255 ; i++ )
 			{
-				var b =cm [ i ] [ 0 ] * 255;
-				var g =cm [ i ] [ 1 ] * 255;
-				var r =cm [ i ] [ 2 ] * 255;
-
-				Console.WriteLine( b.ToString() + " , " + g.ToString() + " , " + r.ToString() );
-
-				scalebar [ i , 0 , 0 ] = ( byte )( cm [ i ] [ 0 ] * 255 );
+				scalebar [ i , 0 , 0 ] = ( byte )( cm [ i ] [ 2 ] * 255 );
 				scalebar [ i , 0 , 1 ] = ( byte )( cm [ i ] [ 1 ] * 255 );
-				scalebar [ i , 0 , 2 ] = ( byte )( cm [ i ] [ 2 ] * 255 );
-				scalebar [ i , 1 , 0 ] = ( byte )( cm [ i ] [ 0 ] * 255 );
+				scalebar [ i , 0 , 2 ] = ( byte )( cm [ i ] [ 0 ] * 255 );
+				scalebar [ i , 1 , 0 ] = ( byte )( cm [ i ] [ 2 ] * 255 );
 				scalebar [ i , 1 , 1 ] = ( byte )( cm [ i ] [ 1 ] * 255 );
-				scalebar [ i , 1 , 2 ] = ( byte )( cm [ i ] [ 2 ] * 255 );
+				scalebar [ i , 1 , 2 ] = ( byte )( cm [ i ] [ 0 ] * 255 );
 			}
 
 			return new Image<Bgr , byte>( scalebar );
