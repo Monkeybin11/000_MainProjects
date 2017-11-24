@@ -83,8 +83,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BindingExample1.xaml.cs">
+      <DependentUpon>BindingExample1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Columnchart_UCTEst.xaml.cs">
       <DependentUpon>Columnchart_UCTEst.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FirstBasic.xaml.cs">
+      <DependentUpon>FirstBasic.xaml</DependentUpon>
     </Compile>
     <Compile Include="NonBindChart.xaml.cs">
       <DependentUpon>NonBindChart.xaml</DependentUpon>
@@ -92,6 +98,10 @@
     <Compile Include="UC_ColumChart.xaml.cs">
       <DependentUpon>UC_ColumChart.xaml</DependentUpon>
     </Compile>
+    <Page Include="BindingExample1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ColumnChart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -105,6 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Example2_Observable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FirstBasic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

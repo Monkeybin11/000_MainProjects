@@ -71,6 +71,7 @@
     <Compile Include="AmplifiedType\Handler.cs" />
     <Compile Include="AmplifiedType\Maybe.cs" />
     <Compile Include="AmplifiedType\Nothing.cs" />
+    <Compile Include="AmplifiedType\PartialApplication.cs" />
     <Compile Include="ClassInstance\DeviceRunner.cs" />
     <Compile Include="ClassInstance\Either\Either.cs" />
     <Compile Include="ClassInstance\Either\LEither.cs" />

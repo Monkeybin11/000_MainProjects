@@ -18,19 +18,15 @@ namespace ModelLib.AmplifiedType
 			foreach ( T t in source ) yield return t;
 		}
 
-		public static IEnumerable<R> Map<T, R>
+		public static IEnumerable<R> Lift<T, R>
 		 ( this IEnumerable<T> list , Func<T , R> func )
 		  => list.Select( func );
-
-	
-
 
 		public static R Match<T, R>( this IEnumerable<T> list
 		, Func<R> Empty , Func<T , IEnumerable<T> , R> Otherwise )
 		=> list.Head().Match(
 		   Nothing: Empty ,
 		   Just: head => Otherwise( head , list.Skip( 1 ) ) );
-
 
 		public static Maybe<T> Head<T>( this IEnumerable<T> list )
 		{
@@ -48,7 +44,7 @@ namespace ModelLib.AmplifiedType
 
 		public static IEnumerable<Unit> ForEach<A>
 			( this IEnumerable<A> self , Action<A> act )
-			=> self.Map( act.ToFunc() ).ToImmutableList();
+			=> self.Lift( act.ToFunc() ).ToImmutableList();
 
 	}
 }
