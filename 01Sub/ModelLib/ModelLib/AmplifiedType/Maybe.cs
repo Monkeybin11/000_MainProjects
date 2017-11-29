@@ -89,6 +89,11 @@ namespace ModelLib.AmplifiedType
 				() => None ,
 				x => Just( f( x ) ) );
 
+		public static Maybe<A> Flatten<A>
+			( this Maybe<A> self  )
+			=> self;
+
+
 		public static Maybe<Unit> ForEach<A>
 			( this Maybe<A> self , Action<A> act )
 			=> Lift( self , act.ToFunc() );

@@ -23,6 +23,7 @@ using System.Diagnostics;
 
 namespace ThicknessAndComposition_Inspector_IPS_Core
 {
+	using static ApplicationUtilTool.FileIO.CsvTool;
 	public partial class IPSCore
 	{
 		#region OpFun
@@ -166,9 +167,8 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		public bool OpLoadAbsReflecDatas() 
 		{
 			//string path = AppDomain.CurrentDomain.BaseDirectory + @"absreflect\Siref10.csv";
-			string path = AppDomain.CurrentDomain.BaseDirectory + @"absreflect\10deg_siabsreflect.csv";
-			CsvTool cv = new CsvTool();
-			var relec = cv.ReadCsv2String( path );
+			string path = AppDomain.CurrentDomain.BaseDirectory + @"absreflect\10deg_siabsreflecsv";
+			var relec = ReadCsv2String( path );
 			SDWaves = relec.Select( x => Convert.ToDouble( x [ 0 ] ) ).ToList();
 			ReflctFactors = relec.Select( x => Convert.ToDouble( x [ 1 ] ) ).ToList();
 			return true;
@@ -344,10 +344,10 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 						filenamelist = Directory.GetFiles( path ).ToList();
 					}
 
-					CsvTool ct = new CsvTool();
+					
 					foreach ( var item in filenamelist )
 					{
-						var strdata = ct.ReadCsv2String( item , ',' );
+						var strdata = ReadCsv2String( item , ',' );
 						for ( int i = 1 ; i < strdata.Len( 1 ) ; i++ )
 						{
 							List<double> res = new List<double>();
@@ -374,8 +374,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			lock ( key )
 			{
 				string path = @"D:\03JobPro\2017\011.ISP\CsvData\TLA talko _new Sample\1spct\01.csv";
-				CsvTool ct = new CsvTool();
-				var res = ct.ReadCsv2String(path , rowDirction : false);
+				var res = ReadCsv2String(path , order0Dirction : false);
 				return res [ 0 ].Select( x => Convert.ToDouble( x ) ).ToArray();
 			}
 		}
@@ -385,9 +384,8 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		{
 			lock ( key )
 			{
-				CsvTool ct = new CsvTool();
 				var path = @"D:\03JobPro\2017\011.ISP\CsvData\TLA talko _new Sample\1pos\pos.csv";
-				var datas = ct.ReadCsv2String( path , ',' , false);
+				var datas = ReadCsv2String( path , ',' , order0Dirction: false);
 
 				List<PlrCrd> crtnlist = new List<PlrCrd>();
 

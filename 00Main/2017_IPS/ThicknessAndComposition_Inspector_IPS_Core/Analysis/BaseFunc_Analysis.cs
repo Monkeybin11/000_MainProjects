@@ -77,7 +77,7 @@ namespace AnalysisBase
 								.Transpose();
 
 				var scanResult = Range( 0 , posThickness.Count() )
-								.Map( i => new IPSResultData
+								.Lift( i => new IPSResultData
 								{
 									Position = posThickness[i].Item1 ,
 									WaveLegth = wavLis ,
@@ -200,17 +200,17 @@ namespace AnalysisBase
 			this IEnumerable<string> src ,
 			int colNum ,
 			int headerSkip = 0)
-			=> src.Skip(headerSkip).Map( x => x.Split( ',' ) [ colNum ] ); 
+			=> src.Skip(headerSkip).Lift( x => x.Split( ',' ) [ colNum ] ); 
 
 		public static IEnumerable<string[]> ResultRefine( 
 			this IEnumerable<string> src ,
 			int skipnum )
-			=> src.Skip( 1 ).Map( x => x.Split( ',' ).Skip( skipnum ).ToArray() );
+			=> src.Skip( 1 ).Lift( x => x.Split( ',' ).Skip( skipnum ).ToArray() );
 
 		// NewType is Bad Idea on this situation. need to fix this. But explicitivity is good
 
 		public static Tuple<mCrtCrd , Thickness> [ ] ToPosThickness(this IEnumerable<string [ ]> src )
-			=> src.Map( x => Tuple.Create(
+			=> src.Lift( x => Tuple.Create(
 								mCrtCrd( ParseToDouble( x [ 0 ] ) , ParseToDouble( x [ 1 ] ) ) ,
 								Thickness( ParseToDouble( x [ 2 ] ) ) ) )
 					.ToArray();

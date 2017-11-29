@@ -19,6 +19,7 @@ using Emgu.CV.Structure;
 using IPSAnalysis;
 using static IPSAnalysis.Handler;
 using SpeedyCoding;
+
 namespace ThicknessAndComposition_Inspector_IPS
 {
 	using static ThicknessAndComposition_Inspector_IPS_Core.Core_Helper;
@@ -147,12 +148,11 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 
 			var RealToCanvas = FnReScale( w0 , h0 , w1 , h1, w1/2+10 , h1/2+10);
-
 			Func< Tuple< CrtnCrd ,double> , ValPosCrt> toValPos
 				= posval => RealToCanvas( ValPosCrt(posval.Item1.X, posval.Item1.Y , posval.Item2 ) );
 
-			var scaledPosList = result.SpotDataList.Map(x => Tuple.Create( x.CrtPos , x.Thickness))
-												   .Map(toValPos)
+			var scaledPosList = result.SpotDataList.Lift(x => Tuple.Create( x.CrtPos , x.Thickness))
+												   .Lift(toValPos)
 												   .ToList();
 			return scaledPosList;
 		}

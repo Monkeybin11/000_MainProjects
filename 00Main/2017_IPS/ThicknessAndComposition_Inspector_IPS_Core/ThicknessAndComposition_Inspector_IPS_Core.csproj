@@ -89,6 +89,9 @@
     <Compile Include="Core_Fitting.cs" />
     <Compile Include="Core_ResultIO.cs" />
     <Compile Include="Core_SubFunction.cs" />
+    <Compile Include="Fitting\Core_Fitting.cs" />
+    <Compile Include="Fitting\DataLoader.cs" />
+    <Compile Include="Fitting\DataLoader_Sub.cs" />
     <Compile Include="IPSExtension.cs" />
     <Compile Include="IPSNewType\IPSNewType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

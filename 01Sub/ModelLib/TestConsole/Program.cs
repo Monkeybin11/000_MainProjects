@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 using ModelLib.Monad;
 using MachineLib.DeviceLib;
 using System.IO;
+using ModelLib.AmplifiedType;
+using static ModelLib.AmplifiedType.Handler;
+using ThicknessAndComposition_Inspector_IPS_Core;
 
 namespace TestConsole
 {
+	using DataTable = IEnumerable<IEnumerable<double>>;
+
 	class Student
 	{
 		public string Name;
@@ -17,12 +22,29 @@ namespace TestConsole
 
 	class Program
 	{
+
 		static string path = @"E:\temp\pos.csv";
+		static string ipspath  = @"E:\IPSData\IPSTest\1-1_Refelctivity.csv";
 		static void Main( string [ ] args )
 		{
-			var res = File.ReadAllLines(path);
-			var res1 = File.ReadAllText(path);
-			var res2 = File.ReadLines(path).ToList();
+
+			DataLoader.main( ipspath );
+
+
+
+			//var ores = new double[2][] { new double [ ] { 1,2} , new double [ ] { 3,4} };
+			//
+			//var t1 = ores.AsEnumerable();
+			//var t2 = ores.Select(x => x.AsEnumerable());
+			//
+			//
+			//var datas = new List<double>() { 1,2,3,4,5 };
+			//var test = Just(datas);
+			//
+			//
+			//var res = File.ReadAllLines(path);
+			//var res1 = File.ReadAllText(path);
+			//var res2 = File.ReadLines(path).ToList();
 			Console.WriteLine();
 		}
 
