@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SpeedyCoding;
 using ModelLib.AmplifiedType;
 using static ModelLib.AmplifiedType.Handler;
@@ -10,8 +8,6 @@ using FittingDataStruct;
 
 namespace ThicknessAndComposition_Inspector_IPS_Core
 {
-	using static SpeedyCoding.Handler;
-
 	using static ApplicationUtilTool.FileIO.CsvTool;
 	using static System.IO.Directory;
 	using static System.IO.Path;
@@ -27,7 +23,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 	public static partial class DataLoader
 	{
 
-		public static bool CheckFiles( FileNames files )
+		static bool CheckFiles( FileNames files )
 		{
 			var headList = files.Select( x => GetFileName(x).Split( '_' ).First() ).Distinct().ToList();
 
@@ -48,7 +44,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			}
 			return true;
 		}
-
 
 		#region Applied Func
 
@@ -71,9 +66,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		#endregion
 
 		#region BaseFunc
-
-		
-
 		static Func<string , string [ ] [ ]> ReadThikness
 		=> file => ReadCsv2String( file , rowend: 25 , colend: 3 , rowskip: 1 , order0Dirction: false );
 
@@ -88,14 +80,14 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		/// <summary>
 		/// ( Filtered Name , BasPath ) -> Filtered Names Path  
 		/// </summary>
-		public static Func<string , FileNames , FileNames> FileFilter
+		static Func<string , FileNames , FileNames> FileFilter
 			=> ( filter , filenames )
 			=> filenames.Where( x => x.Split( new char [ ] { '_' } ).Last() == filter );
 
-		public static FileNames GetAllFileNames( Paths dirpaths )
+		static FileNames GetAllFileNames( Paths dirpaths )
 			=> dirpaths.Lift( f => GetFiles( f ) ).Flatten();
 
-		public static Paths GetAllDirs( string topdir )
+		static Paths GetAllDirs( string topdir )
 		{
 			var dir =  GetDirectories( topdir , "*" , System.IO.SearchOption.AllDirectories );
 			return dir.Count() == 0
@@ -106,11 +98,11 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		#endregion
 
 		#region Helper
-		public static IEnumerable<MList> ToMListTable // IEnumerable< Maybe<IEnumerable<double>>>;
+		static IEnumerable<MList> ToMListTable // IEnumerable< Maybe<IEnumerable<double>>>;
 		( this IEnumerable<IEnumerable<string>> src )
 		=> src.Select( x => x.ToDoubleList() );
 
-		private static MList ToDoubleList    // Maybe<IEnumerable<double>>;
+		static MList ToDoubleList    // Maybe<IEnumerable<double>>;
 			( this IEnumerable<string> src )
 		{
 			var output = new List<double>();
@@ -137,7 +129,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 }
 namespace FittingDataStruct
 {
-
 	public static class Handler
 	{
 		public static DatasAnMissing<T> ToWithMissing<T>( IEnumerable<Maybe<T>> src )
@@ -149,7 +140,6 @@ namespace FittingDataStruct
 		public static PosThckRflt<T> ToPosThckRflt<T>
 			( T x , T y , T thck , List<T> rflt , List<T> wave )
 			=> new PosThckRflt<T>( x , y , thck , rflt , wave );
-
 	}
 
 	public class PosThckRflt<T>

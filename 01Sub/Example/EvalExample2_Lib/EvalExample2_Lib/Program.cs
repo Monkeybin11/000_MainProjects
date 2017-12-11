@@ -20,6 +20,11 @@ namespace EvalExample2_Lib
 	{
 		static void Main( string [ ] args )
 		{
+			P2_Dll.main2();
+		}
+
+		public static void ex1()
+		{
 			var value = CSharpScript.EvaluateAsync("1+2");
 			WriteLine( value.Result );
 
@@ -37,7 +42,7 @@ namespace EvalExample2_Lib
 			var val3 = CSharpScript.EvaluateAsync<string>(@"Path.Combine(""A"",""B"");" , options).Result;
 			WriteLine( val3 );
 
-										
+
 
 
 
@@ -55,7 +60,11 @@ namespace EvalExample2_Lib
 			//result is now 5
 			Console.WriteLine( result );
 			Console.ReadLine();
+
+
+
 		}
+
 
 		static Func<string,string> Getimg =
 			Path => "Image";

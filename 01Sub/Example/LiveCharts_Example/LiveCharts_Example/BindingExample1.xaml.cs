@@ -35,7 +35,7 @@ namespace LiveCharts_Example
 			set
 			{
 				_Counter = value;
-				OnPropertyChanged( "Counter" );
+				OnPropertyChanged( "여기에 프로퍼티 이름" );
 			} }
 
 		int i;

@@ -22,15 +22,24 @@ namespace SpeedyCoding
             Tuple<int , int> target
             )
         {
-            return Math.Sqrt( ( @this.Item1 - target.Item1 ) ^ 2 + ( @this.Item2 - target.Item2 ) ^ 2 );
+            return Math.Sqrt( Math.Pow( ( @this.Item1 - target.Item1 ) , 2 ) + Math.Pow( ( @this.Item2 - target.Item2 ) , 2 ) );
         }
 
-        public static double L2(
+		public static double L2(
+		 this Tuple<double , double> @this ,
+		 Tuple<double , double> target
+		 )
+		{
+			return Math.Sqrt( Math.Pow( ( @this.Item1 - target.Item1 ) , 2)  +Math.Pow( ( @this.Item2 - target.Item2 ) , 2) );
+		}
+
+
+		public static double L2(
             this Tuple<byte , byte> @this ,
             Tuple<byte , byte> target
             )
         {
-            return Math.Sqrt( ( ( int )@this.Item1 - ( int )target.Item1 ) ^ 2 + ( ( int )@this.Item2 - ( int )target.Item2 ) ^ 2 );
+            return Math.Sqrt( Math.Pow( ( @this.Item1 - target.Item1 ) , 2 ) + Math.Pow( ( @this.Item2 - target.Item2 ) , 2 ) );
         }
         #endregion
 
