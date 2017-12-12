@@ -6,18 +6,18 @@ using ModelLib.AmplifiedType;
 using static ModelLib.AmplifiedType.Handler;
 using FittingDataStruct;
 
-namespace ThicknessAndComposition_Inspector_IPS_Core
+using static FittingDataStruct.Handler;
+using static SpeedyCoding.Handler;
+using static System.IO.Directory;
+using static System.IO.Path;
+using System;
+
+
+namespace Fitting_Core
 {
-	using static FittingDataStruct.Handler;
-	using static SpeedyCoding.Handler;
 	using FileNames = IEnumerable<string>;
 	using DPosThckRflt = NumPosThckRflt<double>;
 	using MssData = DatasAnMissing<List<double>>;
-
-	using static System.IO.Directory;
-	using static System.IO.Path;
-	using System;
-
 	public static partial class DataLoader
 	{
 		readonly static string RefFileName = "Reflectivity.csv";
@@ -36,12 +36,12 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			{
 				var samefile = path.Where( x => x.Split('_').First() == simbol);
 
-				var resultPath = samefile.Where(x => x.Split('_').Last() == ResFileName ).ToList(); 
+				var resultPath = samefile.Where(x => x.Split('_').Last() == ResFileName ).ToList();
 				var rfltPath = samefile.Where(x => x.Split('_').Last() == RefFileName ).ToList();
 
 				if ( resultPath.Count == 1 && rfltPath.Count == 1 )
 				{
-					output.Add( new string [ ] { simbol.Split('-').First().Split('\\').Last() , resultPath.First() , rfltPath.First() } );
+					output.Add( new string [ ] { simbol.Split( '-' ).First().Split( '\\' ).Last() , resultPath.First() , rfltPath.First() } );
 				}
 			}
 			return output;
@@ -52,23 +52,23 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 			var output = new List<string[]>();
 
-			var simbolList = path.Select(x => x.Split('_').First()).Distinct().ToList();
+			var simbolList = path.Select(x => x.Split('_').FromLast(1) ).Distinct().ToList();
 
 			foreach ( var simbol in simbolList )
 			{
-				var samefile = path.Where( x => x.Split('_').First() == simbol);
+				var samefile = path.Where( x => x.Split('_').FromLast(1) == simbol);
 
 				var resultPath = samefile.Where(x => x.Split('_').Last() == ResFileName ).ToList();
 				var rfltPath = samefile.Where(x => x.Split('_').Last() == RefFileName ).ToList();
 
 				if ( resultPath.Count == 1 && rfltPath.Count == 1 )
 				{
-					output.Add( new string [ ] { simbol.Split( '-' ).First().Split( '\\' ).Last() , resultPath.First() , rfltPath.First() } );
+					output.Add( new string [ ] { simbol.Split( '-' ).FromLast(1).Split( '\\' ).Last() , resultPath.First() , rfltPath.First() } );
 				}
 			}
-			return output.Count > 0 
-					? Just(output) 
-					: None ;
+			return output.Count > 0
+					? Just( output )
+					: None;
 		}
 
 
@@ -118,15 +118,16 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				for ( int j = 0 ; j < newrflt.Count ; j++ )
 				{
 					var ptrw = ToPosThckRflt(  newthck[j][0] , newthck[j][1] , newthck[j][2] , newrflt[j] , wave );
-					
+
 					output.Add( ptrw );
 				}
 				totallist.Add( output );
 			}
-			return Just(totallist.Flatten().ToList());
+			return Just( totallist.Flatten().ToList() );
 		}
 	}
 }
+
 
 
 

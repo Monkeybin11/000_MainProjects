@@ -12,6 +12,7 @@ using ThicknessAndComposition_Inspector_IPS_Core;
 
 namespace TestConsole
 {
+	//using XGBoost;
 	using DataTable = IEnumerable<IEnumerable<double>>;
 
 	class Student
@@ -24,27 +25,33 @@ namespace TestConsole
 	{
 
 		static string path = @"E:\temp\pos.csv";
-		static string ipspath  = @"E:\IPSData\IPSTest\1-1_Refelctivity.csv";
+		static string ipspath  = @"E:\IPSData\IPSData\1-1_Reflectivity.csv";
+		static string klapath  = @"E:\IPSData\KLAData\ThicknessData\2-KLAResult.csv";
 		static void Main( string [ ] args )
 		{
+			var res = DataLoader.GetEachDataSet( ipspath , klapath);
 
-			DataLoader.main( ipspath );
+			//var re = new XGBRegressor();
+			//
+			//var x = new float[][]
+			//	{
+			//		new float[] { 1, 2},
+			//		new float[] { 2 , 3},
+			//		new float[] { 5, 6}
+			//	};
+			//
+			//var y = new float[] { 1,2,5};
+			//
+			//var x2 = new float[][]
+			//	{
+			//		new float[] { 3, 4},
+			//		new float[] { 5 , 6},
+			//		new float[] { 7, 8}
+			//	};
+			//
+			//re.Fit( x , y );
+			//var temp = re.Predict(x2);
 
-
-
-			//var ores = new double[2][] { new double [ ] { 1,2} , new double [ ] { 3,4} };
-			//
-			//var t1 = ores.AsEnumerable();
-			//var t2 = ores.Select(x => x.AsEnumerable());
-			//
-			//
-			//var datas = new List<double>() { 1,2,3,4,5 };
-			//var test = Just(datas);
-			//
-			//
-			//var res = File.ReadAllLines(path);
-			//var res1 = File.ReadAllText(path);
-			//var res2 = File.ReadLines(path).ToList();
 			Console.WriteLine();
 		}
 

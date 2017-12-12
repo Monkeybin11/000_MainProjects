@@ -6,13 +6,16 @@ using ModelLib.AmplifiedType;
 using static ModelLib.AmplifiedType.Handler;
 using FittingDataStruct;
 
-namespace ThicknessAndComposition_Inspector_IPS_Core
-{
-	using static ApplicationUtilTool.FileIO.CsvTool;
-	using static System.IO.Directory;
-	using static System.IO.Path;
-	using static FittingDataStruct.Handler;
+using static ApplicationUtilTool.FileIO.CsvTool;
+using static System.IO.Directory;
+using static System.IO.Path;
+using static FittingDataStruct.Handler;
 
+
+using System.IO;
+
+namespace Fitting_Core
+{
 	using Paths = IEnumerable<string>;
 	using FileNames = IEnumerable<string>;
 	using RowDatas = List<double>;
@@ -20,7 +23,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 	using MList = Maybe<List<double>>;
 	using MssData = DatasAnMissing<List<double>>;
-	using System.IO;
 
 	// Base Funcs
 	public static partial class DataLoader
@@ -35,14 +37,14 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				var test = GetFileName(files.First()).Split( '_' ).Last();
 				var namelist = files.Where( x=>  head == GetFileName(x).Split( '_' ).First() ).ToList();
 
-					// case : only single files exist
+				// case : only single files exist
 				if ( namelist.Count < 2 ) return false;
 
 				var thcks = ThckFilter(namelist);
 				var rflts = RfltFilter(namelist);
 
-					// case : only single rflt and result exist.
-					// prevent 1-1_1_Result.csv and  1-1_2_Result.csv 
+				// case : only single rflt and result exist.
+				// prevent 1-1_1_Result.csv and  1-1_2_Result.csv 
 				if ( thcks.Count() != 1 || rflts.Count() != 1 ) return false;
 			}
 			return true;
@@ -52,12 +54,12 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 
 		static Dictionary<string , List<float>> GetKlaData
-			(FileNames paths )
+			( FileNames paths )
 		{
 			var output = new Dictionary<string , List<float>>();
 			foreach ( var item in paths )
 			{
-				output.Add( GetNumOfClass( item ) , ReadKlaData( item ).TryFloatParse().ToList()  );
+				output.Add( GetNumOfClass( item ) , ReadKlaData( item ).TryFloatParse().ToList() );
 			}
 			return output;
 		}
@@ -98,7 +100,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		static Func<string , string> GetNumOfClass
 			=> x
-			=> x.Split( '-' ).First().Split('\\').Last();
+			=> x.Split( '-' ).First().Split( '\\' ).Last();
 
 		static Func<string , string [ ] [ ]> ReadPos
 		=> file => ReadCsv2String( file , rowend: 25 , colend: 2 , rowskip: 1 , order0Dirction: false );
@@ -109,9 +111,9 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		static Func<string , string [ ] [ ]> ReadWaveLen
 		=> file => ReadCsv2String( file , rowend: 850 , colend: 1 , rowskip: 451 , colskip: 0 , order0Dirction: true );
 
-		static Func<string, string[]> ReadKlaData
-			=> path => ReadCsv2String( path , rowend: 25 , colend: 3 , rowskip: 1 , colskip : 2, order0Dirction: false )
-						.Select( x => x[0])
+		static Func<string , string [ ]> ReadKlaData
+			=> path => ReadCsv2String( path , rowend: 25 , colend: 3 , rowskip: 1 , colskip: 2 , order0Dirction: false )
+						.Select( x => x [ 0 ] )
 						.ToArray();
 
 		/// <summary>
@@ -140,14 +142,14 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 
 		static Maybe<FileNames> MGetAllFileNames( Paths dirpaths )
-			=> Just(dirpaths.Lift( f => GetFiles( f ) ).Flatten());
+			=> Just( dirpaths.Lift( f => GetFiles( f ) ).Flatten() );
 
-		static Maybe<string[]> MGetAllDirs( string topdir )
+		static Maybe<string [ ]> MGetAllDirs( string topdir )
 		{
 			var dir =  GetDirectories( topdir , "*" , System.IO.SearchOption.AllDirectories );
 			return dir.Count() == 0
 					? Just( Just( topdir ).AsEnumerable().ToArray() )
-					: Just(dir);
+					: Just( dir );
 		}
 		#endregion
 
@@ -167,7 +169,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			return result;
 		}
 
-		static IEnumerable<double[]> TryDoubleParse
+		static IEnumerable<double [ ]> TryDoubleParse
 		( this IEnumerable<IEnumerable<string>> strs )
 		{
 			List<double[]> result = new List<double[]>();
@@ -176,15 +178,15 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 			for ( int i = 0 ; i < strlist.Length ; i++ )
 			{
-				
+
 				var rowstrdata = strlist[i].ToArray();
 				var rows = new double[ rowstrdata.Length ];
 
 				for ( int j = 0 ; j < rowstrdata.Length ; j++ )
 				{
 					double output;
-					if ( double.TryParse( rowstrdata[j] , out output ) )
-						rows[j] = output ;
+					if ( double.TryParse( rowstrdata [ j ] , out output ) )
+						rows [ j ] = output;
 				}
 
 				result.Add( rows );
@@ -200,7 +202,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			if ( double.TryParse( str , out output ) )
 			{ return output; }
 			return -999999;
-		
+
 		}
 
 
@@ -307,7 +309,7 @@ namespace FittingDataStruct
 
 		public static NumPosThckRflt<T> ToPosThckRflt<T>
 			( T x , T y , T thck , List<T> rflt , List<T> wave )
-			=> new NumPosThckRflt<T>(  x , y , thck  , rflt , wave );
+			=> new NumPosThckRflt<T>( x , y , thck , rflt , wave );
 	}
 
 	public class NumPosThckRflt<T>

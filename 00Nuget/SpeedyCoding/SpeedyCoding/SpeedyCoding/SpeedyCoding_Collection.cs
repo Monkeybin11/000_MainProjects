@@ -75,6 +75,13 @@ namespace SpeedyCoding
 			return Enumerable.Range( start , count ).Select( x => x * step );
 		}
 
+		public static T FromLast<T>
+			( this IEnumerable<T> src , int idxfromlast )
+		{
+			var count = src.Count();
+			return src.ElementAt( count - 1 - idxfromlast );
+		}
+
 		/// <summary>
 		/// Pick only element that in range for prevent outofindex exception
 		/// </summary>
@@ -125,7 +132,6 @@ namespace SpeedyCoding
 				|| rowcol [ 0 ]  < 0
 				|| rowcol [ 1 ]  < 0)
 			{
-				var de = default(T);
 				return default(T);
 			}
 			var temp = self [ rowcol[0] ] [ rowcol[1] ];

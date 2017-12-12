@@ -1,0 +1,47 @@
+﻿<Window x:Class="ThicknessAndComposition_Inspector_IPS.Win_FittingControl"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ThicknessAndComposition_Inspector_IPS"
+        xmlns:xc ="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="FittingControl" Height="600" Width="280">
+    <Grid>
+        <DockPanel Margin="5">
+            <Border CornerRadius="6" BorderThickness="2" BorderBrush="LightSteelBlue" DockPanel.Dock="Top">
+                <UniformGrid Columns="2" Rows="16" >
+                    <Button x:Name="btnLoad" Content="Load Data" Style="{StaticResource btnBase}" Click="btnLoad_Click"/>
+                    <Button x:Name="btnStart" Content="Update" Style="{StaticResource btnBase}" Click="btnStart_Click"/>
+                    <Button x:Name="btnLoadModel" Content="Load Model" Style="{StaticResource btnBase}" Click="btnLoadModel_Click"/>
+                    <Button x:Name="btnSaveModel" Content="Save Model" Style="{StaticResource btnBase}" Click="btnSaveModel_Click"/>
+                    <Button x:Name="btnEvaluate" Content="Evaluate Model" Style="{StaticResource btnBase}" Click="btnEvaluate_Click"/>
+                    <Button x:Name="btnUseModel" Content="Save Model" Style="{StaticResource btnBase}" Click="btnUseModel_Click"/>
+                    <Label Content="MSE Error :" Style="{StaticResource labelTAble}"/>
+                    <Label x:Name="lblError" Content="0" Style="{StaticResource labelTAble}"/>
+                    <Label Content="maxDepth" Style="{StaticResource labelTAble}"/>
+                    <xc:DoubleUpDown x:Name="nudmaxDepth" Style="{StaticResource nudBase}"/>
+                    <Label Content="learningRate" Style="{StaticResource labelTAble}"/>
+                    <xc:DoubleUpDown x:Name="nudlearningRate" Style="{StaticResource nudBase}"/>
+                    <Label Content="nEstimators" Style="{StaticResource labelTAble}"/>
+                    <xc:DoubleUpDown x:Name="nudnEstimators" Style="{StaticResource nudBase}"/>
+                    <Label Content="gamma" Style="{StaticResource labelTAble}"/>
+                    <xc:DoubleUpDown x:Name="nudgamma" Style="{StaticResource nudBase}"/>
+                    <Label Content="minChildWeight" Style="{StaticResource labelTAble}"/>
+                    <xc:DoubleUpDown x:Name="nudnudmaxDepth" Style="{StaticResource nudBase}"/>
+                    <Label Content="maxDeltaStep" Style="{StaticResource labelTAble}"/>
+                    <xc:DoubleUpDown x:Name="nudmaxDeltaStep" Style="{StaticResource nudBase}"/>
+                    <Label Content="subsample" Style="{StaticResource labelTAble}"/>
+                    <Label Content="colSampleByTree" Style="{StaticResource labelTAble}"/>
+                    <Label Content="colSampleByLevel" Style="{StaticResource labelTAble}"/>
+                    <Label Content="regAlpha" Style="{StaticResource labelTAble}"/>
+                    <Label Content="regLambda" Style="{StaticResource labelTAble}"/>
+                    <Label Content="scalePosWeight" Style="{StaticResource labelTAble}"/>
+                    <Label Content="baseScore" Style="{StaticResource labelTAble}"/>
+
+                </UniformGrid>
+
+            </Border>
+        </DockPanel>
+    </Grid>
+</Window>

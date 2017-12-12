@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeedyCoding", "..\..\..\00
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterfaceCollection", "..\..\..\02Starter\Interface\InterfaceCollection\InterfaceCollection\InterfaceCollection.csproj", "{939597ED-4B78-4806-BA27-22D97EB6ECFA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitting_Core", "..\Fitting_Core\Fitting_Core.csproj", "{B77267AC-BDDB-4D49-974E-5069DFC0303B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,14 @@ Global
 		{939597ED-4B78-4806-BA27-22D97EB6ECFA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{939597ED-4B78-4806-BA27-22D97EB6ECFA}.Release|x64.ActiveCfg = Release|x64
 		{939597ED-4B78-4806-BA27-22D97EB6ECFA}.Release|x64.Build.0 = Release|x64
+		{B77267AC-BDDB-4D49-974E-5069DFC0303B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B77267AC-BDDB-4D49-974E-5069DFC0303B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B77267AC-BDDB-4D49-974E-5069DFC0303B}.Debug|x64.ActiveCfg = Debug|x64
+		{B77267AC-BDDB-4D49-974E-5069DFC0303B}.Debug|x64.Build.0 = Debug|x64
+		{B77267AC-BDDB-4D49-974E-5069DFC0303B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B77267AC-BDDB-4D49-974E-5069DFC0303B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B77267AC-BDDB-4D49-974E-5069DFC0303B}.Release|x64.ActiveCfg = Release|Any CPU
+		{B77267AC-BDDB-4D49-974E-5069DFC0303B}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
