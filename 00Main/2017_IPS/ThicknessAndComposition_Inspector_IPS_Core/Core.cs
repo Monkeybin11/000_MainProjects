@@ -256,8 +256,24 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 													: logres.Act( x => Lggr.Log(x.Left , true )); // Logging Error
 
 						evtSpectrum( intenlist.Right , SelectedWaves );
+
+
+
+
+
+
+
+						ToThickness(
+							toReflect(intenlist.Right)
+								.Act( x => evtRefleectivity( x , SelectedWaves ))
+								.ToLEither(intenlist.Left),
+							wavelength,
+							pos );  // Estimate Thickness
 						
-						calcTaskList[ taskcounter++ ] // 여기서 두께를 계산하게 됨
+
+
+
+			calcTaskList [ taskcounter++ ] // 여기서 두께를 계산하게 됨
 										= Task.Run<Tuple<PlrCrd , LEither<double> ,double[] >>(
 											() => logres.IsRight
 													? ToThickness(
