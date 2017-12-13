@@ -50,11 +50,14 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		#endregion
 
 		#region Static Data
+		public string ModelPath = AppDomain.CurrentDomain.BaseDirectory + "Model";
+		public string ModelName = "CurrentModel.model";
 		public string ConfigBasePath = AppDomain.CurrentDomain.BaseDirectory + "config";
 		public string ConfigName = "SettedConfig.xml";
 		public string PrcConfigBasePath = AppDomain.CurrentDomain.BaseDirectory + "Prcconfig";
 		public string PrcConfigName = "PrcSettedConfig.xml";
 
+		public string ModelFullPath { get { return Path.Combine( ModelPath.CheckAndCreateDir() , ModelName ); } }
 		public string ConfigFullPath { get { return Path.Combine( ConfigBasePath , ConfigName ); } }
 		public string PrcConfigFullPath { get { return Path.Combine( PrcConfigBasePath , PrcConfigName ); } }
 		string LogTime = "yyyy-MM-dd_HH-mm-ss";

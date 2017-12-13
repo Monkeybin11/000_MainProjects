@@ -20,10 +20,12 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using EmguCvExtension;
 using System.Diagnostics;
+using Fitting_Core;
 
 namespace ThicknessAndComposition_Inspector_IPS_Core
 {
 	using static Core_Helper;
+	using static Core_Fitting;
 	public partial class IPSCore
 	{
 		public ScanPosData ScanPos; 
@@ -66,21 +68,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 						new IPSDefualtSetting().ToConfig() , // Defulat Setting
 						ConfigBasePath.CheckAndCreateDir() ,
 						ConfigName.CheckAndCreateFile() );
-
-		
-
-			//Task.Run( () =>
-			//{
-			//	while ( true )
-			//	{
-			//		if ( FlgAutoUpdate )
-			//		{
-			//			GetPos();
-			//		}
-			//		Thread.Sleep( 0 );
-			//	}
-			//} );
-
 		}
 
 		public bool ConnectHW( string comport )
@@ -184,14 +171,27 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 						Tuple<PlrCrd , LEither<double> , double [ ]>> ToThickness =>
 			( reflections , wave , plrcrd ) =>
 			{
+
+				var temp =  reflections.Bind( x => x.Skip( 450 ).Take( 400 ).ToArray() , "Refine Refelectivity Fail" );
+				var temp2 = Predict(temp.Right);
+
+				List<double> templist = new List<double>();
+
+				foreach ( var item in temp2 )
+				{
+					templist.Add( ( double )item );
+				}
+
 				return Tuple.Create( plrcrd,
-									 reflections.Bind( x => x.Integral(wave , Config.IntglStart , Config.IntglEnd), "Integral Fail" )
-											    .Bind( x => ( x*Config.Weight + Config.Bias) ),
+									 reflections.Bind( x => x.Skip(450).Take(400).ToArray()	, "Refine Refelectivity Fail" )
+											    .Bind( Predict , "Predict Fail" )
+												.Bind( x => (double)x.First() ),
 									 reflections.Right);
 			};
 
 		public async Task<bool> ScanAutoRun() // Use Internal Config , not get config from method parameter
 		{
+			LoadModel( ModelFullPath );
 			OpMaxSpeed();
 			OpORGMaxSpeed();
 			counter = 0;

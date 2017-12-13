@@ -36,6 +36,14 @@ namespace Fitting_Core
 			return Regr;
 		}
 
+		public static float [ ] Predict( double [ ] src )
+		{
+			var xdata = src.Select( x =>(float)x).ToArray();
+			var output =  Regr.Predict( new float[][] { xdata } );
+			return output   ;
+		}
+
+
 
 		public static Action<string> SaveModel
 			=> ( path )
