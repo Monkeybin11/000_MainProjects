@@ -18,7 +18,8 @@ namespace ApplicationUtilTool.Log
 		public TextLogger( string dir , string name )
 		{
 			BaseDir = dir.CheckAndCreateDir();
-			FileName = name.CheckAndCreateFile();
+			FileName = name;
+			FullPath.CheckAndCreateFile();
 		}
 
 		public void Log( string msg , bool addTime = false)

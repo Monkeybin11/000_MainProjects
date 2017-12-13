@@ -40,44 +40,16 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		}
 		#endregion
 
-
-		#region Visualize
-		public void DrawTest()
-		{
-			CreateMapandBar( ResultData , 6 )
-					.Act( x => ImgScanResult = x.Item1 [ 0 ] )
-					.Act( x => Imgscalebar = x.Item1 [ 1 ] )
-					.Act( x => EstedThickness = x.Item2 );
-
-		}
-
-		public Image<Bgr , byte> [ ] CreateMap2( IPSResult src , int divide )
-		{
-			var offset = src.SpotDataList.Select( x => x.PlrPos.Rho/10).Max();
-			var thlist = src.SpotDataList.Select( x => x.Thickness);
-			var min = thlist.Min();
-			var max = thlist.Max();
-
-			var cm = new ColorMap().Inferno_cm;
-			var xyCm1 = src.Result2TRThArr().OrderBy( x => x[1]).Select( x =>x).ToList(); 
-			var xyCm2 = xyCm1            .Interpol_Theta(divide).OrderBy( x => x[0]).ThenBy( x => x[1]).Select( x =>x).ToList();
-			var xyCm3 = xyCm2             .Interpol_Rho(divide).OrderBy( x => x[0]).ThenBy( x => x[1]).Select( x =>x).ToList();
-			var xyCm4 = xyCm3             .ToCartesianReslt().OrderBy( x=> x[0]).ThenBy( x => x[1]).Select( x =>x).ToList();
-
-			return null;
-		}
-
-		#endregion
-
 		#region IO
 
 		public void SaveResult( string path , IPSResult result )
 		{
+			if ( !CheckResult( result ) ) return;
 			StringBuilder stb = new StringBuilder();
 			//stb.Append( "Theta" + "," + "Rho" + "," + "Thickness" );
 			stb.Append( "X" + "," + "Y" + "," + "Thickness" );
 			stb.Append( Environment.NewLine );
-			result.SpotDataList.ForEach( x =>
+			result?.SpotDataList.ForEach( x =>
 			{
 				stb.Append( x.CrtPos.X.ToString("N2") + "," +  x.CrtPos.Y.ToString("N2") );
 				//stb.Append( x.PlrPos.Theta.ToString() + "," +  x.PlrPos.Rho.ToString() );
@@ -95,6 +67,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			List<double> refer , 
 			List<double> absreflect )
 		{
+			if ( !CheckResult( result ) ) return;
 			StringBuilder stb = new StringBuilder();
 			
 			stb.Append( "WaveLength,Dark,Referance,Abs_Reflectivity" );
@@ -131,6 +104,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		IPSResult result,
 		List<double> wavelen )
 		{
+			if ( !CheckResult( result ) ) return;
 			StringBuilder stb_raw = new StringBuilder();
 			stb_raw.Append( "WaveLength" );
 			result.SpotDataList.ForEach( x =>
@@ -152,8 +126,27 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			File.WriteAllText( path , stb_raw.ToString() );
 		}
 
-		public void SaveImage(string path )
-			=> ImgScanResult.Save( path );
+		public bool SaveImage( string path )
+		{
+			if ( ImgScanResult == null )
+			{
+				MessageBox.Show( "Scan result is not exist. Save is canceled" );
+				return false;
+			}
+			ImgScanResult.Save( path );
+			return true;
+		}
+
+		private bool CheckResult( IPSResult res )
+		{
+			if ( res == null )
+			{
+				MessageBox.Show( "Scan result is not exist. Save is canceled" );
+				return false;
+			}
+			return true;
+		}
+
 
 		public void LoadConfig( string path )
 		{
@@ -185,16 +178,10 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 	public static class Core_Helper
 	{
-		public static Tuple<Image<Bgr , byte> [ ] , int [ ]> CreateMapandBar( IPSResult src , int divide )
+		public static Image<Bgr , byte>  CreateMapandBar( IPSResult src , int divide )
 		{
-			
-
 			int dotSize = 5;
 			var sizemultiflier = 8;
-			var scalebarTask = new Task<Image<Bgr,byte>>(
-									() => CreateScalebar())
-								.Act( x => x.Start());
-
 			var imgshiftoffset = 10;
 			var offset = src.SpotDataList.Select( x => x.PlrPos.Rho/10.0).Max(); // Padding Size
 			var thcklist = src.SpotDataList.Select( x => x.Thickness);
@@ -233,6 +220,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 
 			var srcdatas = src.Result2TRThArr().Select( x =>x).ToList();
+			
 			/*
 			#region 
 			// Extact Color Position
@@ -315,11 +303,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				);
 
 			var imgData = new byte[(int)(imgsize*sizemultiflier + imgshiftoffset*2.0) ,(int)(imgsize*sizemultiflier+imgshiftoffset*2.0),3];
-			//var grayimgData = new byte[(int)(imgsize*sizemultiflier + imgshiftoffset*2.0) ,(int)(imgsize*sizemultiflier+imgshiftoffset*2.0),1];
 			Image<Bgr,byte> img = new Image<Bgr, byte>(imgData);
-			//Image<Gray,byte> grayimg = new Image<Gray, byte>(grayimgData);
-			Console.WriteLine();
-			Console.WriteLine( "  --- Datas  ---" );
 			var circleLst = xyCm.Select((x,i) =>
 									new
 									{
@@ -327,7 +311,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 																			(int)(x.X*sizemultiflier)+imgshiftoffset,
 																			(int)(x.Y*sizemultiflier)+imgshiftoffset),
 
-										color = new MCvScalar(x.Cm[2]*255 , x.Cm[1]*255 , x.Cm[0]*255).Act(k => { if(i %500 == 0) { test22(k); } } )
+										color = new MCvScalar(x.Cm[2]*255 , x.Cm[1]*255 , x.Cm[0]*255)
 									});
 
 
@@ -338,20 +322,8 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			img = img.Median( 5 );
 			img = img.SmoothGaussian( 3 );
 
-			return Tuple.Create(
-					 new Image<Bgr , byte> [ ] { img , scalebarTask.Result } ,
-					 new int [ ] { } );
-			//grayimg.Data.Flatten().Select(x => (int)x).ToArray() );
+			return img; 
 		}
-
-		static Action<MCvScalar> test22 =
-			x => {
-				var r = x.V0.ToString();
-				var g = x.V1.ToString();
-				var b = x.V2.ToString();
-				Console.WriteLine( b.ToString() + " , " + g.ToString() + " , " + r.ToString() );
-			};
-
 
 		public static Image<Bgr , byte> CreateScalebar()
 		{

@@ -24,7 +24,7 @@ using ModelLib.AmplifiedType;
 namespace ThicknessAndComposition_Inspector_IPS
 {
 	using static ModelLib.AmplifiedType.Handler;
-
+	using static ThicknessAndComposition_Inspector_IPS_Core.Core_Helper;
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
@@ -35,6 +35,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 		Win_Config WinConfig;
 		Win_SpctDisplay WinSpct;
 		WIn_SinglePointAnalysis WinSingleScan;
+		Win_FittingControl WinFitting;
 		bool CoreRunning;
 
 		#region Load Close
@@ -45,12 +46,13 @@ namespace ThicknessAndComposition_Inspector_IPS
 		}
 		private void Window_Loaded( object sender , RoutedEventArgs e )
 		{
-			ucSpectrum.Title = "Raw Spectrum";
-			ucReflectivity.Title = "Reflectivity";
+			ucSpectrum.lblTitle.Content = "Raw Spectrum";
+			ucReflectivity.lblTitle.Content = "Reflectivity";
 
 			WinConfig = new Win_Config();
 			WinSpct = new Win_SpctDisplay();
 			WinSingleScan = new WIn_SinglePointAnalysis();
+			WinFitting = new Win_FittingControl();
 			ucLSMenu.evtBtn += new BtnEvt( LeftSideBtn );
 
 			Core = new IPSCore()
@@ -80,8 +82,30 @@ namespace ThicknessAndComposition_Inspector_IPS
 				MessageBox.Show("Spectrometer Problem. Transfer wavelength fail.  Please restart spectrometer ") ;
 			Core.StartBackgroundTask();
 
-
+			UI_Init();
 		}
+
+		private void UI_Init()
+		{
+			ucSpectrum.UpdateSeries( new double [ ] { 1 , 1100 , 110000 , 110000 } , new double [ ] { 1 , 2 , 3 , 4 } );
+			ucReflectivity.UpdateSeries( new double [ ] { 1 , 1100 , 110000 , 110000 } , new double [ ] { 1 , 2 , 3 , 4 } );
+
+			ucSpectrum.lblTitle.Content = "Intensity";
+			ucSpectrum.axisY.Title = "Intensity";
+			ucSpectrum.Ysprtor.Step = 5000;
+			ucSpectrum.axisY.MaxValue = 61000;
+			ucSpectrum.axisY.MinValue = 0;
+
+			ucReflectivity.lblTitle.Content = "Reflectivity";
+			ucReflectivity.axisY.Title = "Reflectivity";
+			ucReflectivity.Ysprtor.Step = 10;
+			ucReflectivity.axisY.MaxValue = 110;
+			ucReflectivity.axisY.MinValue = 0;
+
+			ucMapDisplay.imgScale.ImageSource = CreateScalebar().ToBitmapSource();
+		}
+
+
 
 
 		private void Window_Closed( object sender , EventArgs e )
@@ -104,41 +128,53 @@ namespace ThicknessAndComposition_Inspector_IPS
 		bool FlgSpctDisplay;
 		public void FileMenuClick( object sender , RoutedEventArgs e )
 		{
-			SaveFileDialog ofd = new SaveFileDialog();
+			SaveFileDialog sfd = new SaveFileDialog();
 			if ( CoreRunning ) return;
 			CoreRunning = true;
 			var master = sender as MenuItem;
 			switch ( master.Name )
 			{
 				case "menuSaveResultonly":
-					
-					break;
+					if ( sfd.ShowDialog() == true )
+						Core.SaveResult( sfd.FileName + "_Result.csv" , Core.ResultData );
+						break;
 				case "menuSaveRawonly":
+					if ( sfd.ShowDialog() == true )
+					{
+						Core.SaveRaw(
+							sfd.FileName + "_Raw.csv" ,
+							Core.ResultData ,
+							Core.SelectedWaves ,
+							Core.Darks ,
+							Core.Refs ,
+							Core.SelectedReflctFactors );
 
+						Core.SaveRawReflectivity(
+								sfd.FileName + "_Reflectivity.csv" ,
+								Core.ResultData ,
+								Core.SelectedWaves );
+					}
 					break;
 				case "menuSaveImageonly":
-
-					break;
-				case "menuViewSpct":
-
-					break;
-				case "menuSaveConfig":
-					ofd.Filter = "Data Files (*.xml)|*.xml";
-					ofd.DefaultExt = "xml";
-					ofd.AddExtension = true;
-					if ( ofd.ShowDialog() == true )
-					{
-						Core.SaveConfig(ofd .FileName);
-					}
-					
-					break;
+					if ( sfd.ShowDialog() == true )
+						Core.SaveImage( sfd.FileName );
+						break;
 				
+				case "menuSaveConfig":
+					sfd.Filter = "Data Files (*.xml)|*.xml";
+					sfd.DefaultExt = "xml";
+					sfd.AddExtension = true;
+					if ( sfd.ShowDialog() == true )
+					{
+						Core.SaveConfig(sfd .FileName);
+					}
+					break;
 
 				case "menuExit":
 					Environment.Exit( Environment.ExitCode );
 					break;
 			}
-
+			CoreRunning = false;
 		}
 
 		public void AnalysisMenuClick( object sender , RoutedEventArgs e )
@@ -160,6 +196,10 @@ namespace ThicknessAndComposition_Inspector_IPS
 									.Act( x => x.evtClose += () => this.IsEnabled = true )
 									.Act( x => x.Show()); 
 					this.IsEnabled = false;
+					break;
+					
+				case "menuModelUpdator":
+					WinFitting.Visibility = Visibility.Visible;
 					break;
 
 				default:
@@ -266,39 +306,25 @@ namespace ThicknessAndComposition_Inspector_IPS
 				case "btnHome":
 					Core.OpORGMaxSpeed();
 					Core.OpHome();
-					//var data = Enumerable.Range(0,50).Select( x => (double)x).ToArray();
-					//Random rnd = new Random();
-					//double[] data2 = new double[4] { rnd.Next(10) *10 , rnd.Next(10) * 10 , rnd.Next(10) * 10 ,  rnd.Next(10) *10};
-					//ucHisto.CreateHistogram2( data2 );
-					//ucHisto.CreateHistogram( );
-					//Core.OnePointScan();
 					break;
 				case "btnScanReady":
 					Core.OpReady(IPSCore.ScanReadyMode.All);
 					break;
 				case "btnReconnect":
-					Core.DrawTest();
-					ucMapDisplay.DrawImg( Core.ImgScanned , Core.ImgScaleBar );
-					//Window_Loaded( null , null );
+					Core.Connect();
 					break;
-
 				case "btnStart":
-					//Core.ScanRun();
-					
 					Core.Config = UI2IpsConfig();
 					ucLSStatus.lblProgress.Content = "InProgress";
 					Core.ScanPos = new ScanPosData();
-					Core.ScanPos.RhoList [ 3 ] = ucLSMenu.nudOuterLength.Value.ToNonNullable();
+					Core.ScanPos.RhoList [ 3 ] = Core.Config.EndgeEnd;
 
-					var result = await Task<bool>.Run(()=> Core.ScanAutoRun());
-
-					if ( result )
+					if ( await Task<bool>.Run( () => Core.ScanAutoRun() ) )
 					{
 						ucLSStatus.lblProgress.Content = "Ready";
 						ucDataGrid.UpdateGrid( Core.ResultData.SpotDataList.Select( x =>
 																x.ToGridResult() ).ToList() );
-						ucMapDisplay.DrawImg( Core.ImgScanned , Core.ImgScaleBar );
-						//ucHisto.DrawHistogram( Core.ResultData.SpotDataList.Select( x => x.Thickness).ToArray() );
+						ucMapDisplay.DrawImg( Core.ImgScanned );
 					}
 					else ucLSStatus.lblProgress.Content = ( "Ready (Interruped)" );
 					
@@ -311,28 +337,11 @@ namespace ThicknessAndComposition_Inspector_IPS
 						Core.SaveConfig( ofd.FileName );
 					}
 					break;
-
-				case "btnLoadData":
-					//if ( ofd.ShowDialog() == true )
-					//{
-					//	Core.LoadConfig( ofd.FileName );
-					//	Config2UI( Core.Config );
-					//}
-					break;
-
-				
 				default:
 					break;
 			}
 			Mouse.OverrideCursor = null;
 			CoreRunning = false;
-
-			// Load config 
-			// Save config
-			// Save Raw Data
-			// ToDo : 결과 저장 기능. 결과 디스플레이 , 두께 찾는기능 ( 스펙트럼데이터 -> 두께)
-			// ToDo : 서브기능 = 1. 레전드 표시 , 2. 스테이지 실시간 포지션  3. 스펙트로미터 실시가나 표시 
-
 		}
 	}
 	

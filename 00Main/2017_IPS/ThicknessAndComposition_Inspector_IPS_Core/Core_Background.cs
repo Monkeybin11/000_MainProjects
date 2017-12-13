@@ -44,7 +44,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		public List<int> PickedFactorIdx = new List<int>();
 		public List<double> ReflctFactors = new List<double>();
 		public List<double> SelectedReflctFactors = new List<double>();
-		public int[] EstedThickness = new int[] { };
 
 		public int SpectrometerDelayTime { get { return Config.SpectrumWaitTime; } set { } }
 		#endregion

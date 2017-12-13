@@ -103,7 +103,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 						.Map( Adaptor.ToIPSResult )
 						.Act( x => ucAnalysisMap.SetBtnTag(x) )
 						.Map( x => CreateMapandBar( x , 6 ) )
-						.Map( x => x.Item1[0].ToBitmapSource() )
+						.Map( x => x.ToBitmapSource() )
 						.Act( x => ucAnalysisMap.SetImage(x) );
 				}
 				else
@@ -191,7 +191,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 		Func<IPSResult , BitmapSource> CreateMapImg( Maybe<BitmapSource> img )
 			=> res => img.Match(
-						() => CreateMapandBar( res , 6 ).Item1 [ 0 ].ToBitmapSource() ,
+						() => CreateMapandBar( res , 6 ).ToBitmapSource() ,
 						thisimg => thisimg );
 
 		AnalysisState SetStateLib( AnalysisState state )

@@ -38,9 +38,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		IMaya_Spectrometer Spctr;
 		//Maya_Spectrometer Spctr;
 		Image<Bgr,byte> ImgScanResult;
-		Image<Bgr,byte> Imgscalebar;
 		public System.Windows.Media.Imaging.BitmapSource ImgScanned { get { return ImgScanResult.ToBitmapSource(); } }
-		public System.Windows.Media.Imaging.BitmapSource ImgScaleBar { get { return Imgscalebar.ToBitmapSource(); } }
 
 		#region Init
 		public IPSCore()
@@ -127,6 +125,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				counter++;
 			}
 		}
+		/*
 		public Func<LEither<double[]> , IEnumerable<double> , PlrCrd ,
 						Tuple<PlrCrd , LEither<double>>> CalcPorce1 =>
 			( inten , wave , plrcrd ) =>
@@ -165,7 +164,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				}
 				return Tuple.Create( crd , res.ToLEither() );
 			};
-
+			*/
 
 		public Func<LEither<double [ ]> , IEnumerable<double>  , PlrCrd ,
 						Tuple<PlrCrd , LEither<double> , double [ ]>> ToThickness =>
@@ -201,7 +200,8 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 							  Config.XStgSpeed ,
 							  Config.Scan2Avg ,
 							  Config.IntegrationTime ,
-							  Config.Boxcar 
+							  Config.Boxcar ,
+							  Config.EndgeEnd
 							  );
 			// Ref Check --
 			if ( !FlgRefReady ) return false.Act( x => MessageBox.Show("Set Referance Please"));
@@ -222,11 +222,8 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 					new Task< Tuple<PlrCrd , LEither<double> , double[]>>
 					[ScanPos.ThetaList.Select( x => x.Length).Aggregate((f,s) => f+ s) ];
 			var wavelength = SDWaves;
-			var res = new TEither( Stg as IStgCtrl , 12);
+			var res = new TEither( Stg as IStgCtrl , 12); // Controller , Timeout 
 
-
-
-			//FlgAutoUpdate = true;
 			// Get Pos-Intensity || Task Calc Thickness --
 			int taskcounter = 0;
 			var posIntenlist = ScanPos.RhoList.Select( ( rho , i ) =>
@@ -257,23 +254,14 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 						evtSpectrum( intenlist.Right , SelectedWaves );
 
-
-
-
-
-
-
 						ToThickness(
 							toReflect(intenlist.Right)
 								.Act( x => evtRefleectivity( x , SelectedWaves ))
 								.ToLEither(intenlist.Left),
 							wavelength,
 							pos );  // Estimate Thickness
-						
 
-
-
-			calcTaskList [ taskcounter++ ] // 여기서 두께를 계산하게 됨
+			calcTaskList [ taskcounter++ ] // Clac Thickness
 										= Task.Run<Tuple<PlrCrd , LEither<double> ,double[] >>(
 											() => logres.IsRight
 													? ToThickness(
@@ -352,9 +340,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				Stopwatch stw = new Stopwatch();
 				stw.Start();
 				CreateMapandBar( ResultData , 6 )
-					.Act( x => ImgScanResult = x.Item1 [ 0 ] )
-					.Act( x => Imgscalebar = x.Item1 [ 1 ] )
-					.Act( x => EstedThickness = x.Item2 );
+					.Act( x => ImgScanResult = x );
 				stw.ElapsedMilliseconds.Print("Draw Time");
 				return true;
 			}

@@ -20,7 +20,8 @@ namespace ThicknessAndComposition_Inspector_IPS
 		, double xspeed 
 		, double scan2avg 
 		, double intetime 
-		, double boxcar );
+		, double boxcar 
+		, double edgeEnd );
 
 	/// <summary>
 	/// Interaction logic for Win_Config.xaml
@@ -35,6 +36,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 		double Scan2Avg        ;
 		double IntegrationTIme ;
 		double Boxcar          ;
+		double EdgeEnd          ;
 
 		public event StgSpeedEvent evtStgSpeedSetChange;
 		public event Action evtClose;
@@ -53,13 +55,15 @@ namespace ThicknessAndComposition_Inspector_IPS
 			Scan2Avg		= nudScan2Avg.Value			.ToNonNullable();
 			IntegrationTIme = nudIntegrationTime.Value	.ToNonNullable();
 			Boxcar			= nudBoxcar.Value			.ToNonNullable();
+			EdgeEnd		    = nudOuterLength.Value			.ToNonNullable();
 
 			evtStgSpeedSetChange( 
 								RstgSpeed		,
 								XstgSpeed		,
 								Scan2Avg		,
 								IntegrationTIme ,
-								Boxcar			);
+								Boxcar			 ,
+								EdgeEnd );
 			evtClose();
 		}
 

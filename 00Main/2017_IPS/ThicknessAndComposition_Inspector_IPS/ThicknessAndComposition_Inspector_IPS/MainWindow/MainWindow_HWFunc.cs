@@ -24,11 +24,6 @@ namespace ThicknessAndComposition_Inspector_IPS
 			res.RStgSpeed = ( int )WinConfig.nudRStgSpeed.Value.ToNonNullable();
 			res.BaseDirPath = Core.ConfigBasePath;
 			res.StartupConfigName = Core.ConfigName;
-			res.Weight	    = ucLSMenu.nudWeight		.Value.ToNonNullable();
-			res.Bias		= ucLSMenu.nudBias			.Value.ToNonNullable();
-			res.IntglStart	= ucLSMenu.nudIntglStart	.Value.ToNonNullable();
-			res.IntglEnd	= ucLSMenu.nudIntglEnd		.Value.ToNonNullable();
-
 			return res;
 		}
 
@@ -40,15 +35,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 			WinConfig.nudBoxcar.Value = config.Boxcar;
 			WinConfig.nudXStgSpeed.Value = config.XStgSpeed;
 			WinConfig.nudRStgSpeed.Value = config.RStgSpeed;
-
-			ucLSMenu.nudWeight		.Value = config.Weight;
-			ucLSMenu.nudBias		.Value = config.Bias;
-			ucLSMenu.nudIntglStart	.Value = config.IntglStart;
-			ucLSMenu.nudIntglEnd	.Value = config.IntglEnd;
-			
-
-
-
+			WinConfig.nudOuterLength.Value = config.EndgeEnd;
 		}
 
 

@@ -11,19 +11,22 @@
         <Setter Property="Height" Value="30"/>
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="FontWeight"  Value="SemiBold"/>
-        <Setter Property="Background" Value="Linen"/>
+        <Setter Property="Background" Value="#CEBACFE9"/>
+        <Setter Property="Foreground" Value="#114A6D"/>
     </Style>
 
     <Style x:Key="menu" TargetType="Menu">
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="FontWeight"  Value="SemiBold"/>
-        <Setter Property="Background" Value="Linen"/>
+        <Setter Property="Background" Value="LightSteelBlue"/>
+        <Setter Property="Foreground" Value="#114A6D"/>
     </Style>
 
     
     <Style x:Key="tabitem" TargetType="TabItem">
         <Setter Property="Width" Value="120"/>
+        <Setter Property="Foreground" Value="#114A6D"/>
     </Style>
 
     <Style x:Key="ComboboxBase" TargetType="ComboBox">
@@ -37,8 +40,20 @@
         <Setter Property="Margin" Value="10,5,10,5"/>
         <Setter Property="FontSize"  Value="13"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="Background" Value="LightBlue"/>
+        <Setter Property="Background" Value="Transparent"/>
+
     </Style>
+
+    <Style x:Key="btnLSide" TargetType="Button">
+        <Setter Property="Margin" Value="10,5,10,5"/>
+        <Setter Property="FontSize"  Value="13"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="#114A6D"/>
+        <Setter Property="BorderBrush" Value="LightSteelBlue"/>
+        <Setter Property="Height" Value =" 40"/>
+    </Style>
+
     <Style x:Key="nudBase" TargetType="xc:DoubleUpDown">
         <Setter Property="Margin" Value="0,0,10,0"/>
         <Setter Property="HorizontalAlignment" Value="Right"/>
@@ -46,12 +61,23 @@
         <Setter Property="FontSize"  Value="11"/>
         <Setter Property="MinWidth" Value="60"/>
     </Style>
+
+    <Style x:Key="lblTitle" TargetType="Label">
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontSize"  Value="13"/>
+        <Setter Property="FontWeight"  Value="SemiBold"/>
+        <Setter Property="Foreground" Value="#114A6D"/>
+    </Style>
+
     <Style x:Key="lblBase" TargetType="Label">
         <Setter Property="Margin" Value="10,0,0,0"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="FontSize"  Value="13"/>
         <Setter Property="FontWeight"  Value="SemiBold"/>
+        <Setter Property="Foreground" Value="#114A6D"/>
     </Style>
     <Style x:Key="lblUnit" TargetType="Label">
         <Setter Property="Margin" Value="0,0,0,0"/>
@@ -59,6 +85,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="FontSize" Value="9"/>
         <Setter Property="FontWeight" Value="DemiBold"/>
+        <Setter Property="Foreground" Value="#114A6D"/>
     </Style>
     <Style x:Key="lblStatus" TargetType="Label">
         <Setter Property="Margin" Value="5"/>
@@ -66,6 +93,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="FontSize"  Value="13"/>
         <Setter Property="FontWeight"  Value="SemiBold"/>
+        <Setter Property="Foreground" Value="#114A6D"/>
     </Style>
     <Style x:Key="lblConnection" TargetType="Label">
         <Setter Property="Margin" Value="0,0,4,0"/>
@@ -73,6 +101,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="FontSize"  Value="13"/>
         <Setter Property="FontWeight"  Value="SemiBold"/>
+        <Setter Property="Foreground" Value="#114A6D"/>
     </Style>
     <Style x:Key="chkBase" TargetType="CheckBox">
         <Setter Property="Margin" Value="5"/>

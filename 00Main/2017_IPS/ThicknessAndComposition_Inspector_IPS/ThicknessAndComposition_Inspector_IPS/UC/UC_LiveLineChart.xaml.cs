@@ -26,7 +26,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 	{
 		//public ChartValues<double[]> ChartDatas { get; set; }
 
-		public string Title { set { srsMain.Title = value; } }
+		//public string Title { set { srsMain.Title = value; } }
 
 
 		public UC_LiveLineChart()
@@ -39,12 +39,12 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 			Charting.For<double [ ]>( mapper );
 			//srsMain.DataLabels = false;
-			srsMain.Focusable = false;
-			srsMain.Title = "Real Time Spectrum";
-			srsMain.Fill = Brushes.Transparent;
-			srsMain.PointGeometrySize = 0;
-			axisY.MaxValue = 70000;
-			axisY.MinValue = 0;
+			//srsMain.Focusable = false;
+			//srsMain.Title = "Real Time Spectrum";
+			//srsMain.Fill = Brushes.Transparent;
+			//srsMain.PointGeometrySize = 0;
+			//axisY.MaxValue = 70000;
+			//axisY.MinValue = 0;
 			DataContext = this;
 		}
 

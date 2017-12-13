@@ -29,15 +29,10 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 		public int XStgSpeed { get { return 50000; } set { } }
 		public int RStgSpeed { get { return 100000; } set { } }
 
+		public double EndgeEnd { get { return 148.0; } set { } }
+
 		//
-		public double Weight { get { return -1.9897; } set { } }
-		//public double Weight { get { return -0.5277; } set { } }
-		public double Bias { get { return 3517.2; } set { } }
-		//public double Bias { get { return 1838.9; } set { } }
-		public double IntglStart { get { return 440; } set { } }
-		//public double IntglStart { get { return 0; } set { } }
-		public double IntglEnd { get { return 470; } set { } }
-		//public double IntglEnd { get { return 0; } set { } }
+	
 	}
 
 	public static class ConfigExt
@@ -54,10 +49,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 			res.IntegrationTime		=	src.IntegrationTime		;
 			res.XStgSpeed			=	src.XStgSpeed			;
 			res.RStgSpeed			=	src.RStgSpeed			;
-			res.Weight				=	src.Weight				;
-			res.Bias				=	src.Bias				;
-			res.IntglStart			=	src.IntglStart			;
-			res.IntglEnd			=	src.IntglEnd;
+			res.EndgeEnd				=	src.EndgeEnd;
 			return res;
 		}
 	}

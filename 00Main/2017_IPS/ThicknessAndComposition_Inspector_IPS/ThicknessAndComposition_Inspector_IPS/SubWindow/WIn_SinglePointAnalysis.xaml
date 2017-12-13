@@ -7,7 +7,7 @@
         xmlns:uc="clr-namespace:ThicknessAndComposition_Inspector_IPS"
         xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="WIn_SinglePointAnalysis" Height="600" Width="700" Closing="Window_Closing">
+        Title="SinglePointAnalysis" Height="650" Width="800" Closing="Window_Closing">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -19,58 +19,55 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="1" Grid.RowSpan="3">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="5*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
 
-            <UniformGrid Columns="3" Grid.ColumnSpan="2">
-                <Button x:Name="btnSinglePosStart" Content="Start"  Style="{StaticResource btnBase}" Background="LightGoldenrodYellow" Click="btnSinglePosStart_Click"/>
-               
-                <Button x:Name="btnSaveSingleScan" Content="Save"  Style="{StaticResource btnBase}" Click="btnSaveSingleScan_Click"/>
-                <Button x:Name="btnSeriesClear"    Content="Clear"  Style="{StaticResource btnBase}" Background="LightSalmon" Grid.Column="1" Click="btnSeriesClear_Click"/>
+        <DockPanel Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.RowSpan="3">
+            <Border CornerRadius="6" BorderThickness="2" BorderBrush="LightSteelBlue" DockPanel.Dock="Top" >
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-            </UniformGrid>
-            
-            
-            <Label  Content="Count : " Grid.Row="1" Grid.Column="0"                 Style="{StaticResource lblBase}" />
-            <Label x:Name="lblSingleScanStatus" Content="0" Grid.Row="1" Grid.Column="1"                 Style="{StaticResource lblBase}" />
-            <Label Content="X Position" Grid.Row="2" Grid.Column="0"                        Style="{StaticResource lblBase}" />
-            <Label Content="Y Position" Grid.Row="3" Grid.Column="0"                        Style="{StaticResource lblBase}" />
-            <Label Content="Interval (sec)" Grid.Row="4" Grid.Column="0"                    Style="{StaticResource lblBase}" />
-            <Label Content="Scan Count" Grid.Row="5" Grid.Column="0"                        Style="{StaticResource lblBase}" />
-            <xc:DoubleUpDown x:Name="nudXposSingle"       Grid.Row="2" Grid.Column="1"    Value="10" Style="{StaticResource nudBase}" />
-            <xc:DoubleUpDown x:Name="nudYposSingle"       Grid.Row="3" Grid.Column="1"    Value="10" Style="{StaticResource nudBase}" />
-            <xc:DoubleUpDown x:Name="nudIntervalSingle"   Grid.Row="4" Grid.Column="1"    Value="3"  Style="{StaticResource nudBase}" />
-            <xc:DoubleUpDown x:Name="nudCountSingel"      Grid.Row="5" Grid.Column="1"    Value="3"  Style="{StaticResource nudBase}" />
+                    <UniformGrid Columns="2" Rows="2" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                        <Button x:Name="btnSinglePosStart" Content="Start"  Style="{StaticResource btnLSide}"  Height="30"  Click="btnSinglePosStart_Click"/>
+                        <Button x:Name="btnSaveSingleScan" Content="Save"  Style="{StaticResource btnLSide}"   Height="30" Click="btnSaveSingleScan_Click"/>
+                        <Button x:Name="btnSeriesClear"    Content="Clear"  Style="{StaticResource btnLSide}"  Height="30"  Grid.Column="1" Click="btnSeriesClear_Click"/>
+                        <Button x:Name="btnStop" Content="Stop" Style="{StaticResource btnLSide}" Grid.Row="8" Height="30" Click="btnStop_Click"/>
+                    </UniformGrid>
 
-            <CheckBox x:Name="ckbTempBackup" Content="TempBackup" Grid.Row="6" Grid.ColumnSpan="2" Style="{StaticResource chkBase}" VerticalAlignment="Bottom"/>
-            <Label Content="Path :" Style="{StaticResource lblBase}" Grid.Row="7"/>
-            <TextBox x:Name="txbTempBackupFile" Text="E:\IPSTemp\tempMenualScanDatas" Grid.Row="7"  Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="70,0,5,0"/>
-            <Button x:Name="btnStop" Content="Stop" Style="{StaticResource btnBase}" Grid.Row="8" Click="btnStop_Click"/>
 
-        </Grid>
-       
+                    <Label  Content="Count : " Grid.Row="2" Grid.Column="0"                 Style="{StaticResource lblBase}" />
+                    <Label x:Name="lblSingleScanStatus" Content="0" Grid.Row="2" Grid.Column="1"                 Style="{StaticResource lblBase}" />
+                    <Label Content="X Position" Grid.Row="3" Grid.Column="0"                        Style="{StaticResource lblBase}" />
+                    <Label Content="Y Position" Grid.Row="4" Grid.Column="0"                        Style="{StaticResource lblBase}" />
+                    <Label Content="Interval (sec)" Grid.Row="5" Grid.Column="0"                    Style="{StaticResource lblBase}" />
+                    <Label Content="Scan Count" Grid.Row="6" Grid.Column="0"                        Style="{StaticResource lblBase}" />
+                    <xc:DoubleUpDown x:Name="nudXposSingle"       Grid.Row="3" Grid.Column="1"    Value="10" Style="{StaticResource nudBase}" />
+                    <xc:DoubleUpDown x:Name="nudYposSingle"       Grid.Row="4" Grid.Column="1"    Value="10" Style="{StaticResource nudBase}" />
+                    <xc:DoubleUpDown x:Name="nudIntervalSingle"   Grid.Row="5" Grid.Column="1"    Value="3"  Style="{StaticResource nudBase}" />
+                    <xc:DoubleUpDown x:Name="nudCountSingel"      Grid.Row="6" Grid.Column="1"    Value="3"  Style="{StaticResource nudBase}" />
 
-        <Label Grid.Row="0" Grid.Column="1" Content="Intensity" DockPanel.Dock="Top" HorizontalAlignment="Center" Style="{StaticResource lblBase}"/>
+                    <CheckBox x:Name="ckbTempBackup" Content="TempBackup" Grid.Row="7" Grid.ColumnSpan="2" Style="{StaticResource chkBase}" VerticalAlignment="Bottom"/>
+                    <Label Content="Path :" Style="{StaticResource lblBase}" Grid.Row="8"/>
+                    <TextBox x:Name="txbTempBackupFile" Text="E:\IPSTemp\tempMenualScanDatas"  Grid.RowSpan="5" Height="100" Grid.Row="8"  Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="70,10,5,0"/>
+                </Grid>
+            </Border>
+        </DockPanel>
+        <Label Grid.Row="0" Grid.Column="1" Content="Intensity" DockPanel.Dock="Top" HorizontalAlignment="Center" Style="{StaticResource lblTitle}"/>
         <uc:UC_LiveLineChartMulti x:Name="ucIntensitiychart"  Grid.Row="1" Grid.Column="1" />
-        <Label Grid.Row="2" Grid.Column="1" Content="Reflectivity" DockPanel.Dock="Top" HorizontalAlignment="Center" Style="{StaticResource lblBase}"/>
+        <Label Grid.Row="2" Grid.Column="1" Content="Reflectivity" DockPanel.Dock="Top" HorizontalAlignment="Center" Style="{StaticResource lblTitle}"/>
         <uc:UC_LiveLineChartMulti x:Name="ucReflectivityChart" Grid.Row="3" Grid.Column="1"/>
-
-
     </Grid>
 </Window>

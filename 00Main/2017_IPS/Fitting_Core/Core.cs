@@ -30,7 +30,7 @@ namespace Fitting_Core
 			return Regr;
 		}
 
-		public static XGBRegressor LoadModel( string path )
+		public static XGBRegressor LoadModel( string path ) // Excuted when ScanAutorun is fired
 		{
 			Regr = LoadRegressorFromFile( path );
 			return Regr;

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ThicknessAndComposition_Inspector_IPS"
               xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Background="LightCyan">
+             d:DesignHeight="300" d:DesignWidth="300" >
         <DockPanel Margin="5" >
         <Border CornerRadius="6" BorderThickness="2" BorderBrush="LightSteelBlue" DockPanel.Dock="Top">
             <Grid>

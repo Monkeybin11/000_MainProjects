@@ -32,11 +32,9 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 		public int XStgSpeed { get; set; }
 		public int RStgSpeed { get; set; }
 
-		//Algorithm
-		public double Weight { get; set; }
-		public double Bias { get; set; }
-		public double IntglStart { get; set; }
-		public double IntglEnd { get; set; }
+		public double EndgeEnd { get; set; }
+
+
 	}
 
 	public static class IPSConfigExt

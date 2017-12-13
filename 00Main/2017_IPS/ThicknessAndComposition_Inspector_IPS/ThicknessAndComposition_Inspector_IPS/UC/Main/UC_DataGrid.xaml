@@ -6,8 +6,11 @@
              xmlns:local="clr-namespace:ThicknessAndComposition_Inspector_IPS"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <DockPanel>
-        <DataGrid Name="dgdResult"  />
+    <DockPanel Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+        <Border CornerRadius="6" BorderThickness="2" BorderBrush="LightSteelBlue" DockPanel.Dock="Top" >
+
+            <DataGrid Name="dgdResult" Margin="10" Background="White" />
+        </Border>
     </DockPanel>
-            
+
 </UserControl>

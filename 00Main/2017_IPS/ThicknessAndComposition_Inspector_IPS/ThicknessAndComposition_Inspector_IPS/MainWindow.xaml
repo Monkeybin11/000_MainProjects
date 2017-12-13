@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"  
         xmlns:uc ="clr-namespace:ThicknessAndComposition_Inspector_IPS" 
-        Title="MainWindow" Height="900" Width="1600" Loaded="Window_Loaded" Closed="Window_Closed" MinHeight="900" MinWidth="1600">
+        Title="UniSense"  Height="900" Width="1600" Loaded="Window_Loaded" Closed="Window_Closed" MinHeight="900" MinWidth="1600" 
+     WindowStyle="SingleBorderWindow" 
+        >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -30,8 +32,10 @@
             </MenuItem>
 
             <MenuItem Header="Analysis" >
-                <MenuItem x:Name="menuSinglePosScan" Header="Spctrum View Window    "          Style="{StaticResource menuItem}" Click="AnalysisMenuClick"/>
-                <MenuItem x:Name="menuMapAnalysis" Header="Result Analysis Window "           Style="{StaticResource menuItem}" Click="AnalysisMenuClick"/>
+                <MenuItem x:Name="menuMapAnalysis" Header="Result Analysis"           Style="{StaticResource menuItem}" Click="AnalysisMenuClick"/>
+                <MenuItem x:Name="menuSinglePosScan" Header="Single Point Scan"          Style="{StaticResource menuItem}" Click="AnalysisMenuClick"/>
+                <MenuItem x:Name="menuModelUpdator" Header="Fitting Model Update"          Style="{StaticResource menuItem}" Click="AnalysisMenuClick"/>
+
             </MenuItem>
 
         </Menu>
@@ -41,28 +45,29 @@
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid >
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1.4*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <uc:UC_LeftSideMenu x:Name="ucLSMenu" />
                 <uc:UC_Status x:Name="ucLSStatus" Grid.Row="1"/>
             </Grid>
-            <Grid  Grid.Column="1" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <uc:UC_Map x:Name="ucMapDisplay"   />
-                <UniformGrid Grid.Row="1" Columns="2"  >
-                    <uc:UC_LiveLineChart x:Name="ucSpectrum" />
-                    <uc:UC_LiveLineChart x:Name="ucReflectivity" />
-                </UniformGrid>
-
-            </Grid>
-                <uc:UC_DataGrid x:Name="ucDataGrid" Grid.Column="2" Background="blue"/>
+            
+                <uc:UC_Map x:Name="ucMapDisplay" Grid.Column="1"   />
                
+            
+                <uc:UC_DataGrid x:Name="ucDataGrid" Grid.Column="2" Grid.RowSpan="2" />
+
+            <UniformGrid Grid.Row="1" Grid.ColumnSpan="2" Columns="2"  >
+                <uc:UC_LiveLineChart x:Name="ucSpectrum" />
+                <uc:UC_LiveLineChart x:Name="ucReflectivity" />
+            </UniformGrid>
+
         </Grid>
     </Grid>
 </Window>

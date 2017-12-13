@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="450" Background="White">
     <DockPanel Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Border CornerRadius="6" BorderThickness="2" BorderBrush="RoyalBlue" DockPanel.Dock="Top" >
+        <Border CornerRadius="6" BorderThickness="2" BorderBrush="LightSteelBlue" DockPanel.Dock="Top" >
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*"/>

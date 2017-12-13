@@ -26,12 +26,9 @@ namespace ThicknessAndComposition_Inspector_IPS
 			InitializeComponent();
 		}
 
-		public void DrawImg(ImageSource src , ImageSource colormap ) // colormap need to be (255 x 3[rgb]) 
+		public void DrawImg(ImageSource src  ) // colormap need to be (255 x 3[rgb]) 
 		{
-			
 			imgOri.ImageSource = src;
-			//imgOri.Dispatcher.BeginInvoke( new Action( () => imgOri.ImageSource = src ) );
-			imgScale.ImageSource = colormap;
 		}
 
 	
