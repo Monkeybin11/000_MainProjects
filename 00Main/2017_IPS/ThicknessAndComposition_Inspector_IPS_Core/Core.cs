@@ -201,7 +201,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 							  Config.Scan2Avg ,
 							  Config.IntegrationTime ,
 							  Config.Boxcar ,
-							  Config.EndgeEnd
+							  Config.EdgeEnd
 							  );
 			// Ref Check --
 			if ( !FlgRefReady ) return false.Act( x => MessageBox.Show("Set Referance Please"));
@@ -236,7 +236,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 				return  thetas[i].Select( (theta,j) =>
 					{
-						var pos = new PlrCrd(theta,rho);
+						var pos = new PlrCrd(theta,rho).Print();
 
 						var logres = logs.Bind( x => x.Act( f =>
 						{
@@ -254,7 +254,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 						evtSpectrum( intenlist.Right , SelectedWaves );
 
-						ToThickness(
+						var temp1 = ToThickness(
 							toReflect(intenlist.Right)
 								.Act( x => evtRefleectivity( x , SelectedWaves ))
 								.ToLEither(intenlist.Left),

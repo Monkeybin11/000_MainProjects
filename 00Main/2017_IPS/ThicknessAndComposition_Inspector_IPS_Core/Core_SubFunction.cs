@@ -46,7 +46,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 							  Config.Scan2Avg ,
 							  Config.IntegrationTime ,
 							   Config.Boxcar ,
-							   Config.EndgeEnd
+							   Config.EdgeEnd
 							  );
 					result.Bind( x => OpSetRef() , "Referance Scan is Fail" )
 						  .Bind( x => x.Act( f => FlgRefReady = true));
@@ -145,7 +145,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				if ( idx >= 0 ) idxlist.Add( idx );
 			}
 			PickedFactorIdx = idxlist;
-			//SelectedReflctFactors = PickedFactorIdx.Select( x => ReflctFactors [ x ] ).ToList(); // Get from selected index
 			SelectedReflctFactors = ReflctFactors; // For Speed
 			return true;
 		}
@@ -175,7 +174,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 				return false;
 			}
 
-			var relec = ReadCsv2String( path );
+			var relec = ReadCsv2String( path , order0Dirction: false );
 			SDWaves = relec.Select( x => Convert.ToDouble( x [ 0 ] ) ).ToList();
 			ReflctFactors = relec.Select( x => Convert.ToDouble( x [ 1 ] ) ).ToList();
 			return true;
@@ -233,7 +232,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			Config.Scan2Avg = ( int )scan2avg;
 			Config.IntegrationTime = ( int )intetime;
 			Config.Boxcar = ( int )boxcar;
-			Config.EndgeEnd = edgeend;
+			Config.EdgeEnd = edgeend;
 
 			Stg.SendAndReady( "S:24" );
 			Stg.SendAndReady( "S:15" );
@@ -284,16 +283,8 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			List<double> reffactor )
 			=> src =>
 			{
-				
-
 				var res =src.Select( ( x , i ) => ( (x - dark [ i ]) / (refer [ i ] - dark [ i ]) ) * reffactor [ i ] )
 						 .ToArray();
-
-				//for ( int i = 0 ; i < dark.Count ; i++ )
-				//{
-				//	Console.WriteLine( src [ i ].ToString() + " " + refer [ i ].ToString() + " " + dark [ i ].ToString() + " " + reffactor [ i ].ToString() + " " + res [ i ].ToString() );
-				//}
-
 				return res;
 			};
 			
@@ -412,9 +403,5 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		}
 
 		#endregion
-
-
-		
-
 	}
 }

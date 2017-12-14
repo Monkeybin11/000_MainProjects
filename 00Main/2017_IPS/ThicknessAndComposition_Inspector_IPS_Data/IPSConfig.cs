@@ -32,7 +32,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 		public int XStgSpeed { get; set; }
 		public int RStgSpeed { get; set; }
 
-		public double EndgeEnd { get; set; }
+		public double EdgeEnd { get; set; }
 
 
 	}

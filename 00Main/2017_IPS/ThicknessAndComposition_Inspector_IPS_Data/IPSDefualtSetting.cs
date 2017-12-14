@@ -25,7 +25,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 		public int SpectrumWaitTime { get { return 500; } set { } }
 
 		// Stage
-		public int Port { get { return 7; } set { } }
+		public int Port { get { return 8; } set { } }
 		public int XStgSpeed { get { return 50000; } set { } }
 		public int RStgSpeed { get { return 100000; } set { } }
 
@@ -49,7 +49,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Data
 			res.IntegrationTime		=	src.IntegrationTime		;
 			res.XStgSpeed			=	src.XStgSpeed			;
 			res.RStgSpeed			=	src.RStgSpeed			;
-			res.EndgeEnd				=	src.EndgeEnd;
+			res.EdgeEnd				=	src.EndgeEnd;
 			return res;
 		}
 	}

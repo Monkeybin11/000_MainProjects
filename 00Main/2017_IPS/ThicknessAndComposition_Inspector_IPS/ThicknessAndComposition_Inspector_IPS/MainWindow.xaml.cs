@@ -90,17 +90,26 @@ namespace ThicknessAndComposition_Inspector_IPS
 			ucSpectrum.UpdateSeries( new double [ ] { 1 , 1100 , 110000 , 110000 } , new double [ ] { 1 , 2 , 3 , 4 } );
 			ucReflectivity.UpdateSeries( new double [ ] { 1 , 1100 , 110000 , 110000 } , new double [ ] { 1 , 2 , 3 , 4 } );
 
+			Action<UC_LiveLineChart> CommonSetting
+				= src
+				=> src.srsMain.Act( x => x.DataLabels = false)
+								.Act( x=> x.PointGeometrySize = 0 )
+								.Act( x=> x.Fill = Brushes.Transparent);
+
 			ucSpectrum.lblTitle.Content = "Intensity";
 			ucSpectrum.axisY.Title = "Intensity";
 			ucSpectrum.Ysprtor.Step = 5000;
 			ucSpectrum.axisY.MaxValue = 61000;
 			ucSpectrum.axisY.MinValue = 0;
+			CommonSetting( ucSpectrum );
+
 
 			ucReflectivity.lblTitle.Content = "Reflectivity";
 			ucReflectivity.axisY.Title = "Reflectivity";
 			ucReflectivity.Ysprtor.Step = 10;
 			ucReflectivity.axisY.MaxValue = 110;
 			ucReflectivity.axisY.MinValue = 0;
+			CommonSetting( ucReflectivity );
 
 			ucMapDisplay.imgScale.ImageSource = CreateScalebar().ToBitmapSource();
 		}
@@ -317,7 +326,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 					Core.Config = UI2IpsConfig();
 					ucLSStatus.lblProgress.Content = "InProgress";
 					Core.ScanPos = new ScanPosData();
-					Core.ScanPos.RhoList [ 3 ] = Core.Config.EndgeEnd;
+					Core.ScanPos.RhoList [ 3 ] = Core.Config.EdgeEnd;
 
 					if ( await Task<bool>.Run( () => Core.ScanAutoRun() ) )
 					{
