@@ -83,7 +83,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 	
 
 		Action AutoUpdateSpctrm =>
-			() => BkD_Spctrm = Spctr.GetSpectrum();
+			() => BkD_Spctrm = GetSpectrum();
 
 		Action GetPos =>
 			() =>

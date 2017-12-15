@@ -38,13 +38,6 @@ namespace ThicknessAndComposition_Inspector_IPS
                 .Y(model => model[1]);           //use the value property as Y
 
 			Charting.For<double [ ]>( mapper );
-			//srsMain.DataLabels = false;
-			//srsMain.Focusable = false;
-			//srsMain.Title = "Real Time Spectrum";
-			//srsMain.Fill = Brushes.Transparent;
-			//srsMain.PointGeometrySize = 0;
-			//axisY.MaxValue = 70000;
-			//axisY.MinValue = 0;
 			DataContext = this;
 		}
 

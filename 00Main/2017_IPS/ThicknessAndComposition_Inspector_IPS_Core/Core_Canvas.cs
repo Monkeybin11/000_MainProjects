@@ -65,7 +65,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 					if ( curcount == count ) break;
 
-					var currentInten = Spctr.GetSpectrum();
+					var currentInten = GetSpectrum();
 					var reflet =  toReflect(currentInten);
 					var thckn = ToThickness(
 												reflet.ToLEither() ,

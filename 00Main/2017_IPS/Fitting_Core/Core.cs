@@ -30,6 +30,8 @@ namespace Fitting_Core
 			return Regr;
 		}
 
+
+
 		public static XGBRegressor LoadModel( string path ) // Excuted when ScanAutorun is fired
 		{
 			Regr = LoadRegressorFromFile( path );
@@ -79,4 +81,41 @@ namespace Fitting_Core
 			=> ( target , pred )
 			=> Math.Sqrt( target.Select( ( x , i ) => ( double )Math.Pow( ( x - pred [ i ] ) , 2 ) ).Sum() / target.Length );
 	}
+
+	public class Parameters
+	{
+		public readonly List<double> PrameterList;
+
+		public Parameters
+			(
+					int		maxDepth = 3,
+					float	learningRate = 0.1F, 
+					int		nEstimators = 100,
+					bool	silent = true, 
+					string	objective = "reg:linear", 
+					int		nThread = -1, 
+					float	gamma = 0, 
+					int		minChildWeight = 1, 
+					int		maxDeltaStep = 0, 
+					float	subsample = 1, 
+					float	colSampleByTree = 1,
+					float	colSampleByLevel = 1, 
+					float	regAlpha = 0, 
+					float	regLambda = 1, 
+					float	scalePosWeight = 1, 
+					float	baseScore = 0.5F, 
+					int		seed = 0, 
+					float	missing = float.NaN
+			)
+		{
+
+
+
+
+		}
+
+
+
+	}
+
 }

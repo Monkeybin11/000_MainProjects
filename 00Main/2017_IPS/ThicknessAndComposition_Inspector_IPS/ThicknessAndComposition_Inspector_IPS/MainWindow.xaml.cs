@@ -195,6 +195,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 			{
 				case "menuSinglePosScan":
 					WinSingleScan.Visibility = Visibility.Visible;
+					WinSingleScan.Topmost = true;
 					break;
 
 				case "menuMapAnalysis":
@@ -209,6 +210,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 					
 				case "menuModelUpdator":
 					WinFitting.Visibility = Visibility.Visible;
+					WinFitting.Topmost = true;
 					break;
 
 				default:
@@ -228,12 +230,12 @@ namespace ThicknessAndComposition_Inspector_IPS
 				case "menuViewSpct":
 					Core.FlgAutoUpdate = true;
 					FlgSpctDisplay = true;
-					WinSpct.Show();
+					WinSpct.Visibility = Visibility.Visible;
 					Task.Run( () =>
 					 {
 						 while ( FlgSpctDisplay )
 						 {
-							 WinSpct.ucSpctShart.UpdateSeries( Core.BkD_Spctrm , Core.SelectedWaves );
+							 WinSpct.ucSpctShart.UpdateSeries( Core.GetSpectrum() , Core.SelectedWaves );
 							 Thread.Sleep( Core.SpectrometerDelayTime );
 						 }
 					 } );

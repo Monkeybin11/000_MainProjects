@@ -93,9 +93,10 @@ namespace ThicknessAndComposition_Inspector_IPS
 			lblError.Content = CalcMSE( Regr );
 		}
 
-		private void btnUseModel_Click( object sender , RoutedEventArgs e )
+		private void Window_Closing( object sender, System.ComponentModel.CancelEventArgs e )
 		{
-
+			e.Cancel = true;
+			this.Visibility = Visibility.Hidden;
 		}
 	}
 }

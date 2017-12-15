@@ -70,7 +70,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		{
 			Stg.SendAndReady( Stg.GoAbs + 0.ToPos( Axis.X ) );
 			Stg.SendAndReady( Stg.Go );
-			var darkraw = Spctr.GetSpectrum();
+			var darkraw = GetSpectrum();
 			Task.Run(() => evtSpectrum( darkraw , SelectedWaves ));
 			Darks = PickedIdx.Select( x => darkraw [ x ] ).ToList();
 			return true;
@@ -83,7 +83,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			 {
 				 Stg.SendAndReady( Stg.GoAbs + 0.ToOffPos( Axis.X ) );
 				 Stg.SendAndReady( Stg.Go );
-				 refraw = Spctr.GetSpectrum();
+				 refraw = GetSpectrum();
 				 evtSpectrum( refraw , SelectedWaves );
 				 Refs = PickedIdx.Select( x => refraw [ x ] ).ToList();
 				 Stg.SendAndReady( Stg.GoAbs + 0.ToPos( Axis.X ) );

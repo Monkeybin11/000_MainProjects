@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ThicknessAndComposition_Inspector_IPS"
         xmlns:xc ="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="FittingControl" Height="800" Width="280">
+        Title="FittingControl" Height="800" Width="280" Closing="Window_Closing">
     <Grid>
         <DockPanel Margin="5">
             <Border CornerRadius="6" BorderThickness="2" BorderBrush="LightSteelBlue" DockPanel.Dock="Top">

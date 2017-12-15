@@ -112,7 +112,9 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		}
 
-		#endregion
+		public double[] GetSpectrum()
+			=> Spctr.GetSpectrum();
+			#endregion
 
 		#region MainFunction
 		int counter = 0;
@@ -249,7 +251,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 						var intenlist = logres.IsRight // Todo : Change to Match Function
 													//? logres.Bind( x => toSelected( BkD_Spctrm ) )
-													? logres.Bind( x => toSelected( Spctr.GetSpectrum() ) ) // Todo : Change to only toSelected( Spctr.GetSpectrum() ), not bind. cuz endpoint
+													? logres.Bind( x => toSelected( GetSpectrum() ) ) // Todo : Change to only toSelected( Spctr.GetSpectrum() ), not bind. cuz endpoint
 													: logres.Act( x => Lggr.Log(x.Left , true )); // Logging Error
 
 						evtSpectrum( intenlist.Right , SelectedWaves );
