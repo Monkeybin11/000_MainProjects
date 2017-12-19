@@ -9,6 +9,7 @@ using ModelLib.AmplifiedType;
 namespace SIP_InspectLib.Recipe
 {
 	using static Handler;
+	using static SpeedyCoding.Handler;
 	using static ModelLib.AmplifiedType.Handler;
 	using static SIP_InspectLib.Indexing.Common;
 	using Emgu.CV.Util;
@@ -33,6 +34,8 @@ namespace SIP_InspectLib.Recipe
 
 		public bool NeedEdgrCut;
 		public int EdgeLimit = 0;
+		double XoffSet;
+		double YoffSet;
 
 	}
 
@@ -102,13 +105,14 @@ namespace SIP_InspectLib.Recipe
 			=> x
 			=> x.IndexPos;
 
-		public static Func< Recipe_PLMapping , PosLineEq , List<Rectangle> , IEnumerable<Maybe<Indexji>>> ToBoxIndex
-			=> ( srcRe , poseq , boxs )
+		public static Func< Recipe_PLMapping , Func<Rectangle , double> , PosLineEq , List<Rectangle> , IEnumerable<Maybe<Indexji>>> ToBoxIndex
+			=> ( srcRe , sumfunc , poseq , boxs )
 			=>
 			{
 				var indexres = GetIndexOf(srcRe.Tolerance , boxs , poseq.HLineEQs , poseq.VLineEQs);
 
 				var resultGenerator = ImportResult.Apply(srcRe)
+												  .Apply(sumfunc)
 												  .Apply( poseq.IndexPos )
 												  .Apply( boxs)
 												  .Apply( indexres );
@@ -116,13 +120,13 @@ namespace SIP_InspectLib.Recipe
 				return null;
 			};
 
-		public static Func<Recipe_PLMapping , List<Rectangle> , Maybe<PLMappingResult>> ToResualt
-			=> ( srcRe , boxs )
-			 =>
-			 {
-
-				 return null;
-			 };
+		//public static Func<Recipe_PLMapping , Func<Rectangle , double> , List<Rectangle> , Maybe<PLMappingResult>> ToResualt
+		//	=> ( srcRe , boxs )
+		//	 =>
+		//	 {
+		//
+		//		 return null;
+		//	 };
 
 		private static Func<
 				Recipe_PLMapping,
@@ -135,8 +139,8 @@ namespace SIP_InspectLib.Recipe
 			=> ( srcRe , sumFunc , ested , boxlist , boxindices , src )
 			=>
 			{
-				var updator = ResultUpdator
-									   .Apply<sumFunc>
+				var updator = ResultUpdator  
+									   .Apply(sumFunc)
 									   .Apply(srcRe.NeedEdgrCut)
 									   .Apply(ested)
 									   .Apply(src)
@@ -148,7 +152,13 @@ namespace SIP_InspectLib.Recipe
 				return src;
 			};
 
-		static Action< Func<Rectangle , double> , bool , double [ , , ] , ExResult [ ] [ ] , Constrain , IndexRect> ResultUpdator
+		static Action< 
+					Func<Rectangle , double> , 
+					bool , 
+					double [ , , ] , 
+					ExResult [ ] [ ] , 
+					Constrain , 
+					IndexRect> ResultUpdator
 			=> ( sumFunc , needEdgeCut ,  ested , src , constrain , idxrec )
 			=> idxrec.Index.Match(
 				() => Unit() , // NG Case
@@ -164,7 +174,7 @@ namespace SIP_InspectLib.Recipe
 					
 					if ( needEdgeCut )
 					{
-						if ( InValidArea( xpos , ypos , CnstPN ) )
+						if ( InValidArea( xpos , ypos , constrain.ValidLen ) ) //여기 고쳐야 한다. << 
 						{
 							src [ j ] [ i ] = new ExResult( j , i
 												 , ( int )ypos - ( int )( rec.Y + rec.Height / 2 )
@@ -191,10 +201,10 @@ namespace SIP_InspectLib.Recipe
 					return Unit();
 				} );
 
-		static Func<double , double , ConstrainInfo_Playnitride , bool> InValidArea
-			 => ( x , y , constrain )
-			 => ToTuple( x , y ).L2( CnstPN.Center )
-				 > constrain.BoundaryLen
+		static Func<double , double , double , double , bool> InValidArea
+			 => ( x , y , x1,y1 )
+			 => ToTuple( x , y ).L2( ToTuple(x1,y1) )  // <<<<<
+				 > constrain.BoundaryLen  
 				 ? false
 				 : true;
 
