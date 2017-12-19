@@ -7,11 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CSharp;
 
+
+
 namespace SIPEngine.Recipe
 {
 	using Img = Emgu.CV.Image<Gray , byte>;
 
-	public class RecipePreProc
+	public class Recipe_PLMapping
 	{
 		public const string Median = "Median";
 		public const string Normalize = "Normalize";
@@ -29,83 +31,85 @@ namespace SIPEngine.Recipe
 
 	public static partial class Handler
 	{
-		public static Func<Img , Img> Runner;
-
-		public static List<Func<Img , Img>> ReadFunc(string[][] recipe)
+		public static IEnumerable<Func<Img , Img>> CreateFuncList( Recipe_PLMapping recipe  )
 		{
-			// only First Function Name List
+			Func<Img,Img> temp = new Func<Image<Gray, byte>, Image<Gray, byte>>( x => x);
 
-			// Matcher and Get Func
-
-
+			return new Func<Img , Img>[] { temp };
 		}
 
-		public Func<Img , Img> Matching( string name )
-		{
 
-		}
+		//public static Func<Img , Img> Runner;
+		//
+		//public static List<Func<Img , Img>> ReadFunc(string[][] recipe)
+		//{
+		//	// only First Function Name List
+		//
+		//	// Matcher and Get Func
+		//
+		//
+		//}
+		//
+		//public Func<Img , Img> Matching( string name )
+		//{
+		//
+		//}
+		//
+		//public Func<Img , Img> ApplyOption(string option)
+		//{
+		//
+		//
+		//}
 
-		public Func<Img , Img> ApplyOption(string option)
-		{
-
-
-		}
-
-		public Func<Img , Img> mian()
-		{
-			string name = "";
-			string fparm = "200";
-
-			var temp = new byte[3,3,1];
-			var img = new Image<Gray,byte>( temp );
-
-
-
-			switch ( name )
-			{
-				case "Normalized":
-
-					int ptemp;
-
-					if ( !int.TryParse( fparm , out ptemp ) )
-					{
-						return;
-					}
-					return new Func<Img , Img>( ximg => ximg.Mul( 255.0 / ptemp ) );
-
-
-				case "AdpThreshold":
-
-					int ptemp2;
-					string fparams = "MeanC,Binary,"
-
-
-					if ( !int.TryParse( fparm , out ptemp ) )
-					{
-						return;
-					}
-					return new Func<Img , Img>( ximg => ximg.Mul( 255.0 / ptemp ) );
-
-					
-
-					break;
-
-			}
-
-
-		}
+		//public Func<Img , Img> mian()
+		//{
+		//	string name = "";
+		//	string fparm = "200";
+		//
+		//	var temp = new byte[3,3,1];
+		//	var img = new Image<Gray,byte>( temp );
+		//
+		//
+		//
+		//	switch ( name )
+		//	{
+		//		case "Normalized":
+		//
+		//			int ptemp;
+		//
+		//			if ( !int.TryParse( fparm , out ptemp ) )
+		//			{
+		//				return;
+		//			}
+		//			return new Func<Img , Img>( ximg => ximg.Mul( 255.0 / ptemp ) );
+		//
+		//
+		//		case "AdpThreshold":
+		//
+		//			int ptemp2;
+		//			string fparams = "MeanC,Binary,"
+		//
+		//
+		//			if ( !int.TryParse( fparm , out ptemp ) )
+		//			{
+		//				return;
+		//			}
+		//			return new Func<Img , Img>( ximg => ximg.Mul( 255.0 / ptemp ) );
+		//
+		//			
+		//
+		//			break;
+		//
+		//	}
+		//
+		//
+		//}
 
 	}
 
 	public static class FunctionLib
 	{
-		public static Dictionary<string,Func<  >>
-
-
-
-
-
-
+		//public static Dictionary<string,Func<  >>
 
 	}
 

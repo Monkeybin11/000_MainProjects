@@ -18,7 +18,7 @@ namespace TestConsole
 
 			string src = "Console.WriteLine( \"hi\" );";
 
-
+			
 			var res = EvalCSCode.Eval( src );
 
 			Console.WriteLine( "Done" );

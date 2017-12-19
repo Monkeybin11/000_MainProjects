@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0B488CBB-D0D8-40C2-84D0-A034F63D6AC1}</ProjectGuid>
+    <ProjectGuid>{96CF1341-DD29-4B70-8B9D-4D765A515882}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SIPEngine</RootNamespace>
-    <AssemblyName>SIPEngine</AssemblyName>
+    <RootNamespace>PLMapping_SIPCore</RootNamespace>
+    <AssemblyName>PLMapping_SIPCore</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,9 +33,6 @@
     <Reference Include="Emgu.CV.World">
       <HintPath>..\..\..\dll\emgucv3_3\Emgu.CV.World.dll</HintPath>
     </Reference>
-    <Reference Include="ModelLib">
-      <HintPath>..\..\..\dll\ModelLib.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -47,17 +44,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actor\Actor.cs" />
-    <Compile Include="AdressConverter.cs" />
-    <Compile Include="Handler.cs" />
+    <Compile Include="Adaptor\IOWithServer.cs" />
+    <Compile Include="Core_PlMapping.cs" />
+    <Compile Include="EmxIO\CommandLib.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Recipe\RecipePreProc.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\00Nuget\SpeedyCoding\SpeedyCoding\SpeedyCoding\SpeedyCoding.csproj">
       <Project>{04ef47cb-6add-4ca9-8dc9-9443aa536f84}</Project>
       <Name>SpeedyCoding</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\01Sub\ModelLib\ModelLib\ModelLib.csproj">
+      <Project>{0aa6abfc-7dc0-484d-b2d4-9aad902f95ed}</Project>
+      <Name>ModelLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SIPEngine\SIPEngine\SIPEngine.csproj">
+      <Project>{0b488cbb-d0d8-40c2-84d0-a034f63d6ac1}</Project>
+      <Name>SIPEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SIP_IOLib\SIP_InspectLib\SIP_InspectLib\SIP_InspectLib.csproj">
+      <Project>{7e3f6e03-5698-497b-a69c-b22e654d82ac}</Project>
+      <Name>SIP_InspectLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

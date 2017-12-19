@@ -8,7 +8,18 @@ namespace SpeedyCoding
 {
     public static class SpeedyCoding_Collection
     {
-        public static Dictionary<Tk , Tv> Append<Tk, Tv>( 
+		public static T FoldL<T>(
+			this IEnumerable<Func<T , T>> funList , T first )
+		{
+			T output = default(T);
+			foreach ( var item in funList )
+			{
+				output = item( first );
+			}
+			return output;
+		}
+
+		public static Dictionary<Tk , Tv> Append<Tk, Tv>( 
             this Dictionary<Tk , Tv> src , 
             Tk key , 
             Tv value)

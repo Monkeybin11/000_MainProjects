@@ -22,8 +22,39 @@ namespace SIP_InspectLib.Indexing
 	using CSize = Int32; // chennel size
 	
 
-	public static class Common
+	public static partial class Common
 	{
+		public static IEnumerable<Maybe<Indexji>> GetIndexOf( int tollerance , List<Rectangle> boxlist , IEnumerable<LineEQ> hLineEqs , IEnumerable<LineEQ> vLineEqs )
+		{
+			var indexofhBox  = BoxIndexOf.Apply(true).Apply(tollerance).Apply(hLineEqs); // y index
+			var indexofvBox  = BoxIndexOf.Apply(false).Apply(tollerance).Apply(vLineEqs); // x index
+
+			var h_jList = boxlist.Select( indexofhBox );
+			var v_iList = boxlist.Select( indexofvBox );
+
+			var output = h_jList.Zip( v_iList , ToPairIndex ).ToArray();
+			var arr = output.ToArray();
+			return arr;
+		}
+
+		public static Func<Rectangle , double> FnSumInsideBox( byte[,,] src )
+		{
+			var sumbox = new Func<Rectangle , double>((Rectangle box)=>
+			{
+				double sum = 0;
+				for (int i = box.X; i < box.X + box.Width; i++)
+				{
+					for (int j = box.Y; j < box.Y + box.Height; j++)
+					{
+						sum += src[j,i,0];
+					}
+				}
+				return sum;
+			} );
+			return sumbox;
+		}
+
+
 		public static Func<bool,HSize , WSize , CSize , byte [ , , ]> MatPattern
 			=> ( isWhite , h , w , c )
 			=>
@@ -488,6 +519,7 @@ namespace SIP_InspectLib.Indexing
 		{
 			return model [ 0 ] * point + model [ 1 ];
 		}
+
 		#endregion
 	}
 
