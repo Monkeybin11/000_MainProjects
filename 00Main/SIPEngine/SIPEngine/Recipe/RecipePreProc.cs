@@ -13,7 +13,7 @@ namespace SIPEngine.Recipe
 {
 	using Img = Emgu.CV.Image<Gray , byte>;
 
-	public class Recipe_PLMapping
+	public class Recipe_PLMappingModel
 	{
 		public const string Median = "Median";
 		public const string Normalize = "Normalize";
@@ -31,7 +31,7 @@ namespace SIPEngine.Recipe
 
 	public static partial class Handler
 	{
-		public static IEnumerable<Func<Img , Img>> CreateFuncList( Recipe_PLMapping recipe  )
+		public static IEnumerable<Func<Img , Img>> CreateFuncList( Recipe_PLMappingModel recipe  )
 		{
 			Func<Img,Img> temp = new Func<Image<Gray, byte>, Image<Gray, byte>>( x => x);
 

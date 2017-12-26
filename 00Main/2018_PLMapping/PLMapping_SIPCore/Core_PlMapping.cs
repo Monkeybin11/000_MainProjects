@@ -9,40 +9,71 @@ using SIPEngine.Recipe;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using SIP_InspectLib.Recipe;
+using Emgu.CV;
+using Emgu.CV.Util;
+using SIP_InspectLib.DataType;
+using SIP_InspectLib.Recipe;
 
 namespace PLMapping_SIPCore
 {
-	using static SIPEngine.Handler;
-	using static ModelLib.AmplifiedType.Handler;
-	using static SIP_InspectLib.DefectInspect.Handler;
-	using static SIP_InspectLib.Indexing.Common;
 
-	using Img = Image<Gray , byte>;
+    using static SIP_InspectLib.Recipe.Adaptor;
+    using static SIPEngine.Handler;
+    using static ModelLib.AmplifiedType.Handler;
+    using static SIP_InspectLib.DefectInspect.Handler;
+    using static SIP_InspectLib.Indexing.Common;
 
-	public class Core_PlMapping
+    using Img = Image<Gray, byte>;
+    using ProcFunc = Func<Image<Gray, byte>, Image<Gray, byte>>;
+    using System.Drawing;
+
+    public class Core_PlMapping
 	{
 		public void Start( string imgpath , string configpath )
 		{
 
-			
+            var img = LoadImage( imgpath );
+            var modellist = CreateModel(configpath);
+            var resimg = RunProcessing(img , modellist);
 
 
 
-		}
+            var inspectrecipe = ToInspctRecipe(configpath); // 
+            List<ExResult> outdata = Indexing(inspectrecipe , resimg);
+
+            var poseq =  EstedChipPosAndEq(inspectrecipe);
+            var esetedindex = ToEstedIndex(poseq);
 
 
-		public void LoadImage(string imgpath)
-		{ }
+
+            var resisp1 = ToBoxList(resimg , inspectrecipe );
+
+
+            Func<Rectangle,double> boxsum = new Func<Rectangle, double>( x => 1);
+
+
+            var ested =  ToBoxIndex(inspectrecipe , boxsum , poseq ,  )
+
+
+
+
+        }
+
+        #region
+        public Img LoadImage(string imgpath)
+		{
+            return default( Img );
+        }
 
 
 		// with maybe
-		public Recipe_PLMapping LoadConfig( string configpath )
+		public InspctRescipe LoadConfig( string configpath )
 		{
 
 			return null;
 		}
 
-		public static Func<string , IEnumerable<Func<Img , Img>>> CreateModel
+		public static Func<string , IEnumerable<ProcFunc>> CreateModel
 			=> recipe 
 			=>
 		{
@@ -53,17 +84,37 @@ namespace PLMapping_SIPCore
 			=> (src, ModelLib)
 			=> RunProcessing( src , ModelLib );
 
-		public Func<SIPEngine.Recipe.Recipe_PLMapping , Img , > Indexing
-			=> (recipe , img )
-		{
-			
+
+        public Func<string, InspctRescipe> ToInspctRecipe
+           => path
+           =>
+           {
+               return null;
+           };
 
 
-			// mat 
-			// contour 
-			// inbox 
-			// resultdata
-		}
+
+        #endregion
+
+
+
+        public Func<InspctRescipe, Img , List<ExResult> > Indexing
+            => ( recipe, img )
+            =>
+
+        {
+            // 
+            //  
+            // classify 도 여기서 하자. 
+            // 
+            return null;
+            // mat 
+            // contour 
+            // inbox 
+            // resultdata
+        };
+
+
 
 		public void DefectClassify()
 		{
@@ -79,12 +130,12 @@ namespace PLMapping_SIPCore
 
 
 
-		public Recipe_PLMapping ToInspectRecipe( string path )
+		public InspctRescipe ToInspectRecipe( string path )
 		{
 			return null;
 		}
 
-		public Recipe_PLMapping ToModelRecipe( string path )
+		public InspctRescipe ToModelRecipe( string path )
 		{
 			return null;
 		}

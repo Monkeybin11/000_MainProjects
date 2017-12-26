@@ -8,15 +8,16 @@ using ModelLib.AmplifiedType;
 
 namespace SIP_InspectLib.Recipe
 {
-	using static Handler;
-	using static SpeedyCoding.Handler;
-	using static ModelLib.AmplifiedType.Handler;
-	using static SIP_InspectLib.Indexing.Common;
-	using Emgu.CV.Util;
-	using Img = Image<Gray , byte>;
-	using DataType;
+    using static Handler;
+    using static SpeedyCoding.Handler;
+    using static ModelLib.AmplifiedType.Handler;
+    using static SIP_InspectLib.Indexing.Common;
+    using Emgu.CV.Util;
+    using Img = Image<Gray, byte>;
+    using DataType;
+    using SpeedyCoding;
 
-	public class Recipe_PLMapping
+    public class InspctRescipe
 	{
 		public double RhoLimit;
 		public int IntenLowLimt;
@@ -87,13 +88,13 @@ namespace SIP_InspectLib.Recipe
 
 	public static class Adaptor
 	{
-		public static Func<Img , Recipe_PLMapping , Maybe<List<Rectangle>>> ToBoxList
+		public static Func<Img , InspctRescipe , Maybe<List<Rectangle>>> ToBoxList
 			=> ( img , srcRe )
 			=> Just( img ).Lift( FnFindContour( srcRe.AreaHighLimt , srcRe.AreaLowLimt ) )
 						  .Lift( SortContour )
 						  .Lift( ApplyBox );
 
-		public static Func<Recipe_PLMapping , PosLineEq > EstedChipPosAndEq
+		public static Func<InspctRescipe , PosLineEq > EstedChipPosAndEq
 			=> srcRe
 			=> FnEstChipPos_4PointAndEQ_Rhombus( srcRe.realLT , 
 												 srcRe.realLB , 
@@ -105,7 +106,7 @@ namespace SIP_InspectLib.Recipe
 			=> x
 			=> x.IndexPos;
 
-		public static Func< Recipe_PLMapping , Func<Rectangle , double> , PosLineEq , List<Rectangle> , IEnumerable<Maybe<Indexji>>> ToBoxIndex
+		public static Func< InspctRescipe , Func<Rectangle , double> , PosLineEq , List<Rectangle> , IEnumerable<Maybe<Indexji>>> ToBoxIndex
 			=> ( srcRe , sumfunc , poseq , boxs )
 			=>
 			{
@@ -129,7 +130,7 @@ namespace SIP_InspectLib.Recipe
 		//	 };
 
 		private static Func<
-				Recipe_PLMapping,
+				InspctRescipe,
 				Func<Rectangle , double>,
 				double [ , , ] ,
 				List<Rectangle> ,
@@ -174,7 +175,7 @@ namespace SIP_InspectLib.Recipe
 					
 					if ( needEdgeCut )
 					{
-						if ( InValidArea( xpos , ypos , constrain.ValidLen ) ) //여기 고쳐야 한다. << 
+						if ( InValidArea( xpos , ypos , 0, 0 , 0 ) ) //여기 고쳐야 한다. << 
 						{
 							src [ j ] [ i ] = new ExResult( j , i
 												 , ( int )ypos - ( int )( rec.Y + rec.Height / 2 )
@@ -201,10 +202,10 @@ namespace SIP_InspectLib.Recipe
 					return Unit();
 				} );
 
-		static Func<double , double , double , double , bool> InValidArea
-			 => ( x , y , x1,y1 )
+		static Func<double , double , double , double , double , bool> InValidArea
+			 => ( x , y , x1,y1 , lnelimit)
 			 => ToTuple( x , y ).L2( ToTuple(x1,y1) )  // <<<<<
-				 > constrain.BoundaryLen  
+				 > lnelimit
 				 ? false
 				 : true;
 
