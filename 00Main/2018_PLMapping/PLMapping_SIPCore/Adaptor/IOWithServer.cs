@@ -13,8 +13,6 @@ namespace PLMapping_SIPCore.Adaptor
 		public  static byte [ , , ] GetFile( string srcpath )
 		{
 
-
-
 			return null;
 		}
 
@@ -62,6 +60,5 @@ namespace PLMapping_SIPCore.Adaptor
 			}
 			return originalPath;
 		}
-
 	}
 }

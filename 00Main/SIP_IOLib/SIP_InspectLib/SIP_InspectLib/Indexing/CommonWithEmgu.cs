@@ -17,9 +17,12 @@ namespace SIP_InspectLib.Indexing
 		{
 			var findpasscntr = new Func<Image<Gray , byte> , VectorOfVectorOfPoint>((imgori) => {
 
+                imgori.Save(@"D:\temp\test2.png");
+
 				VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
 				VectorOfVectorOfPoint passcontours = new VectorOfVectorOfPoint();
 				CvInvoke.FindContours( imgori , contours , null , RetrType.External , ChainApproxMethod.ChainApproxNone );
+                var c = contours.Size;
 				for ( int i = 0 ; i < contours.Size ; i++ )
 				{
 					double areaSize = CvInvoke.ContourArea(contours[i]);
@@ -28,7 +31,8 @@ namespace SIP_InspectLib.Indexing
 						passcontours.Push( contours[i] );
 					}
 				}
-				return passcontours;
+                var temp = passcontours.Size;
+                return passcontours;
 			} );
 			return findpasscntr;
 		}

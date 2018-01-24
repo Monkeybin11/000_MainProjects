@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+
+using System.IO;
 using SpeedyCoding;
 using ModelLib.AmplifiedType;
 using SIPEngine.Recipe;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using SIP_InspectLib.Recipe;
-using Emgu.CV;
 using Emgu.CV.Util;
 using SIP_InspectLib.DataType;
-using SIP_InspectLib.Recipe;
+
 
 namespace PLMapping_SIPCore
 {
-
+    using static SIPEngine.Recipe.FunctionLib;
+    using static System.IO.Path;
+    using static ApplicationUtilTool.FileIO.XmlTool;
+    using static ApplicationUtilTool.FileIO.CsvTool;
+    using static PLMapping_SIPCore.Adaptor.IOWithServer;
     using static SIP_InspectLib.Recipe.Adaptor;
     using static SIPEngine.Handler;
     using static ModelLib.AmplifiedType.Handler;
@@ -29,125 +33,70 @@ namespace PLMapping_SIPCore
 
     public class Core_PlMapping
 	{
-		public void Start( string imgpath , string configpath )
+		public Maybe<List<ExResult>> Start( string imgpath , string procpath ,  string configpath )
 		{
 
             var img = LoadImage( imgpath );
-            var modellist = CreateModel(configpath);
-            var resimg = RunProcessing(img , modellist);
+            Func<Rectangle,double> boxsum = FnSumInsideBox(img.Data);     //여기서 에버리지로 할건지, 합으로 할껀지 정할 수 있다. 
+
+            var inspectrecipe = ToInspctRecipe(configpath);
+            var poseq         = EstedChipPosAndEq(inspectrecipe);
+            var esetedindex   = ToEstedIndex(poseq);
+
+            var doproc  = RunProcessing.Apply(img);
+
+            //var recp = ReadCsv2String(procpath , order0Dirction: false);
 
 
+            var resimg = Just(procpath)
+                                 .Bind(RemoveHeadTail)
+                                 .Bind(ToFuncRecipeList)
+                                 .Bind(ToPreProcFuncs)
+                                 .Bind(Preprocess.Apply(img));
 
-            var inspectrecipe = ToInspctRecipe(configpath); // 
-            List<ExResult> outdata = Indexing(inspectrecipe , resimg);
-
-            var poseq =  EstedChipPosAndEq(inspectrecipe);
-            var esetedindex = ToEstedIndex(poseq);
-
-
-
-            var resisp1 = ToBoxList(resimg , inspectrecipe );
-
-
-            Func<Rectangle,double> boxsum = new Func<Rectangle, double>( x => 1);
+            if (!resimg.isJust) return None;
+                            
+           
+            var resisp1 = ToBoxList(  inspectrecipe , resimg.Value);
+            // 컨투어 찾고, 소팅후 박스로 (끝)
 
 
-            var ested =  ToBoxIndex(inspectrecipe , boxsum , poseq ,  )
+            var resGenerator =  ToExResult(inspectrecipe , boxsum , poseq , resisp1.Value );
+            // 박스 리스트에 대해 대응되는 인덱싱 리스트 (끝) 여기까지 체크 완료. 
 
+            var exresults = ResultInitializer(inspectrecipe) // 인덱싱 초기화만 되있음. 
+                                .Map( resGenerator )
+                                .Flatten()
+                                .ToList(); // 끝 여기서 모든 결과를 만들었다. (끝)\
 
+            //var counter = exresults.Where(x => x.OKNG == "OK").Count();
 
-
+            return Just(exresults);
         }
 
         #region
         public Img LoadImage(string imgpath)
-		{
-            return default( Img );
-        }
+		 => new Image<Gray, byte>( imgpath );
 
 
-		// with maybe
-		public InspctRescipe LoadConfig( string configpath )
-		{
-
-			return null;
-		}
-
-		public static Func<string , IEnumerable<ProcFunc>> CreateModel
-			=> recipe 
-			=>
-		{
-			return null;
-		};
-
-		public static Func<Img , IEnumerable<Func<Img , Img>> ,  Img> Preprocess
-			=> (src, ModelLib)
-			=> RunProcessing( src , ModelLib );
+        public static Func<Img, IEnumerable<Func<Img, Img>>, Maybe<Img>> Preprocess
+            => (src, ModelLib)
+            => Just(ModelLib.FoldL(src));
 
 
         public Func<string, InspctRescipe> ToInspctRecipe
            => path
            =>
            {
-               return null;
+               var abspath = GetUNCPath( path );
+               var name    = GetFileName(abspath);
+               var dir     = GetDirectoryName(abspath);
+               var recipe  = ReadXmlClas( default(InspctRescipe) , dir , name );
+               return recipe;
            };
 
 
 
         #endregion
-
-
-
-        public Func<InspctRescipe, Img , List<ExResult> > Indexing
-            => ( recipe, img )
-            =>
-
-        {
-            // 
-            //  
-            // classify 도 여기서 하자. 
-            // 
-            return null;
-            // mat 
-            // contour 
-            // inbox 
-            // resultdata
-        };
-
-
-
-		public void DefectClassify()
-		{
-			// modify resultdata class 
-
-
-		}
-
-		public void ExportReadult()
-		{
-
-		}
-
-
-
-		public InspctRescipe ToInspectRecipe( string path )
-		{
-			return null;
-		}
-
-		public InspctRescipe ToModelRecipe( string path )
-		{
-			return null;
-		}
-
-
-		//public static IMage
-
-
-		// receive command
-
-		// send command 
-
-		//a
 	}
 }

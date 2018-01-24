@@ -35,9 +35,8 @@ namespace SIP_InspectLib.Recipe
 
 		public bool NeedEdgrCut;
 		public int EdgeLimit = 0;
-		double XoffSet;
-		double YoffSet;
-
+		public double XoffSet;
+		public double YoffSet;
 	}
 
 
@@ -88,9 +87,9 @@ namespace SIP_InspectLib.Recipe
 
 	public static class Adaptor
 	{
-		public static Func<Img , InspctRescipe , Maybe<List<Rectangle>>> ToBoxList
-			=> ( img , srcRe )
-			=> Just( img ).Lift( FnFindContour( srcRe.AreaHighLimt , srcRe.AreaLowLimt ) )
+		public static Func<InspctRescipe , Img , Maybe<List<Rectangle>>> ToBoxList
+			=> ( srcRe , img  )
+			=> Just( img ).Lift( FnFindContour( srcRe.AreaLowLimt , srcRe.AreaHighLimt ) )
 						  .Lift( SortContour )
 						  .Lift( ApplyBox );
 
@@ -106,29 +105,19 @@ namespace SIP_InspectLib.Recipe
 			=> x
 			=> x.IndexPos;
 
-		public static Func< InspctRescipe , Func<Rectangle , double> , PosLineEq , List<Rectangle> , IEnumerable<Maybe<Indexji>>> ToBoxIndex
+		public static Func< InspctRescipe , Func<Rectangle , double> , PosLineEq , List<Rectangle> , Func<ExResult[][],ExResult[][]>> ToExResult
 			=> ( srcRe , sumfunc , poseq , boxs )
 			=>
 			{
 				var indexres = GetIndexOf(srcRe.Tolerance , boxs , poseq.HLineEQs , poseq.VLineEQs);
 
-				var resultGenerator = ImportResult.Apply(srcRe)
-												  .Apply(sumfunc)
+                return ImportResult.Apply(srcRe)  .Apply(sumfunc)
 												  .Apply( poseq.IndexPos )
 												  .Apply( boxs)
 												  .Apply( indexres );
-
-				return null;
 			};
 
-		//public static Func<Recipe_PLMapping , Func<Rectangle , double> , List<Rectangle> , Maybe<PLMappingResult>> ToResualt
-		//	=> ( srcRe , boxs )
-		//	 =>
-		//	 {
-		//
-		//		 return null;
-		//	 };
-
+	
 		private static Func<
 				InspctRescipe,
 				Func<Rectangle , double>,

@@ -14,6 +14,8 @@ namespace SIP_InspectLib.DefectInspect
 	using static DefectInspect.Handler;
 	using DataType;
 	using SpeedyCoding;
+    using SIP_InspectLib.Recipe;
+    using static IntenArea;
 
 	public static class IntenArea
 	{
@@ -137,7 +139,9 @@ namespace SIP_InspectLib.DefectInspect
 	public static class Handler
 	{
 		public static Constrain Constrain( int up , int dw ) => new Constrain() { UpInten = up , DwInten = dw };
-	}
+
+        public static ExResult[][] ResultInitializer( InspctRescipe src ) => NgResultInitializer( src.HChipNum, src.WChipNum );
+    }
 
 	public class IndexRect
 	{

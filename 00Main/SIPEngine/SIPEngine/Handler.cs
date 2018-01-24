@@ -14,7 +14,7 @@ namespace SIPEngine
 	public static partial class Handler
 	{
 
-		public static Img PreProcessing( Img src )
+		public static Img PreProcessing( Img src , string  xc)
 			=> src;
 
 		//  여기서 프로세싱 과정 진행해야한다. 

@@ -29,11 +29,11 @@ namespace SIP_InspectLib.Indexing
 			var indexofhBox  = BoxIndexOf.Apply(true).Apply(tollerance).Apply(hLineEqs); // y index
 			var indexofvBox  = BoxIndexOf.Apply(false).Apply(tollerance).Apply(vLineEqs); // x index
 
-			var h_jList = boxlist.Select( indexofhBox );
-			var v_iList = boxlist.Select( indexofvBox );
+			var h_jList = boxlist.Select( indexofhBox ).ToList();
+			var v_iList = boxlist.Select( indexofvBox ).ToList();
 
 			var output = h_jList.Zip( v_iList , ToPairIndex ).ToArray();
-			var arr = output.ToArray();
+            var arr = output.ToArray().ToList();
 			return arr;
 		}
 

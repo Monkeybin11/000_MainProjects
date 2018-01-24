@@ -15,7 +15,8 @@ namespace SIPEngine
 
 	public static partial class Handler 
 	{
-		public static Img RunProcessing( Img src , IEnumerable<Func<Img , Img>> funcList )
+		public static Func< Img, IEnumerable<Func<Img, Img>> , Img> RunProcessing
+            => (  src , funcList )
 			=> funcList.FoldL( src );
 	}
 
