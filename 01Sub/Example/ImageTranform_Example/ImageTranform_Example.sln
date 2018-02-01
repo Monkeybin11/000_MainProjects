@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageTranform_Example", "ImageTranform_Example\ImageTranform_Example.csproj", "{190F5CA6-993A-4DFB-89B3-0C07482540EF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{190F5CA6-993A-4DFB-89B3-0C07482540EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{190F5CA6-993A-4DFB-89B3-0C07482540EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{190F5CA6-993A-4DFB-89B3-0C07482540EF}.Debug|x64.ActiveCfg = Debug|x64
+		{190F5CA6-993A-4DFB-89B3-0C07482540EF}.Debug|x64.Build.0 = Debug|x64
+		{190F5CA6-993A-4DFB-89B3-0C07482540EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{190F5CA6-993A-4DFB-89B3-0C07482540EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{190F5CA6-993A-4DFB-89B3-0C07482540EF}.Release|x64.ActiveCfg = Release|x64
+		{190F5CA6-993A-4DFB-89B3-0C07482540EF}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F9387F31-9D28-4066-8691-9BE90FD803F2}
+	EndGlobalSection
+EndGlobal

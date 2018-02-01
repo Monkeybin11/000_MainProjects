@@ -67,8 +67,6 @@ namespace ModelLib.AmplifiedType
 
         public Stack<A> ValueHistory => Value;
         public Stack<string> PaperHistory => Paper;
-
-
     }
 
     public static class AccumulWriterExt
@@ -76,7 +74,6 @@ namespace ModelLib.AmplifiedType
         public static A Lift<A>
             (this AccumulWriter<A> self, Func<A, A> f )
             => f(self.Value.First()) ;
-
 
         // Func => new M<A> ( val , txt , self  )
         public static AccumulWriter<A> Bind<A>
@@ -90,6 +87,25 @@ namespace ModelLib.AmplifiedType
         public static A GetLastValue<A>
            (this AccumulWriter<A> self)
            => self.Value.First();
+
+        public static string GetFirstPaper<A>
+          (this AccumulWriter<A> self)
+          => self.Paper.Last();
+
+        public static A GetFirstValue<A>
+           (this AccumulWriter<A> self)
+           => self.Value.Last();
+
+        public static AccumulWriter<A> Restore<A>
+            (this AccumulWriter<A> src)
+        {
+            src.Paper.Pop();
+            src.Value.Pop();
+            return src;
+
+
+
+        }
 
     }
 }

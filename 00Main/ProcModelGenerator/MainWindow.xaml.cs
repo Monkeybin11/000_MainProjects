@@ -22,9 +22,10 @@ using Emgu.CV.CvEnum;
 
 namespace ProcModelGenerator
 {
+    using static PLProtocol;
+    using static Helper;
     using static ModelLib.AmplifiedType.Handler;
     using static ProcModelGenerator.FunLib;
-    using static ProcModelGenerator.PLProtocol;
     using Img = Image<Gray, byte>;
     using MImg = AccumulWriter<Image<Gray, byte>>;
 
@@ -34,6 +35,8 @@ namespace ProcModelGenerator
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool IsOrigonalImg= false;
+
         double ZoomMax = 5;
         double ZoomMin = 0.5;
         double ZoomSpeed = 0.001;
@@ -172,31 +175,42 @@ namespace ProcModelGenerator
 
                 case ("btnAdpThreshold"):
                     var parmAdTh = (int)nudAdpThreshold.Value;
-                    SrcMImg = SrcMImg.Bind(AdpTHreshold.Apply(parmAdTh), StrThreshold.With(parmAdTh));
+                    SrcMImg = SrcMImg.Bind(AdpTHreshold.Apply(parmAdTh), StrAdpTHreashold.With(parmAdTh));
                     break;
 
                 case ("btnMedian"):
                     var parmMdn = (int)nudMedian.Value;
-                    SrcMImg = SrcMImg.Bind(Median.Apply(parmMdn), StrThreshold.With(parmMdn));
+                    SrcMImg = SrcMImg.Bind(Median.Apply(parmMdn), StrMedian.With(parmMdn));
                     break;
 
                 case ("btnNormalize"):
                     var parmNorm = (int)nudNormalize.Value;
-                    SrcMImg = SrcMImg.Bind(Threshold.Apply(parmNorm), StrThreshold.With(parmNorm));
+                    SrcMImg = SrcMImg.Bind(Normalize.Apply(parmNorm), StrNormalize.With(parmNorm));
                     break;
             }
-
-            var img = SrcMImg.GetLastValue();
-
-
-
-
-
+            imgBack.Source = ToBitmapSource( SrcMImg.GetLastValue() );
+            txbLog.Text = SrcMImg.GetLastPaper();
             // 여기에 함수별로 동작을 만들어 준다. => 그리고 back 구현 , 최종적으로 레시피 제작 구현. 
             // 레시피 제작 구현후 통신으로 되는것을 테스트 한다. 
         }
 
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            SrcMImg = SrcMImg.Restore();
+        }
 
-
+        private void btnSwitch_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsOrigonalImg)
+            {
+                IsOrigonalImg = false;
+                imgBack.Source = ToBitmapSource( SrcMImg.GetLastValue());
+            }
+            else
+            {
+                IsOrigonalImg = true;
+                imgBack.Source = ToBitmapSource(SrcMImg.GetFirstValue());
+            }
+        }
     }
 }

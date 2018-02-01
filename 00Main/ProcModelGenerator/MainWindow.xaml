@@ -41,7 +41,11 @@
                 <xc:IntegerUpDown x:Name="nudAdpThreshold" Grid.Row="2" Grid.Column="1"  />
                 <xc:IntegerUpDown x:Name="nudMedian" Grid.Row="3" Grid.Column="1"        />
                 <xc:IntegerUpDown x:Name="nudNormalize" Grid.Row="4" Grid.Column="1"     />
-                
+
+                <Button x:Name="btnBack"    Content="Back"   Grid.Row="5" Grid.Column="0" Style="{StaticResource BtnBase}" Click="btnBack_Click" />
+                <Button x:Name="btnSwitch"  Content="Switch" Grid.Row="5" Grid.Column="1" Style="{StaticResource BtnBase}"  Click="btnSwitch_Click"
+                        />
+
                 <Label Grid.Row="6" Grid.ColumnSpan="2" Content=" - History - " Style="{StaticResource LblTitle}"/>
                 <xc:RichTextBox x:Name="txbLog" Grid.Row="7" Grid.ColumnSpan="2" Background="AliceBlue" Margin="5"/>
 

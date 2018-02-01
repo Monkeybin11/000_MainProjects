@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageTranform", "ImageTranform\ImageTranform.csproj", "{D3EFC474-6BE8-4C99-9842-2D1618F64D39}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Viewer", "Viewer\Viewer.csproj", "{898A7D08-9B3B-493D-9913-5EF987C47AF6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,14 @@ Global
 		{D3EFC474-6BE8-4C99-9842-2D1618F64D39}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D3EFC474-6BE8-4C99-9842-2D1618F64D39}.Release|x64.ActiveCfg = Release|x64
 		{D3EFC474-6BE8-4C99-9842-2D1618F64D39}.Release|x64.Build.0 = Release|x64
+		{898A7D08-9B3B-493D-9913-5EF987C47AF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{898A7D08-9B3B-493D-9913-5EF987C47AF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{898A7D08-9B3B-493D-9913-5EF987C47AF6}.Debug|x64.ActiveCfg = Debug|x64
+		{898A7D08-9B3B-493D-9913-5EF987C47AF6}.Debug|x64.Build.0 = Debug|x64
+		{898A7D08-9B3B-493D-9913-5EF987C47AF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{898A7D08-9B3B-493D-9913-5EF987C47AF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{898A7D08-9B3B-493D-9913-5EF987C47AF6}.Release|x64.ActiveCfg = Release|Any CPU
+		{898A7D08-9B3B-493D-9913-5EF987C47AF6}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

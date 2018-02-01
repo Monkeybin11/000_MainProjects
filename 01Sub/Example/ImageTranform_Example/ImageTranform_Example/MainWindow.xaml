@@ -1,0 +1,34 @@
+﻿<Window x:Class="ImageTranform_Example.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ImageTranform_Example"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="550" Width="1025">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <UniformGrid Rows="10">
+            <Button x:Name="btnStart" Content="Start" Click="btnStart_Click"/>
+        </UniformGrid>
+
+        <Border BorderThickness="2" Grid.Column="1"  BorderBrush="Black" Margin="5">
+            <Canvas x:Name="cvsOriginal" Grid.Column="1" Margin="5">
+                <Image x:Name="imgOriginal" Stretch="Fill" Width="{Binding Path=ActualWidth, ElementName=cvsOriginal}" Height="{Binding Path=ActualHeight, ElementName=cvsOriginal}"/>
+        </Canvas>
+        </Border>
+
+        <Border BorderThickness="2" Grid.Column="2"  BorderBrush="Black" Margin="5">
+        <Canvas x:Name="cvsRotated" Margin="5">
+                <Image x:Name="imgRotated" Stretch="Fill" Width="{Binding Path=ActualWidth, ElementName=cvsRotated}" Height="{Binding Path=ActualHeight, ElementName=cvsRotated}"/>
+        </Canvas>
+        </Border>
+
+    </Grid>
+</Window>
