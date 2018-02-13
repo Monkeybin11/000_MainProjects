@@ -31,7 +31,7 @@ namespace ProcModelGenerator
 
         public static Func<int, Img, Img> Median
            => (median, img)
-           => img.SmoothMedian(median);
+           => img.SmoothMedian(median%2 != 0 ?  median : median + 1);
 
         public static Func<int, Img, Img> Normalize
           => (norm, img)
@@ -42,6 +42,10 @@ namespace ProcModelGenerator
         public static Writer PLImagingWriter
             => str
             => "|" + str;
+
+        public static string Paper2TextHistory
+            (this string paper)
+            =>paper.Split('|').Aggregate((f, s) => f + "\r" + s);
 
     }
 
@@ -72,10 +76,10 @@ namespace ProcModelGenerator
 
     public static class PLProtocol
     {
-        public static readonly string StrThreshold = "Threshold";
-        public static readonly string StrAdpTHreashold = "AdpThreshold";
-        public static readonly string StrMedian = "Median";
-        public static readonly string StrNormalize = "Normalize";
+        public static readonly string StrThreshold       = "Threshold"       ;
+        public static readonly string StrAdpTHreashold   = "AdpThreshold"    ;
+        public static readonly string StrMedian          = "Median"          ;
+        public static readonly string StrNormalize       = "Normalize"       ;
 
         public static string With
             (this string src, int param)

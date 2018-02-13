@@ -11,8 +11,8 @@ namespace ModelLib.AmplifiedType
 
     public partial class Handler
     {
-        public static AccumulWriter<A> Accmululatable<A>(A val, Writer writer) => new AccumulWriter<A>(val, writer); 
-        public static AccumulWriter<A> Accmululatable<A>(A val,string txt, Writer writer) => new AccumulWriter<A>(val, txt , writer); 
+        public static AccumulWriter<A> Accmululatable<A>(A val, Writer writer) => new AccumulWriter<A>(val, writer);
+        public static AccumulWriter<A> Accmululatable<A>(A val, string txt, Writer writer) => new AccumulWriter<A>(val, txt, writer);
     }
 
 
@@ -62,7 +62,7 @@ namespace ModelLib.AmplifiedType
 
             Paper = past.Paper;
             Writer = past.Writer;
-            Paper.Push( Paper.First() + Writer(txt) );
+            Paper.Push(Paper.First() + Writer(txt));
         }
 
         public Stack<A> ValueHistory => Value;
@@ -72,11 +72,11 @@ namespace ModelLib.AmplifiedType
     public static class AccumulWriterExt
     {
         public static A Lift<A>
-            (this AccumulWriter<A> self, Func<A, A> f )
-            => f(self.Value.First()) ;
+            (this AccumulWriter<A> self, Func<A, A> f)
+            => f(self.Value.First());
 
         // Func => new M<A> ( val , txt , self  )
-        public static AccumulWriter<A> Bind<A>
+        public static AccumulWriter<A> Add<A>
             (this AccumulWriter<A> self, Func<A, A> f, string txt)
             => new AccumulWriter<A>(f(self.Value.First()), txt, self);
 
@@ -102,10 +102,10 @@ namespace ModelLib.AmplifiedType
             src.Paper.Pop();
             src.Value.Pop();
             return src;
-
-
-
         }
 
+        public static int Count<A>
+           (this AccumulWriter<A> src)
+            => src.Value.Count;
     }
 }

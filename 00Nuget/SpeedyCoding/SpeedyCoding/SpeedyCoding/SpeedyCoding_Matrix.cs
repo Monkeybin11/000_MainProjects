@@ -268,9 +268,9 @@ namespace SpeedyCoding
             int start ,
             int end )
         {
-            TSrc[] output = new TSrc[end - start];
+            TSrc[] output = new TSrc[end - start + 1];
             int count = 0;
-            for ( int i = start ; i < end ; i++ )
+            for ( int i = start ; i <= end ; i++ )
             {
                 output [ count ] = @this [ i ];
                 count++;
@@ -283,13 +283,20 @@ namespace SpeedyCoding
             int [ ] yxStart ,
             int [ ] yxEnd )
         {
-            TSrc[][] output = new TSrc[yxEnd[0] - yxStart[0]][];
+            TSrc[][] output = new TSrc[yxEnd[0] - yxStart[0] + 1][];
+            for (int i = 0; i < output.GetLength(0); i++)
+            {
+                output[i] = new TSrc[yxEnd[1] - yxStart[1] + 1];
+            }
+
+
+
             int countY = 0;
             int countX = 0;
-            for ( int i = yxStart [ 0 ] ; i < yxEnd [ 0 ] ; i++ )
+            for ( int j  = yxStart [ 0 ] ; j <= yxEnd [ 0 ] ; j++ )
             {
                 countX = 0;
-                for ( int j = yxStart [ 1 ] ; j < yxEnd [ 1 ] ; j++ )
+                for ( int i  = yxStart [ 1 ] ; i <= yxEnd [ 1 ] ; i++ )
                 {
                     output [ countY ] [ countX ] = @this [ j ] [ i ];
                     countX++;

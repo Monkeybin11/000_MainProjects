@@ -6,7 +6,7 @@
         xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:ProcModelGenerator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1200">
+        Title="Preprocessing Model Generator" Height="800" Width="1200">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width = "0.3*" />
@@ -32,19 +32,18 @@
                 <Button x:Name="btnLoad"   Grid.Row="0" Grid.Column="0" Content="Load"    Style="{StaticResource BtnBase}" Click="btnLoad_Click"  />
                 <Button x:Name="btnExport" Grid.Row="0" Grid.Column="1" Content="Export"  Style="{StaticResource BtnBase}" Click="btnExport_Click" />
                 
-                <Button x:Name="btnThreshold"    Grid.Row="1" Grid.Column="0" Content="Threshold"    Style="{StaticResource BtnBase}" />
-                <Button x:Name="btnAdpThreshold" Grid.Row="2" Grid.Column="0" Content="AdpThreshold" Style="{StaticResource BtnBase}" />
-                <Button x:Name="btnMedian"       Grid.Row="3" Grid.Column="0" Content="Median"       Style="{StaticResource BtnBase}" />
-                <Button x:Name="btnNormalize"    Grid.Row="4" Grid.Column="0" Content="Normalize"    Style="{StaticResource BtnBase}" />
+                <Button x:Name="btnThreshold"    Grid.Row="1" Grid.Column="0" Content="Threshold"    Style="{StaticResource BtnBase}" Click="btnOperation" />
+                <Button x:Name="btnAdpThreshold" Grid.Row="2" Grid.Column="0" Content="AdpThreshold" Style="{StaticResource BtnBase}" Click="btnOperation" />
+                <Button x:Name="btnMedian"       Grid.Row="3" Grid.Column="0" Content="Median"       Style="{StaticResource BtnBase}" Click="btnOperation" />
+                <Button x:Name="btnNormalize"    Grid.Row="4" Grid.Column="0" Content="Normalize"    Style="{StaticResource BtnBase}" Click="btnOperation" />
 
-                <xc:IntegerUpDown x:Name="nudThreshold" Grid.Row="1" Grid.Column="1"     />
-                <xc:IntegerUpDown x:Name="nudAdpThreshold" Grid.Row="2" Grid.Column="1"  />
-                <xc:IntegerUpDown x:Name="nudMedian" Grid.Row="3" Grid.Column="1"        />
-                <xc:IntegerUpDown x:Name="nudNormalize" Grid.Row="4" Grid.Column="1"     />
+                <xc:IntegerUpDown x:Name="nudThreshold" Grid.Row="1" Grid.Column="1"     Style="{StaticResource nudBase}" />
+                <xc:IntegerUpDown x:Name="nudAdpThreshold" Grid.Row="2" Grid.Column="1"  Style="{StaticResource nudBase}" />
+                <xc:IntegerUpDown x:Name="nudMedian" Grid.Row="3" Grid.Column="1"        Style="{StaticResource nudBase}" />
+                <xc:IntegerUpDown x:Name="nudNormalize" Grid.Row="4" Grid.Column="1"     Style="{StaticResource nudBase}" />
 
                 <Button x:Name="btnBack"    Content="Back"   Grid.Row="5" Grid.Column="0" Style="{StaticResource BtnBase}" Click="btnBack_Click" />
-                <Button x:Name="btnSwitch"  Content="Switch" Grid.Row="5" Grid.Column="1" Style="{StaticResource BtnBase}"  Click="btnSwitch_Click"
-                        />
+                <Button x:Name="btnSwitch"  Content="Switch" Grid.Row="5" Grid.Column="1" Style="{StaticResource BtnBase}"  Click="btnSwitch_Click" />
 
                 <Label Grid.Row="6" Grid.ColumnSpan="2" Content=" - History - " Style="{StaticResource LblTitle}"/>
                 <xc:RichTextBox x:Name="txbLog" Grid.Row="7" Grid.ColumnSpan="2" Background="AliceBlue" Margin="5"/>
@@ -52,7 +51,7 @@
             </Grid>
         </Border>
         
-        <Border Grid.Column="1" BorderThickness="2" BorderBrush="DarkSlateGray" Margin="5" >
+        <Border x:Name="brdimg"  Grid.Column="1" BorderThickness="2" BorderBrush="DarkSlateGray" Margin="5" >
             <Canvas x:Name="canvas_Zoom" Grid.Column="1" ClipToBounds="True" >
                 <Canvas x:Name="canvas_Draw" MouseWheel="Canvas_MouseWheel"  >
                     <Image x:Name="imgBack" MouseLeftButtonDown="imgBack_MouseLeftButtonDown" MouseMove="imgBack_MouseMove" MouseLeftButtonUp="imgBack_MouseLeftButtonUp" />

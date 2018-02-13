@@ -30,7 +30,7 @@ namespace TempTest
 
             var res = val.Lift(f1);
 
-            var res2 = val.Bind(f1,"f1").Bind(f2,"f2").Bind(f3,"f3");
+            var res2 = val.Add(f1,"f1").Add(f2,"f2").Add(f3,"f3");
 
             var res2res = res2.GetLastPaper();
             var valres = res2.GetLastValue();

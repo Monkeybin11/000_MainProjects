@@ -4,7 +4,9 @@
                     xmlns:local="clr-namespace:ProcModelGenerator">
 
     <Style x:Key="BtnBase" TargetType="Button">
-        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Margin" Value="10,20,10,20"/>
+        <Setter Property="Background" Value="SteelBlue"/>
+        <Setter Property="Foreground" Value="White"/>
     </Style>
 
     <Style x:Key="LblBase" TargetType="Label">
@@ -20,5 +22,9 @@
         <Setter Property="FontWeight" Value="SemiBold"/>
     </Style>
 
+    <Style x:Key="nudBase" TargetType="xc:IntegerUpDown">
+        <Setter Property="Margin"  Value="10,20,10,20"/>
+    </Style>
+    
 
 </ResourceDictionary>

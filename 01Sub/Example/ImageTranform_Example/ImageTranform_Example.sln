@@ -5,6 +5,12 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageTranform_Example", "ImageTranform_Example\ImageTranform_Example.csproj", "{190F5CA6-993A-4DFB-89B3-0C07482540EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageTranform", "..\..\ImageTranform\ImageTranform\ImageTranform.csproj", "{D3EFC474-6BE8-4C99-9842-2D1618F64D39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeedyCoding", "..\..\..\00Nuget\SpeedyCoding\SpeedyCoding\SpeedyCoding\SpeedyCoding.csproj", "{04EF47CB-6ADD-4CA9-8DC9-9443AA536F84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LargeSizeImage_Transformation", "..\..\LargeSizeImage_Transformation\LargeSizeImage_Transformation\LargeSizeImage_Transformation.csproj", "{4CFC1C92-DE3D-44F3-BEB8-87C8CF196642}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +27,30 @@ Global
 		{190F5CA6-993A-4DFB-89B3-0C07482540EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{190F5CA6-993A-4DFB-89B3-0C07482540EF}.Release|x64.ActiveCfg = Release|x64
 		{190F5CA6-993A-4DFB-89B3-0C07482540EF}.Release|x64.Build.0 = Release|x64
+		{D3EFC474-6BE8-4C99-9842-2D1618F64D39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3EFC474-6BE8-4C99-9842-2D1618F64D39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3EFC474-6BE8-4C99-9842-2D1618F64D39}.Debug|x64.ActiveCfg = Debug|x64
+		{D3EFC474-6BE8-4C99-9842-2D1618F64D39}.Debug|x64.Build.0 = Debug|x64
+		{D3EFC474-6BE8-4C99-9842-2D1618F64D39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3EFC474-6BE8-4C99-9842-2D1618F64D39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3EFC474-6BE8-4C99-9842-2D1618F64D39}.Release|x64.ActiveCfg = Release|x64
+		{D3EFC474-6BE8-4C99-9842-2D1618F64D39}.Release|x64.Build.0 = Release|x64
+		{04EF47CB-6ADD-4CA9-8DC9-9443AA536F84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04EF47CB-6ADD-4CA9-8DC9-9443AA536F84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04EF47CB-6ADD-4CA9-8DC9-9443AA536F84}.Debug|x64.ActiveCfg = Debug|x64
+		{04EF47CB-6ADD-4CA9-8DC9-9443AA536F84}.Debug|x64.Build.0 = Debug|x64
+		{04EF47CB-6ADD-4CA9-8DC9-9443AA536F84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04EF47CB-6ADD-4CA9-8DC9-9443AA536F84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04EF47CB-6ADD-4CA9-8DC9-9443AA536F84}.Release|x64.ActiveCfg = Release|x64
+		{04EF47CB-6ADD-4CA9-8DC9-9443AA536F84}.Release|x64.Build.0 = Release|x64
+		{4CFC1C92-DE3D-44F3-BEB8-87C8CF196642}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CFC1C92-DE3D-44F3-BEB8-87C8CF196642}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CFC1C92-DE3D-44F3-BEB8-87C8CF196642}.Debug|x64.ActiveCfg = Debug|x64
+		{4CFC1C92-DE3D-44F3-BEB8-87C8CF196642}.Debug|x64.Build.0 = Debug|x64
+		{4CFC1C92-DE3D-44F3-BEB8-87C8CF196642}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CFC1C92-DE3D-44F3-BEB8-87C8CF196642}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CFC1C92-DE3D-44F3-BEB8-87C8CF196642}.Release|x64.ActiveCfg = Release|x64
+		{4CFC1C92-DE3D-44F3-BEB8-87C8CF196642}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

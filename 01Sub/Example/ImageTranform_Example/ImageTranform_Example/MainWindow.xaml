@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageTranform_Example"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="1025">
+        Title="MainWindow" Height="550" Width="1425">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -16,18 +17,30 @@
 
         <UniformGrid Rows="10">
             <Button x:Name="btnStart" Content="Start" Click="btnStart_Click"/>
+            <Button x:Name="btnxyaffineStart" Content="New Start" Click="btnxyaffineStart_Click"/>
+            <Button x:Name="btnWithPointStart" Content="Test2" Click="btnWithPointStart_Click"/>
+            <Button x:Name="btnTest" Content="Test" Click="btnTest_Click"/>
+            <Button x:Name="btnTestonePoint" Content="TestOne" Click="btnTestonePoint_Click"/>
+            <Button x:Name="btnTestDll" Content="TestDll" Click="btnTestDll_Click"/>
         </UniformGrid>
 
         <Border BorderThickness="2" Grid.Column="1"  BorderBrush="Black" Margin="5">
-            <Canvas x:Name="cvsOriginal" Grid.Column="1" Margin="5">
+            <Canvas x:Name="cvsOriginal" Grid.Column="1" Margin="5" Background="Transparent"  MouseDown="cvsOriginal_MouseDown">
                 <Image x:Name="imgOriginal" Stretch="Fill" Width="{Binding Path=ActualWidth, ElementName=cvsOriginal}" Height="{Binding Path=ActualHeight, ElementName=cvsOriginal}"/>
         </Canvas>
         </Border>
 
         <Border BorderThickness="2" Grid.Column="2"  BorderBrush="Black" Margin="5">
-        <Canvas x:Name="cvsRotated" Margin="5">
-                <Image x:Name="imgRotated" Stretch="Fill" Width="{Binding Path=ActualWidth, ElementName=cvsRotated}" Height="{Binding Path=ActualHeight, ElementName=cvsRotated}"/>
+        <Canvas x:Name="cvstranslated" Margin="5">
+                <Image x:Name="imgtranslated" Stretch="Fill" Width="{Binding Path=ActualWidth, ElementName=cvsRotated}" Height="{Binding Path=ActualHeight, ElementName=cvsRotated}"/>
         </Canvas>
+        </Border>
+
+
+        <Border BorderThickness="2" Grid.Column="3"  BorderBrush="Black" Margin="5">
+            <Canvas x:Name="cvsRotated" Margin="5">
+                <Image x:Name="imgRotated" Stretch="Fill" Width="{Binding Path=ActualWidth, ElementName=cvsRotated}" Height="{Binding Path=ActualHeight, ElementName=cvsRotated}"/>
+            </Canvas>
         </Border>
 
     </Grid>
