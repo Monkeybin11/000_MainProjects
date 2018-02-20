@@ -88,10 +88,10 @@ namespace SIPEngine.Recipe
             var splited = rawrecipe.Split('|');
             var head = splited.First();
             var tail = splited.Last();
-            var body = splited.Skip(1).Take(splited.Length - 1);
+            var body = splited.Skip(1).Take(splited.Length - 2);
 
             if (head == StartStr && tail == EndStr)
-                Just(body);
+                return Just(body);
             return None;
         }
 

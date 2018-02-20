@@ -33,6 +33,8 @@ namespace PLMapping_SIPCore
 
     public class Core_PlMapping
 	{
+        public event Action<string> evtProcessDone;
+
 		public Maybe<List<ExResult>> Start( string imgpath , string procpath ,  string configpath )
 		{
 
@@ -45,10 +47,10 @@ namespace PLMapping_SIPCore
 
             var doproc  = RunProcessing.Apply(img);
 
-            //var recp = ReadCsv2String(procpath , order0Dirction: false);
+            var recp = File.ReadAllText(procpath);
 
 
-            var resimg = Just(procpath)
+            var resimg = Just(recp)
                                  .Bind(RemoveHeadTail)
                                  .Bind(ToFuncRecipeList)
                                  .Bind(ToPreProcFuncs)

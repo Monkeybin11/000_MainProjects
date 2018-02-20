@@ -43,6 +43,7 @@ namespace SIP_InspectLib.DataType
 	}
 	public class ExResult
 	{
+        public static double PixelResolution;
 		public int Hindex;
 		public int Windex;
 

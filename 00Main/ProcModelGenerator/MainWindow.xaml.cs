@@ -1,4 +1,4 @@
-﻿
+﻿      
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,11 +51,11 @@ namespace ProcModelGenerator
             InitializeComponent();
             InitParam();
 
-            canvas_Zoom.Height = brdimg.ActualHeight;
-            canvas_Zoom.Width = brdimg.ActualWidth;
-
-            canvas_Draw.Height = brdimg.ActualHeight;
-            canvas_Draw.Width = brdimg.ActualWidth;
+            //canvas_Zoom.Height = brdimg.ActualHeight;
+            //canvas_Zoom.Width = brdimg.ActualWidth;
+            //
+            //canvas_Draw.Height = brdimg.ActualHeight;
+            //canvas_Draw.Width = brdimg.ActualWidth;
         }
 
         void InitParam()
@@ -95,23 +95,17 @@ namespace ProcModelGenerator
                 imgBack.ActualHeight.Print("img H");
                 imgBack.ActualWidth.Print("img W");
 
-
-
-
                 Canvas.SetLeft(imgBack, offsetW);
                 Canvas.SetTop(imgBack, offsetH);
                 imgBack.Stretch = Stretch.Fill;
 
-                
-
-
-                SrcMImg = Accmululatable( new Img(ofd.FileName) , "START", PLImagingWriter);
+                SrcMImg = Accmululatable( new Img(ofd.FileName) , "Start", PLImagingWriter);
                
                 imgBack.Source = ToBitmapSource(SrcMImg.GetLastValue());
                 txbLog.Selection.Text = SrcMImg.GetLastPaper().Paper2TextHistory();
 
-                Canvas.SetLeft(imgBack, offsetW);
-                Canvas.SetTop(imgBack, offsetH);
+                //Canvas.SetLeft(imgBack, offsetW);
+                //Canvas.SetTop(imgBack, offsetH);
 
             }
         }
@@ -121,7 +115,7 @@ namespace ProcModelGenerator
             SaveFileDialog fd = new SaveFileDialog();
             if (fd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                File.WriteAllText(fd.FileName, SrcMImg.GetLastPaper() + "|END");
+                File.WriteAllText(fd.FileName, SrcMImg.GetLastPaper().Replace("Start", "ImgProStart") + "|ImgProEnd");
             }
         }
 

@@ -37,8 +37,7 @@ namespace Network_Communication.Ethernet
 
             }
 
-            Task.Run( () => Reciever() );
-            Task.Run( () => Sender() );
+           
         }
 
         public void Reciever( TcpClient clinet )

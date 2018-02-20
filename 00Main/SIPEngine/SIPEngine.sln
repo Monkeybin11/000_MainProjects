@@ -23,6 +23,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmguCvExtension", "..\..\00
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TempTest", "TempTest\TempTest.csproj", "{3B59C6DE-9A16-4123-BE56-E3BA11A39A8F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{929D7A43-2233-4D75-AA4F-0B736C0C2FB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessingClient", "ImageProcessingClient\ImageProcessingClient.csproj", "{F67FA2EC-DECE-4B20-B179-3CF94621E8B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Network_Communication", "..\Network_Communication\Network_Communication\Network_Communication.csproj", "{BA8FE0F0-4E7F-4FBC-9D8F-500A87DECC7C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,15 +111,34 @@ Global
 		{A784FAE0-FF07-4E1A-8138-D9D3B698B951}.Release|x64.Build.0 = Release|x64
 		{3B59C6DE-9A16-4123-BE56-E3BA11A39A8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3B59C6DE-9A16-4123-BE56-E3BA11A39A8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B59C6DE-9A16-4123-BE56-E3BA11A39A8F}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{3B59C6DE-9A16-4123-BE56-E3BA11A39A8F}.Debug|x64.Build.0 = Debug|Any CPU
+		{3B59C6DE-9A16-4123-BE56-E3BA11A39A8F}.Debug|x64.ActiveCfg = Debug|x64
+		{3B59C6DE-9A16-4123-BE56-E3BA11A39A8F}.Debug|x64.Build.0 = Debug|x64
 		{3B59C6DE-9A16-4123-BE56-E3BA11A39A8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B59C6DE-9A16-4123-BE56-E3BA11A39A8F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3B59C6DE-9A16-4123-BE56-E3BA11A39A8F}.Release|x64.ActiveCfg = Release|Any CPU
 		{3B59C6DE-9A16-4123-BE56-E3BA11A39A8F}.Release|x64.Build.0 = Release|Any CPU
+		{F67FA2EC-DECE-4B20-B179-3CF94621E8B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F67FA2EC-DECE-4B20-B179-3CF94621E8B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F67FA2EC-DECE-4B20-B179-3CF94621E8B6}.Debug|x64.ActiveCfg = Debug|x64
+		{F67FA2EC-DECE-4B20-B179-3CF94621E8B6}.Debug|x64.Build.0 = Debug|x64
+		{F67FA2EC-DECE-4B20-B179-3CF94621E8B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F67FA2EC-DECE-4B20-B179-3CF94621E8B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F67FA2EC-DECE-4B20-B179-3CF94621E8B6}.Release|x64.ActiveCfg = Release|Any CPU
+		{F67FA2EC-DECE-4B20-B179-3CF94621E8B6}.Release|x64.Build.0 = Release|Any CPU
+		{BA8FE0F0-4E7F-4FBC-9D8F-500A87DECC7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA8FE0F0-4E7F-4FBC-9D8F-500A87DECC7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA8FE0F0-4E7F-4FBC-9D8F-500A87DECC7C}.Debug|x64.ActiveCfg = Debug|x64
+		{BA8FE0F0-4E7F-4FBC-9D8F-500A87DECC7C}.Debug|x64.Build.0 = Debug|x64
+		{BA8FE0F0-4E7F-4FBC-9D8F-500A87DECC7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA8FE0F0-4E7F-4FBC-9D8F-500A87DECC7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA8FE0F0-4E7F-4FBC-9D8F-500A87DECC7C}.Release|x64.ActiveCfg = Release|x64
+		{BA8FE0F0-4E7F-4FBC-9D8F-500A87DECC7C}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F67FA2EC-DECE-4B20-B179-3CF94621E8B6} = {929D7A43-2233-4D75-AA4F-0B736C0C2FB9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3A323466-97C7-4F9E-80A9-FCBFE7124355}
