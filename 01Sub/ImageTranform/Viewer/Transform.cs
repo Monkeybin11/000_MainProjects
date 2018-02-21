@@ -20,7 +20,7 @@ namespace Viewer
 
     using ClrImg = Image<Bgr, byte>;
     using Img = Image<Gray, byte>;
-    using static Transfom;
+    using static ImageAlingn;
     using System.Drawing;
 
     public static class Transform

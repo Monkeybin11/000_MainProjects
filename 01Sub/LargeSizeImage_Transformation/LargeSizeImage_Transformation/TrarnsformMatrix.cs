@@ -73,6 +73,68 @@ namespace LargeSizeImage_Transformation
 
             int h = G.Length;
 
+            for (y = 0; y < target.Length; y++)
+            {
+                for (x = 0; x < target[0].Length; x++)
+                {
+                    var dx = x - (centerX + diffX);
+                    var dy = y - (centerY + diffY);
+
+                    var xres = dx * cosRadian - dy * sinRadian;
+                    var yres  = dx*sinRadian + dy * cosRadian;
+
+                    var srcX = xres + centerX;
+                    var srcY = yres - hidx * h + centerY;
+
+
+                    isourceX = (int)Math.Round(srcX);
+                    isourceY = (int)Math.Round(srcY);
+               
+                    try
+                    {
+                        if (isourceY < G.Length
+                            && isourceY >= 0
+                            && isourceX < G[0].Length
+                            && isourceX >= 0)
+                          
+                        {
+                            target[y][x] = G[isourceY][isourceX];
+                        }
+                    }
+                    catch (Exception es)
+                    {
+                        Console.WriteLine(es.ToString());
+                    }
+
+                }
+            }
+        }
+
+        public static void rotateGeneral_old(ref byte[][] target, TrnsData data, byte[][] G, int hidx, int oldw, int oldh)
+        {
+
+            double radian = data.Angle;
+            var newWidth = target[0].Length;
+            var newHeight = target.Length;
+
+            double cosRadian = Cos(radian);
+            double sinRadian = Sin(radian);
+
+
+            int centerX = oldw / 2;
+            int centerY = oldh / 2;
+            int diffX = (newWidth - oldw) / 2;
+            int diffY = (newHeight - oldh) / 2;
+
+
+            double sourceX, sourceY;
+            int isourceX, isourceY;
+            int isourceX2, isourceY2;
+
+            int y, x;
+
+            int h = G.Length;
+
 
             for (y = 0; y < G.Length; y++)
             {

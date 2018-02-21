@@ -69,13 +69,13 @@ namespace ImageTranform_Example
                 double angle = 25;
                 double radian;
 
-                int[,] ResultArray = rotateGeneral(data , w ,h ,angle  ,false);
+                //int[,] ResultArray = rotateGeneral(data , w ,h ,angle  ,false);
 
                 /// Start To Bitmap
                 //var bmpsource = ResultArray.ToBitmap().ToImageSource();
-                var bmpsource = ResultArray.ToBitmap_SetPixel().ToImageSource();
+                //var bmpsource = ResultArray.ToBitmap_SetPixel().ToImageSource();
 
-                imgRotated.Source = bmpsource;
+                //imgRotated.Source = bmpsource;
             }
         }
 

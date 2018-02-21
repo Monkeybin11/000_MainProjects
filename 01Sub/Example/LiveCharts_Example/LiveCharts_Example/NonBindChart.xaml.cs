@@ -42,7 +42,7 @@ namespace LiveCharts_Example
 
 
 			
-
+            ScatterSeries
 			LineSeries temp1 = new LineSeries();
 			LineSeries temp2 = new LineSeries();
 

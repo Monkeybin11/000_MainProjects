@@ -183,7 +183,7 @@ namespace ImageTranform
 
         }
 
-        private static byte[][] CreateJagged(int h, int w)
+        public static byte[][] CreateJagged(int h, int w)
         {
             byte[][] output = new byte[h][];
             for (int i = 0; i < h; i++)
@@ -195,7 +195,7 @@ namespace ImageTranform
         }
         //Create 
 
-        private static Bitmap ToBitmap_SetPixel(this byte[,] src)
+        public static Bitmap ToBitmap_SetPixel(this byte[,] src)
         {
             int h = src.GetLength(0);
             int w = src.GetLength(1);
@@ -214,7 +214,7 @@ namespace ImageTranform
         }
 
         //Point to 
-        private static Func<Func<TrnsData>, List<TrsFunc> , IoByte , int , int, PartialData> RunTranform
+        public static Func<Func<TrnsData>, List<TrsFunc> , IoByte , int , int, PartialData> RunTranform
             => (fnData, mfn , src , w , h)
             =>
             {
@@ -238,7 +238,7 @@ namespace ImageTranform
                           .ToList();
             };
 
-        private static double[][] ToAffinenMetrix(PointD[] fisrt, PointD[] last)
+        public static double[][] ToAffinenMetrix(PointD[] fisrt, PointD[] last)
         {
             var srcM = new double[][]
            {
@@ -262,7 +262,7 @@ namespace ImageTranform
 
 
 
-        private static void GetInfo(IEnumerable<PointF> pointsF, IEnumerable<PointF> pointsD, Img img)
+        public static void GetInfo(IEnumerable<PointF> pointsF, IEnumerable<PointF> pointsD, Img img)
         {
             var mat = CvInvoke.GetPerspectiveTransform(pointsF.ToArray() , pointsD.ToArray());
 
@@ -300,7 +300,7 @@ namespace ImageTranform
             return mat;
         }
 
-        private static PointF[] ToTransPos(CornerPoints pos)
+        public static PointF[] ToTransPos(CornerPoints pos)
         {
             var p0 = new PointF((float)pos.x0, (float)pos.y0);
             var p1 = new PointF((float)pos.x1, (float)pos.y1);

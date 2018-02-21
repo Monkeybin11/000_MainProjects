@@ -17,7 +17,7 @@ namespace Viewer
 {
     using ClrImg = Image<Bgr, byte>;
     using Img = Image<Gray, byte>;
-    using static Transfom;
+    using static ImageAlingn;
     using System.IO;
     using Emgu.CV.Stitching;
     using Emgu.CV.Util;
@@ -186,8 +186,18 @@ namespace Viewer
             var data = transmat.GetData();
 
             // ---
+            var p0_D = new PointD((float)954, (float)2139);
+            var p1_D = new PointD((float)600, (float)375);
+            var p2_D = new PointD((float)2363, (float)18);
 
-            var afinmat = ToAffinenMetrix(srcPoints, trgPoints);
+            var ptarget0_D = new PointD((float)(centerx - innerw), (float)(centery - innerh));
+            var ptarget1_D = new PointD((float)(centerx - innerw), (float)(centery + innerh));
+            var ptarget2_D = new PointD((float)(centerx + innerw), (float)(centery + innerh));
+
+            var srcPoints_D = new PointD[] { p0_D, p1_D, p2_D };
+            var trgPoints_D = new PointD[] { ptarget0_D, ptarget1_D, ptarget2_D };
+
+            var afinmat = ToAffinenMetrix(srcPoints_D, trgPoints_D);
             // ---
 
 
@@ -280,7 +290,7 @@ namespace Viewer
 
                 // Get TransMatrix
                 var trsMat = GetTransMat2();
-                var trsMatcv = GetTransMat().Item2;
+                //var trsMatcv = GetTransMat().Item2;
 
                 // Update idx
                 var transedres = idxdata.Select(x => x.Select(l => TransOperation(trsMat, l)).ToArray()).ToList();
@@ -553,18 +563,18 @@ namespace Viewer
             double[] GetTransMat_Small45do()
         {
 
-            var pf0 = new PointF((float)1, (float)0);
-            var pf1 = new PointF((float)1, (float)1);
-            var pf2 = new PointF((float)1, (float)2);
+            var pf0 = new PointD((float)1, (float)0);
+            var pf1 = new PointD((float)1, (float)1);
+            var pf2 = new PointD((float)1, (float)2);
 
-            var pl0 = new PointF((float)0, (float)0);
-            var pl1 = new PointF((float)1, (float)1);
-            var pl2 = new PointF((float)2, (float)2);
+            var pl0 = new PointD((float)0, (float)0);
+            var pl1 = new PointD((float)1, (float)1);
+            var pl2 = new PointD((float)2, (float)2);
 
 
 
-            var srcPoints = new PointF[] { pf0, pf1, pf2 };
-            var trgPoints = new PointF[] { pl0, pl1, pl2 };
+            var srcPoints = new PointD[] { pf0, pf1, pf2 };
+            var trgPoints = new PointD[] { pl0, pl1, pl2 };
 
 
             var afinmat = ToAffinenMetrix(srcPoints, trgPoints);
@@ -601,18 +611,18 @@ namespace Viewer
         double[] GetTransMat_Small2()
         {
 
-            var pf0 = new PointF((float)1, (float)0);
-            var pf1 = new PointF((float)1, (float)1);
-            var pf2 = new PointF((float)1, (float)2);
+            var pf0 = new PointD((float)1, (float)0);
+            var pf1 = new PointD((float)1, (float)1);
+            var pf2 = new PointD((float)1, (float)2);
 
-            var pl0 = new PointF((float)0, (float)1);
-            var pl1 = new PointF((float)1, (float)2);
-            var pl2 = new PointF((float)2, (float)3);
+            var pl0 = new PointD((float)0, (float)1);
+            var pl1 = new PointD((float)1, (float)2);
+            var pl2 = new PointD((float)2, (float)3);
 
 
 
-            var srcPoints = new PointF[] { pf0, pf1, pf2 };
-            var trgPoints = new PointF[] { pl0, pl1, pl2 };
+            var srcPoints = new PointD[] { pf0, pf1, pf2 };
+            var trgPoints = new PointD[] { pl0, pl1, pl2 };
 
 
             var afinmat = ToAffinenMetrix(srcPoints, trgPoints);
@@ -624,18 +634,18 @@ namespace Viewer
         double[] GetTransMat_Small()
         {
 
-            var pf0 = new PointF((float)59, (float)22);
-            var pf1 = new PointF((float)77, (float)13);
-            var pf2 = new PointF((float)67, (float)41);
+            var pf0 = new PointD((float)59, (float)22);
+            var pf1 = new PointD((float)77, (float)13);
+            var pf2 = new PointD((float)67, (float)41);
 
-            var pl0 = new PointF((float)27, (float)44);
-            var pl1 = new PointF((float)47, (float)44);
-            var pl2 = new PointF((float)27, (float)64);
+            var pl0 = new PointD((float)27, (float)44);
+            var pl1 = new PointD((float)47, (float)44);
+            var pl2 = new PointD((float)27, (float)64);
 
 
 
-            var srcPoints = new PointF[] { pf0, pf1, pf2 };
-            var trgPoints = new PointF[] { pl0, pl1, pl2 };
+            var srcPoints = new PointD[] { pf0, pf1, pf2 };
+            var trgPoints = new PointD[] { pl0, pl1, pl2 };
 
 
             var afinmat = ToAffinenMetrix(srcPoints, trgPoints);
@@ -688,17 +698,17 @@ namespace Viewer
 
 
 
-            var p0 = new PointF((float)954, (float)2139);
-            var p1 = new PointF((float)600, (float)375);
-            var p2 = new PointF((float)2363, (float)18);
+            var p0 = new PointD((float)954, (float)2139);
+            var p1 = new PointD((float)600, (float)375);
+            var p2 = new PointD((float)2363, (float)18);
 
-            var ptarget0 = new PointF((float)(centerx - innerw), (float)(centery - innerh));
-            var ptarget1 = new PointF((float)(centerx - innerw), (float)(centery + innerh));
-            var ptarget2 = new PointF((float)(centerx + innerw), (float)(centery + innerh));
+            var ptarget0 = new PointD((float)(centerx - innerw), (float)(centery - innerh));
+            var ptarget1 = new PointD((float)(centerx - innerw), (float)(centery + innerh));
+            var ptarget2 = new PointD((float)(centerx + innerw), (float)(centery + innerh));
 
 
-            var srcPoints = new PointF[] { p0, p1, p2 };
-            var trgPoints = new PointF[] { ptarget0, ptarget1, ptarget2 };
+            var srcPoints = new PointD[] { p0, p1, p2 };
+            var trgPoints = new PointD[] { ptarget0, ptarget1, ptarget2 };
 
 
             var afinmat = ToAffinenMetrix(srcPoints, trgPoints);

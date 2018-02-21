@@ -42,6 +42,8 @@ namespace LargeSizeImage_Transformation
                 var w1 = R1[0].Length;
                 var h1 = R1.Length;
 
+               
+
                 var degree = trsData.Angle * 180 / Math.PI;
 
                 double radian = trsData.Angle;

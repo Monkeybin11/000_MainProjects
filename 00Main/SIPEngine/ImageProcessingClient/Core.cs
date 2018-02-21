@@ -23,6 +23,7 @@ namespace ImageProcessingClient
         Client ProcClient;
         Encoding encode = Encoding.GetEncoding("utf-8");
         Queue<WfInfo> WfInfoList = new Queue<WfInfo>();
+        List<WfInfo> WfInfoFinished = new List<WfInfo>();
         WaferStatus WfStatus = WaferStatus.Wating;
         WfInfo WfNow;
         Thread ProcessingThread;
@@ -30,18 +31,26 @@ namespace ImageProcessingClient
 
         string SaveDir;
 
-        public void Connect(string serverIp, int port)
+        public bool Connect(string serverIp, int port)
         {
-            ProcClient = new Client(serverIp, port);
-            
-            ProcClient.evtRecived += Actor;
-            ProcClient.BuildClient();
-            Processing();
-
-            var fd = new FolderBrowserDialog();
-            if (fd.ShowDialog() == DialogResult.OK)
+            try
             {
-                SaveDir = fd.SelectedPath;
+                ProcClient = new Client(serverIp, port);
+
+                ProcClient.evtRecived += Actor;
+                ProcClient.BuildClient();
+                Processing();
+
+                var fd = new FolderBrowserDialog();
+                if (fd.ShowDialog() == DialogResult.OK)
+                {
+                    SaveDir = fd.SelectedPath;
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 
@@ -54,6 +63,7 @@ namespace ImageProcessingClient
                 {
                     if (WfInfoList.Count > 0)
                     {
+                        Thread.Sleep(3000);
                         WfNow = WfInfoList.Dequeue();
 
                         var splited2 = File.ReadAllText(WfNow.RecipePath , Encoding.UTF8 );
@@ -65,6 +75,8 @@ namespace ImageProcessingClient
                             () => SendTBD() ,
                             x  => SaveResult(x) );
                         SendProcessResult(res);
+
+                        WfInfoFinished.Add(WfNow);
                         // Start Processing
                     }
                     Thread.Sleep(1000);
@@ -78,14 +90,6 @@ namespace ImageProcessingClient
                 var splited = str.Split('|');
                 var cmd = splited[1];
                 var body = splited.Skip(2);
-                var temp = body.ToArray();
-                //여기서 str을 분리하자. 
-                // 1. 패킷 길이만큼 읽기
-                // 2. 
-                //
-                //
-                //
-                //
 
                 switch (cmd)
                 {
@@ -142,11 +146,71 @@ namespace ImageProcessingClient
            => result
            => 
            {
+               while (SaveDir == null)
+               { Thread.Sleep(100); }
+               var path = Path.Combine(SaveDir, WfNow.WaferName+"_"+WfNow.WaferCreateTime + ".csv");
 
-               // SaveResult
-               var path = Path.Combine(SaveDir, WfNow.WaferName + ".csv");
+               StringBuilder stb = new StringBuilder();
+               var delimiter = ",";
+               stb.Append("Y ");
+               stb.Append(delimiter);
+               stb.Append("X ");
+               stb.Append(delimiter);
+               stb.Append("Y Error ");
+               stb.Append(delimiter);
+               stb.Append("X Error ");
+               stb.Append(delimiter);
+               stb.Append("OK/NG/LOW/OVER");
+               stb.Append(delimiter);
+               stb.Append("Size");
+               stb.Append(delimiter);
+               stb.Append("Integrated Intensity");
+               stb.Append(delimiter);
+               stb.Append(Environment.NewLine);
+
+               stb.Append("(Row)");
+               stb.Append(delimiter);
+               stb.Append("(Column)");
+               stb.Append(delimiter);
+               stb.Append("(pixel)");
+               stb.Append(delimiter);
+               stb.Append("(pixel)");
+               stb.Append(delimiter);
+               stb.Append(" ");
+               stb.Append(delimiter);
+               stb.Append("(pixel^2)");
+               stb.Append(delimiter);
+               stb.Append("(a.u)");
+               stb.Append(delimiter);
+               stb.Append(Environment.NewLine);
+
+               result = result.OrderBy(x => x.Hindex).ThenBy(x => x.Windex).ToList();
+
+               for (int i = 0; i < result.Count; i++)
+               {
+                   stb.Append(result[i].Hindex + 1);
+                   stb.Append(delimiter);
+                   stb.Append(result[i].Windex + 1);
+                   stb.Append(delimiter);
+                   stb.Append(result[i].HindexError);
+                   stb.Append(delimiter);
+                   stb.Append(result[i].WindexError);
+                   stb.Append(delimiter);
+                   stb.Append(result[i].OKNG);
+                   stb.Append(delimiter);
+                   stb.Append(result[i].ContourSize);
+                   stb.Append(delimiter);
+                   stb.Append(result[i].Intensity);
+                   stb.Append(Environment.NewLine);
+               }
+               System.IO.File.WriteAllText(path, stb.ToString());
+
+
                return path;
            };
+
+
+
 
         #region Common Command
         void IDN(string str)
@@ -194,28 +258,36 @@ namespace ImageProcessingClient
         {
             try
             {
-                var res = "GetQueueStatus" +
-                            WfInfoList.Count.ToString().AddBar() +
-                            WfNow.WaferCreateTime.AddBar() +
-                            WfNow.WaferName.AddBar() +
-                            WfStatus.ToString().AddBar();
-
-                // Wait Wafer
-                var wlist = WfInfoList.ToList();
-
-                for (int i = 0; i < WfInfoList.Count; i++)
+                if (WfNow == null)
                 {
-                    var createTime = wlist[i].WaferCreateTime;
-                    var name = wlist[i].WaferName;
-                    var status = "Wait";
-
-                    res = res +
-                        createTime.AddBar() +
-                        name.AddBar() +
-                        status.AddBar();
+                    var empty = "GetQueueStatus|0||||";
+                    ProcClient.SendMsg(empty.WithCount());
                 }
+                else
+                {
+                    var res = "GetQueueStatus" +
+                           WfInfoList.Count.ToString().AddBar() +
+                           WfNow.WaferCreateTime.AddBar() +
+                           WfNow.WaferName.AddBar() +
+                           "Processing".AddBar();
 
-                ProcClient.SendMsg(res.WithCount());
+                    // Wait Wafer
+                    var wlist = WfInfoList.ToList();
+
+                    for (int i = 0; i < WfInfoList.Count; i++)
+                    {
+                        var createTime = wlist[i].WaferCreateTime;
+                        var name = wlist[i].WaferName;
+                        var status = "Wait";
+
+                        res = res +
+                            createTime.AddBar() +
+                            name.AddBar() +
+                            status.AddBar();
+                    }
+
+                    ProcClient.SendMsg(res.WithCount());
+                }
             }
             catch (Exception)
             {
@@ -225,6 +297,7 @@ namespace ImageProcessingClient
 
         void GetWaferStatus(BodyList body)
         {
+            var temp = body.ToArray();
             var key = body.ElementAt(0);
 
             string res;
@@ -308,6 +381,7 @@ namespace ImageProcessingClient
             => "|" + str ;
     }
 
+    
     
 
 

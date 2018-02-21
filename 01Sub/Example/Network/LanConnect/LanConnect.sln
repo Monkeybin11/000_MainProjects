@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanConnect", "LanConnect\LanConnect.csproj", "{7AB3F6A4-D09A-44BE-8310-58F030472304}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FUG_Protocol", "..\FUG_Protocol\FUG_Protocol.csproj", "{6801C441-7FAD-41E7-9BD5-9A5AC5B4F478}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleServer_Test1", "SimpleServer_Test1\SimpleServer_Test1.csproj", "{A11DDBE8-7665-4E67-8E3B-88008FCF3170}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7AB3F6A4-D09A-44BE-8310-58F030472304}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AB3F6A4-D09A-44BE-8310-58F030472304}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AB3F6A4-D09A-44BE-8310-58F030472304}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AB3F6A4-D09A-44BE-8310-58F030472304}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6801C441-7FAD-41E7-9BD5-9A5AC5B4F478}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6801C441-7FAD-41E7-9BD5-9A5AC5B4F478}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6801C441-7FAD-41E7-9BD5-9A5AC5B4F478}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6801C441-7FAD-41E7-9BD5-9A5AC5B4F478}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A11DDBE8-7665-4E67-8E3B-88008FCF3170}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A11DDBE8-7665-4E67-8E3B-88008FCF3170}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A11DDBE8-7665-4E67-8E3B-88008FCF3170}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A11DDBE8-7665-4E67-8E3B-88008FCF3170}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

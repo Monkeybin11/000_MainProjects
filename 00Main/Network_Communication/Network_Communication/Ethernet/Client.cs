@@ -26,7 +26,6 @@ namespace Network_Communication.Ethernet
         {
             ServerAddress = serverIP;
             Port = port;
-          
         }
 
         public void BuildClient()
@@ -51,7 +50,7 @@ namespace Network_Communication.Ethernet
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.ToString());
-                        MessageBox.Show("Connection Lost");
+                        MessageBox.Show("Connection Lost")      ;
                         break;
                     }
                 }
