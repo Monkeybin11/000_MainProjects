@@ -82,9 +82,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Backup\Backup_1.cs" />
-    <Compile Include="Backup\Backup_2.cs" />
-    <Compile Include="Backup\Backup_3.cs" />
     <Compile Include="Analysis\BaseFunc_Analysis.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="Analysis\Core_Analysis.cs" />
@@ -129,6 +126,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Backup\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
