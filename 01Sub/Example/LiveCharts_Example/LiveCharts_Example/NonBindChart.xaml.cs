@@ -39,10 +39,7 @@ namespace LiveCharts_Example
 			var datas2 = Enumerable.Range( 0 , 100 ).Select( x => ( double )( x/2 + rnd.Next( 5 ) ));
 			chartDatas1.AddRange( datas1 );
 			chartDatas2.AddRange( datas2 );
-
-
 			
-            ScatterSeries
 			LineSeries temp1 = new LineSeries();
 			LineSeries temp2 = new LineSeries();
 
