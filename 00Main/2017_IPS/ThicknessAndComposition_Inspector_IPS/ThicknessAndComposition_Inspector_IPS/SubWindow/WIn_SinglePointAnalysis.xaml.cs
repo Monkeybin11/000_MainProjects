@@ -57,6 +57,8 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 			TempPathInten = txbTempBackupFile.Text;
 			waveSetted = false;
+			ucIntensitiychart.Counter = 0;
+			ucReflectivityChart.Counter = 0;
 			try
 			{
 				if ( ( bool )ckbTempBackup.IsChecked )
@@ -156,6 +158,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 
 		private void Window_Closing( object sender , System.ComponentModel.CancelEventArgs e )
 		{
+			IsReady = true;
 			e.Cancel = true;
 			this.Visibility = Visibility.Hidden;
 		}
