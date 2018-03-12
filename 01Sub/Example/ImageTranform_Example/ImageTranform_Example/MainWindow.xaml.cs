@@ -325,8 +325,8 @@ namespace ImageTranform_Example
 
 
                     // -- Set Ratio
-                    RatioW = w / cvsOriginal.ActualWidth;
-                    RatioH = h / cvsOriginal.ActualHeight;
+                    //RatioW = w / cvsOriginal.ActualWidth;
+                    //RatioH = h / cvsOriginal.ActualHeight;
                     // --
 
                     var data = img.Data.TointArray();
