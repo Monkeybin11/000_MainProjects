@@ -139,7 +139,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 		}
 
 		#region sub Func
-
+		public int Counter = 0;
 		LineSeries CreateSeries( ChartValues<double [ ]> chartDatas ,int indexer )
 		{
 			var newseries = new LineSeries();
@@ -148,6 +148,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 			newseries.PointGeometrySize = 0;
 			newseries.Fill = Brushes.Transparent;
 			newseries.Stroke = ColorList [ indexer ];
+			newseries.Title = Counter.ToString();
 			return newseries;
 		}
 
@@ -158,6 +159,7 @@ namespace ThicknessAndComposition_Inspector_IPS
 			newseries.DataLabels = false;
 			newseries.PointGeometrySize = 0;
 			newseries.Fill = Brushes.Transparent;
+			newseries.Title = Counter.ToString();
 			return newseries;
 		}
 
