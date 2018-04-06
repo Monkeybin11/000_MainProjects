@@ -53,6 +53,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SpeedyCoding, Version=2.1.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\SpeedyCoding.2.1.2\lib\net462\SpeedyCoding.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -68,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\01Sub\ModelLib\ModelLib\ModelLib.csproj">

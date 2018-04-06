@@ -65,6 +65,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\dll\emgucv3_3\Emgu.CV.World.dll</HintPath>
     </Reference>
+    <Reference Include="SpeedyCoding, Version=2.1.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\SpeedyCoding.2.1.2\lib\net462\SpeedyCoding.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -119,6 +122,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -128,10 +132,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\00Nuget\SpeedyCoding\SpeedyCoding\SpeedyCoding\SpeedyCoding.csproj">
-      <Project>{04ef47cb-6add-4ca9-8dc9-9443aa536f84}</Project>
-      <Name>SpeedyCoding</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\01Sub\ModelLib\ModelLib\ModelLib.csproj">
       <Project>{0aa6abfc-7dc0-484d-b2d4-9aad902f95ed}</Project>
       <Name>ModelLib</Name>

@@ -9,7 +9,6 @@ using FittingDataStruct;
 namespace ThicknessAndComposition_Inspector_IPS_Core
 {
 	using static FittingDataStruct.Handler;
-	using static SpeedyCoding.Handler;
 	using FileNames = IEnumerable<string>;
 	using DPosThckRflt = NumPosThckRflt<double>;
 	using MssData = DatasAnMissing<List<double>>;
@@ -86,7 +85,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			var wave     = GetDataWith( ReadWaveLen , RfltFilter , filenames ).First().Datas.First().Value;
 			var thckness = GetDataWith( ReadPos , ThckFilter , filenames );
 			var rflts    = GetDataWith( ReadReflectivity , RfltFilter , filenames );
-			var Total = thckness.Zip( rflts , (f,s) => ToTuple( f  ,  s ) ).ToList();
+			var Total = thckness.Zip( rflts , (f,s) => f.ToTuple(  s ) ).ToList();
 			//var Total = ToClsNumWihtThckRflt(numOfClass , thckness , rflts );
 
 			List<List< DPosThckRflt >> totallist = new List<List<NumPosThckRflt<double>>>();

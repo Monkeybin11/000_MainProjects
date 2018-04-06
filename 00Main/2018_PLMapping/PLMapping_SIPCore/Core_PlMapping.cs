@@ -76,8 +76,46 @@ namespace PLMapping_SIPCore
             return Just(exresults);
         }
 
-        #region
-        public Img LoadImage(string imgpath)
+		public Maybe<List<ExResult>> StartWithData(Img img, string procpath, InspctRecipe inspectrecipe)
+		{
+			Func<Rectangle, double> boxsum = FnSumInsideBox(img.Data);     //여기서  avg로 할건지, 합으로 할껀지 정할 수 있다. 
+			var poseq = EstedChipPosAndEq(inspectrecipe);
+			var esetedindex = ToEstedIndex(poseq);
+
+			var doproc = RunProcessing.Apply(img);
+
+			var recp = File.ReadAllText(procpath);
+
+
+			var resimg = Just(recp)
+								 .Bind(RemoveHeadTail)
+								 .Bind(ToFuncRecipeList)
+								 .Bind(ToPreProcFuncs)
+								 .Bind(Preprocess.Apply(img));
+
+			if (!resimg.isJust) return None;
+
+
+			var resisp1 = ToBoxList(inspectrecipe, resimg.Value);
+			// 컨투어 찾고, 소팅후 박스로 (끝)
+
+
+			var resGenerator = ToExResult(inspectrecipe, boxsum, poseq, resisp1.Value);
+			// 박스 리스트에 대해 대응되는 인덱싱 리스트 (끝) 여기까지 체크 완료. 
+
+			var exresults = ResultInitializer(inspectrecipe) // 인덱싱 초기화만 되있음. 
+								.Map(resGenerator)
+								.Flatten()
+								.ToList(); // 끝 여기서 모든 결과를 만들었다. (끝)\
+
+			//var counter = exresults.Where(x => x.OKNG == "OK").Count();
+
+			return Just(exresults);
+		}
+
+
+		#region
+		public Img LoadImage(string imgpath)
 		 => new Image<Gray, byte>( imgpath );
 
 
@@ -86,14 +124,14 @@ namespace PLMapping_SIPCore
             => Just(ModelLib.FoldL(src));
 
 
-        public Func<string, InspctRescipe> ToInspctRecipe
+        public Func<string, InspctRecipe> ToInspctRecipe
            => path
            =>
            {
                var abspath = GetUNCPath( path );
                var name    = GetFileName(abspath);
                var dir     = GetDirectoryName(abspath);
-               var recipe  = ReadXmlClas( default(InspctRescipe) , dir , name );
+               var recipe  = ReadXmlClas( default(InspctRecipe) , dir , name );
                return recipe;
            };
 

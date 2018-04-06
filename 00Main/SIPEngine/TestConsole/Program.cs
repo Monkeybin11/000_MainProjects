@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CSharp;
+using ModelLib.AmplifiedType;
 using PLMapping_SIPCore;
 
 namespace TestConsole
@@ -30,7 +31,7 @@ namespace TestConsole
         public static void ExportXmlInspect()
         {
             string outpath = @"D:\temp\test.xml";
-            var temp = new InspctRescipe()
+            var temp = new InspctRecipe()
             {
                  RhoLimit       = 0,
                  IntenLowLimt   = 2500,
@@ -49,10 +50,7 @@ namespace TestConsole
                  XoffSet        = 0,
                  YoffSet        = 0
              };
-
-
             WriteXmlClass( temp, Path.GetDirectoryName(outpath) , Path.GetFileName(outpath));
-
         }
 	}
 }

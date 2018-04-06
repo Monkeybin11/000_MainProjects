@@ -121,15 +121,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		public bool OpPickWaveIdx() //sjw
 		{
 			Bkd_WaveLen = Spctr.GetWaveLen().Select(x => (double)Math.Round(x , 11)).ToArray();
-			// wave = Bkd_WaveLen.Select( x => (int)x).ToArray(); // for selected wave
-			//var wave = Bkd_WaveLen;
-			//List<int> idxlist = new List<int>();
-			//foreach ( var item in SDWaves )
-			//{
-			//	var idx = Array.IndexOf( wave , item);
-			//	if ( idx >= 0 ) idxlist.Add( idx );
-			//}
-			//PickedIdx = idxlist;
 			PickedIdx = Enumerable.Range(0,Bkd_WaveLen.GetLength(0)).ToList();
 			//SelectedWaves = PickedIdx.Select( x => (double)Bkd_WaveLen [ x ] ).ToList();
 			SelectedWaves = Bkd_WaveLen.ToList();
@@ -291,7 +282,7 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		public Func<double [ ] , double [ ]> FnIdxDataPicker(
 			List<int> pickedidx )
-			=> src => pickedidx.Select( x => src [ x ] ).ToArray();
+			=> src => pickedidx.Count == 0 ? src : pickedidx.Select( x => src [ x ] ).ToArray();
 
 
 		public double [ ] SplitBound( double [ ] src , int divide )
@@ -405,3 +396,4 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 		#endregion
 	}
 }
+ 

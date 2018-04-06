@@ -9,7 +9,6 @@ using ModelLib.AmplifiedType;
 namespace SIP_InspectLib.Recipe
 {
     using static Handler;
-    using static SpeedyCoding.Handler;
     using static ModelLib.AmplifiedType.Handler;
     using static SIP_InspectLib.Indexing.Common;
     using Emgu.CV.Util;
@@ -17,7 +16,7 @@ namespace SIP_InspectLib.Recipe
     using DataType;
     using SpeedyCoding;
 
-    public class InspctRescipe
+    public class InspctRecipe
 	{
 		public double RhoLimit;
 		public int IntenLowLimt;
@@ -87,13 +86,13 @@ namespace SIP_InspectLib.Recipe
 
 	public static class Adaptor
 	{
-		public static Func<InspctRescipe , Img , Maybe<List<Rectangle>>> ToBoxList
+		public static Func<InspctRecipe , Img , Maybe<List<Rectangle>>> ToBoxList
 			=> ( srcRe , img  )
-			=> Just( img ).Lift( FnFindContour( srcRe.AreaLowLimt , srcRe.AreaHighLimt ) )
+			=> Just( img ).Lift( FnFindContour( srcRe.AreaHighLimt, srcRe.AreaLowLimt ) )
 						  .Lift( SortContour )
 						  .Lift( ApplyBox );
 
-		public static Func<InspctRescipe , PosLineEq > EstedChipPosAndEq
+		public static Func<InspctRecipe , PosLineEq > EstedChipPosAndEq
 			=> srcRe
 			=> FnEstChipPos_4PointAndEQ_Rhombus( srcRe.realLT , 
 												 srcRe.realLB , 
@@ -105,7 +104,7 @@ namespace SIP_InspectLib.Recipe
 			=> x
 			=> x.IndexPos;
 
-		public static Func< InspctRescipe , Func<Rectangle , double> , PosLineEq , List<Rectangle> , Func<ExResult[][],ExResult[][]>> ToExResult
+		public static Func< InspctRecipe , Func<Rectangle , double> , PosLineEq , List<Rectangle> , Func<ExResult[][],ExResult[][]>> ToExResult
 			=> ( srcRe , sumfunc , poseq , boxs )
 			=>
 			{
@@ -119,7 +118,7 @@ namespace SIP_InspectLib.Recipe
 
 	
 		private static Func<
-				InspctRescipe,
+				InspctRecipe,
 				Func<Rectangle , double>,
 				double [ , , ] ,
 				List<Rectangle> ,
@@ -193,14 +192,14 @@ namespace SIP_InspectLib.Recipe
 
 		static Func<double , double , double , double , double , bool> InValidArea
 			 => ( x , y , x1,y1 , lnelimit)
-			 => ToTuple( x , y ).L2( ToTuple(x1,y1) )  // <<<<<
+			 => x.ToTuple(  y ).L2( x1.ToTuple( y1) )  // <<<<<
 				 > lnelimit
 				 ? false
 				 : true;
 
 		static Func<double , Constrain , string> Classifier
 			=> ( inten , constrain )
-			=> inten < constrain.DwInten / 10 ? "NOPL" :
+			=> inten < Math.Sqrt( constrain.DwInten ) ? "NOPL" :
 			   inten < constrain.DwInten ? "LOW" :
 			   inten > constrain.UpInten ? "OVER" :
 											  "OK";

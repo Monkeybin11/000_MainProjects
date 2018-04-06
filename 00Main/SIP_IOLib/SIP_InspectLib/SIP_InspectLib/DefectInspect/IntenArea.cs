@@ -8,7 +8,6 @@ using System.Linq;
 
 namespace SIP_InspectLib.DefectInspect
 {
-	using static SpeedyCoding.Handler;
 	using static ModelLib.AmplifiedType.Handler;
 	using static Enumerable;
 	using static DefectInspect.Handler;
@@ -113,7 +112,7 @@ namespace SIP_InspectLib.DefectInspect
 
 		public static Func<Tuple<double,double> , double , double , double , bool> InValidArea
 			 => ( center , limit , x , y )
-			 => ToTuple( x , y ).L2( center )
+			 => x.ToTuple( y ).L2( center )
 				 > limit
 				 ? false
 				 : true;
@@ -140,7 +139,7 @@ namespace SIP_InspectLib.DefectInspect
 	{
 		public static Constrain Constrain( int up , int dw ) => new Constrain() { UpInten = up , DwInten = dw };
 
-        public static ExResult[][] ResultInitializer( InspctRescipe src ) => NgResultInitializer( src.HChipNum, src.WChipNum );
+        public static ExResult[][] ResultInitializer( InspctRecipe src ) => NgResultInitializer( src.HChipNum, src.WChipNum );
     }
 
 	public class IndexRect

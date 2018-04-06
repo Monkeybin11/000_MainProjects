@@ -12,7 +12,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 {
 	using static DataLoaderExt;
 	using static FittingDataStruct.Handler;
-	using static SpeedyCoding.Handler;
 	using FileNames = IEnumerable<string>;
 	using DPosThckRflt = NumPosThckRflt<double>;
 	using MssData = DatasAnMissing<List<double>>;

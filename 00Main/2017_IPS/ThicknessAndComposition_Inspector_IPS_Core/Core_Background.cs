@@ -78,9 +78,9 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 							200.xRange( 40 , 20 )
 							.Select( i => Bkd_WaveLen [ i ] ))
 					.ToArray(); } }
-		#endregion	
+		#endregion
 
-	
+
 
 		Action AutoUpdateSpctrm =>
 			() => BkD_Spctrm = GetSpectrum();

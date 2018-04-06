@@ -52,7 +52,6 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 			ConnectHW( "COM" + Config.Port.ToString() ).FailShow( "Virtual Mode is Activated" );
 		}
 
-
 		public string TodayLogPath()
 		=> DateTime.Now.ToString( "yyyyMMdd" ) + "_IPSLog.txt";
 
@@ -70,28 +69,39 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 		public bool ConnectHW( string comport )
 		{
-			Stg = new SgmaStg_XR( comport , false );
-			Spctr = new Maya_Spectrometer();
+			bool stg = false;
+			bool spt = false;
+			try
+			{
+				
+				Stg = new SgmaStg_XR( comport, false );
+				Spctr = new Maya_Spectrometer();
 
-			var stg =  Stg.Open() == true
-						? true
-						: false.Act( x =>  Err.WriteShowErr( ErrorType.StgConnectErr ));
+				stg = Stg.Open() == true
+							? true
+							: false.Act( x => Err.WriteShowErr( ErrorType.StgConnectErr ) );
 
-			var spt = Spctr.Connect()  == true
-						? true
-						: false.Act( x =>  Err.WriteShowErr( ErrorType.SpecConnectErr ));
-
+				spt = Spctr.Connect() == true
+							? true
+							: false.Act( x => Err.WriteShowErr( ErrorType.SpecConnectErr ) );
+			}
+			catch ( Exception ){}
+			
 			if ( !stg || !spt )
 			{
 				Stg.Close();
 				Stg = new SgmaStg_XR_Virtual();
 				Spctr = new Maya_Spectrometer_Virtual();
+
+				// Dummy Data
+				var rnd = new Random();
+				Darks = new double[1068].ToList();
+				ReflctFactors = Enumerable.Range( 0, 1068 ).Select( x => (double)rnd.Next( 1, 10 ) ).ToList();
+				Refs = Enumerable.Range( 0, 1068 ).Select( x => (double)rnd.Next( 10, 100 ) ).ToList();
+				SelectedWaves = 300.0.xRange( 1068, 1 ).ToList();
 			}
 
 			evtConnection( stg , spt );
-
-			
-
 			return stg && spt;
 		}
 
@@ -228,6 +238,9 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 
 			// Get Pos-Intensity || Task Calc Thickness --
 			int taskcounter = 0;
+			try
+			{
+
 			var posIntenlist = ScanPos.RhoList.Select( ( rho , i ) =>
 			{
 				var logs = res.Bind( x => x.Act( f =>
@@ -345,6 +358,13 @@ namespace ThicknessAndComposition_Inspector_IPS_Core
 					.Act( x => ImgScanResult = x );
 				stw.ElapsedMilliseconds.Print("Draw Time");
 				return true;
+			}
+
+			}
+			catch ( Exception e)
+			{
+				MessageBox.Show( e.ToString() );
+				return false;
 			}
 		}
 		#endregion

@@ -15,8 +15,6 @@ namespace Network_Communication.Ethernet
         readonly int Port;
         readonly Action<string> ErrorFunc;
         readonly IRule Rule;
-        bool Exit;
-
 
         public Server( string serverIP , int port , IRule rule, Action<string> errorFunc )
         {

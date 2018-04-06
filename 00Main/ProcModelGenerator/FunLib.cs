@@ -8,7 +8,6 @@ using Emgu.CV.Structure;
 using Emgu.CV.CvEnum;
 using ModelLib.AmplifiedType;
 using EmguCvExtension;
-using Emgu.CV;
 using System.Runtime.InteropServices;
 
 namespace ProcModelGenerator

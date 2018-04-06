@@ -76,10 +76,11 @@ namespace ThicknessAndComposition_Inspector_IPS
 			
 
 			Config2UI( Core.Config );
-			if(!Core.OpLoadAbsReflecDatas() 
-				|| !Core.OpPickWaveIdx() 
-				|| !Core.OpPickReflectFactorIdx())
-				MessageBox.Show("Spectrometer Problem. Transfer wavelength fail.  Please restart spectrometer ") ;
+			if ( !Core.OpLoadAbsReflecDatas()
+				|| !Core.OpPickWaveIdx()
+				|| !Core.OpPickReflectFactorIdx() )
+				MessageBox.Show( "Spectrometer Problem. Transfer wavelength fail.  Please restart spectrometer " );
+					
 			Core.StartBackgroundTask();
 
 			UI_Init();

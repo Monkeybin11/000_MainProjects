@@ -31,7 +31,6 @@ namespace Fitting_Core
 		}
 
 
-
 		public static XGBRegressor LoadModel( string path ) // Excuted when ScanAutorun is fired
 		{
 			Regr = LoadRegressorFromFile( path );
@@ -108,10 +107,6 @@ namespace Fitting_Core
 					float	missing = float.NaN
 			)
 		{
-
-
-
-
 		}
 
 

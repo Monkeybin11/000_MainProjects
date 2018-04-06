@@ -7,7 +7,6 @@ using static ModelLib.AmplifiedType.Handler;
 using FittingDataStruct;
 
 using static FittingDataStruct.Handler;
-using static SpeedyCoding.Handler;
 using static System.IO.Directory;
 using static System.IO.Path;
 using System;
@@ -86,7 +85,7 @@ namespace Fitting_Core
 			var wave     = GetDataWith( ReadWaveLen , RfltFilter , filenames ).First().Datas.First().Value;
 			var thckness = GetDataWith( ReadPos , ThckFilter , filenames );
 			var rflts    = GetDataWith( ReadReflectivity , RfltFilter , filenames );
-			var Total = thckness.Zip( rflts , (f,s) => ToTuple( f  ,  s ) ).ToList();
+			var Total = thckness.Zip( rflts , (f,s) => f.ToTuple( s ) ).ToList();
 			//var Total = ToClsNumWihtThckRflt(numOfClass , thckness , rflts );
 
 			List<List< DPosThckRflt >> totallist = new List<List<NumPosThckRflt<double>>>();

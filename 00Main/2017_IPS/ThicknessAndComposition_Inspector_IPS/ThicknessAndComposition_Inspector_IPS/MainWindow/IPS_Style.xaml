@@ -62,7 +62,17 @@
         <Setter Property="MinWidth" Value="60"/>
     </Style>
 
-    <Style x:Key="lblTitle" TargetType="Label">
+	<Style x:Key="nudBaseConfig" TargetType="xc:DoubleUpDown">
+		<Setter Property="Margin" Value="0,0,10,0"/>
+		<Setter Property="HorizontalAlignment" Value="Right"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="FontSize"  Value="11"/>
+		<Setter Property="MinWidth" Value="60"/>
+		<Setter Property="Value" Value="0"/>
+	</Style>
+
+
+	<Style x:Key="lblTitle" TargetType="Label">
         <Setter Property="Margin" Value="10,0,0,0"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>

@@ -19,6 +19,7 @@ using SpeedyCoding;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.CvEnum;
+using MahApps.Metro.Controls;
 
 namespace ProcModelGenerator
 {
@@ -34,7 +35,7 @@ namespace ProcModelGenerator
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         bool IsOrigonalImg= false;
 
@@ -49,16 +50,22 @@ namespace ProcModelGenerator
         public MainWindow()
         {
             InitializeComponent();
-            InitParam();
+          
 
-            //canvas_Zoom.Height = brdimg.ActualHeight;
-            //canvas_Zoom.Width = brdimg.ActualWidth;
-            //
-            //canvas_Draw.Height = brdimg.ActualHeight;
-            //canvas_Draw.Width = brdimg.ActualWidth;
+         
         }
 
-        void InitParam()
+		private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+		{
+			InitParam();
+			canvas_Zoom.Height = brdimg.ActualHeight;
+			canvas_Zoom.Width = brdimg.ActualWidth;
+			canvas_Draw.Height = brdimg.ActualHeight;
+			canvas_Draw.Width = brdimg.ActualWidth;
+		}
+
+
+		void InitParam()
         {
             nudThreshold.Value = 180;
             nudAdpThreshold.Value = 100;
@@ -113,6 +120,7 @@ namespace ProcModelGenerator
         private void btnExport_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog fd = new SaveFileDialog();
+			fd.Filter = "csv file (*.csv )| *.csv";
             if (fd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 File.WriteAllText(fd.FileName, SrcMImg.GetLastPaper().Replace("Start", "ImgProStart") + "|ImgProEnd");
@@ -177,7 +185,7 @@ namespace ProcModelGenerator
 
         private void imgBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            FirstPos = e.GetPosition(this);
+            FirstPos = e.GetPosition(canvas_Zoom);
             imgBack.CaptureMouse();
         }
 
@@ -190,7 +198,7 @@ namespace ProcModelGenerator
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                Point temp = e.GetPosition(this);
+                Point temp = e.GetPosition(canvas_Zoom);
                 Point res = new Point(FirstPos.X - temp.X, FirstPos.Y - temp.Y);
                 Canvas.SetLeft(imgBack, Canvas.GetLeft(imgBack) - res.X);
                 Canvas.SetTop(imgBack, Canvas.GetTop(imgBack) - res.Y);
@@ -202,7 +210,7 @@ namespace ProcModelGenerator
         {
             img.MouseLeftButtonDown += (ss, ee) =>
             {
-                FirstPos = ee.GetPosition(this);
+                FirstPos = ee.GetPosition(canvas_Zoom);
                 imgBack.CaptureMouse();
             };
 
@@ -210,7 +218,7 @@ namespace ProcModelGenerator
             {
                 if (ee.LeftButton == MouseButtonState.Pressed)
                 {
-                    Point temp = ee.GetPosition(this);
+                    Point temp = ee.GetPosition(canvas_Zoom);
                     Point res = new Point(FirstPos.X - temp.X, FirstPos.Y - temp.Y);
                     Canvas.SetLeft(imgBack, Canvas.GetLeft(imgBack) - res.X);
                     Canvas.SetTop(imgBack, Canvas.GetTop(imgBack) - res.Y);
@@ -248,7 +256,8 @@ namespace ProcModelGenerator
             }
         }
 
-        #endregion
+		#endregion
 
-    }
+		
+	}
 }

@@ -10,7 +10,7 @@ using FittingDataStruct;
 
 
 using static FittingDataStruct.Handler;
-using static SpeedyCoding.Handler;
+
 
 
 using static System.IO.Directory;

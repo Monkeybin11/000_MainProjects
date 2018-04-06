@@ -25,31 +25,31 @@
 
 
                     <Label Content="maxDepth" Style="{StaticResource lblBase}"/>
-                    <xc:DoubleUpDown x:Name="nudmaxDepth" Style="{StaticResource nudBase}"/>
+                    <xc:DoubleUpDown x:Name="nudmaxDepth" Style="{StaticResource nudBaseConfig}"/>
                     <Label Content="learningRate" Style="{StaticResource lblBase}"/>
-                    <xc:DoubleUpDown x:Name="nudlearningRate" Style="{StaticResource nudBase}"/>
+					<xc:DoubleUpDown x:Name="nudlearningRate" Style="{StaticResource nudBaseConfig}"/>
                     <Label Content="nEstimators" Style="{StaticResource lblBase}"/>
-                    <xc:DoubleUpDown x:Name="nudnEstimators" Style="{StaticResource nudBase}"/>
+					<xc:DoubleUpDown x:Name="nudnEstimators" Style="{StaticResource nudBaseConfig}"/>
                     <Label Content="gamma" Style="{StaticResource lblBase}"/>
-                    <xc:DoubleUpDown x:Name="nudgamma" Style="{StaticResource nudBase}"/>
+					<xc:DoubleUpDown x:Name="nudgamma" Style="{StaticResource nudBaseConfig}"/>
                     <Label Content="minChildWeight" Style="{StaticResource lblBase}"/>
-                    <xc:DoubleUpDown x:Name="nudnudmaxDepth" Style="{StaticResource nudBase}"/>
+					<xc:DoubleUpDown x:Name="nudnudmaxDepth" Style="{StaticResource nudBaseConfig}"/>
                     <Label Content="maxDeltaStep" Style="{StaticResource lblBase}"/>
-                    <xc:DoubleUpDown x:Name="nudmaxDeltaStep" Style="{StaticResource nudBase}"/>
+					<xc:DoubleUpDown x:Name="nudmaxDeltaStep" Style="{StaticResource nudBaseConfig}"/>
                     <Label Content="subsample" Style="{StaticResource lblBase}"/>
-                    <xc:DoubleUpDown x:Name="nudsubsample" Style="{StaticResource nudBase}"/>
+					<xc:DoubleUpDown x:Name="nudsubsample" Style="{StaticResource nudBaseConfig}"/>
                     <Label Content="colSampleByTree" Style="{StaticResource lblBase}"/>
-                    <xc:DoubleUpDown x:Name="nudcolSampleByTree" Style="{StaticResource nudBase}"/>
+					<xc:DoubleUpDown x:Name="nudcolSampleByTree" Style="{StaticResource nudBaseConfig}"/>
                     <Label Content="colSampleByLevel" Style="{StaticResource lblBase}"/>
-                    <xc:DoubleUpDown x:Name="nudv" Style="{StaticResource nudBase}"/>
+					<xc:DoubleUpDown x:Name="nudv" Style="{StaticResource nudBaseConfig}"/>
                     <Label Content="regAlpha" Style="{StaticResource lblBase}"/>
-                    <xc:DoubleUpDown x:Name="nudregAlpha" Style="{StaticResource nudBase}"/>
+					<xc:DoubleUpDown x:Name="nudregAlpha" Style="{StaticResource nudBaseConfig}"/>
                     <Label Content="regLambda" Style="{StaticResource lblBase}"/>
-                    <xc:DoubleUpDown x:Name="nudregLambda" Style="{StaticResource nudBase}"/>
+					<xc:DoubleUpDown x:Name="nudregLambda" Style="{StaticResource nudBaseConfig}"/>
                     <Label Content="scalePosWeight" Style="{StaticResource lblBase}"/>
-                    <xc:DoubleUpDown x:Name="nudscalePosWeight" Style="{StaticResource nudBase}"/>
+					<xc:DoubleUpDown x:Name="nudscalePosWeight" Style="{StaticResource nudBaseConfig}"/>
                     <Label Content="baseScore" Style="{StaticResource lblBase}"/>
-                    <xc:DoubleUpDown x:Name="nudbaseScore" Style="{StaticResource nudBase}"/>
+					<xc:DoubleUpDown x:Name="nudbaseScore" Style="{StaticResource nudBaseConfig}"/>
 
                 </UniformGrid>
 

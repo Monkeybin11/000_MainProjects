@@ -1,0 +1,43 @@
+﻿<Window x:Class="WPF_ContextMenu.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_ContextMenu"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+		<UniformGrid Rows="4" Columns="3">
+			<Button Content="Right Click me" VerticalAlignment="Center" HorizontalAlignment="Center">
+				<Button.ContextMenu>
+					<ContextMenu>
+						<MenuItem Header="M1"/>
+						<MenuItem Header="M2"/>
+						<MenuItem Header="M3"/>
+					</ContextMenu>
+				</Button.ContextMenu>
+			</Button>
+
+			<Label Content="Right Clck label">
+				<Label.ContextMenu>
+					<ContextMenu>
+						<MenuItem Header="M1"/>
+						<MenuItem Header="M2"/>
+						<MenuItem Header="M3"/>
+					</ContextMenu>
+				</Label.ContextMenu>
+			</Label>
+			<Canvas Background="Aqua">
+				<Canvas.ContextMenu>
+					<ContextMenu>
+						<MenuItem Header="Cancas M1"/>
+						<MenuItem Header="Cancas M2"/>
+						<MenuItem Header="Cancas M3"/>
+					</ContextMenu>
+				</Canvas.ContextMenu>
+			</Canvas>
+			<Canvas x:Name="cvsBlack" Background="Black" MouseRightButtonUp="cvsBlack_MouseRightButtonUp"/>
+			<Canvas x:Name="cvsdouble" Background="Green" MouseRightButtonUp="cvsdouble_MouseRightButtonUp"/>
+		</UniformGrid>
+    </Grid>
+</Window>
