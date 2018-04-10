@@ -63,6 +63,9 @@
     <Reference Include="Emgu.CV.World, Version=3.3.0.2824, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EMGU.CV.3.3.0.2824\lib\net35\Emgu.CV.World.dll</HintPath>
     </Reference>
+    <Reference Include="SpeedyCoding, Version=2.1.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\SpeedyCoding.2.1.2\lib\net462\SpeedyCoding.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -133,14 +136,6 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\00Nuget\SpeedyCoding\SpeedyCoding\SpeedyCoding\SpeedyCoding.csproj">
-      <Project>{04ef47cb-6add-4ca9-8dc9-9443aa536f84}</Project>
-      <Name>SpeedyCoding</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\ImageTranform\ImageTranform\ImageTranform.csproj">
-      <Project>{d3efc474-6be8-4c99-9842-2d1618f64d39}</Project>
-      <Name>ImageTranform</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\LargeSizeImage_Transformation\LargeSizeImage_Transformation\LargeSizeImage_Transformation.csproj">
       <Project>{4cfc1c92-de3d-44f3-beb8-87c8cf196642}</Project>
       <Name>LargeSizeImage_Transformation</Name>

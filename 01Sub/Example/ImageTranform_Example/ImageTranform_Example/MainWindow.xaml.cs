@@ -23,13 +23,11 @@ namespace ImageTranform_Example
     using System.Drawing;
     using System.IO;
     using System.Runtime.InteropServices;
-    using ImageTranform;
-    using static ImageTranform.TranformUtil;
     using static Lib;
-    using static ImageTranform.ImageAlingn;
     using Img = Image<Gray, byte>;
     using System.Drawing.Imaging;
     using System.Diagnostics;
+	using LargeSizeImage_Transformation;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -195,121 +193,7 @@ namespace ImageTranform_Example
                 ExtLib.SaveImg(path, bmpsource);
             }
         }
-
-        private void btnTest_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog ofd = new OpenFileDialog();
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                try
-                {
-
-
-                    imgOriginal.Source = new BitmapImage(new Uri(ofd.FileName));
-                    var img = new Img(ofd.FileName);
-                    Mat img2 = CvInvoke.Imread(ofd.FileName, Emgu.CV.CvEnum.ImreadModes.Grayscale);
-                    var w = img.Width;
-                    var h = img.Height;
-
-
-                    // -- Set Ratio
-                    RatioW = w / cvsOriginal.ActualWidth;
-                    RatioH = h / cvsOriginal.ActualHeight;
-                    // --
-
-                    var data = img.Data.TointArray();
-
-                    // ------------
-
-                    // ------------
-
-
-                    var dataW = img.Data.GetLength(1);
-                    var dataH = img.Data.GetLength(0);
-
-                    var strideW = dataW % 4;
-                    var strideH = dataH % 4;
-
-                    if (dataW != dataH || strideW != 0 || strideH != 0)
-                    {
-                        System.Windows.Forms.MessageBox.Show("w != h");
-                        return;
-                    }
-
-
-
-                    if (LBPos == null || LTPos == null || RTPos == null) return;
-
-
-                    var poslist = new PointD[4] { LBPos, LTPos, RTPos, RBPos };
-
-                 
-                    var srcdata = img//.Resize(dataW - strideW , dataH - strideH ,Inter.Cubic)
-                                        .Data.Flatten();
-                    Tuple<byte[], int, int> dataXY;
-                    //Tuple<Bitmap,Bitmap> resimgs;
-                    Bitmap resimgs; ;
-                    using (MemoryStream mstream = new MemoryStream(srcdata))
-                    {
-                        //dataXY = Run(mstream, w, h, poslist);
-                        resimgs = Run(mstream, w, h, poslist);
-                    }
-
-                    //var bitimg = CopyDataToBitmap(dataXY.Item1, dataXY.Item2, dataXY.Item3);
-
-                    /*
-                    BitmapImage biImg = new BitmapImage();
-
-                    System.Drawing.Image im;
-                    using (MemoryStream ms = new MemoryStream(dataXY.Item1))
-                    {
-                        //biImg.BeginInit();
-                        //biImg.StreamSource = ms;
-                        im = Image.FromStream(ms);
-                    }
-
-                    //biImg.EndInit();
-
-                    ImageSource imgSrc = biImg as ImageSource;
-
-
-
-                    imgRotated.Source = imgSrc;
-                     */
-                    //imgRotated.Source = bitimg.ToImageSource();
-                    //imgtranslated.Source = resimgs.Item1.ToImageSource();
-                    imgRotated.Source = resimgs.ToImageSource();
-
-                    // SAve
-                    //string path = @"C:\Data\Rotated.jpg";
-                    //bitimg.Save(path);
-
-                    //ExtLib.SaveImg(path, biImg);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
-            }
-        }
-
-        private void btnTestonePoint_Click(object sender, RoutedEventArgs e)
-        {
-            var pos = new Point(6, 7);
-         
-            var LBPos = new PointD(4, 4);
-            var LTPos = new PointD(8, 4);
-            var RTPos = new PointD(8, 8);
-            var RBPos = new PointD(4, 8);
-
-
-            var poslist = new PointD[4] { LBPos, LTPos, RTPos, RBPos };
-
-            var res = TransformPoint(poslist, 5, 5, pos);
-            Console.Write(res );
-
-        }
-
+		
         private void btnTestDll_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -325,9 +209,11 @@ namespace ImageTranform_Example
 
 
                     // -- Set Ratio
-                    //RatioW = w / cvsOriginal.ActualWidth;
-                    //RatioH = h / cvsOriginal.ActualHeight;
+                    RatioW = w / cvsOriginal.ActualWidth;
+                    RatioH = h / cvsOriginal.ActualHeight;
                     // --
+
+
 
                     var data = img.Data.TointArray();
                     var dataW = img.Data.GetLength(1);
@@ -336,7 +222,19 @@ namespace ImageTranform_Example
                     var strideW = dataW % 4;
                     var strideH = dataH % 4;
 
-                    if (dataW != dataH || strideW != 0 || strideH != 0)
+					img = img.Resize( dataW + ( strideW == 0 ? 0 : 4 - strideW ), dataH + ( strideH == 0? 0 : 4 - strideH ) , Inter.Cubic);
+
+					data = img.Data.TointArray();
+					dataW = img.Data.GetLength( 1 );
+					dataH = img.Data.GetLength( 0 );
+
+					strideW = dataW % 4;
+					strideH = dataH % 4;
+
+
+
+
+					if ( dataW != dataH || strideW != 0 || strideH != 0)
                     {
                         System.Windows.Forms.MessageBox.Show("w != h");
                         return;
@@ -363,7 +261,7 @@ namespace ImageTranform_Example
 
                         Stopwatch stw = new Stopwatch();
                         stw.Start();
-                        temprers = LargeSizeImage_Transformation.Tranform.Run(mstream, w, h, ltpoint);
+                        temprers = LargeSizeImage_Transformation.Tranform.Run( mstream, dataW, dataH, ltpoint );
 
                         Console.WriteLine(stw.ElapsedMilliseconds / 1000.0);
                      
@@ -384,8 +282,101 @@ namespace ImageTranform_Example
             }
         }
 
+		private void btnTestOnlyAngle_Click( object sender, RoutedEventArgs e )
+		{
 
-        private byte[] GetBytesFromImage(String imageFile)
+		}
+
+		private void btnTestOnlyXY_Click( object sender, RoutedEventArgs e )
+		{
+			OpenFileDialog ofd = new OpenFileDialog();
+			if ( ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK )
+			{
+				try
+				{
+					imgOriginal.Source = new BitmapImage( new Uri( ofd.FileName ) );
+					var img = new Img(ofd.FileName);
+					Mat img2 = CvInvoke.Imread(ofd.FileName, Emgu.CV.CvEnum.ImreadModes.Grayscale);
+					var w = img.Width;
+					var h = img.Height;
+
+
+					// -- Set Ratio
+					RatioW = w / cvsOriginal.ActualWidth;
+					RatioH = h / cvsOriginal.ActualHeight;
+					// --
+
+
+
+					var data = img.Data.TointArray();
+					var dataW = img.Data.GetLength(1);
+					var dataH = img.Data.GetLength(0);
+
+					var strideW = dataW % 4;
+					var strideH = dataH % 4;
+
+					img = img.Resize( dataW + ( strideW == 0 ? 0 : 4 - strideW ), dataH + ( strideH == 0 ? 0 : 4 - strideH ), Inter.Cubic );
+
+					data = img.Data.TointArray();
+					dataW = img.Data.GetLength( 1 );
+					dataH = img.Data.GetLength( 0 );
+
+					strideW = dataW % 4;
+					strideH = dataH % 4;
+
+
+
+
+					if ( dataW != dataH || strideW != 0 || strideH != 0 )
+					{
+						System.Windows.Forms.MessageBox.Show( "w != h" );
+						//return;
+					}
+
+					if ( LBPos == null || LTPos == null || RTPos == null ) return;
+					var poslist = new PointD[4] { LBPos, LTPos, RTPos, RBPos };
+
+					var srcdata = img.Data.Flatten();
+					Tuple<byte[], int, int> dataXY;
+
+					Bitmap resimgs; ;
+
+
+
+					var ltpoint = poslist.Select(x => new LargeSizeImage_Transformation.PointD(x.X, x.Y)).ToArray();
+
+					byte[][] temprers;
+
+					using ( MemoryStream mstream = new MemoryStream( srcdata ) )
+					{
+						//dataXY = Run(mstream, w, h, poslist);
+
+
+						Stopwatch stw = new Stopwatch();
+						stw.Start();
+						temprers = LargeSizeImage_Transformation.Tranform.Run( mstream, dataW, dataH, ltpoint , true );
+
+						Console.WriteLine( stw.ElapsedMilliseconds / 1000.0 );
+
+
+					}
+					Stopwatch stw2 = new Stopwatch();
+					var temp1 = temprers.ToMat();
+					var temp2 = temp1.ToBitmap_SetPixel2();
+
+					imgRotated.Source = temp2.ToImageSource();
+					Console.WriteLine( stw2.ElapsedMilliseconds / 1000.0 );
+
+				}
+				catch ( Exception ex )
+				{
+					Console.WriteLine( ex.ToString() );
+				}
+			}
+		}
+
+
+		private byte[] GetBytesFromImage(String imageFile)
         {
             MemoryStream ms = new MemoryStream();
             Image img = Image.FromFile(imageFile);
@@ -393,7 +384,6 @@ namespace ImageTranform_Example
 
             return ms.ToArray();
         }
-
 
         public Bitmap CopyDataToBitmap(byte[] data, int w, int h)
         {
@@ -499,10 +489,23 @@ namespace ImageTranform_Example
 
         }
 
-     
-    }
+		private void btnSave_Click(object sender, RoutedEventArgs e)
+		{
+			SaveFileDialog fd = new SaveFileDialog();
+			if (fd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+			{
+				var path = fd.FileName;
 
-    public static class ExtLib
+				var encoder = new PngBitmapEncoder();
+				encoder.Frames.Add( BitmapFrame.Create( (BitmapSource)imgRotated.Source ) );
+				using (FileStream stream = new FileStream( path, FileMode.Create ))
+					encoder.Save( stream );
+
+			}
+		}
+	}
+
+	public static class ExtLib
     {
         public static void SaveImg(string path, BitmapSource bmp)
         {

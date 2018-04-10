@@ -14,7 +14,7 @@ namespace LargeSizeImage_Transformation
 
     public static class Tranform
     {
-        public static byte[][] Run(MemoryStream bytestream, int w, int h, PointD[] pos3 , bool onlyxy = false)
+        public static byte[][] Run(MemoryStream bytestream, int w, int h, PointD[] pos3)
         {
             try
             {
@@ -39,15 +39,8 @@ namespace LargeSizeImage_Transformation
                     xytransform(ref R1, trsData, reshaped, i, xmax, ymax);
                 }
 
-				if (onlyxy)
-				{
-					return R1;
-				}
-
                 var w1 = R1[0].Length;
                 var h1 = R1.Length;
-
-               
 
                 var degree = trsData.Angle * 180 / Math.PI;
 

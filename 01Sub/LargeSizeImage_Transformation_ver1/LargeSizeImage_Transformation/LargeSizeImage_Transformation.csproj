@@ -49,9 +49,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SpeedyCoding, Version=2.1.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\..\Example\ImageTranform_Example\packages\SpeedyCoding.2.1.2\lib\net462\SpeedyCoding.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -69,9 +66,6 @@
     <Compile Include="TransformData.cs" />
     <Compile Include="TransformUtil.cs" />
     <Compile Include="TrarnsformMatrix.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

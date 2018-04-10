@@ -254,9 +254,9 @@ namespace ImageTranform
                 new double[]{ last[0].Y , last[1].Y, last[2].Y}
             };
             
-            var squareSrc = Matrix.DotWithTransposed(srcM, srcM);
-            var squareInv = Matrix.Inverse(squareSrc);
-            var output = Matrix.Dot(targetM, squareInv);
+            var squareSrc = Accord.Math.Matrix.DotWithTransposed(srcM, srcM);
+            var squareInv = Accord.Math.Matrix.Inverse(squareSrc);
+            var output = Accord.Math.Matrix.Dot(targetM, squareInv);
             return output;
         }
 
@@ -288,15 +288,9 @@ namespace ImageTranform
             var pf = ToTransPos(pos);
             var pl = new PointF[] { lb, lt, rt };
 
-
-
-
             var mat = CvInvoke.GetAffineTransform(pf, pl);
 
-
-
             Console.WriteLine();
-
             return mat;
         }
 

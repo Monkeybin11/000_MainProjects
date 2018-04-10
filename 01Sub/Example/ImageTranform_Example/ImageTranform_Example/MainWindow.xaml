@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageTranform_Example"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="1425">
+        Title="MainWindow" Height="500" Width="1425">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition Width="0.2*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -19,9 +19,10 @@
             <Button x:Name="btnStart" Content="Start" Click="btnStart_Click"/>
             <Button x:Name="btnxyaffineStart" Content="New Start" Click="btnxyaffineStart_Click"/>
             <Button x:Name="btnWithPointStart" Content="Test2" Click="btnWithPointStart_Click"/>
-            <Button x:Name="btnTest" Content="Test" Click="btnTest_Click"/>
-            <Button x:Name="btnTestonePoint" Content="TestOne" Click="btnTestonePoint_Click"/>
+			<Button x:Name="btnTestOnlyXY" Content="TestOnlyXY" Click="btnTestOnlyXY_Click"/>
+			<Button x:Name="btnTestOnlyAngle" Content="TestOnlyAngle" Click="btnTestOnlyAngle_Click"/>
             <Button x:Name="btnTestDll" Content="TestDll" Click="btnTestDll_Click"/>
+            <Button x:Name="btnSave" Content="Save" Click="btnSave_Click"/>
         </UniformGrid>
 
         <Border BorderThickness="2" Grid.Column="1"  BorderBrush="Black" Margin="5">
